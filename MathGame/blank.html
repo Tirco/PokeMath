@@ -1,0 +1,61 @@
+<DOCTYPE html>
+<html lang="en">
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Pokémath</title>
+	<link rel="stylesheet" href="globalstyle.css??v=4">
+	<!--<link rel="stylesheet" href="cookies.css?v=1">-->
+	<link rel="stylesheet" href="menustyle.css??v=4">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+	<!-- <link rel="stylesheet" href="https://www.jsdelivr.com/package/npm/bulma> -->
+</head>
+<body>
+	<div class="topbar">
+		<a onclick="history.back()" id="backbutton">&#8249;</a>
+		<a href="#money" id="money" class="topbar-icon-left">
+			<img id="coinimage" src="money.svg" width="50" 
+			height="50"/>
+			<text id="cointext" class="topbar-icontext-left money score"
+			data-added="0" data-total="0"></text>
+		</a>
+		<a href="dex.html" id="caught" class="topbar-icon-left">
+			<img id="ballimage" src="pokeball.svg" width="50" 
+			height="50"/>
+			<text id="balltext" class="topbar-icontext-left">0</text>
+		</a>
+		<div class="dropdown">
+			<button class="dropbtn">
+				<img id="gearimage" src="images/gear.png" width="50" 
+				height="50"/>
+			  <i class="fa fa-caret-down"></i>
+			</button>
+			<div class="dropdown-content">
+			  <a href="index.html">Hovedmeny</a>
+			  <a href="dex.html">Pokedex</a>
+			  <a href="shop.html">Butikk</a>
+			  <a href="about.html">Om siden</a>
+			  <a href="about.html#contact">Kontakt oss</a>
+			  <a href="#"> </a>
+			  <a onclick="resetPrompt()">Tilbakestill (Slett alt)</a>
+			</div>
+		</div>
+	</div>
+<div class="main">
+	<!--<div id="cookieNotice" class="cookie-consent"> <span>Denne siden trenger tillatelse til å ta i bruk Cookies for å kunne lagre dine Pokêmon. <a href="https://www.privacypolicies.com/generic/" target="_blank" rel="noopener noreferrer" class="ml-1 text-decoration-none">Privacy policy</a> </span>
+		<div class="columns align-items-center justify-content-safe-center"> <button id="cookie-allow" class="allow-button">Tillat</button> <button id="cookie-cancel" class="allow-button">Avslå</button> </div>
+	</div>-->
+
+</div>
+	<div class="botbar">
+		<a id="update-log" class="align-right" href="about.html#news">Nytt</a>
+	</div>
+
+	  <!--<script src="main.js?v=1"></script>>-->
+	  <script src="global.js??v=4"></script>
+	  <!--<script src="cookies.js?v=1"></script>-->
+</body>
+
+</html>

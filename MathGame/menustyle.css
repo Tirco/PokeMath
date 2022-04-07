@@ -1,0 +1,112 @@
+.bigcard {
+  background-color: #fff;
+  box-shadow: 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.5), 0 0 0 1px rgba(10, 10, 10, 0.2);
+  color: #4a4a4a;
+  max-width: 18vw;
+  position: relative;
+	margin-left: 0.5vmin;
+	margin-right: 0.5vmin;
+  margin-top: 5vh;
+  bottom: 50%;
+  padding: 1vmin;
+  text-align: center;
+  cursor: pointer;
+  background-position: center;
+  background-attachment: fixed;
+  display: block;
+  height: fit-content;
+  min-width: 128px;
+  font-size: calc(12px + 0.4vw);
+}
+
+#logo {
+  margin: auto;
+  margin-top: 50px;
+  height: 20vh;
+  background-image: url('images/logo.png');
+  background-size: 75vmin;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+#logotext {
+  color: rgb(255, 108, 108);
+  text-shadow:3px 3px #3F3F00;
+  position: absolute;
+  font: 2em/1 impact, sans-serif;
+  font-size: 4vmin;
+  right: 10%;
+  left: 45%;
+  text-align: center;
+  top: 17vmin;
+  animation: pop 1.0s infinite;
+  -webkit-animation: pop 1.0s infinite;
+  -moz-animation: pop 1.0s infinite;
+  -webkit-user-select: none; /* Safari */        
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+/Edge */
+  user-select: none; /* Standard */
+}
+
+@media only screen and (max-width: 720px) {
+  #logotext {
+      display: none;
+  }
+}
+
+.fraction {
+  display: inline-block;
+  position: relative;
+  vertical-align: middle; 
+  letter-spacing: 0.001em;
+  text-align: center;
+  font-size: 12px;
+  }
+.fraction > span { 
+  display: block; 
+  padding: 0.1em; 
+  }
+.fraction span.fdn {border-top: thin solid black;}
+.fraction span.bar {display: none;}
+
+.card-footer-divisjon {
+  background-color: transparent;
+  border-top: 1px solid #ededed;
+  align-items: center;
+  display: inline-flex;
+  height: 50px;
+}
+
+.card-footer-item-divisjon {
+  align-items: center;
+  display: flex;
+  flex-basis: 0;
+  flex-grow: 1;
+  flex-shrink: 0;
+  justify-content: center;
+  padding: 0.2rem;
+}
+
+@keyframes pop {
+  from {
+      transform: scale(0.95) rotate(-12deg);
+  }
+  50% {
+      transform: scale(1)  rotate(-12deg)
+  }
+  to {
+      transform: scale(0.95) rotate(-12deg)
+  }
+}
+@-webkit-keyframes pop {
+  from {
+      -webkit-transform: scale(0.95)  rotate(-12deg)
+  }
+  50% {
+      -webkit-transform: scale(1) rotate(-12deg)
+  }
+  to {
+      -webkit-transform: scale(0.95) rotate(-12deg)
+  }
+}
+

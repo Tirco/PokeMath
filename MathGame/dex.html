@@ -1,0 +1,102 @@
+<DOCTYPE html>
+<html lang="en">
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Pokémath</title>
+	<link rel="stylesheet" href="globalstyle.css?v=6">
+	<link rel="stylesheet" href="dex.css?v=6">
+	<link rel="stylesheet" href="pokemon.css?v=6">
+	<!--<link rel="stylesheet" href="cookies.css?v=1">-->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+	<!-- <link rel="stylesheet" href="https://www.jsdelivr.com/package/npm/bulma> -->
+</head>
+<div class="topbar">
+	<a onclick="location.href='index.html';" id="backbutton">&#8249;</a>
+	<a href="shop.html" id="money" class="topbar-icon-left">
+		<img id="coinimage" src="money.svg" width="50" 
+		height="50"/>
+		<text id="cointext" class="topbar-icontext-left money score"
+		data-added="0" data-total="0"></text>
+	</a>
+	<a href="#pokedex" id="caught" class="topbar-icon-left">
+		<img id="ballimage" src="pokeball.svg" width="50" 
+		height="50"/>
+		<text id="balltext" class="topbar-icontext-left">0</text>
+	</a>
+	<div class="dropdown">
+		<button class="dropbtn">
+			<img id="gearimage" src="images/gear.png" width="50" 
+			height="50"/>
+		  <i class="fa fa-caret-down"></i>
+		</button>
+		<div class="dropdown-content">
+		  <a href="index.html">Hovedmeny</a>
+		  <a href="dex.html">Pokedex</a>
+		  <a href="shop.html">Butikk</a>
+		  <a href="about.html">Om siden</a>
+		  <a href="about.html#contact">Kontakt oss</a>
+		  <a href="#"> </a>
+		  <a onclick="resetPrompt()">Tilbakestill (Slett alt)</a>
+		</div>
+	</div>
+</div>
+<img src="" alt="" id="background"></img>
+<body>
+
+<div class="main">
+	<div id="filterButtons">
+			<button id="filterAllBtn" class="btn active " onclick="filterSelection('all')"> Vis alle</button>
+			<button class="btn" onclick="filterSelection('alolan')"> Alolan</button>
+			<button class="btn" onclick="filterSelection('galarian')"> Galarian</button>
+			<button class="btn" onclick="filterSelection('Shiny')"> Shiny</button>
+			<button class="btn" onclick="filterSelection('Legendarisk')"> Legendarisk</button>
+			<button class="btn" onclick="filterSelection('Mytisk')"> Mytisk</button>
+			<button class="btn" onclick="filterSelection(' mega ')"> Mega</button>
+			<button class="btn" onclick="filterSelection('gigantamax')"> Gigantamax</button>
+		
+		<input type="text" class="align-right" placeholder="Søk.." id="searchInput" onkeyup="textFilterFunction()">
+		<br>
+		<div class="align-right">
+			<button class="typecard type-bug btn" onclick="filterSelection('bug')"> Bug</button>
+			<button class="typecard type-dark btn" onclick="filterSelection('dark')"> Dark</button>
+			<button class="typecard type-dragon btn" onclick="filterSelection('dragon')"> Dragon</button><br>
+			<button class="typecard type-electric btn" onclick="filterSelection('electric')"> Electric</button>
+			<button class="typecard type-fairy btn" onclick="filterSelection('fairy')"> Fairy</button>
+			<button class="typecard type-fighting btn" onclick="filterSelection('fighting')"> Fighting</button><br>
+			<button class="typecard type-fire btn" onclick="filterSelection('fire')"> Fire</button>
+			<button class="typecard type-flying btn" onclick="filterSelection('flying')"> Flying</button>
+			<button class="typecard type-ghost btn" onclick="filterSelection('ghost')"> Ghost</button><br>
+			<button class="typecard type-grass btn" onclick="filterSelection('grass')"> Grass</button>
+			<button class="typecard type-ground btn" onclick="filterSelection('ground')"> Ground</button>
+			<button class="typecard type-ice btn" onclick="filterSelection('ice')"> Ice</button><br>
+			<button class="typecard type-normal btn" onclick="filterSelection('normal')"> Normal</button>
+			<button class="typecard type-poison btn" onclick="filterSelection('poison')"> Poison</button>
+			<button class="typecard type-psychic btn" onclick="filterSelection('psychic')"> Psychic</button><br>
+			<button class="typecard type-rock btn" onclick="filterSelection('rock')"> Rock</button>
+			<button class="typecard type-steel btn" onclick="filterSelection('steel')"> Steel</button>
+			<button class="typecard type-water btn" onclick="filterSelection('water')"> Water</button>
+		</div>
+	</div>
+
+	<div class="columns is-multiline is-mobile" id="pokedex">
+    </div>
+
+
+</div>
+	<div class="botbar">
+			<a id="amountCaught" class="statisticText" data-text=" fanget.">?</a>
+			<a id="amountCaught2" class="statisticText" data-text=" unike.">?</a>
+			<a id="amountCaught3" class="statisticText" data-text=" i valgt søk.">?</a>
+		<a id="update-log" class="align-right" href="about.html#news">Nytt</a>
+	</div>
+
+	  <!--<script src="main.js?v=1"></script>>-->
+	  <script src="global.js?v=5"></script>
+	  <!--<script src="cookies.js?v=1"></script>-->
+	  <script src="dex.js?v=5"></script>
+</body>
+
+</html>

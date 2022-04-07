@@ -1,0 +1,131 @@
+<DOCTYPE html>
+<html lang="en">
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Pokémath</title>
+	<link rel="stylesheet" href="globalstyle.css?v=6">
+	<!--<link rel="stylesheet" href="cookies.css?v=1">-->
+	<link rel="stylesheet" href="menustyle.css?v=6">
+	<link rel="stylesheet" href="shop.css?v=6">
+	<script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
+	<!-- <link rel="stylesheet" href="https://www.jsdelivr.com/package/npm/bulma> -->
+</head>
+<body>
+	<div class="topbar">
+		<a href="index.html" id="backbutton">&#8249;</a>
+		<a href="shop.html" id="money" class="topbar-icon-left">
+			<img id="coinimage" src="money.svg" width="50" 
+			height="50"/>
+			<text id="cointext" class="topbar-icontext-left money score"
+			data-added="0" data-total="0"></text>
+		</a>
+		<a href="dex.html" id="caught" class="topbar-icon-left">
+			<img id="ballimage" src="pokeball.svg" width="50" 
+			height="50"/>
+			<text id="balltext" class="topbar-icontext-left">0</text>
+		</a>
+		<div class="dropdown">
+			<button class="dropbtn">
+				<img id="gearimage" src="images/gear.png" width="50" 
+				height="50"/>
+			  <i class="fa fa-caret-down"></i>
+			</button>
+			<div class="dropdown-content">
+			  <a href="index.html">Hovedmeny</a>
+			  <a href="dex.html">Pokedex</a>
+			  <a href="shop.html">Butikk</a>
+			  <a href="about.html">Om siden</a>
+			  <a href="about.html#contact">Kontakt oss</a>
+			  <a href="#"> </a>
+			  <a onclick="resetPrompt()">Tilbakestill (Slett alt)</a>
+			</div>
+		</div>
+	</div>
+<image src="" alt="" id="background"></image>
+<div class="main">
+	<div class="carousel"
+ 		 data-flickity='{ "wrapAround": true }'>
+  		<div class="carousel-cell" style="background-image: url('images/backgrounds/bg-001.png');">
+			<div class="carousel-caption" id="bg-001" >
+				<h3>Bakgrunn 001</h3>
+				<a class="pricetag" data-price="25 000"></a>
+				<br>
+				<br>
+				<button class="button-1 buy" onClick="shopButtonBuy(this)">Kjøp</button>
+				<button class="button-1 disabled use" onClick="shopButtonUse(this)">Bruk</button>
+				<br>
+				<span class="hovertext" data-hover="Denne bakgrunnen kan du bruke på hele nettsiden!">
+					?
+				</span>
+
+			</div>
+		</div>
+		<div class="carousel-cell" style="background-image: url('images/backgrounds/bg-002.png');">
+			<div class="carousel-caption" id="bg-002">
+				<h3>Bakgrunn 002</h3>
+				<a class="pricetag" data-price="25 000"></a>
+				<br>
+				<br>
+				<button class="button-1 buy" onClick="shopButtonBuy(this)">Kjøp</button>
+				<button class="button-1 disabled use" onClick="shopButtonUse(this)">Bruk</button>
+				<br>
+				<span class="hovertext" data-hover="Denne bakgrunnen kan du bruke på hele nettsiden!">
+					?
+				</span>
+			</div>
+		</div>
+		<div class="carousel-cell" style="background-image: url('images/backgrounds/bg-003.png');">
+			<div class="carousel-caption" id="bg-003">
+				<h3>Bakgrunn 003</h3>
+				<a class="pricetag" data-price="25 000"> </a>
+				<br>
+				<br>
+				<button class="button-1 buy" onClick="shopButtonBuy(this)">Kjøp</button>
+				<button class="button-1 disabled use" onClick="shopButtonUse(this)">Bruk</button>
+				<br>
+				<span class="hovertext" data-hover="Denne bakgrunnen kan du bruke på hele nettsiden!">
+					?
+				</span>
+			</div>
+		</div>
+	</div>
+	<button class="button-1 use centerposition" onClick="shopButtonUse()">Fjern Bakgrunn</button>
+	<br>
+
+	<br><a>Butikken er under utvikling, og kan inneholde større feil, eller få store endringer etterhvert.</a>
+	<div class="shopButtons columns is-multiline is-mobile">
+		
+		<br>
+		<div id="shinyShop" class="shopObject card" data-price="0" data-level="0">
+			<img src="images/shinycharm.png" width="75" height="75"><img>
+			<h3>Shiny Charm</h3>
+			<a class="shinyLevel levelIndicator" data-level="0">Nivå: </a>
+			<br>
+			<a class="pricetag" data-price="10000"></a>
+			<br>
+			<br>
+			<button class="button-1 shopButton upgrade disabled" onClick="shopButtonUpgrade(this)">Oppgrader</button>
+			<span class="hovertext" data-hover="Hvert nivå vil øke sjansen din for å fange en Shiny pokèmon, bittelitt!">
+				?
+			</span>
+			
+		</div>
+		
+	</div>
+</div>
+
+<div class="botbar">
+	<a id="update-log" class="align-right" href="about.html#news">Nytt</a>
+</div>
+
+
+
+	  <!--<script src="main.js?v=1"></script>>-->
+	  <script src="global.js?v=6"></script>
+	  <script src="shop.js?v=6"></script>
+	  <!--<script src="cookies.js?v=1"></script>-->
+</body>
+
+</html>

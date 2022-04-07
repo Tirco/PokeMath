@@ -1,0 +1,230 @@
+<DOCTYPE html>
+<html lang="en">
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Pokémath</title>
+	<link rel="stylesheet" href="globalstyle.css?v=6">
+	<link rel="stylesheet" href="menustyle.css?v=6">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+</head>
+<body>
+	<div class="topbar">
+		<a onclick="history.back()" id="backbutton">&#8249;</a>
+		<a href="shop.html" id="money" class="topbar-icon-left">
+			<img id="coinimage" src="money.svg" width="50" 
+			height="50"/>
+			<text id="cointext" class="topbar-icontext-left money score"
+			data-added="0" data-total="0"></text>
+		</a>
+		<a href="dex.html" id="caught" class="topbar-icon-left">
+			<img id="ballimage" src="pokeball.svg" width="50" 
+			height="50"/>
+			<text id="balltext" class="topbar-icontext-left">0</text>
+		</a>
+		<div class="dropdown">
+			<button class="dropbtn">
+				<img id="gearimage" src="images/gear.png" width="50" 
+				height="50"/>
+			  <i class="fa fa-caret-down"></i>
+			</button>
+			<div class="dropdown-content">
+			  <a href="index.html">Hovedmeny</a>
+			  <a href="dex.html">Pokedex</a>
+			  <a href="shop.html">Butikk</a>
+			  <a href="about.html">Om siden</a>
+			  <a href="about.html#contact">Kontakt oss</a>
+			  <a href="#"> </a>
+			  <a onclick="resetPrompt()">Tilbakestill (Slett alt)</a>
+			</div>
+		</div>
+	</div>
+<image src="" alt="" id="background"></image>
+<div class="main">
+	<div id="logo" class="logo">
+		<text id="logotext" class="tilt pop"> </text>
+	</div>
+
+	<div class="columns is-multiline is-mobile" id="stageselect">
+		<div class="bigcard" id="stage-one" onclick="location.href='pokemath.html?stage=1';">
+			<div class="card-content">
+				<div class="has-text-centered" id="menu-image-1"></div>
+			</div>
+			<div class="card-footer">
+				<p class="card-footer-item">
+				  <strong style="text-transform: capitalize;">Nivå 1</strong>
+				</p>
+			</div>
+			<footer class="card-footer">
+				<p class="card-footer-item">
+					<b>Addisjon (+):&nbsp;&nbsp;</b> 0 - 10
+				</p>
+			</footer>
+			<footer class="card-footer">
+				<p class="card-footer-item">
+					<b>Subtraksjon (-):&nbsp;&nbsp;</b> 0 - 10
+				</p>
+			</footer>
+			<footer class="card-footer">
+				<p class="card-footer-item"></p>
+			</footer>
+			<footer class="card-footer">
+				<p class="card-footer-item"></p>
+			</footer>
+	   </div>
+
+		<div class="bigcard"  id="stage-two" onclick="location.href='pokemath.html?stage=2';">
+			  <div class="card-content">
+				<div class="has-text-centered" id="menu-image-2">
+				</div>
+			  </div>
+			  <div class="card-footer">
+				<p class="card-footer-item">
+				  <strong style="text-transform: capitalize;">Nivå 2</strong>
+				</p>
+			  </div>
+			  <footer class="card-footer">
+				<p class="card-footer-item">
+					<b>Addisjon (+):&nbsp;</b> 0 - 25
+				</p>
+			</footer>
+			<footer class="card-footer">
+				<p class="card-footer-item">
+					<b>Subtraksjon (-):&nbsp;</b> 0 - 25
+				</p>
+			</footer>
+			<footer class="card-footer">
+				<p class="card-footer-item"></p>
+			</footer>
+			<footer class="card-footer">
+				<p class="card-footer-item"></p>
+			</footer>
+		</div>
+
+		<div class="bigcard" id="stage-three" onclick="location.href='pokemath.html?stage=3';">
+			<div class="card-content">
+				<div class="has-text-centered" id="menu-image-3">
+				</div>
+			  </div>
+			  <div class="card-footer">
+				<p class="card-footer-item">
+				  <strong style="text-transform: capitalize;">Nivå 3</strong>
+				</p>
+			  </div>
+			  <footer class="card-footer">
+				<p class="card-footer-item">
+					<b>Addisjon (+):&nbsp;&nbsp;</b> 0 - 10
+				</p>
+				
+			</footer>
+			<footer class="card-footer">
+				<p class="card-footer-item">
+					<b>Subtraksjon (-):&nbsp;&nbsp;</b> 0 - 10
+				</p>
+			</footer>
+			<footer class="card-footer">
+				<p class="card-footer-item">
+					<b>Multiplikasjon (x):&nbsp;&nbsp;</b> 0 - 10
+				</p>
+			</footer>
+			<footer class="card-footer-divisjon">
+				<p class="card-footer-item-divisjon">
+					<b>Divisjon (/):&nbsp;</b>
+					<div class="fraction">
+						<span class="fup">0 - 100</span>
+						<span class="bar">/</span>
+						<span class="fdn">1 - 10</span>
+					  </div>
+				</p>
+			</footer>
+		</div>
+
+		<div class="bigcard" id="stage-four" onclick="location.href='pokemath.html?stage=4';">
+			  <div class="card-content">
+				<div class="has-text-centered" id="menu-image-4">
+				</div>
+			  </div>
+			  <div class="card-footer">
+				<p class="card-footer-item">
+				  <strong style="text-transform: capitalize;">Nivå 4</strong>
+				</p>
+			  </div>
+			  <footer class="card-footer">
+				<p class="card-footer-item">
+					<b>Addisjon (+):&nbsp;&nbsp;</b> 10 - 100
+				</p>
+			</footer>
+			<footer class="card-footer">
+				<p class="card-footer-item">
+					<b>Subtraksjon (-):&nbsp;&nbsp;</b> 10 - 100
+				</p>
+			</footer>
+			<footer class="card-footer">
+				<p class="card-footer-item">
+					<b>Multiplikasjon (x):&nbsp;&nbsp;</b> 10 - 100
+				</p>
+			</footer>
+			<footer class="card-footer-divisjon">
+				<p class="card-footer-item-divisjon">
+					<b>Divisjon (/):&nbsp;</b>
+					<div class="fraction">
+						<span class="fup">10 - 1000</span>
+						<span class="bar">/</span>
+						<span class="fdn">1 - 10</span>
+					  </div>
+				</p>
+			</footer>
+		</div>
+
+		<div class="bigcard"  id="stage-five" onclick="location.href='pokemath.html?stage=5';">
+			  <div class="card-content">
+				<div class="has-text-centered" id="menu-image-5">
+				</div>
+			  </div>
+			  <div class="card-footer">
+				<p class="card-footer-item">
+				  <strong style="text-transform: capitalize;">Nivå 5</strong>
+				</p>
+			  </div>
+			  <footer class="card-footer">
+				<p class="card-footer-item">
+					<b>Addisjon (+):&nbsp;&nbsp;</b> 1000 - 10 000
+				</p>
+			</footer>
+			<footer class="card-footer">
+				<p class="card-footer-item">
+					<b>Subtraksjon (-):&nbsp;&nbsp;</b> 1000 - 10 000
+				</p>
+			</footer>
+			<footer class="card-footer">
+				<p class="card-footer-item">
+					<b>Multiplikasjon (x):&nbsp;&nbsp;</b> 10 - 999
+				</p>
+			</footer>
+			<footer class="card-footer-divisjon">
+				<p class="card-footer-item-divisjon">
+					<b>Divisjon (/):&nbsp;</b>
+					<div class="fraction">
+						<span class="fup">100 - 1 000 000</span>
+						<span class="bar">/</span>
+						<span class="fdn">10 - 100</span>
+					  </div>
+				</p>
+			</footer>
+		</div>
+	</div>
+</div>
+<div class="botbar">
+	<a id="update-log" class="align-right" href="about.html#news">Nytt</a>
+</div>
+
+
+
+	  <!--<script src="main.js?v=1"></script>>-->
+	  <script src="global.js?v=6"></script>
+	  <!--<script src="cookies.js?v=1"></script>-->
+	  <script src="menu.js?v=6"></script>
+</body>
+
+</html>

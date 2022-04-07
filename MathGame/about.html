@@ -1,0 +1,159 @@
+<DOCTYPE html>
+<html lang="en">
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Pokémath</title>
+	<link rel="stylesheet" href="globalstyle.css?v=6">
+	<!--<link rel="stylesheet" href="cookies.css?v=1">-->
+	<link rel="stylesheet" href="menustyle.css?v=6">
+	<link rel="stylesheet" href="about.css?v=6">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+	<!-- <link rel="stylesheet" href="https://www.jsdelivr.com/package/npm/bulma> -->
+</head>
+<body>
+	<div class="topbar">
+		<a onclick="history.back()" id="backbutton">&#8249;</a>
+		<a href="shop.html" id="money" class="topbar-icon-left">
+			<img id="coinimage" src="money.svg" width="50" 
+			height="50"/>
+			<text id="cointext" class="topbar-icontext-left money score"
+			data-added="0" data-total="0"></text>
+		</a>
+		<a href="dex.html" id="caught" class="topbar-icon-left">
+			<img id="ballimage" src="pokeball.svg" width="50" 
+			height="50"/>
+			<text id="balltext" class="topbar-icontext-left">0</text>
+		</a>
+		<div class="dropdown">
+			<button class="dropbtn">
+				<img id="gearimage" src="images/gear.png" width="50" 
+				height="50"/>
+			  <i class="fa fa-caret-down"></i>
+			</button>
+			<div class="dropdown-content">
+			  <a href="index.html">Hovedmeny</a>
+			  <a href="dex.html">Pokedex</a>
+			  <a href="shop.html">Butikk</a>
+			  <a href="about.html">Om siden</a>
+			  <a href="about.html#contact">Kontakt oss</a>
+			  <a href="#"> </a>
+			  <a onclick="resetPrompt()">Tilbakestill (Slett alt)</a>
+			</div>
+		</div>
+	</div>
+<div class="main">
+	<!--<div id="cookieNotice" class="cookie-consent"> <span>Denne siden trenger tillatelse til å ta i bruk Cookies for å kunne lagre dine Pokêmon. <a href="https://www.privacypolicies.com/generic/" target="_blank" rel="noopener noreferrer" class="ml-1 text-decoration-none">Privacy policy</a> </span>
+		<div class="columns align-items-center justify-content-safe-center"> <button id="cookie-allow" class="allow-button">Tillat</button> <button id="cookie-cancel" class="allow-button">Avslå</button> </div>
+	</div>-->
+	<h1 class="header">Informasjon</h1>
+	<section id="about" class="section">
+		<div class="image-container">
+			<img class="item.image" src="images/backgrounds/bg-001.png" alt=""></img>
+		</div>
+
+		<article class="content">
+			<h2 class="section-title">Om siden</h1>
+			<p><strong>Denne siden er under utvikling og vil gjennomgå store endringer underveis.</strong></p>
+		
+			<p>Pokemath.online er en læringsrik side hvor man kan få mengdetrening i addisjon, subtraksjon, multiplikasjon og divisjon. <br>
+			Nettsiden prøver på ingen måte å tjene penger, verken ved bruk av reklame eller salg.<br>
+			Formålet med siden er å skape en motiverende læringsarena for barn (og voksne) som er interessert i pokemon.<br>
+			</p>
+			<p>
+			Nettsiden bruker <a href="https://pokeapi.co/" alt="pokeapi.co">https://pokeapi.co/</a> sin database for å finne, og vise, informasjon om de forskjellige pokemonene.
+			Bildene er i hovedsak hentet fra poketwo.net (<a href="https://github.com/poketwo/poketwo" alt="github.com/poketwo">https://github.com/poketwo/poketwo</a>) sin bildedatabase. <br>
+			Endringer / mangler på bilder som vises på denne siden kan skje uten at vi har noen kontroll over det, ettersom det refereres til lenker som poketwo disponerer.
+			</p>
+		
+			<p><a href="https://www.flaticon.com/search?word=pokemon&type=icon" title="Flaticon.com">Flere av ikonene er hentet fra: Roundicons Freebies - Flaticon</a></p>
+		</article>
+	</section>
+	<section id="contact" class="section">
+		<div class="image-container">
+			<img class="item.image" src="images/backgrounds/bg-002.png" alt=""></img>
+		</div>
+		<article class="content">
+			<h2 class="section-title">Kontakt</h1>
+			<p>
+				Kontaktinformasjon:<br>
+				Mail: Tirco@Tirco.tv (marker meldingen med pokemath)
+			</p>
+		</article>
+	</section>
+	<section id="news" class="section">
+		<div class="image-container">
+			<img class="img" src="images/backgrounds/bg-003.png" alt=""></img>
+		</div>
+		<article class="content">
+			<h2 class="section-title">Nyheter</h1>
+				<p>15.03.2022</p>
+				- Fikset "bruk" knappen på bakgrunnen.<br>
+				- Økte effektiviteten på Shiny Charm litt.<br>
+				- Endret på prisen og maks-nivå på Shiny Charm.<br>
+				- La til et "Toast"-system som gjør at meldinger kan vises enklere.<br>
+				- La til tilfeldige meldinger når du får en pokemon, istedet for bare "flott jobbet!"<br>
+
+				<p>05.03.2022</p>
+				- Fikset noen mindre feil.<br>
+				- La til de første elementene i butikken.<br>
+				- Oppdaterte utseendet på pokedexen og hovedmenyen.<br>
+				
+				<p>16.02.2022</p>
+				- Fikset på bildet til Gigantamax Rillaboom. Hvis du allerede har fanget denne pokemonen, så vil bildet forbli feil...<br>
+				- Endret på vanskelighetsgradene til nivå 2 og 4.<br>
+				- Endret på informasjon om vanskelighetsgrad.<br>
+
+				<p>08.02.2022</p>
+				- Fikset på noen pokemon som lå inne med feil bilde. Hvis du allerede har fanget disse pokemonene, så vil bildet forbli feil...<br>
+				- Fikset på en pokemon som burde vert listet som legendarisk.<br>
+				- Endret på utseendet til informasjonssiden.<br>
+				- Forbedret deler av koden.<br>
+				- Oppdaterte utseendet til Pokédexen.<br>
+				- Gjorde klar til videre oppdateringer.<br>
+
+				<p>06.02.2022</p>
+				- Lagde en pokedex side.<br>
+				- Slettet alle pokemon fra cookies.<br>
+				- Tok i bruk et nytt lagringssystem.<br>
+				- Fikset ikonet til charizard i hovedmenyen.<br>
+				- Fikset så pengene lagrer seg og legges til ordentlig.<br>
+				- Oppdaterte utseendet på pokemon i listen.<br>
+				- La til en "slett alt"-knapp, og lagde en navigerings meny.<br>
+				- Gjorde så duplikate pokemon ikke lager nye kort.<br>
+				- Endret litt på språket på siden.<br>
+				- Fikset en bugg hvor shinies lagde uendelige normale versjoner av seg selv.<br>
+				- La til Alolan varianter.<br>
+				- La til Galarian varianter.<br>
+				- La til Gigantamax varianter.<br>
+				- La til Mega varianter.<br>
+				- La til spesielle varianter av noen pokemon.<br>
+				<p>01.02.2022</p>
+				<p>- la til flere nivåer.<br>
+				- La til nivå-meny.<br>
+				- endret på utseendet.<br>
+				- ryddet opp i kode.<br>
+				- la til ikoner for poeng og pokemon.<br>
+				- fikset småfeil.</p>
+			  <p>28.01.2022</p>
+			  <p>- La til delingsstykker.<br>
+				- Gjorde Shinies vanskeligere å finne.<br>
+				- Gjorde legendaries og mythics vanskeligere å finne.<br>
+				- Gjorde så legendaries og mythics har egne rammer i pokedexen<br>
+				- La til lagring.<br>
+				- Lagde topptekst og bunntekst<br>
+				- La til en teller for antall pokemon og poeng.<br>
+				- Tok i bruk cookies.<br>
+				- La til funksjoner som hindrer at man med et uhell kan gå forbi en pokemon.</p>
+		</article>
+	</section>
+</div>
+
+	  <!--<script src="main.js?v=1"></script>>-->
+	  <script src="global.js?v=6"></script>
+	  <!--<script src="cookies.js?v=1"></script>-->
+</body>
+
+</html>

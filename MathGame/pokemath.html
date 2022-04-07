@@ -1,0 +1,110 @@
+<DOCTYPE html>
+<html lang="en">
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Pokémath</title>
+	<link rel="stylesheet" href="globalstyle.css?v=6">
+	<link rel="stylesheet" href="pokemon.css?v=6">
+	<!--<link rel="stylesheet" href="cookies.css?v=1">-->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+	<!-- <link rel="stylesheet" href="https://www.jsdelivr.com/package/npm/bulma> -->
+</head>
+<div class="main">
+<div class="topbar">
+	<a href='index.html';" id="backbutton">&#8249;</a>
+	<a href="shop.html" id="money" class="topbar-icon-left">
+		<img id="coinimage" src="money.svg" width="50" 
+		height="50"/>
+		<text id="cointext" class="topbar-icontext-left money score"
+		data-added="0" data-total="0"></text>
+	</a>
+	<a href="dex.html" id="caught" class="topbar-icon-left">
+		<img id="ballimage" src="pokeball.svg" width="50" 
+		height="50"/>
+		<text id="balltext" class="topbar-icontext-left">0</text>
+	</a>
+	<div class="dropdown">
+		<button class="dropbtn">
+			<img id="gearimage" src="images/gear.png" width="50" 
+			height="50"/>
+		  <i class="fa fa-caret-down"></i>
+		</button>
+		<div class="dropdown-content">
+		  <a href="index.html">Hovedmeny</a>
+		  <a href="dex.html">Pokedex</a>
+		  <a href="shop.html">Butikk</a>
+		  <a href="about.html">Om siden</a>
+		  <a href="about.html#contact">Kontakt oss</a>
+		  <a href="#"> </a>
+		  <a onclick="resetPrompt()">Tilbakestill (Slett alt)</a>
+		</div>
+	</div>
+</div>
+<image src="" alt="" id="background"></image>
+<body>
+	<div class="main-ui">
+
+		<p class="problem"></p> 
+		
+		<form action="" class="our-form">
+			<input type="text" class="our-field" autocomplete="off">
+			<button>Svar</button>
+		</form>
+		
+		<p class="status">Du trenger <span class="points-needed">5</span> flere poeng, og kan gjøre <span class="mistakes-allowed">2</span> feil.</p>
+		
+		<div class="progress">
+			<div class="boxes">
+				<div class="box"></div>
+				<div class="box"></div>
+				<div class="box"></div>
+				<div class="box"></div>
+				<div class="box"></div>
+			</div>
+			<div class="progress-inner"></div>
+		</div>
+		<br>
+	</div>
+	
+	
+	
+
+<!--	<div id="cookieNotice" class="cookie-consent"> <span>Denne siden tar i bruk Cookies for å kunne lagre dine pokémon og annen data. <a href="https://www.privacypolicies.com/generic/" target="_blank" rel="noopener noreferrer" class="ml-1 text-decoration-none">Privacy policy</a> </span>
+		<div class="columns align-items-center justify-content-safe-center"> <button id="cookie-allow" class="allow-button">Tillat</button> <button id="cookie-cancel" class="allow-button">Avslå</button> </div>
+	</div>-->
+	
+	<div class="columns is-multiline is-mobile" id="pokedex">
+    </div>
+	
+	<div class="overlay">
+		<div class="overlay-inner">
+			<p class="end-message"></p>
+			<br>
+			<a id="pokeball" class="pokeball animate__animated animate__wobble animate__repeat-3 mt-2 mb-6 is-hidden"></a>
+			<a id="new-catch-info" style="white-space:pre;"></a>
+			<br>
+			<button class="reset-button is-hidden">Fortsett</button>
+		</div>
+	</div>
+
+</body>
+</div>
+
+<div class="botbar">
+	<a id="botbar-1" onclick="location.href='pokemath.html?stage=1';">1</a>
+	<a id="botbar-2" onclick="location.href='pokemath.html?stage=2';">2</a>
+	<a id="botbar-3" onclick="location.href='pokemath.html?stage=3';">3</a>
+	<a id="botbar-4" onclick="location.href='pokemath.html?stage=4';">4</a>
+	<a id="botbar-5" onclick="location.href='pokemath.html?stage=5';">5</a>
+	<a id="update-log" class="align-right" href="about.html#news">Nytt</a>
+</div>
+	  <!--<script src="main.js?v=1"></script>>-->
+	  <script src="alternateforms.js?v=6"></script>
+	  <script src="global.js?v=6"></script>
+	  <!--<script src="cookies.js?v=1"></script>-->
+	  <script src="math.js?v=6"></script>
+	  <script src="pokestuff.js?v=6"></script>
+</html>
