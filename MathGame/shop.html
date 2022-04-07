@@ -93,8 +93,6 @@
 	</div>
 	<button class="button-1 use centerposition" onClick="shopButtonUse()">Fjern Bakgrunn</button>
 	<br>
-
-	<br><a>Butikken er under utvikling, og kan inneholde større feil, eller få store endringer etterhvert.</a>
 	<div class="shopButtons columns is-multiline is-mobile">
 		
 		<br>
@@ -112,7 +110,48 @@
 			</span>
 			
 		</div>
-		
+		<div id="legendShop" class="shopObject card" data-price="0" data-level="0">
+			<img src="images/lure_legend.svg" width="75" height="75"><img>
+			<h3>Legend Lure</h3>
+			<a class="legendLevel levelIndicator" data-level="0">Nivå: </a>
+			<br>
+			<a class="pricetag" data-price="10000"></a>
+			<br>
+			<br>
+			<button class="button-1 shopButton upgrade disabled" onClick="shopButtonUpgrade(this)">Oppgrader</button>
+			<span class="hovertext" data-hover="Hvert nivå vil øke sjansen din for å fange en legendarisk pokèmon! På maks nivå vil de være like vanlige som andre pokèmon">
+				?
+			</span>
+			
+		</div>
+		<div id="mythicShop" class="shopObject card" data-price="0" data-level="0">
+			<img src="images/lure.svg" width="75" height="75"><img>
+			<h3>Mythic Lure</h3>
+			<a class="mythicLevel levelIndicator" data-level="0">Nivå: </a>
+			<br>
+			<a class="pricetag" data-price="10000"></a>
+			<br>
+			<br>
+			<button class="button-1 shopButton upgrade disabled" onClick="shopButtonUpgrade(this)">Oppgrader</button>
+			<span class="hovertext" data-hover="Hvert nivå vil øke sjansen din for å fange en mytisk pokèmon! På maks nivå vil de være like vanlige som andre pokèmon">
+				?
+			</span>
+			
+		</div>
+		<div id="coinShop" class="shopObject card" data-price="0" data-level="0">
+			<img src="images/coinbag.svg" width="75" height="75"><img>
+			<h3>Repeat Coins</h3>
+			<a class="coinLevel levelIndicator" data-level="0">Nivå: </a>
+			<br>
+			<a class="pricetag" data-price="10000"></a>
+			<br>
+			<br>
+			<button class="button-1 shopButton upgrade disabled" onClick="shopButtonUpgrade(this)">Oppgrader</button>
+			<span class="hovertext" data-hover="Øker hvor mye penger du får når du fanger en pokémon du har fra før!">
+				?
+			</span>
+			
+		</div>
 	</div>
 </div>
 

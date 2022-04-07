@@ -52,7 +52,8 @@ let shopOptions = {
   shinyLevel: 1,
   mythicLevel: 0,
   legendLevel: 0,
-  specialLevel: 0
+  specialLevel: 0,
+  coinLevel: 0
 }
 
 function loadShop() {
@@ -62,6 +63,10 @@ function loadShop() {
   if(shopOptions.shinyLevel == 0) {
     shopOptions.shinyLevel = 1
   }
+  shopOptions.mythicLevel = getStorageInt('mythicLevel')
+  shopOptions.legendLevel = getStorageInt('legendLevel')
+  shopOptions.specialLevel = getStorageInt('specialLevel')
+  shopOptions.coinLevel = getStorageInt('coinLevel')
   loadBackground();
 }
 
@@ -104,6 +109,18 @@ function saveAll(){
   }
   if(shopOptions.shinyLevel != "") {
     window.localStorage.setItem('shinyLevel',JSON.stringify(shopOptions.shinyLevel))
+  }
+  if(shopOptions.legendLevel != "") {
+    window.localStorage.setItem('legendLevel',JSON.stringify(shopOptions.legendLevel))
+  }
+  if(shopOptions.mythicLevel != "") {
+    window.localStorage.setItem('mythicLevel',JSON.stringify(shopOptions.mythicLevel))
+  }
+  if(shopOptions.specialLevel != "") {
+    window.localStorage.setItem('specialLevel',JSON.stringify(shopOptions.specialLevel))
+  }
+  if(shopOptions.coinLevel != "") {
+    window.localStorage.setItem('coinLevel',JSON.stringify(shopOptions.coinLevel))
   }
 }
 

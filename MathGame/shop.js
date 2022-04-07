@@ -1,7 +1,14 @@
 //Load the prices of all elements.
 
 const shinyMaxLevel = 150;
+const legendMaxLevel = 15;
+const mythicMaxLevel = 25;
+const coinMaxLevel = 50;
 const shinyBasePrice = 100;
+const legendBasePrice = 1000;
+const mythicBasePrice = 2000;
+const coinBasePrice = 200;
+
 
 function loadShopLocal(){
     
@@ -55,7 +62,25 @@ function loadShopLocal(){
                 maxLevel = shinyMaxLevel;
                 level = shopOptions.shinyLevel;
                 levelIndicator.dataset.level =  level;
-                price = Math.ceil((shinyBasePrice * (level ** 1.3))/100)*100;
+                price = Math.ceil((shinyBasePrice * (level ** 1.3))/100)*100 + shinyBasePrice;
+                priceTag.dataset.price = price;
+            } else if(levelIndicator.classList.contains("mythicLevel")) {
+                maxLevel = mythicMaxLevel;
+                level = shopOptions.mythicLevel;
+                levelIndicator.dataset.level =  level;
+                price = Math.ceil((mythicBasePrice * (level ** 1.3))/100)*100 + mythicBasePrice;
+                priceTag.dataset.price = price;
+            } else if(levelIndicator.classList.contains("legendLevel")) {
+                maxLevel = legendMaxLevel;
+                level = shopOptions.legendLevel;
+                levelIndicator.dataset.level =  level;
+                price = Math.ceil((legendBasePrice * (level ** 1.3))/100)*100 + legendBasePrice;
+                priceTag.dataset.price = price;
+            } else if(levelIndicator.classList.contains("coinLevel")) {
+                maxLevel = coinMaxLevel;
+                level = shopOptions.coinLevel;
+                levelIndicator.dataset.level =  level;
+                price = Math.ceil((coinBasePrice * (level ** 1.1))/100)*100 + coinBasePrice;
                 priceTag.dataset.price = price;
             }
             //Do other button types.
@@ -197,9 +222,31 @@ function shopButtonUpgrade(btn){
         if(levelIndicator.classList.contains("shinyLevel")) {
             maxLevel = shinyMaxLevel;
             level = shopOptions.shinyLevel;
+        } else if(levelIndicator.classList.contains("legendLevel")) {
+            maxLevel = legendMaxLevel;
+            level = shopOptions.legendLevel;
+        } else if(levelIndicator.classList.contains("mythicLevel")) {
+            maxLevel = mythicMaxLevel;
+            level = shopOptions.mythicLevel;
+        } else if(levelIndicator.classList.contains("coinLevel")) {
+            maxLevel = coinMaxLevel;
+            level = shopOptions.coinLevel;
         }
         //Do other button types.
 
+    }
+
+    if(level >= maxLevel) {
+        console.log("Max level reached")
+        const toast = new Toast({
+            text: "Du har nådd maks nivå",
+            position: "top-right",
+            pauseOnHover: true,
+            pauseOnFocusLoss: true,
+            canClose: true,
+            badToast: true,
+          })
+        return;
     }
 
 
@@ -232,10 +279,20 @@ function shopButtonUpgrade(btn){
     //Let's buy it!
         state.totalScore -= price;
 
-
+        var upgString = "Ukjent oppgradering."
         //Probably a better way to do this?
         if(levelIndicator.classList.contains("shinyLevel")) {
             shopOptions.shinyLevel ++;
+            upgString = "Shiny Charm ble oppgradert til nivå " + shopOptions.shinyLevel + "!";
+        } else if(levelIndicator.classList.contains("legendLevel")) {
+            shopOptions.legendLevel ++;
+            upgString = "Legend Lure ble oppgradert til nivå " + shopOptions.legendLevel + "!";
+        } else if(levelIndicator.classList.contains("mythicLevel")) {
+            shopOptions.mythicLevel ++;
+            upgString = "Mythic Lure ble oppgradert til nivå " + shopOptions.mythicLevel + "!";
+        } else if(levelIndicator.classList.contains("coinLevel")) {
+            shopOptions.coinLevel ++;
+            upgString = "Repeat Coins ble oppgradert til nivå " + shopOptions.coinLevel + "!";
         }
 
         moneySubAnimation(price);
@@ -248,7 +305,7 @@ function shopButtonUpgrade(btn){
         saveAll();
         loadShopLocal();
         const toast = new Toast({
-            text: "Shiny Charm ble oppgradert til nivå " + shopOptions.shinyLevel + "!",
+            text: upgString,
             position: "top-right",
             pauseOnHover: true,
             pauseOnFocusLoss: true,

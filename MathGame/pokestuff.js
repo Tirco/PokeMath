@@ -37,7 +37,7 @@ function createRandomPokemon(){
 
   if(legendaries.includes(randomPokemon)) {
     //Legendaries should be 5x more rare than any other pokemon. Let us see if they get to keep it, or we will reroll.
-    if((Math.floor(Math.random() * (20-Number(mathValues.stage)))) === 0) {
+    if((Math.floor(Math.random() * (20-(Number(mathValues.stage) + shopOptions.legendLevel)))) === 0) {
       //keep the legendary.
       //console.log("kept legendary")
     } else {
@@ -49,7 +49,7 @@ function createRandomPokemon(){
     
   } else if(mythics.includes(randomPokemon)) {
     //Legendaries should be 5x more rare than any other pokemon. Let us see if they get to keep it, or we will reroll.
-    if((Math.floor(Math.random() * (30-Number(mathValues.stage)))) === 0) {
+    if((Math.floor(Math.random() * (30-(Number(mathValues.stage) + shopOptions.mythicLevel)))) === 0) {
       //keep the legendary.
       //console.log("kept mythic")
     } else {
@@ -180,8 +180,9 @@ function addToPokedex(id, pkmnName, pkmnTypes, imageId, generateShiny, baseId) {
     var number = parseInt(counter.textContent.substring(1));
     repeats += number;
     counter.textContent = ("x" + repeats);
-    endMessage.textContent = `Du fanget en ${shinyText}${legendaryText}${pkmnName}!\r\nSiden du allerede har denne pokémonen, fikk du 50 mynter istedet.`
-    addFixedMoney(50)
+    var repeatMoney = (50 + (shopOptions.coinLevel * 10));
+    endMessage.textContent = `Du fanget en ${shinyText}${legendaryText}${pkmnName}!\r\nSiden du allerede har denne pokémonen, fikk du ${repeatMoney} mynter istedet.`
+    addFixedMoney(repeatMoney)
 
   } else {
     //Make new
