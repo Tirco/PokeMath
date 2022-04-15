@@ -126,9 +126,9 @@ function addToPokedex(id, pkmnName, pkmnTypes, imageId, generateShiny, baseId) {
   pkmncaught.textContent = state.pkmnCaught
 
   
-  let imageLink = `https://assets.poketwo.net/images/${imageId}.png?v=24`
+  let imageLink = `images/pokemon/normal/${imageId}.png`
   if(generateShiny === 0) {
-    imageLink = `https://assets.poketwo.net/shiny/${imageId}.png?v=24`
+    imageLink = `images/pokemon/shiny/${imageId}.png`
   }
 
 
@@ -180,7 +180,7 @@ function addToPokedex(id, pkmnName, pkmnTypes, imageId, generateShiny, baseId) {
     var number = parseInt(counter.textContent.substring(1));
     repeats += number;
     counter.textContent = ("x" + repeats);
-    var repeatMoney = (50 + (shopOptions.coinLevel * 10));
+    var repeatMoney = (100 + (shopOptions.coinLevel * 20));
     endMessage.textContent = `Du fanget en ${shinyText}${legendaryText}${pkmnName}!\r\nSiden du allerede har denne pokémonen, fikk du ${repeatMoney} mynter istedet.`
     addFixedMoney(repeatMoney)
 

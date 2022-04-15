@@ -14,6 +14,10 @@
 }
 
 body {
+  background-color: hsl(5, 15%, 5%);
+}
+
+.main {
   color: hsl(0, 0%, 95%);
   background-color: hsl(5, 15%, 5%);
   font-size: clamp(1.2rem, 5vw, 1.5rem);
@@ -76,6 +80,7 @@ a {
   max-width: 55ch;
   width: calc(100% - var(--space));
   background: hsla(5, 15%, 5%, 0.9);
+  
 }
 
 .content > * + * {

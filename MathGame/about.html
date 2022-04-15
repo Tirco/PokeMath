@@ -6,44 +6,105 @@
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Pokémath</title>
-	<link rel="stylesheet" href="globalstyle.css?v=6">
+	<link rel="stylesheet" href="globalstyle.css?v=7">
 	<!--<link rel="stylesheet" href="cookies.css?v=1">-->
-	<link rel="stylesheet" href="menustyle.css?v=6">
-	<link rel="stylesheet" href="about.css?v=6">
+	<link rel="stylesheet" href="menustyle.css?v=7">
+	<link rel="stylesheet" href="about.css?v=7">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 	<!-- <link rel="stylesheet" href="https://www.jsdelivr.com/package/npm/bulma> -->
 </head>
 <body>
-	<div class="topbar">
-		<a onclick="history.back()" id="backbutton">&#8249;</a>
-		<a href="shop.html" id="money" class="topbar-icon-left">
-			<img id="coinimage" src="money.svg" width="50" 
-			height="50"/>
-			<text id="cointext" class="topbar-icontext-left money score"
-			data-added="0" data-total="0"></text>
-		</a>
-		<a href="dex.html" id="caught" class="topbar-icon-left">
-			<img id="ballimage" src="pokeball.svg" width="50" 
-			height="50"/>
-			<text id="balltext" class="topbar-icontext-left">0</text>
-		</a>
-		<div class="dropdown">
-			<button class="dropbtn">
-				<img id="gearimage" src="images/gear.png" width="50" 
+	<div>
+		<div class="topbar">
+			<a href="index.html" id="backbutton">&#8249;</a>
+			<a href="shop.html" id="money" class="topbar-icon-left">
+				<img id="coinimage" src="money.svg" width="50" 
 				height="50"/>
-			  <i class="fa fa-caret-down"></i>
-			</button>
-			<div class="dropdown-content">
-			  <a href="index.html">Hovedmeny</a>
-			  <a href="dex.html">Pokedex</a>
-			  <a href="shop.html">Butikk</a>
-			  <a href="about.html">Om siden</a>
-			  <a href="about.html#contact">Kontakt oss</a>
-			  <a href="#"> </a>
-			  <a onclick="resetPrompt()">Tilbakestill (Slett alt)</a>
+				<text id="cointext" class="topbar-icontext-left money score"
+				data-added="0" data-total="0"></text>
+			</a>
+			<a href="dex.html" id="caught" class="topbar-icon-left">
+				<img id="ballimage" src="pokeball.svg" width="50" 
+				height="50"/>
+				<text id="balltext" class="topbar-icontext-left">0</text>
+			</a>
+			<div id="playercard" class="topbar-icon-left playercard">
+				<a class="playerbtn"><img id="playerimage" src="images/player.png" width="50" 
+				height="50"/>
+				<text id="playertext" class="topbar-icontext-left">Ash</text></a>
+				<div class="playercard-content">
+					<div class="trainercard">
+						<div class="card-avatar">
+							<img src="images/player.png" width="100"></img>
+						</div>
+						<div class="trainercard-details">
+						   <div class="trainercard-name">
+							   <text id="playertextheader">Ketchup </text> <button id="editname" onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Endre</button></div>
+						   <div class="trainercard-occupation">Pokémon Trener</div>
+						   <br>
+						   Oppgaver løst pr Nivå:
+						   <div class="trainercard-about">
+							  <div class="trainercard-item">
+								 <span class="value">1</span>
+								 <span class="label" id="t1solved">0000</span>
+							  </div>
+							  <div class="trainercard-item">
+								 <span class="value">2</span>
+								 <span class="label" id="t2solved">0000</span>
+							  </div>
+							  <div class="trainercard-item">
+								 <span class="value">3</span>
+								 <span class="label" id="t3solved">0000</span>
+							  </div>
+							  <div class="trainercard-item">
+								<span class="value">4</span>
+								<span class="label" id="t4solved">0000</span>
+							 </div>
+							 <div class="trainercard-item">
+								<span class="value">5</span>
+								<span class="label" id="t5solved">0000</span>
+							 </div>
+						   </div>
+						   <div class="skills">
+							  <span class="value"> </span>
+						   </div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="dropdown">
+				<button class="dropbtn">
+					<img id="gearimage" src="images/gear.png" width="50" 
+					height="50"/>
+				  <i class="fa fa-caret-down"></i>
+				</button>
+				<div class="dropdown-content">
+				  <a href="index.html">Hovedmeny</a>
+				  <a href="dex.html">Pokedex</a>
+				  <a href="shop.html">Butikk</a>
+				  <a href="about.html">Om siden</a>
+				  <a href="about.html#contact">Kontakt oss</a>
+				  <a href="about.html#news">Nylige oppdateringer</a>
+				  <a href="#"> </a>
+				  <a onclick="resetPrompt()">Tilbakestill (Slett alt)</a>
+				</div>
 			</div>
 		</div>
-	</div>
+	<image src="" alt="" id="background"></image>
+	<div id="id01" class="modal">
+		<span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+		<form class="modal-content">
+		  <div class="container">
+			<h1>Endre navn</h1>
+			<label for="name"><b>Navn</b></label>
+			<input type="name" placeholder="Skriv inn nytt navn" name="name" required>
+			<div class="clearfix">
+			  <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn button-1">Avbryt</button>
+			  <button type="submit" class="signupbtn button-1">Lagre</button>
+			</div>
+		  </div>
+		</form>
+	  </div>
 <div class="main">
 	<!--<div id="cookieNotice" class="cookie-consent"> <span>Denne siden trenger tillatelse til å ta i bruk Cookies for å kunne lagre dine Pokêmon. <a href="https://www.privacypolicies.com/generic/" target="_blank" rel="noopener noreferrer" class="ml-1 text-decoration-none">Privacy policy</a> </span>
 		<div class="columns align-items-center justify-content-safe-center"> <button id="cookie-allow" class="allow-button">Tillat</button> <button id="cookie-cancel" class="allow-button">Avslå</button> </div>
@@ -65,10 +126,11 @@
 			<p>
 			Nettsiden bruker <a href="https://pokeapi.co/" alt="pokeapi.co">https://pokeapi.co/</a> sin database for å finne, og vise, informasjon om de forskjellige pokemonene.
 			Bildene er i hovedsak hentet fra poketwo.net (<a href="https://github.com/poketwo/poketwo" alt="github.com/poketwo">https://github.com/poketwo/poketwo</a>) sin bildedatabase. <br>
-			Endringer / mangler på bilder som vises på denne siden kan skje uten at vi har noen kontroll over det, ettersom det refereres til lenker som poketwo disponerer.
 			</p>
 		
-			<p><a href="https://www.flaticon.com/search?word=pokemon&type=icon" title="Flaticon.com">Flere av ikonene er hentet fra: Roundicons Freebies - Flaticon</a></p>
+			Flere av ikonene er hentet fra:<a href="https://www.flaticon.com/search?word=pokemon&type=icon" title="Flaticon.com"> Roundicons Freebies - Flaticon</a><br>
+			Noen av bakgrunnene er laget av <a href="https://pixabay.com/users/tmstbch-3040875/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1572475">Tommaso Tabacchi</a> fra <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1572475">Pixabay</a></p>
+			Noen av bakgrunnene er laget av <a href="https://pixabay.com/users/incantabiless-17625387/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=5432819">Incantabiless</a> fra <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=5432819">Pixabay</a>
 		</article>
 	</section>
 	<section id="contact" class="section">
@@ -79,7 +141,24 @@
 			<h2 class="section-title">Kontakt</h1>
 			<p>
 				Kontaktinformasjon:<br>
-				Mail: Tirco@Tirco.tv (marker meldingen med pokemath)
+				Mail: tirco@tirco.tv (marker meldingen med pokemath)<br><br><br>
+				<div id="donate-button-container">
+					Hvis du ønsker å sponse meg en godbit eller tilsvarende for arbeidet lagt inn i siden, så kan du legge inn en donasjon her: 	
+					<div id="donate-button"></div>
+						<script src="https://www.paypalobjects.com/donate/sdk/donate-sdk.js" charset="UTF-8"></script>
+						<script>
+							PayPal.Donation.Button({
+							env:'production',
+							hosted_button_id:'XAMQNRWKEJWX4',
+							image: {
+							src:'https://www.paypalobjects.com/en_US/NO/i/btn/btn_donateCC_LG.gif',
+							alt:'Donate with PayPal button',
+							title:'PayPal - The safer, easier way to pay online!',
+							}
+							}).render('#donate-button');
+						</script>
+				</div>
+					
 			</p>
 		</article>
 	</section>
@@ -89,6 +168,11 @@
 		</div>
 		<article class="content">
 			<h2 class="section-title">Nyheter</h1>
+				<p>15.04.2022</p>
+				- La til nye bakgrunner i butikken.<br>
+				- La til nye oppgraderinger i butikken.<br>
+				- La til en donasjonsknapp under "kontakt".<br>
+				- Overførte pokebildene til lokal vert. (Dette gjelder nylig fangede pokemon, og ikke de du har fra før)<br>
 				<p>15.03.2022</p>
 				- Fikset "bruk" knappen på bakgrunnen.<br>
 				- Økte effektiviteten på Shiny Charm litt.<br>
@@ -152,8 +236,9 @@
 </div>
 
 	  <!--<script src="main.js?v=1"></script>>-->
-	  <script src="global.js?v=6"></script>
+	  <script src="global.js?v=7"></script>
 	  <!--<script src="cookies.js?v=1"></script>-->
 </body>
-<!-- https://icon-icons.com/users/RoundIcons/icon-sets/ Ikoner laget av RoundIcons -->
+<!-- https://icon-icons.com/users/RoundIcons/icon-sets/ Ikoner laget av RoundIcons 
+Noen bakgrunner er laget av <a href="https://pixabay.com/users/tmstbch-3040875/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1572475">Tommaso Tabacchi</a> from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1572475">Pixabay</a>-->
 </html>

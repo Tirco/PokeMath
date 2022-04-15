@@ -10,7 +10,7 @@ body {
   position: relative;
   margin-left:auto;
   margin-right: auto;
-  background-color:rgba(207, 207, 207, 0.4);
+  background-color:rgba(207, 207, 207, 0.705);
   box-shadow: 0 1.5em 4em -0.25em rgb(10 10 10 / 10%), 0 0 0 1px rgb(10 10 10 / 5%);
   border-left: 4px solid rgba(255, 255, 255, 0.1);
   border-right: 4px solid rgba(255, 255, 255, 0.1);

@@ -4,6 +4,7 @@ body {
   color: #333;
 }
 
+
 #background {
   position: fixed;
   background-repeat: no-repeat;
@@ -52,7 +53,7 @@ html {
   padding: 10;
   justify-content: safe center;
   background: linear-gradient(180deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0.2) 20%, rgba(255,255,255,0) 100%);
-  min-height: 60%;
+  
   border-top: 4px solid rgba(255, 255, 255, 0.5);
 }
 
@@ -713,4 +714,248 @@ a.tag:hover {
 .toast-container[data-position$="-center"] {
   left: 50%;
   transform: translateX(-50%);
+}
+
+.playercard-content {
+  display: none;
+  position: absolute;
+  right: -200px;
+  width: 300px;
+  left: auto;
+  padding-right: 0px;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.3);
+  z-index: 1;
+  background-color: white;
+}
+
+.playercard:hover .playercard-content {
+  display: block;
+}
+
+.trainercard { 
+  min-width: calc(200px * 1.586);
+  height: 200px;
+  
+  border-radius: 0.75rem;
+  box-shadow:  0 22px 70px 4px rgba(0,0,0,0.56), 0 0 0 1px rgba(0, 0, 0, 0.3);
+  
+  background: black;
+  
+  display: grid;
+  grid-template-columns: 40% auto;
+  color: white;
+  
+  align-items: center;
+  
+  will-change: transform;
+  transition: transform 0.25s cubic-bezier(0.4, 0.0, 0.2, 1), box-shadow 0.25s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+.trainercard:hover {
+  transform: scale(1.1);
+  box-shadow:  0 32px 80px 14px rgba(0,0,0,0.36), 0 0 0 1px rgba(0, 0, 0, 0.3);
+}
+
+.trainercard-details {
+  padding: 1rem;
+}
+
+.trainercard-name {
+  font-size: 1.25rem;
+}
+
+.trainercard-occupation {
+  font-weight: 600;
+  color: #ff1ead;
+}
+
+.trainercard-avatar {
+  display: grid;
+  place-items: center;
+}
+
+.trainercard-about {
+  margin-top: 1rem;
+  display: grid;
+  grid-auto-flow: column;
+}
+
+.trainercard-item {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0.5rem;
+}
+
+.trainercard-item .value {
+     font-size: 1rem;
+}
+  
+.trainercard-item .label {
+     margin-top: 0.15rem;
+     font-size: 0.75rem;
+     font-weight: 600;
+     color: #ff1ead;
+}
+
+
+.trainercard-skills {
+  display: flex;
+  flex-direction: column;
+  margin-top: 0.75rem;
+}
+.trainercard-skills .label {
+     font-size: 1rem;
+     font-weight: 600;
+     color: #ff1ead;
+}
+  
+.trainercard-skills .value {
+     margin-top: 0.15rem;
+     font-size: 0.75rem;
+     line-height: 1.25rem;
+}
+
+/* Name input Modal stuff */
+
+/* Full-width input fields */
+input[type=text] {
+  padding: 15px;
+  display: inline-block;
+  background: #f1f1f1;
+}
+input[type=name] {
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;
+}
+
+/* Add a background color when the inputs get focus */
+input[type=text]:focus, input[type=name]:focus {
+  background-color: #ddd;
+}
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: #474e5d;
+  padding-top: 50px;
+}
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: #fefefe;
+  margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+}
+
+/* Style the horizontal ruler */
+hr {
+  border: 1px solid #f1f1f1;
+  margin-bottom: 25px;
+}
+ 
+/* The Close Button (x) */
+.close {
+  position: absolute;
+  right: 35px;
+  top: 15px;
+  font-size: 40px;
+  font-weight: bold;
+  color: #f1f1f1;
+}
+
+.close:hover,
+.close:focus {
+  color: #f44336;
+  cursor: pointer;
+}
+
+/* Clear floats */
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+/* Change styles for cancel button and signup button on extra small screens */
+@media screen and (max-width: 300px) {
+  .cancelbtn, .signupbtn {
+     width: 100%;
+  }
+}
+
+.button-1.disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background-color: #e0bbbe;
+  border-radius: 100px;
+  box-shadow: rgba(187, 44, 44, 0.2) 0 -25px 18px -14px inset,rgba(187, 44, 44, .15) 0 1px 2px,rgba(187, 44, 44, .15) 0 2px 4px,rgba(187, 44, 44, .15) 0 4px 8px,rgba(187, 44, 44, .15) 0 8px 16px,rgba(187, 44, 44, .15) 0 16px 32px;
+  color: rgb(128, 0, 0);
+  display: inline-block;
+  font-family: CerebriSans-Regular,-apple-system,system-ui,Roboto,sans-serif;
+  padding: 7px 20px;
+  text-align: center;
+  text-decoration: none;
+  transition: all 250ms;
+  border: 0;
+  font-size: 16px;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+
+/* CSS */
+.button-1 {
+  background-color: #c2fbd7;
+  border-radius: 100px;
+  box-shadow: rgba(44, 187, 99, .2) 0 -25px 18px -14px inset,rgba(44, 187, 99, .15) 0 1px 2px,rgba(44, 187, 99, .15) 0 2px 4px,rgba(44, 187, 99, .15) 0 4px 8px,rgba(44, 187, 99, .15) 0 8px 16px,rgba(44, 187, 99, .15) 0 16px 32px;
+  color: green;
+  cursor: pointer;
+  display: inline-block;
+  font-family: CerebriSans-Regular,-apple-system,system-ui,Roboto,sans-serif;
+  padding: 7px 20px;
+  text-align: center;
+  text-decoration: none;
+  transition: all 250ms;
+  border: 0;
+  font-size: 16px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button-1:hover:not(.disabled):not(.centerposition) {
+  box-shadow: rgba(44,187,99,.35) 0 -25px 18px -14px inset,rgba(44,187,99,.25) 0 1px 2px,rgba(44,187,99,.25) 0 2px 4px,rgba(44,187,99,.25) 0 4px 8px,rgba(44,187,99,.25) 0 8px 16px,rgba(44,187,99,.25) 0 16px 32px;
+  transform: scale(1.05) rotate(-1deg);
+}
+
+/* CSS */
+.button-2 {
+  background-color: #fbc2c2;
+  border-radius: 100px;
+  box-shadow: rgba(187, 44, 44, 0.2) 0 -25px 18px -14px inset,rgba(187, 44, 44, .15) 0 1px 2px,rgba(187, 44, 44, .15) 0 2px 4px,rgba(187, 44, 44, .15) 0 4px 8px,rgba(187, 44, 44, .15) 0 8px 16px,rgba(187, 44, 44, .15) 0 16px 32px;
+  color: red;
+  cursor: pointer;
+  display: inline-block;
+  font-family: CerebriSans-Regular,-apple-system,system-ui,Roboto,sans-serif;
+  padding: 7px 20px;
+  text-align: center;
+  text-decoration: none;
+  transition: all 250ms;
+  border: 0;
+  font-size: 16px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
 }

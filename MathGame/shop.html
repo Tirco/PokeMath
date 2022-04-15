@@ -5,45 +5,105 @@
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Pokémath</title>
-	<link rel="stylesheet" href="globalstyle.css?v=6">
+	<link rel="stylesheet" href="globalstyle.css?v=7">
 	<!--<link rel="stylesheet" href="cookies.css?v=1">-->
-	<link rel="stylesheet" href="menustyle.css?v=6">
-	<link rel="stylesheet" href="shop.css?v=6">
+	<link rel="stylesheet" href="menustyle.css?v=7">
+	<link rel="stylesheet" href="shop.css?v=7">
 	<script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
 	<!-- <link rel="stylesheet" href="https://www.jsdelivr.com/package/npm/bulma> -->
 </head>
 <body>
-	<div class="topbar">
-		<a href="index.html" id="backbutton">&#8249;</a>
-		<a href="shop.html" id="money" class="topbar-icon-left">
-			<img id="coinimage" src="money.svg" width="50" 
-			height="50"/>
-			<text id="cointext" class="topbar-icontext-left money score"
-			data-added="0" data-total="0"></text>
-		</a>
-		<a href="dex.html" id="caught" class="topbar-icon-left">
-			<img id="ballimage" src="pokeball.svg" width="50" 
-			height="50"/>
-			<text id="balltext" class="topbar-icontext-left">0</text>
-		</a>
-		<div class="dropdown">
-			<button class="dropbtn">
-				<img id="gearimage" src="images/gear.png" width="50" 
+	<div>
+		<div class="topbar">
+			<a href="index.html" id="backbutton">&#8249;</a>
+			<a href="shop.html" id="money" class="topbar-icon-left">
+				<img id="coinimage" src="money.svg" width="50" 
 				height="50"/>
-			  <i class="fa fa-caret-down"></i>
-			</button>
-			<div class="dropdown-content">
-			  <a href="index.html">Hovedmeny</a>
-			  <a href="dex.html">Pokedex</a>
-			  <a href="shop.html">Butikk</a>
-			  <a href="about.html">Om siden</a>
-			  <a href="about.html#contact">Kontakt oss</a>
-			  <a href="#"> </a>
-			  <a onclick="resetPrompt()">Tilbakestill (Slett alt)</a>
+				<text id="cointext" class="topbar-icontext-left money score"
+				data-added="0" data-total="0"></text>
+			</a>
+			<a href="dex.html" id="caught" class="topbar-icon-left">
+				<img id="ballimage" src="pokeball.svg" width="50" 
+				height="50"/>
+				<text id="balltext" class="topbar-icontext-left">0</text>
+			</a>
+			<div id="playercard" class="topbar-icon-left playercard">
+				<a class="playerbtn"><img id="playerimage" src="images/player.png" width="50" 
+				height="50"/>
+				<text id="playertext" class="topbar-icontext-left">Ash</text></a>
+				<div class="playercard-content">
+					<div class="trainercard">
+						<div class="card-avatar">
+							<img src="images/player.png" width="100"></img>
+						</div>
+						<div class="trainercard-details">
+						   <div class="trainercard-name">
+							   <text id="playertextheader">Ketchup </text> <button id="editname" onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Endre</button></div>
+						   <div class="trainercard-occupation">Pokémon Trener</div>
+						   <br>
+						   Oppgaver løst pr Nivå:
+						   <div class="trainercard-about">
+							  <div class="trainercard-item">
+								 <span class="value">1</span>
+								 <span class="label" id="t1solved">0000</span>
+							  </div>
+							  <div class="trainercard-item">
+								 <span class="value">2</span>
+								 <span class="label" id="t2solved">0000</span>
+							  </div>
+							  <div class="trainercard-item">
+								 <span class="value">3</span>
+								 <span class="label" id="t3solved">0000</span>
+							  </div>
+							  <div class="trainercard-item">
+								<span class="value">4</span>
+								<span class="label" id="t4solved">0000</span>
+							 </div>
+							 <div class="trainercard-item">
+								<span class="value">5</span>
+								<span class="label" id="t5solved">0000</span>
+							 </div>
+						   </div>
+						   <div class="skills">
+							  <span class="value"> </span>
+						   </div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="dropdown">
+				<button class="dropbtn">
+					<img id="gearimage" src="images/gear.png" width="50" 
+					height="50"/>
+				  <i class="fa fa-caret-down"></i>
+				</button>
+				<div class="dropdown-content">
+				  <a href="index.html">Hovedmeny</a>
+				  <a href="dex.html">Pokedex</a>
+				  <a href="shop.html">Butikk</a>
+				  <a href="about.html">Om siden</a>
+				  <a href="about.html#contact">Kontakt oss</a>
+				  <a href="about.html#news">Nylige oppdateringer</a>
+				  <a href="#"> </a>
+				  <a onclick="resetPrompt()">Tilbakestill (Slett alt)</a>
+				</div>
 			</div>
 		</div>
-	</div>
-<image src="" alt="" id="background"></image>
+	<image src="" alt="" id="background"></image>
+	<div id="id01" class="modal">
+		<span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+		<form class="modal-content">
+		  <div class="container">
+			<h1>Endre navn</h1>
+			<label for="name"><b>Navn</b></label>
+			<input type="name" placeholder="Skriv inn nytt navn" name="name" required>
+			<div class="clearfix">
+			  <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn button-1">Avbryt</button>
+			  <button type="submit" class="signupbtn button-1">Lagre</button>
+			</div>
+		  </div>
+		</form>
+	  </div>
 <div class="main">
 	<div class="carousel"
  		 data-flickity='{ "wrapAround": true }'>
@@ -80,6 +140,104 @@
 			<div class="carousel-caption" id="bg-003">
 				<h3>Bakgrunn 003</h3>
 				<a class="pricetag" data-price="25 000"> </a>
+				<br>
+				<br>
+				<button class="button-1 buy" onClick="shopButtonBuy(this)">Kjøp</button>
+				<button class="button-1 disabled use" onClick="shopButtonUse(this)">Bruk</button>
+				<br>
+				<span class="hovertext" data-hover="Denne bakgrunnen kan du bruke på hele nettsiden!">
+					?
+				</span>
+			</div>
+		</div>
+		<div class="carousel-cell" style="background-image: url('images/backgrounds/bg-004.png');">
+			<div class="carousel-caption" id="bg-004">
+				<h3>Bakgrunn 004</h3>
+				<a class="pricetag" data-price="5 000"> </a>
+				<br>
+				<br>
+				<button class="button-1 buy" onClick="shopButtonBuy(this)">Kjøp</button>
+				<button class="button-1 disabled use" onClick="shopButtonUse(this)">Bruk</button>
+				<br>
+				<span class="hovertext" data-hover="Denne bakgrunnen kan du bruke på hele nettsiden!">
+					?
+				</span>
+			</div>
+		</div>
+		<div class="carousel-cell" style="background-image: url('images/backgrounds/bg-005.png');">
+			<div class="carousel-caption" id="bg-005">
+				<h3>Bakgrunn 005</h3>
+				<a class="pricetag" data-price="5 000"> </a>
+				<br>
+				<br>
+				<button class="button-1 buy" onClick="shopButtonBuy(this)">Kjøp</button>
+				<button class="button-1 disabled use" onClick="shopButtonUse(this)">Bruk</button>
+				<br>
+				<span class="hovertext" data-hover="Denne bakgrunnen kan du bruke på hele nettsiden!">
+					?
+				</span>
+			</div>
+		</div>
+		<div class="carousel-cell" style="background-image: url('images/backgrounds/bg-006.png');">
+			<div class="carousel-caption" id="bg-006">
+				<h3>Bakgrunn 006</h3>
+				<a class="pricetag" data-price="5 000"> </a>
+				<br>
+				<br>
+				<button class="button-1 buy" onClick="shopButtonBuy(this)">Kjøp</button>
+				<button class="button-1 disabled use" onClick="shopButtonUse(this)">Bruk</button>
+				<br>
+				<span class="hovertext" data-hover="Denne bakgrunnen kan du bruke på hele nettsiden!">
+					?
+				</span>
+			</div>
+		</div>
+		<div class="carousel-cell" style="background-image: url('images/backgrounds/bg-007.png');">
+			<div class="carousel-caption" id="bg-007">
+				<h3>Bakgrunn 007</h3>
+				<a class="pricetag" data-price="5 000"> </a>
+				<br>
+				<br>
+				<button class="button-1 buy" onClick="shopButtonBuy(this)">Kjøp</button>
+				<button class="button-1 disabled use" onClick="shopButtonUse(this)">Bruk</button>
+				<br>
+				<span class="hovertext" data-hover="Denne bakgrunnen kan du bruke på hele nettsiden!">
+					?
+				</span>
+			</div>
+		</div>
+		<div class="carousel-cell" style="background-image: url('images/backgrounds/bg-008.png');">
+			<div class="carousel-caption" id="bg-008">
+				<h3>Bakgrunn 008</h3>
+				<a class="pricetag" data-price="5 000"> </a>
+				<br>
+				<br>
+				<button class="button-1 buy" onClick="shopButtonBuy(this)">Kjøp</button>
+				<button class="button-1 disabled use" onClick="shopButtonUse(this)">Bruk</button>
+				<br>
+				<span class="hovertext" data-hover="Denne bakgrunnen kan du bruke på hele nettsiden!">
+					?
+				</span>
+			</div>
+		</div>
+		<div class="carousel-cell" style="background-image: url('images/backgrounds/bg-009.png');">
+			<div class="carousel-caption" id="bg-009">
+				<h3>Bakgrunn 009</h3>
+				<a class="pricetag" data-price="5 000"> </a>
+				<br>
+				<br>
+				<button class="button-1 buy" onClick="shopButtonBuy(this)">Kjøp</button>
+				<button class="button-1 disabled use" onClick="shopButtonUse(this)">Bruk</button>
+				<br>
+				<span class="hovertext" data-hover="Denne bakgrunnen kan du bruke på hele nettsiden!">
+					?
+				</span>
+			</div>
+		</div>
+		<div class="carousel-cell" style="background-image: url('images/backgrounds/bg-010.png');">
+			<div class="carousel-caption" id="bg-010">
+				<h3>Bakgrunn 010</h3>
+				<a class="pricetag" data-price="10 000"> </a>
 				<br>
 				<br>
 				<button class="button-1 buy" onClick="shopButtonBuy(this)">Kjøp</button>
@@ -162,8 +320,8 @@
 
 
 	  <!--<script src="main.js?v=1"></script>>-->
-	  <script src="global.js?v=6"></script>
-	  <script src="shop.js?v=6"></script>
+	  <script src="global.js?v=7"></script>
+	  <script src="shop.js?v=7"></script>
 	  <!--<script src="cookies.js?v=1"></script>-->
 </body>
 

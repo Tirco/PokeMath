@@ -27,6 +27,15 @@ window.onclick = function(event) {
         openDropdown.classList.remove('show');
       }
     }
+  } else if (!event.target.matches('.playerbtn')) {
+    var dropdowns = document.getElementsByClassName("playercard-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
   }
 }
 
@@ -93,6 +102,8 @@ function saveAll(){
   }
   if(state.username != "") {
     window.localStorage.setItem('username',JSON.stringify(state.username))
+  } else {
+    window.localStorage.setItem('username',JSON.stringify("Ash"))
   }
   if(true) {
     window.localStorage.setItem('tier1Solved',JSON.stringify(state.tier1Solved))
@@ -125,6 +136,16 @@ function saveAll(){
 }
 
 function loadAll() {
+  //See if name is set
+  let params = new URLSearchParams(location.search);
+	var name = params.get('name');
+  if(name == null || name == "") {
+    //Do nothing
+  } else {
+    window.localStorage.setItem('username',JSON.stringify(name))
+  }
+
+
   state.totalScore = getStorageInt('money')
   state.pkmnCaught = getStorageInt('pkmncaught')
   state.pkmnList = getStorageArray('pokemonlist','|')
@@ -136,9 +157,20 @@ function loadAll() {
   if(document.getElementById("pokedex")!=null){
     document.getElementById("pokedex").innerHTML = getStorageString('pokedex')
   }
+
   state.username = getStorageString('username')
+  if(state.username.length < 1 || state.username.length > 15) {
+    state.username = "Ash";
+  }
   document.getElementById("cointext").dataset.total = state.totalScore;
   document.getElementById("balltext").textContent = state.pkmnCaught;
+  document.getElementById("playertext").textContent = state.username;
+  document.getElementById("playertextheader").textContent = state.username;
+  document.getElementById("t1solved").textContent = state.tier1Solved;
+  document.getElementById("t2solved").textContent = state.tier2Solved;
+  document.getElementById("t3solved").textContent = state.tier3Solved;
+  document.getElementById("t4solved").textContent = state.tier4Solved;
+  document.getElementById("t5solved").textContent = state.tier5Solved;
   loadShop()
 }
 
@@ -344,4 +376,14 @@ function createToast() {
     canClose: true,
     badToast: true,
   })
+}
+
+// Get the modal
+var modal = document.getElementById('id01');
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
 }

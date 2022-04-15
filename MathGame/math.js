@@ -102,19 +102,19 @@ function addMoney(){
 	var value = 1
 	switch(Number(mathValues.stage)){
 		case 1:
-			value = 1;
+			value = 4;
 			break;
 		case 2:
-			value = 2;
+			value = 8;
 			break;
 		case 3:
-			value = 5;
+			value = 10;
 			break;
 		case 4:
-			value = 12;
+			value = 20;
 			break;
 		case 5:
-			value = 20;
+			value = 50;
 			break;
 		default:
 			break;
@@ -130,7 +130,7 @@ function addMoney(){
 }
 function addFixedMoney(value){
 	if(Number.isNaN(value)){
-		alert(value + " is not a number!")
+		alert(value + " is not a number! Error on payment.")
 		return;
 	}
 	money.dataset.added = '+' + value;
