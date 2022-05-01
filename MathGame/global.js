@@ -180,6 +180,14 @@ function loadAll() {
   state.username = getStorageString('username')
   if(state.username.length < 1 || state.username.length > 15) {
     state.username = "Ash";
+    const toast = new Toast({
+      text: "Brukernavnet er for langt! Det har blitt tilbakestilt til Ash",
+      position: "top-right",
+      pauseOnHover: true,
+      pauseOnFocusLoss: true,
+      canClose: true,
+      badToast: true,
+    })
   }
   document.getElementById("cointext").dataset.total = state.totalScore;
   document.getElementById("balltext").textContent = state.pkmnCaught;
