@@ -7,6 +7,15 @@
   box-shadow: 10px 10px 10px rgba(51, 51, 51, 0.301);
   overflow: hidden;
 }
+.carousel-playericons {
+  background: #EEE;
+  width: 240px;
+  height: 240px;
+  margin: auto;
+  object-fit: cover;
+  box-shadow: 10px 10px 10px rgba(51, 51, 51, 0.301);
+  overflow: hidden;
+}
 
 .carousel-cell {
   margin-right: 10px;
@@ -17,9 +26,18 @@
   background-size: cover;
   background-position: center;
   text-align: center;
-
 }
 
+.carousel-playericons .carousel-cell {
+  margin-right: 10px;
+  border-radius: 5px;
+  counter-increment: carousel-cell;
+  height:100%;
+  width: 110%;
+  background-size: contain;
+  background-position: center top;
+  text-align: center;
+}
 /* cell number */
 .carousel-cell:before {
   display: block;
@@ -269,4 +287,13 @@ https://flickity.metafizzy.co
 
 .centerposition:hover{
   transform: translate(-50%, -50%) scale(1.05) rotate(-1deg);
+}
+
+h3 {
+  background:hsla(0, 0%, 100%, 0.75)
+}
+.pricetag {
+  color: black;
+  background-color: hsla(0, 0%, 100%, 0.66);
+  border-radius: 25%;
 }

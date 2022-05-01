@@ -16,6 +16,25 @@ body {
   z-index: -2;
  }
 
+#playerimage{
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+}
+
+@media (max-width: 720px) {
+ .topbar-icontext-left {
+     display: none;
+  }
+  #playerimage {
+    display: none;
+ }
+ a.playerbtn {
+    display: none;
+ }
+}
+
+
 .main {
   margin-top: 50px;
   margin-bottom: 50px;

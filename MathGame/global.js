@@ -57,7 +57,9 @@ let state = {
 
 let shopOptions = {
   background: "",
+  playerIcon: "",
   boughtBackgrounds: [],
+  boughtPlayerIcons: [],
   shinyLevel: 1,
   mythicLevel: 0,
   legendLevel: 0,
@@ -68,6 +70,8 @@ let shopOptions = {
 function loadShop() {
   shopOptions.background = getStorageString('shopBackground')//"images/backgrounds/bg-001.png"//
   shopOptions.boughtBackgrounds = getStorageArray('boughtBackgrounds','|')
+  shopOptions.playerIcon = getStorageString('playerIcon')//"images/backgrounds/bg-001.png"//
+  shopOptions.boughtPlayerIcons = getStorageArray('boughtPlayerIcons','|')
   shopOptions.shinyLevel = getStorageInt('shinyLevel')
   if(shopOptions.shinyLevel == 0) {
     shopOptions.shinyLevel = 1
@@ -77,6 +81,7 @@ function loadShop() {
   shopOptions.specialLevel = getStorageInt('specialLevel')
   shopOptions.coinLevel = getStorageInt('coinLevel')
   loadBackground();
+  loadPlayerIcon();
 }
 
 function loadBackground(){
@@ -84,6 +89,16 @@ function loadBackground(){
     document.getElementById("background").setAttribute('src',"images/backgrounds/"+shopOptions.background+".png")
   } else {
     document.getElementById("background").setAttribute('src',"")
+  }
+}
+
+function loadPlayerIcon(){
+  if(shopOptions.playerIcon != "") {
+    document.getElementById("playerimage").setAttribute('src',"images/playericons/"+shopOptions.playerIcon+".png")
+    document.getElementById("playerimagebig").setAttribute('src',"images/playericons/"+shopOptions.playerIcon+".png")
+  } else {
+    document.getElementById("playerimage").setAttribute('src',"images/player.png")
+    document.getElementById("playerimagebig").setAttribute('src',"images/player.png")
   }
 }
 
@@ -117,6 +132,10 @@ function saveAll(){
   window.localStorage.setItem('shopBackground',JSON.stringify(shopOptions.background))
   if(shopOptions.boughtBackgrounds != "") {
     window.localStorage.setItem('boughtBackgrounds',JSON.stringify(shopOptions.boughtBackgrounds.join('|')))
+  }
+  window.localStorage.setItem('playerIcon',JSON.stringify(shopOptions.playerIcon))
+  if(shopOptions.boughtBackgrounds != "") {
+    window.localStorage.setItem('boughtPlayerIcons',JSON.stringify(shopOptions.boughtPlayerIcons.join('|')))
   }
   if(shopOptions.shinyLevel != "") {
     window.localStorage.setItem('shinyLevel',JSON.stringify(shopOptions.shinyLevel))

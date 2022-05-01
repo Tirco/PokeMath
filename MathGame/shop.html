@@ -5,10 +5,10 @@
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Pokémath</title>
-	<link rel="stylesheet" href="globalstyle.css?v=7">
+	<link rel="stylesheet" href="globalstyle.css?v=8">
 	<!--<link rel="stylesheet" href="cookies.css?v=1">-->
-	<link rel="stylesheet" href="menustyle.css?v=7">
-	<link rel="stylesheet" href="shop.css?v=7">
+	<link rel="stylesheet" href="menustyle.css?v=8">
+	<link rel="stylesheet" href="shop.css?v=8">
 	<script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
 	<!-- <link rel="stylesheet" href="https://www.jsdelivr.com/package/npm/bulma> -->
 </head>
@@ -34,7 +34,7 @@
 				<div class="playercard-content">
 					<div class="trainercard">
 						<div class="card-avatar">
-							<img src="images/player.png" width="100"></img>
+							<img id="playerimagebig" src="images/player.png" width="100%"></img>
 						</div>
 						<div class="trainercard-details">
 						   <div class="trainercard-name">
@@ -311,6 +311,151 @@
 			
 		</div>
 	</div>
+	<div class="carousel-playericons"
+ 		 data-flickity='{ "wrapAround": true }'>
+  		<div class="carousel-cell" style="background-image: url('images/playericons/roxanne.png');">
+			<div class="carousel-playericon-caption" id="roxanne" >
+				<h3>Roxanne</h3>
+				<a class="pricetag" data-price="0"></a>
+				<br>
+				<br>
+				<button class="button-1 buy" onClick="playerIconButtonBuy(this)">Kjøp</button>
+				<button class="button-1 disabled use" onClick="playerIconButtonUse(this)">Bruk</button>
+				<br>
+				<span class="hovertext" data-hover="Denne figuren kan du bruke på hele nettsiden!">
+					?
+				</span>
+			</div>
+		</div>
+		<div class="carousel-cell" style="background-image: url('images/playericons/brawly.png');">
+			<div class="carousel-playericon-caption" id="brawly" >
+				<h3>Brawly</h3>
+				<a class="pricetag" data-price="0"></a>
+				<br>
+				<br>
+				<button class="button-1 buy" onClick="playerIconButtonBuy(this)">Kjøp</button>
+				<button class="button-1 disabled use" onClick="playerIconButtonUse(this)">Bruk</button>
+				<br>
+				<span class="hovertext" data-hover="Denne figuren kan du bruke på hele nettsiden!">
+					?
+				</span>
+			</div>
+		</div>
+		<div class="carousel-cell" style="background-image: url('images/playericons/flannery.png');">
+			<div class="carousel-playericon-caption" id="flannery" >
+				<h3>Flannery</h3>
+				<a class="pricetag" data-price="5 000"></a>
+				<br>
+				<br>
+				<button class="button-1 buy" onClick="playerIconButtonBuy(this)">Kjøp</button>
+				<button class="button-1 disabled use" onClick="playerIconButtonUse(this)">Bruk</button>
+				<br>
+				<span class="hovertext" data-hover="Denne figuren kan du bruke på hele nettsiden!">
+					?
+				</span>
+			</div>
+		</div>
+		<div class="carousel-cell" style="background-image: url('images/playericons/juan.png');">
+			<div class="carousel-playericon-caption" id="juan" >
+				<h3>Juan</h3>
+				<a class="pricetag" data-price="5 000"></a>
+				<br>
+				<br>
+				<button class="button-1 buy" onClick="playerIconButtonBuy(this)">Kjøp</button>
+				<button class="button-1 disabled use" onClick="playerIconButtonUse(this)">Bruk</button>
+				<br>
+				<span class="hovertext" data-hover="Denne figuren kan du bruke på hele nettsiden!">
+					?
+				</span>
+			</div>
+		</div>
+		<div class="carousel-cell" style="background-image: url('images/playericons/tate.png');">
+			<div class="carousel-playericon-caption" id="tate" >
+				<h3>Tate</h3>
+				<a class="pricetag" data-price="5 000"></a>
+				<br>
+				<br>
+				<button class="button-1 buy" onClick="playerIconButtonBuy(this)">Kjøp</button>
+				<button class="button-1 disabled use" onClick="playerIconButtonUse(this)">Bruk</button>
+				<br>
+				<span class="hovertext" data-hover="Denne figuren kan du bruke på hele nettsiden!">
+					?
+				</span>
+			</div>
+		</div>
+		<div class="carousel-cell" style="background-image: url('images/playericons/liza.png');">
+			<div class="carousel-playericon-caption" id="liza" >
+				<h3>Liza</h3>
+				<a class="pricetag" data-price="5 000"></a>
+				<br>
+				<br>
+				<button class="button-1 buy" onClick="playerIconButtonBuy(this)">Kjøp</button>
+				<button class="button-1 disabled use" onClick="playerIconButtonUse(this)">Bruk</button>
+				<br>
+				<span class="hovertext" data-hover="Denne figuren kan du bruke på hele nettsiden!">
+					?
+				</span>
+			</div>
+		</div>
+		<div class="carousel-cell" style="background-image: url('images/playericons/norman.png');">
+			<div class="carousel-playericon-caption" id="norman" >
+				<h3>Norman</h3>
+				<a class="pricetag" data-price="5 000"></a>
+				<br>
+				<br>
+				<button class="button-1 buy" onClick="playerIconButtonBuy(this)">Kjøp</button>
+				<button class="button-1 disabled use" onClick="playerIconButtonUse(this)">Bruk</button>
+				<br>
+				<span class="hovertext" data-hover="Denne figuren kan du bruke på hele nettsiden!">
+					?
+				</span>
+			</div>
+		</div>
+		<div class="carousel-cell" style="background-image: url('images/playericons/wallace.png');">
+			<div class="carousel-playericon-caption" id="wallace" >
+				<h3>Wallace</h3>
+				<a class="pricetag" data-price="5 000"></a>
+				<br>
+				<br>
+				<button class="button-1 buy" onClick="playerIconButtonBuy(this)">Kjøp</button>
+				<button class="button-1 disabled use" onClick="playerIconButtonUse(this)">Bruk</button>
+				<br>
+				<span class="hovertext" data-hover="Denne figuren kan du bruke på hele nettsiden!">
+					?
+				</span>
+			</div>
+		</div>
+		<div class="carousel-cell" style="background-image: url('images/playericons/wattson.png');">
+			<div class="carousel-playericon-caption" id="wattson" >
+				<h3>Wattson</h3>
+				<a class="pricetag" data-price="5 000"></a>
+				<br>
+				<br>
+				<button class="button-1 buy" onClick="playerIconButtonBuy(this)">Kjøp</button>
+				<button class="button-1 disabled use" onClick="playerIconButtonUse(this)">Bruk</button>
+				<br>
+				<span class="hovertext" data-hover="Denne figuren kan du bruke på hele nettsiden!">
+					?
+				</span>
+			</div>
+		</div>
+		<div class="carousel-cell" style="background-image: url('images/playericons/winona.png');">
+			<div class="carousel-playericon-caption" id="winona" >
+				<h3>Winona</h3>
+				<a class="pricetag" data-price="5 000"></a>
+				<br>
+				<br>
+				<button class="button-1 buy" onClick="playerIconButtonBuy(this)">Kjøp</button>
+				<button class="button-1 disabled use" onClick="playerIconButtonUse(this)">Bruk</button>
+				<br>
+				<span class="hovertext" data-hover="Denne figuren kan du bruke på hele nettsiden!">
+					?
+				</span>
+			</div>
+		</div>
+	</div>
+	<button class="button-1 use centerposition" onClick="playerIconButtonUse()">Fjern Figur</button>
+	<div height="100px"><br></div>
 </div>
 
 <div class="botbar">
@@ -320,8 +465,8 @@
 
 
 	  <!--<script src="main.js?v=1"></script>>-->
-	  <script src="global.js?v=7"></script>
-	  <script src="shop.js?v=7"></script>
+	  <script src="global.js?v=8"></script>
+	  <script src="shop.js?v=8"></script>
 	  <!--<script src="cookies.js?v=1"></script>-->
 </body>
 

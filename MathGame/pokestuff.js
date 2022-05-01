@@ -13,6 +13,7 @@ const specialbonus = 3
 
 var shinyChance = (512 + 5 - ((mathValues.stage*10) + (shopOptions.shinyLevel * 3)));
 
+//For use in informational bits. Currently only used in console.
 function shinyChancePercentage(partialValue, totalValue) {
   return "" + (100 / shinyChance).toFixed(4) + "%"
 } 
@@ -21,13 +22,20 @@ pokeball.addEventListener('click', () => {
   createRandomPokemon()
 })
 
-
+/**
+ * Function to always create a special pokemon. 
+ * It is not guaranteed that it will be any of the special versions of the pokemon that is picked.
+ */
 function createSpecialPokemon(){
   let randomInt = Math.floor(Math.random()* (Object.keys(specialforms).length))
   randomPokemon = specialforms[randomInt]
   createSpecificPokemon(randomPokemon);
 }
 
+/**
+ * Function to make any random pokemon.
+ * @returns 
+ */
 function createRandomPokemon(){
   let randomPokemon = Math.floor(Math.random() * (pkmnNum + (specialbonus + Number(mathValues.stage))))+1
   if(randomPokemon > pkmnNum) {
@@ -65,6 +73,11 @@ function createRandomPokemon(){
   pokeball.classList.add("is-hidden")
 }
 
+/**
+ * Create a specific pokemon and give it to the user.
+ * @param {} id The ID of the pokemon to give to the user.
+ * @returns 
+ */
 function createSpecificPokemon(id) {
 
   let pokeNumber = id;
@@ -98,12 +111,20 @@ function createSpecificPokemon(id) {
 }
 
 
-//Should they get a shiny?
+/**
+ * Should they get a shiny?
+ * This function will check their shinyChance and compare it to a generated number.
+ */
 function generateShiny() {
     return Math.floor(Math.random() * shinyChance) //Here shinyChance is defined.
 }
 
-
+/**
+ * Adds a pokemon to the players dex from axios result.
+ * @param {*} randomPokemon The pokemons ID
+ * @param {*} generateShiny Should the player get a shiny?
+ * @param {*} res The pokemon json bit.
+ */
 function addToDexFromRes(randomPokemon,generateShiny,res){
   const pkmnName = res.data["name"]
   const pkmnTypes = []
@@ -115,13 +136,13 @@ function addToDexFromRes(randomPokemon,generateShiny,res){
 }
 
 /**
- * 
+ * Add a pokemon to the pokedex
  * @param {*} randomPokemon = ID of pokemon to add
- * @param {*} generateShiny = 0 for shiny, 1 for not.
+ * @param {*} generateShiny = 0 for shiny, 1+ for not.
  */
 function addToPokedex(id, pkmnName, pkmnTypes, imageId, generateShiny, baseId) {
   let randomPokemon = id;
-  //oppdater statistikk
+  //Update the statistics
   state.pkmnCaught++
   pkmncaught.textContent = state.pkmnCaught
 
@@ -174,7 +195,7 @@ function addToPokedex(id, pkmnName, pkmnTypes, imageId, generateShiny, baseId) {
   //Check if pokedex has the identifier already, if it does, update it.
   let repeats = 1;
   if(pokedex.contains(document.getElementById(identifier))) {
-    //Update existing
+    //Update existing pokemon.
     card = pokedex.querySelector("#" + identifier);
     counter = card.querySelector("#cardcounter")
     var number = parseInt(counter.textContent.substring(1));
@@ -186,14 +207,14 @@ function addToPokedex(id, pkmnName, pkmnTypes, imageId, generateShiny, baseId) {
 
   } else {
     //Make new
+    let filterText = ("filtered "+id+shinyText+legendaryText+" #"+baseId+" " + pkmnName);
+    let pkmnType = ''
+    const types = pkmnTypes.forEach((type) => {
+      pkmnType += `<span class="typecard type-${type}">${type}</span>`
+      filterText += " " + type;
+    })
 
-  let filterText = ("filtered "+id+shinyText+legendaryText+" #"+baseId+" " + pkmnName);
-  let pkmnType = ''
-  const types = pkmnTypes.forEach((type) => {
-    pkmnType += `<span class="typecard type-${type}">${type}</span>`
-    filterText += " " + type;
-  })
-
+    //Add a new pokemon card to the dex.
     pokedex.innerHTML = `
     <a id=${identifier} class="column is-narrow ${filterText}" style="cursor: pointer;" href=${imageLink} target="_blank">
       <div class="card ${shiny} ${legendary}">

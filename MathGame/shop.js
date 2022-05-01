@@ -9,7 +9,10 @@ const legendBasePrice = 1000;
 const mythicBasePrice = 2000;
 const coinBasePrice = 200;
 
-
+/**
+ * Load in all elements of the shop. 
+ * Update the pricing and button colors.
+ */
 function loadShopLocal(){
     
     //Load the background-carousel
@@ -26,6 +29,33 @@ function loadShopLocal(){
         }
         
         if(shopOptions.boughtBackgrounds.includes(id) || price === -1) {
+            buyButton.classList.add("disabled");
+            useButton.classList.remove("disabled");
+        } else {
+            if(price <= state.totalScore) {
+                buyButton.classList.remove("disabled");
+            } else {
+                buyButton.classList.add("disabled");
+            }
+            
+            useButton.classList.add("disabled");
+        }
+    }
+
+    //Load playerIcon carousel
+    var carouselObjects = document.getElementsByClassName("carousel-playericon-caption");
+    for(var i = 0; i < carouselObjects.length; i++){
+        element = carouselObjects[i];
+        id = element.id;
+        var buyButton = element.querySelector('.buy');
+        var useButton = element.querySelector('.use');
+        var priceTag = element.querySelector('.pricetag');
+        price = -1;
+        if(priceTag != null) {
+            price = Number((priceTag.getAttribute('data-price')+ " ").replace(" ",""));
+        }
+        
+        if(shopOptions.boughtPlayerIcons.includes(id) || price === -1) {
             buyButton.classList.add("disabled");
             useButton.classList.remove("disabled");
         } else {
@@ -100,6 +130,11 @@ function loadShopLocal(){
 
 loadShopLocal();
 
+/**
+ * Used when purchasing backgrounds from the carousel.
+ * @param {*} btn The button clicked.
+ * @returns 
+ */
 function shopButtonBuy(btn){
     parent = btn.parentNode;
     id = parent.id;
@@ -151,6 +186,11 @@ function shopButtonBuy(btn){
         loadShop();
 }
 
+/**
+ * Used when selecting a background to equip from the carousel
+ * @param {*} btn The button clicked
+ * @returns 
+ */
 function shopButtonUse(btn) {
     btn = btn || "empty"
     if(btn == "empty") {
@@ -189,6 +229,114 @@ function shopButtonUse(btn) {
         loadBackground();
         const toast = new Toast({
             text: "Bakgrunnen ble endret!",
+            position: "top-right",
+            pauseOnHover: true,
+            pauseOnFocusLoss: true,
+            canClose: true,
+            badToast: false,
+          })
+
+    }
+}
+
+/**
+ * Used when purchasing player icons from the carousel.
+ * @param {*} btn The button clicked.
+ * @returns 
+ */
+ function playerIconButtonBuy(btn){
+    parent = btn.parentNode;
+    id = parent.id;
+    console.log(parent.id);
+    var priceTag = parent.querySelector('.pricetag');
+    price = -1;
+    if(priceTag != null) {
+        price = Number((priceTag.getAttribute('data-price')+ " ").replace(" ",""));
+        console.log("price = " + price);
+    }
+
+    if(price == -1 ) {
+        console.log("Bugged Price")
+        return;
+    } else if(state.totalScore < price) {
+        console.log("can't afford!")
+        const toast = new Toast({
+            text: "Du har ikke nok mynter!",
+            position: "top-right",
+            pauseOnHover: true,
+            pauseOnFocusLoss: true,
+            canClose: true,
+            badToast: true,
+          })
+        return;
+    } else if(shopOptions.boughtPlayerIcons.includes(id)){
+        console.log("Already bought!")
+        const toast = new Toast({
+            text: "Du eier allerede denne figuren!",
+            position: "top-right",
+            pauseOnHover: true,
+            pauseOnFocusLoss: true,
+            canClose: true,
+            badToast: true,
+          })
+        return;
+    }
+
+    //Let's buy it!
+        state.totalScore -= price;
+        moneySubAnimation(price);
+        
+        var buyButton = parent.querySelector('.buy');
+        var useButton = parent.querySelector('.use');
+        buyButton.classList.add("disabled");
+        useButton.classList.remove("disabled");
+        shopOptions.boughtPlayerIcons.push(id);
+        saveAll();
+        loadShop();
+}
+/**
+ * Used when selecting a background to equip from the carousel
+ * @param {*} btn The button clicked
+ * @returns 
+ */
+ function playerIconButtonUse(btn) {
+    btn = btn || "empty"
+    if(btn == "empty") {
+        if(shopOptions.playerIcon == "") {
+            return;
+        }
+        shopOptions.playerIcon = "";
+        window.localStorage.setItem('playerIcon',JSON.stringify(""))
+        loadPlayerIcon();
+        const toast = new Toast({
+            text: "Figuren ble fjernet!",
+            position: "top-right",
+            pauseOnHover: true,
+            pauseOnFocusLoss: true,
+            canClose: true,
+            badToast: false,
+          })
+        return;
+    }   
+    parent = btn.parentNode;
+    id = parent.id;
+    if(shopOptions.boughtPlayerIcons.includes(id)){
+        if(id == shopOptions.playerIcon) {
+            const toast = new Toast({
+                text: "Du bruker allerede denne figuren!",
+                position: "top-right",
+                pauseOnHover: true,
+                pauseOnFocusLoss: true,
+                canClose: true,
+                badToast: true,
+              })
+              return;
+        }
+        shopOptions.playerIcon = id;
+        window.localStorage.setItem('playerIcon',JSON.stringify(shopOptions.playerIcon))
+        loadPlayerIcon();
+        const toast = new Toast({
+            text: "Figuren ble endret!",
             position: "top-right",
             pauseOnHover: true,
             pauseOnFocusLoss: true,
