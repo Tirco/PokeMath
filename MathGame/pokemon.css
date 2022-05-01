@@ -18,9 +18,18 @@ body {
   padding-left: 10px;
   padding-right: 10px;
 }
-.our-form {
+
+
+.input {
   display: flex;
   justify-content: center;
+  height: 50px;
+}
+
+input {
+  display: flex;
+  justify-content: center;
+  height: 50px;
 }
 
 .status {

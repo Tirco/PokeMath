@@ -11,6 +11,7 @@ const defaultLives = 3 //hvor mange forsøk man har.
 const money = document.querySelector(".money")
 const goodMessages = ["Flott jobbet!","Nice!","Ny pokémon!","Trykk på ballen!","Enda en til samlingen!","Fortsett sånn!","Stå på!","Du er super!","Oh, hva får du nå?","Eyy! Bra jobbet!"]
 
+
 let mathValues = {
 	stage: 3,
 	additionMin: 0,
@@ -193,6 +194,12 @@ function generateProblem() {
 }
 
 ourForm.addEventListener("submit", handleSubmit)
+
+function swapNegative(){
+	value = Number(ourField.value)
+	ourField.value = value - (value * 2);
+	return;
+}
 
 function handleSubmit(e) {
 	e.preventDefault()

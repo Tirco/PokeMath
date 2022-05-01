@@ -108,11 +108,13 @@
 	<div class="main-ui">
 
 		<p class="problem"></p> 
-		
-		<form action="" class="our-form">
-			<input type="tel" pattern="[0-9.+-]*" inputmode="numeric" class="our-field" autocomplete="off">
-			<button>Svar</button>
-		</form>
+		<div class="input">		
+			<button class="flip-btn" onClick="swapNegative()">+/-</button>
+			<form action="" class="our-form">
+				<input type="number" pattern="[0-9.+-]*" inputmode="numeric" class="our-field" autocomplete="off">
+				<button style="height: 50px">Svar</button>
+			</form></div>
+
 		
 		<p class="status">Du trenger <span class="points-needed">5</span> flere poeng, og kan gjøre <span class="mistakes-allowed">2</span> feil.</p>
 		
