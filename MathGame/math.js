@@ -198,6 +198,7 @@ ourForm.addEventListener("submit", handleSubmit)
 function swapNegative(){
 	value = Number(ourField.value)
 	ourField.value = value - (value * 2);
+	ourField.focus();
 	return;
 }
 
