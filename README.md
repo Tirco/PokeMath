@@ -6,6 +6,6 @@ Pokémath er en matteside hvor man kan trene på grunnleggende ferdigheter innen
 
 Den aktive siden kan nås på https://www.pokemath.online/
 
-Nåverende betaversjon nås på https://www.pokemath.online/betab - Merk at å spille på beta vil overskrive data fra den normale versjonen.
+Nåverende betaversjon nås på https://www.pokemath.online/betab - Merk at å spille på beta vil overskrive data fra den normale versjonen, og kan i noen situasjoner ligge flere versjoner bak den aktive versjonen.
 
 Siden er fortsatt under utvikling, og kan inneholde feil eller unøyaktigheter.
