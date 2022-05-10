@@ -98,7 +98,6 @@ function onLoad(){
 	updateProblem();
 }
 
-//pkmnlist will be S1, for shiny #1, and N1 for normal #1.
 function addMoney(){
 	var value = 1
 	switch(Number(mathValues.stage)){

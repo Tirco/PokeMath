@@ -100,7 +100,7 @@ function createSpecificPokemon(id) {
   }
   
   //Do normal fetch stuff
-  axios
+  axios //Originalt fra Lesekloden.no TODO vurder å bytte ut.
     .get(`https://pokeapi.co/api/v2/pokemon/${pokeNumber}`, {
       timeout: 5000,
     })
@@ -134,6 +134,9 @@ function addToDexFromRes(randomPokemon,generateShiny,res){
   let imageId = randomPokemon;
   addToPokedex(randomPokemon, pkmnName, pkmnTypes, imageId, generateShiny, randomPokemon)
 }
+
+
+ //Deler av denne koden er originalt fra Lesekloden.no TODO vurder å bytte ut.
 
 /**
  * Add a pokemon to the pokedex
@@ -214,7 +217,7 @@ function addToPokedex(id, pkmnName, pkmnTypes, imageId, generateShiny, baseId) {
       filterText += " " + type;
     })
 
-    //Add a new pokemon card to the dex.
+    //Add a new pokemon card to the dex. //Originalt fra Lesekloden.no TODO vurder å bytte ut.
     pokedex.innerHTML = `
     <a id=${identifier} class="column is-narrow ${filterText}" style="cursor: pointer;" href=${imageLink} target="_blank">
       <div class="card ${shiny} ${legendary}">
