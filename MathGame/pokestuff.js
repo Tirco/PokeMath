@@ -1,4 +1,4 @@
-const pkmnNum = 898
+const pkmnNum = 905
 const pokeball = document.getElementById("pokeball")
 const pokedex = document.getElementById("pokedex")
 const endMessage = document.querySelector(".end-message")
