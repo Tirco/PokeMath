@@ -210,6 +210,20 @@ var alternateFormsData = {
             "types": ["dark"]
           }
     },
+    "58": {
+      "1": {
+            "name": "hisuian growlithe",
+            "imageid": 10221,
+            "types": ["fire","rock"]
+          }
+    },
+    "59": {
+      "1": {
+            "name": "hisuian arcanine",
+            "imageid": 10222,
+            "types": ["fire","rock"]
+          }
+    },
     "65": {
       "1": {
             "name": "mega alakazam",
@@ -316,6 +330,20 @@ var alternateFormsData = {
             "name": "gigantamax kingler",
             "imageid": 10194,
             "types": ["water"]
+          }
+    },
+    "100": {
+      "1": {
+            "name": "hisuian voltorb",
+            "imageid": 10223,
+            "types": ["electric","grass"]
+          }
+    },
+    "101": {
+      "1": {
+            "name": "hisuian electrode",
+            "imageid": 10224,
+            "types": ["electric","grass"]
           }
     },
     "103": {
@@ -428,6 +456,13 @@ var alternateFormsData = {
             "types": ["psychic"]
           }
     },
+    "157": {
+      "1": {
+            "name": "hisuian typhloshion",
+            "imageid": 10225,
+            "types": ["fire","ghost"]
+          }
+    },
     "181": {
       "1": {
             "name": "mega ampharos",
@@ -449,6 +484,13 @@ var alternateFormsData = {
             "types": ["steel","ground"]
           }
     },
+    "211": {
+      "1": {
+            "name": "hisuian qwilfish",
+            "imageid": 10226,
+            "types": ["dark","poison"]
+          }
+    },
     "212": {
       "1": {
             "name": "mega scizor",
@@ -461,6 +503,13 @@ var alternateFormsData = {
             "name": "mega heracross",
             "imageid": 10047,
             "types": ["steel","ground"]
+          }
+    },
+    "215": {
+      "1": {
+            "name": "hisuian sneasel",
+            "imageid": 10227,
+            "types": ["fighting","poison"]
           }
     },
     "222": {
@@ -760,6 +809,20 @@ var alternateFormsData = {
             "types": ["electric","grass"]
           }
     },
+    "483": {
+      "1": {
+            "name": "origin forme dialga",
+            "imageid": 10238,
+            "types": ["steel","dragon"]
+          }
+    },
+    "484": {
+      "1": {
+            "name": "origin forme palkia",
+            "imageid": 10237,
+            "types": ["water","dragon"]
+          }
+    },
     "487": {
       "1": {
             "name": "origin forme giratina",
@@ -774,11 +837,25 @@ var alternateFormsData = {
             "types": ["grass"]
           }
     },
+    "503": {
+      "1": {
+            "name": "hisuian samurott",
+            "imageid": 10228,
+            "types": ["water","dark"]
+          }
+    },
     "531": {
       "1": {
             "name": "mega audino",
             "imageid": 10069,
             "types": ["normal","fairy"]
+          }
+    },
+    "549": {
+      "1": {
+            "name": "hisuian lilligant",
+            "imageid": 10229,
+            "types": ["grass","fighting"]
           }
     },
     "550": {
@@ -821,11 +898,32 @@ var alternateFormsData = {
             "types": ["poison"]
           }
     },
+    "570": {
+      "1": {
+            "name": "hisuian zorua",
+            "imageid": 10230,
+            "types": ["normal","ghost"]
+          }
+    },
+    "571": {
+      "1": {
+            "name": "hisuian zoroark",
+            "imageid": 10231,
+            "types": ["normal","ghost"]
+          }
+    },
     "618": {
       "1": {
             "name": "galarian stunfisk",
             "imageid": 10177,
             "types": ["ground","steel"]
+          }
+    },
+    "628": {
+      "1": {
+            "name": "hisuian braviary",
+            "imageid": 10232,
+            "types": ["psychic","flying"]
           }
     },
     "641": {
@@ -889,6 +987,20 @@ var alternateFormsData = {
             "types": ["steel","ghost"]
           }
     },
+    "705": {
+      "1": {
+            "name": "hisuian sliggoo",
+            "imageid": 10233,
+            "types": ["steel","dragon"]
+          }
+    },
+    "706": {
+      "1": {
+            "name": "hisuian goodra",
+            "imageid": 10233,
+            "types": ["steel","dragon"]
+          }
+    },
     "710": {
       "1": {
             "name": "pumpkaboo-small",
@@ -923,6 +1035,13 @@ var alternateFormsData = {
             "types": ["ghost","grass"]
           }
     },
+    "713": {
+      "1": {
+            "name": "hisuian avalugg",
+            "imageid": 10235,
+            "types": ["ice","rock"]
+          }
+    },
     "718": {
       "1": {
             "name": "10% forme zygard",
@@ -947,6 +1066,13 @@ var alternateFormsData = {
             "name": "hoopa unbound",
             "imageid": 10086,
             "types": ["psychic","dark"]
+          }
+    },
+    "724": {
+      "1": {
+            "name": "hisuian decidueye",
+            "imageid": 10236,
+            "types": ["grass","fighting"]
           }
     },
     "741": {
@@ -1121,6 +1247,13 @@ var alternateFormsData = {
             "name": "gigantamax ursifhu (single-strike)",
             "imageid": 10218,
             "types": ["fighting","dark"]
+          }
+    },
+    "905": {
+      "1": {
+            "name": "therian forme enamorus",
+            "imageid": 10239,
+            "types": ["fairy","flying"]
           }
     }
 
