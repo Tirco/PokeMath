@@ -997,7 +997,7 @@ var alternateFormsData = {
     "706": {
       "1": {
             "name": "hisuian goodra",
-            "imageid": 10233,
+            "imageid": 10234,
             "types": ["steel","dragon"]
           }
     },

@@ -1,0 +1,208 @@
+<DOCTYPE html>
+<html lang="en">
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Pokémath</title>
+	<link rel="stylesheet" href="globalstyle.css??v=4">
+	<!--<link rel="stylesheet" href="cookies.css?v=1">-->
+	<link rel="stylesheet" href="menustyle.css??v=4">
+	<link rel="stylesheet" href="customizer.css??v=4">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+	<!-- <link rel="stylesheet" href="https://www.jsdelivr.com/package/npm/bulma> -->
+</head>
+<body>
+	<div>
+		<div class="topbar">
+			<a href="index.html" id="backbutton">&#8249;</a>
+			<a href="shop.html" id="money" class="topbar-icon-left">
+				<img id="coinimage" src="money.svg" width="50" 
+				height="50"/>
+				<text id="cointext" class="topbar-icontext-left money score"
+				data-added="0" data-total="0"></text>
+			</a>
+			<a href="dex.html" id="caught" class="topbar-icon-left">
+				<img id="ballimage" src="pokeball.svg" width="50" 
+				height="50"/>
+				<text id="balltext" class="topbar-icontext-left">0</text>
+			</a>
+			<div id="playercard" class="topbar-icon-left playercard">
+				<a class="playerbtn"><img id="playerimage" src="images/player.png" width="50" 
+				height="50"/>
+				<text id="playertext" class="topbar-icontext-left">Ash</text></a>
+				<div class="playercard-content">
+					<div class="trainercard">
+						<div class="card-avatar">
+							<img id="playerimagebig" src="images/player.png" width="100%"></img>
+						</div>
+						<div class="trainercard-details">
+						   <div class="trainercard-name">
+							   <text id="playertextheader">Ketchup </text> <button id="editname" onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Endre</button></div>
+						   <div class="trainercard-occupation">Pokémon Trener</div>
+						   <br>
+						   Oppgaver løst pr Nivå:
+						   <div class="trainercard-about">
+							  <div class="trainercard-item">
+								 <span class="value">1</span>
+								 <span class="label" id="t1solved">0000</span>
+							  </div>
+							  <div class="trainercard-item">
+								 <span class="value">2</span>
+								 <span class="label" id="t2solved">0000</span>
+							  </div>
+							  <div class="trainercard-item">
+								 <span class="value">3</span>
+								 <span class="label" id="t3solved">0000</span>
+							  </div>
+							  <div class="trainercard-item">
+								<span class="value">4</span>
+								<span class="label" id="t4solved">0000</span>
+							 </div>
+							 <div class="trainercard-item">
+								<span class="value">5</span>
+								<span class="label" id="t5solved">0000</span>
+							 </div>
+						   </div>
+						   <div class="skills">
+							  <span class="value"> </span>
+						   </div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="dropdown">
+				<button class="dropbtn">
+					<img id="gearimage" src="images/gear.png" width="50" 
+					height="50"/>
+				  <i class="fa fa-caret-down"></i>
+				</button>
+				<div class="dropdown-content">
+				  <a href="index.html">Hovedmeny</a>
+				  <a href="dex.html">Pokedex</a>
+				  <a href="shop.html">Butikk</a>
+				  <a href="about.html">Om siden</a>
+				  <a href="about.html#contact">Kontakt oss</a>
+				  <a href="about.html#news">Nylige oppdateringer</a>
+				  <a href="#"> </a>
+				  <a onclick="resetPrompt()">Tilbakestill (Slett alt)</a>
+				</div>
+			</div>
+		</div>
+	<image src="" alt="" id="background"></image>
+	<div id="id01" class="modal">
+		<span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+		<form class="modal-content">
+		  <div class="container">
+			<h1>Endre navn</h1>
+			<label for="name"><b>Navn</b></label>
+			<input type="name" placeholder="Skriv inn nytt navn" name="name" required>
+			<div class="clearfix">
+			  <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn button-1">Avbryt</button>
+			  <button type="submit" class="signupbtn button-1">Lagre</button>
+			</div>
+		  </div>
+		</form>
+	  </div>
+<div class="main">
+	<div class="columns is-mobile is-multiline">
+	<form class="customizerform" >
+		<div class="toggle-pill-color">
+			<a class="categoryname"> Addisjon</a>	
+			<input type="checkbox" id="additioncheck" name="add">
+			<label for="additioncheck">  </label>
+		</div>
+
+		<div class="form-group col-md-6" id="addSection" style="display: none;">
+			<label for="first"> Laveste ledd: </label>
+			<input type="number" value="0" id="addMinSel" required autocomplete="off">
+			
+			<label for="first"> Høyeste ledd: </label>
+			<input type="number" value="100" id="addMaxSel" required autocomplete="off">
+			
+			<label for="quantity"> Decimaler (0-5): </label>
+			<input type="number" value="0" id="addDecSel" min="0" max="5" required autocomplete="off">
+		</div>
+
+		<div class="toggle-pill-color">
+			<a class="categoryname"> Subtraksjon</a>	
+			<input type="checkbox" id="subtractioncheck" name="sub">
+			<label for="subtractioncheck">  </label>
+		</div>
+		<div class="form-group col-md-6" id="subSection" style="display: none;">
+			<label for="first">Laveste ledd:</label>
+			<input type="number" id="subMinSel" value="0" class="form-control" required autocomplete="off">
+
+			<label for="first">Høyeste ledd:</label>
+			<input type="number" id="subMaxSel" value="100" class="form-control" required autocomplete="off">
+
+			<label for="quantity"> Decimaler (0-5): </label>
+			<input type="number" id="subDecSel" value="0" id="subDec" min="0" max="5" required autocomplete="off">
+
+			<a>Tillat negative differenser:</a>
+			<div class="toggle-pill-color">
+				<input type="checkbox" id="subtractionallownegative" name="san">
+				<label for="subtractionallownegative">  </label>
+			</div>
+		</div>
+
+		<div class="toggle-pill-color">
+			<a class="categoryname"> Multiplikasjon</a>	
+			<input type="checkbox" id="multiplicationcheck" name="mul">
+			<label for="multiplicationcheck">  </label>
+		</div>
+		<div class="form-group col-md-6" id="mulSection" style="display: none;">
+			<label for="first">Laveste faktor:</label>
+			<input type="number" id="mulMinSel" value="0" class="form-control" required autocomplete="off">
+			
+			<label for="first">Høyeste faktor:</label>
+			<input type="number" id="mulMaxSel" value="10" class="form-control" required autocomplete="off">
+
+			<label for="quantity"> Decimaler (0-5): </label>
+			<input type="number" value="0" id="mulDecSel" min="0" max="5" required autocomplete="off">
+		</div>
+
+		<div class="toggle-pill-color">
+			<a class="categoryname"> Divisjon</a>	
+			<input type="checkbox" id="divisioncheck" name="div">
+			<label for="divisioncheck">  </label>
+		</div>
+		<div class="form-group col-md-6" id="divSection" style="display: none;">
+			<label for="first">Laveste divisor: </label>
+			<input type="number" id="divMinDivSel" value="1" class="form-control" required autocomplete="off">
+			
+			<label for="first">Høyeste divisor: </label>
+			<input type="number" id="divMaxDivSel" id="divMaxDiv" value="10" class="form-control" required autocomplete="off">
+
+			<label for="first">Laveste kvotient: </label>
+			<input type="number" id="divMinKvoSel" value="0" class="form-control" required autocomplete="off">
+			
+			<label for="first">Høyeste kvotient: </label>
+			<input type="number" id="divMaxKvoSel" value="10" class="form-control" required autocomplete="off">
+
+			<label for="quantity"> Decimaler (0-5): </label>
+			<input type="number" value="0" id="divDecSel" min="0" max="5" required autocomplete="off">
+		</div>
+		<button class="button-1" id="useform" onClick="handleUse()" type="button"> Bruk </button> 
+		<button class="button-1" id="copyform"onClick="handleCopy()" type="button"> Kopier </button>
+		<button class="button-1" id="qrcreate"onClick="generateBarCode()" type="button"> Lag QR-Kode </button>
+		<div>
+		<img id='barcode' src="https://api.qrserver.com/v1/create-qr-code/?data=Pokemath.online&amp;size=250x250" alt="" title="QR Kode" width="250" height="250" style="display: none;"/>
+		</div>
+	</form>
+	
+</div>
+	
+
+</div>
+
+<div class="botbar">
+	<a id="update-log" class="align-right" href="about.html#news">Nytt</a>
+</div>
+
+<script src="global.js?v=8"></script>
+<script src="customizer.js?v=8"></script>
+</body>
+
+</html>

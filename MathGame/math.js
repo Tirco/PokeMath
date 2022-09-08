@@ -18,18 +18,67 @@ let mathValues = {
 	additionMax: 10,
 	subtractionMin:  0,
 	subtractionMax:  10,
+	subAllowNegative: true,
 	multiplicationMin:  0,
 	multiplicationMax:  10,
 	divisionMin:  0,
 	divisionMax:  10,
 	divisionMultiplierMin:  0,
 	divisionMultiplierMax:  10,
-	operations: ['+','-','x','/']
+	operations: ['+','-','x','/'],
+	additionDecimals: 0,
+	subtractionDecimals: 0,
+	multiplicationDecimals: 0,
+	divisionDecimals: 0
 }
 
 function onLoad(){
 	let params = new URLSearchParams(location.search);
-	mathValues.stage = params.get('stage');
+	
+	if(params.get('custom') == "true" ) {
+		mathValues.stage = 3;
+		mathValues.operations = [];
+		if(params.get("san") == "f") {
+			mathValues.subAllowNegative = false;
+		}
+		if(params.get("add") == "t") {
+			mathValues.additionMin = Number(params.get("amin"));
+			mathValues.additionMax = Number(params.get("amax"));
+			mathValues.additionDecimals = Number(params.get("adec"));
+			mathValues.operations.push("+");
+		}
+		if(params.get("sub") == "t") {
+			mathValues.subtractionMin = Number(params.get("smin"));
+			mathValues.subtractionMax = Number(params.get("smax"));
+			mathValues.subtractionDecimals = Number(params.get("sdec"));
+			mathValues.operations.push("-")
+		}
+		if(params.get("mul") == "t") {
+			mathValues.multiplicationMin = Number(params.get("mumin"));
+			mathValues.multiplicationMax = Number(params.get("mumax"));
+			mathValues.multiplicationDecimals = Number(params.get("mudec"));
+			mathValues.operations.push("x")
+		}
+		if(params.get("div") == "t") {
+			mathValues.divisionMin = Number(params.get("dmin"));
+			mathValues.divisionMax = Number(params.get("dmax"));
+			mathValues.divisionMultiplierMin = Number(params.get("dmmin"));
+			mathValues.divisionMultiplierMax = Number(params.get("dmmin"));
+			mathValues.divisionDecimals = Number(params.get("ddec"));
+			mathValues.operations.push("/")
+		}
+		updateProblem();
+		return;
+		if(false){
+
+		//TODO fix rounding issues. https://www.codingem.com/javascript-how-to-limit-decimal-places/#:~:text=To%20limit%20decimal%20places%20in%20JavaScript%2C%20use%20the%20toFixed(),Converts%20it%20into%20a%20string.
+			//Make "Creation Page"
+			//http://127.0.0.1:5500/MathGame/pokemath.html?custom=true&add=t&amin=1&amax=999&sub=t&smin=5&smax=10&san=f&mul=t&mumin=101&mumax=100&div=t&dmin=1&dmax=10&dmmin=100&dmmax=101&adec=2&sdec=2&mudec=2&ddec=2
+
+		}
+		//mathValues.operations = ['+','-','x','/'];
+		return;
+	}
 	if(mathValues.stage == null || Number(mathValues.stage) == 0) {
 		mathValues.stage = 3;
 	}
@@ -43,6 +92,7 @@ function onLoad(){
 		mathValues.additionMax = 10;
 		mathValues.subtractionMin = 0;
 		mathValues.subtractionMax = 10;
+		mathValues.subAllowNegative = false;
 		mathValues.operations = ['+','-'];
 		break;
 	case '2':
@@ -50,6 +100,7 @@ function onLoad(){
 		mathValues.additionMax = 25;
 		mathValues.subtractionMin = 0;
 		mathValues.subtractionMax = 25;
+		mathValues.subAllowNegative = false;
 		mathValues.operations = ['+','-'];
 		break;
 	case '3':
@@ -156,6 +207,10 @@ function generateNumber(max) {
 function generateNumber(min, max) {
 	return min + (Math.floor(Math.random() * (max + 1 - min)))
 }
+function generateNumber(min, max, decimals) {
+	let num = min + (Math.random() * (max + 1 - min));
+	return Number(num.toFixed(decimals))
+}
 
 function generateProblem() {
   var operator = mathValues.operations[Math.floor(Math.random()*mathValues.operations.length)]
@@ -163,26 +218,31 @@ function generateProblem() {
   var numberTwo = 1;
   switch(operator) {
 	case '+':
-		numberOne = generateNumber(mathValues.additionMin, mathValues.additionMax);
-		numberTwo = generateNumber(mathValues.additionMin, mathValues.additionMax);
+		numberOne = generateNumber(mathValues.additionMin, mathValues.additionMax, mathValues.additionDecimals);
+		numberTwo = generateNumber(mathValues.additionMin, mathValues.additionMax, mathValues.additionDecimals);
 		break;
 	case '-':
-		numberOne = generateNumber(mathValues.subtractionMin, mathValues.subtractionMax);
-		numberTwo = generateNumber(mathValues.subtractionMin, mathValues.subtractionMax);
+		numberOne = generateNumber(mathValues.subtractionMin, mathValues.subtractionMax, mathValues.subtractionDecimals);
+		numberTwo = generateNumber(mathValues.subtractionMin, mathValues.subtractionMax, mathValues.subtractionDecimals);
 		break;
 	case 'x':
-		numberOne = generateNumber(mathValues.multiplicationMin, mathValues.multiplicationMax);
-		numberTwo = generateNumber(mathValues.multiplicationMin, mathValues.multiplicationMax);
+		numberOne = generateNumber(mathValues.multiplicationMin, mathValues.multiplicationMax, mathValues.multiplicationDecimals);
+		numberTwo = generateNumber(mathValues.multiplicationMin, mathValues.multiplicationMax, mathValues.multiplicationDecimals);
 		break;
 	case '/':
-		numberOne = generateNumber(mathValues.divisionMultiplierMin, mathValues.divisionMultiplierMax);
-		numberTwo = generateNumber(mathValues.divisionMin, mathValues.divisionMax);
+		numberOne = generateNumber(mathValues.divisionMultiplierMin, mathValues.divisionMultiplierMax, mathValues.divisionDecimals);
+		numberTwo = generateNumber(mathValues.divisionMin, mathValues.divisionMax, mathValues.divisionDecimals);
 		if(numberTwo == 0) {
 			numberTwo++;
 		}
 		numberOne = numberOne * numberTwo
+		if(countDecimals(numberOne) != mathValues.divisionDecimals) {
+			console.log("Editing decimals of division " + numberOne)
+			numberOne = Number(numberOne.toFixed(mathValues.divisionDecimals))
+		}
   }
-  if((mathValues.stage == '1' || mathValues.stage == '2') && numberOne < numberTwo) {
+  
+  if((!mathValues.subAllowNegative && operator == "-") && numberOne < numberTwo) {
 	  let tempNumber = numberTwo
 	  numberTwo = numberOne
 	  numberOne = tempNumber
@@ -212,22 +272,34 @@ function handleSubmit(e) {
   if(state.score == winScore) { //Make sure we can't enter a score when whe are in the win screen.
     return;
   }
-	
+	var playerAnswer = Number(ourField.value);
+	var convertedPlayerAnswer = playerAnswer;
+
 	let correctAnswer
 	const p = mathValues.currentProblem
 	if(p.operator == "+") {
 		correctAnswer = p.numberOne + p.numberTwo
+		correctAnswer = Number(correctAnswer.toFixed(mathValues.additionDecimals))
+		convertedPlayerAnswer = Number(playerAnswer.toFixed(mathValues.additionDecimals))
 	} else if(p.operator == "-") {
 		correctAnswer = p.numberOne - p.numberTwo
+		correctAnswer = Number(correctAnswer.toFixed(mathValues.subtractionDecimals))
+		convertedPlayerAnswer = Number(playerAnswer.toFixed(mathValues.subtractionDecimals))
 	} else if(p.operator == "x") {
 		correctAnswer = p.numberOne * p.numberTwo
+		correctAnswer = Number(correctAnswer.toFixed(mathValues.multiplicationDecimals))
+		convertedPlayerAnswer = Number(playerAnswer.toFixed(mathValues.multiplicationDecimals))
 	} else if(p.operator == "/") {
 		correctAnswer = p.numberOne / p.numberTwo
+		correctAnswer = Number(correctAnswer.toFixed(mathValues.divisionDecimals))
+		convertedPlayerAnswer = Number(playerAnswer.toFixed(mathValues.divisionDecimals))
 	} else {
 		correctAnswer = "?"
 	}
+
+	console.log(correctAnswer);
 	
-	if(parseInt(ourField.value,10) == correctAnswer) {
+	if(playerAnswer == correctAnswer || convertedPlayerAnswer == correctAnswer) {
 		state.score++
 		state.streak++
 		pointsNeeded.textContent = 5 - state.score
@@ -255,18 +327,38 @@ function handleSubmit(e) {
 				break;
 		}
 	} else {
+		//TODO make popup with amount of Decimals.
+		
+		console.log(countDecimals("Answer Decimals:" + correctAnswer))
+		console.log(countDecimals("Your Decimals:" + playerAnswer))
+		console.log("Converted Answer: " + Number(correctAnswer.toFixed(mathValues.divisionDecimals)))
+		console.log("Your converted Answer: " + Number(playerAnswer.toFixed(mathValues.divisionDecimals)))
+		console.log("Do they match? " + (Number(correctAnswer.toFixed(mathValues.divisionDecimals)) == Number(playerAnswer.toFixed(mathValues.divisionDecimals))))
+
 		state.wrongAnswers++
 		state.streak = 0;
     	ourField.value = ""
 		mistakesAllowed.textContent = 2-state.wrongAnswers
 		ourField.focus()
-    problemElement.classList.add("animate-wrong")
-    setTimeout(() => problemElement.classList.remove("animate-wrong"), 451)
-    mainUI.classList.add("ui-animate-wrong")
-    setTimeout(() =>  mainUI.classList.remove("ui-animate-wrong"), 1001)
+    	problemElement.classList.add("animate-wrong")
+    	setTimeout(() => problemElement.classList.remove("animate-wrong"), 451)
+    	mainUI.classList.add("ui-animate-wrong")
+    	setTimeout(() =>  mainUI.classList.remove("ui-animate-wrong"), 1001)
 	}
 	checkLogic()
 		
+}
+
+function countDecimals(number) { //Thank you https://stackoverflow.com/questions/17369098/simplest-way-of-getting-the-number-of-decimals-in-a-number-in-javascript
+    if (Math.floor(number.valueOf()) === number.valueOf()) return 0;
+
+    var str = number.toString();
+    if (str.indexOf(".") !== -1 && str.indexOf("-") !== -1) {
+        return str.split("-")[1] || 0;
+    } else if (str.indexOf(".") !== -1) {
+        return str.split(".")[1].length || 0;
+    }
+    return str.split("-")[1] || 0;
 }
 
 function checkLogic() {
