@@ -978,3 +978,27 @@ hr {
   -webkit-user-select: none;
   touch-action: manipulation;
 }
+.cookie-container{
+  position: fixed;
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 10%), 0 4px 6px 4px rgb(0 0 0 / 30%);
+  --bg-opacity: 1;
+  background-color: #fff;
+  background-color: rgba(255,255,255,var(--bg-opacity));
+  padding: 1rem;
+  border-top-width: 4px;
+  bottom: 55px;
+  right: 5px;
+  z-index: 1000;
+  border-radius: 10px;
+  max-width: 40%;
+  min-width: 300px;
+  display: block;
+}
+
+.cookie-header{
+  font-weight: 800;
+  font-size: 32px;
+}
+.cookie-text{
+  font-weight: 500;
+}

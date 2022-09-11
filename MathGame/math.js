@@ -69,22 +69,12 @@ function onLoad(){
 		}
 		updateProblem();
 		return;
-		if(false){
-
-		//TODO fix rounding issues. https://www.codingem.com/javascript-how-to-limit-decimal-places/#:~:text=To%20limit%20decimal%20places%20in%20JavaScript%2C%20use%20the%20toFixed(),Converts%20it%20into%20a%20string.
-			//Make "Creation Page"
-			//http://127.0.0.1:5500/MathGame/pokemath.html?custom=true&add=t&amin=1&amax=999&sub=t&smin=5&smax=10&san=f&mul=t&mumin=101&mumax=100&div=t&dmin=1&dmax=10&dmmin=100&dmmax=101&adec=2&sdec=2&mudec=2&ddec=2
-
-		}
-		//mathValues.operations = ['+','-','x','/'];
-		return;
 	}
+	
 	if(mathValues.stage == null || Number(mathValues.stage) == 0) {
 		mathValues.stage = 3;
 	}
 	//console.log("stage: " + mathValues.stage);
-	var selector = ("botbar-" + mathValues.stage);
-	document.getElementById(selector).outerHTML = `<a class="active">${mathValues.stage}</a>`;
 	
 	switch(mathValues.stage){
 	case '1':
@@ -168,6 +158,7 @@ function addMoney(){
 			value = 50;
 			break;
 		default:
+			value = 10;
 			break;
 	}
 	money.dataset.added = '+' + value;
@@ -205,10 +196,12 @@ function generateNumber(max) {
 	return (Math.floor(Math.random() * (max + 1)))
 }
 function generateNumber(min, max) {
+	console.log("Gen Number: min" + min + " max " + max)
 	return min + (Math.floor(Math.random() * (max + 1 - min)))
 }
 function generateNumber(min, max, decimals) {
-	let num = min + (Math.random() * (max + 1 - min));
+	let num = min + (Math.random() * (max - min));
+	console.log("Gen Number: min" + min + " max " + max + " dec " + decimals + " result: " + num + " numFix " + Number(num.toFixed(decimals)))
 	return Number(num.toFixed(decimals))
 }
 
@@ -262,6 +255,7 @@ function swapNegative(){
 }
 
 function handleSubmit(e) {
+	console.log("triggered")
 	e.preventDefault()
 
   if(ourField.value == "") {
@@ -324,6 +318,9 @@ function handleSubmit(e) {
 				break;
 			case '5':
 				state.tier5Solved ++;
+				break;
+			default:
+				state.customSolved ++;
 				break;
 		}
 	} else {

@@ -1,4 +1,5 @@
 const newsButton = document.getElementById("update-log")
+const cookiePolicy = document.getElementById("cookie-container")
 
 
 /**
@@ -240,7 +241,8 @@ let state = {
   tier2Solved: 0,
   tier3Solved: 0,
   tier4Solved: 0,
-  tier5Solved: 0
+  tier5Solved: 0,
+  customSolved: 0
 }
 
 let shopOptions = {
@@ -314,6 +316,7 @@ function saveAll(){
     window.localStorage.setItem('tier3Solved',JSON.stringify(state.tier3Solved))
     window.localStorage.setItem('tier4Solved',JSON.stringify(state.tier4Solved))
     window.localStorage.setItem('tier5Solved',JSON.stringify(state.tier5Solved))
+    window.localStorage.setItem('customSolved',JSON.stringify(state.customSolved))
   }
 
   //Shop stuff
@@ -342,7 +345,25 @@ function saveAll(){
   }
 }
 
+const getCookieValue = (name) => (
+  document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)')?.pop() || ''
+)
+function checkACookieExists(name) {
+  if (document.cookie.split(';').some((item) => item.trim().startsWith(name + '='))) {
+    return true;
+  }
+  return false;
+}
+
+
 function loadAll() {
+  //See if cookies are consented
+  if(checkACookieExists("cookies")) {
+    if(cookiePolicy != null) {
+      cookiePolicy.style = "display: none";
+    }
+  }
+
   //See if name is set
   let params = new URLSearchParams(location.search);
 	var name = params.get('name');
@@ -361,6 +382,7 @@ function loadAll() {
   state.tier3Solved = getStorageInt('tier3Solved')
   state.tier4Solved = getStorageInt('tier4Solved')
   state.tier5Solved = getStorageInt('tier5Solved')
+  state.customSolved = getStorageInt('customSolved')
   if(document.getElementById("pokedex")!=null){
     document.getElementById("pokedex").innerHTML = getStorageString('pokedex')
   }
@@ -391,6 +413,7 @@ function loadAll() {
   document.getElementById("t3solved").textContent = state.tier3Solved;
   document.getElementById("t4solved").textContent = state.tier4Solved;
   document.getElementById("t5solved").textContent = state.tier5Solved;
+  //document.getElementById("csolved").textContent = state.customSolved;
   loadShop()
 }
 
@@ -424,6 +447,13 @@ function getStorageInt(key) {
 
 function clearStorage() {
   window.localStorage.clear();
+}
+
+function acceptCookies(){
+  if(cookiePolicy != null) {
+    cookiePolicy.style = "display: none";
+  }
+  document.cookie = "cookies=true"
 }
 
 loadAll();

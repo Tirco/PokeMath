@@ -72,7 +72,7 @@ function handleCopy(){
 
 function handleUse(){
     console.log("Used!")
-    fetchURL();
+    window.location.href = fetchURL();
 }
 
 function fetchURL(){
@@ -127,6 +127,7 @@ function generateBarCode()
 {
     var link = encodeURIComponent(fetchURL());
     var barurl = 'https://api.qrserver.com/v1/create-qr-code/?data=' + link + '&amp;size=250x250';
-    $('#barcode').attr('src', barurl);
+    //$('#barcode').attr('src', barurl);
+    barcode.src = barurl;
     barcode.style.display = "";
 }
