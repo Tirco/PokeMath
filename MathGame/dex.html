@@ -120,6 +120,7 @@
 <body>
 <div class="main">
 	<div id="filterButtons">
+		<input type="text" class="align-left" placeholder="Søk.." id="searchInput" onkeyup="textFilterFunction()">
 			<button id="filterAllBtn" class="btn active " onclick="filterSelection('all')"> Vis alle</button>
 			<button class="btn" onclick="filterSelection('alolan')"> Alolan</button>
 			<button class="btn" onclick="filterSelection('galarian')"> Galarian</button>
@@ -129,31 +130,31 @@
 			<button class="btn" onclick="filterSelection('Mytisk')"> Mytisk</button>
 			<button class="btn" onclick="filterSelection(' mega ')"> Mega</button>
 			<button class="btn" onclick="filterSelection('gigantamax')"> Gigantamax</button>
-			<button class="btn dropbtn">
-				Typer 
+			<button class="altbtn typedropdown" id="typedropdown"> Typer &#x25BC;
+				<div class="typecontent">
+					<a class="typecard2 type-bug btn" onclick="filterSelection('bug')"> Bug</a>
+					<a class="typecard2 type-dark btn" onclick="filterSelection('dark')"> Dark</a>
+					<a class="typecard2 type-dragon btn" onclick="filterSelection('dragon')"> Dragon</a><br>
+					<a class="typecard2 type-electric btn" onclick="filterSelection('electric')"> Electric</a>
+					<a class="typecard2 type-fairy btn" onclick="filterSelection('fairy')"> Fairy</a>
+					<a class="typecard2 type-fighting btn" onclick="filterSelection('fighting')"> Fighting</a><br>
+					<a class="typecard2 type-fire btn" onclick="filterSelection('fire')"> Fire</a>
+					<a class="typecard2 type-flying btn" onclick="filterSelection('flying')"> Flying</a>
+					<a class="typecard2 type-ghost btn" onclick="filterSelection('ghost')"> Ghost</a><br>
+					<a class="typecard2 type-grass btn" onclick="filterSelection('grass')"> Grass</a>
+					<a class="typecard2 type-ground btn" onclick="filterSelection('ground')"> Ground</a>
+					<a class="typecard2 type-ice btn" onclick="filterSelection('ice')"> Ice</a><br>
+					<a class="typecard2 type-normal btn" onclick="filterSelection('normal')"> Normal</a>
+					<a class="typecard2 type-poison btn" onclick="filterSelection('poison')"> Poison</a>
+					<a class="typecard2 type-psychic btn" onclick="filterSelection('psychic')"> Psychic</a><br>
+					<a class="typecard2 type-rock btn" onclick="filterSelection('rock')"> Rock</a>
+					<a class="typecard2 type-steel btn" onclick="filterSelection('steel')"> Steel</a>
+					<a class="typecard2 type-water btn" onclick="filterSelection('water')"> Water</a>
+				</div>
 			</button>
-			<div class="dropdown-content">
-				<button class="typecard type-bug btn" onclick="filterSelection('bug')"> Bug</button>
-				<button class="typecard type-dark btn" onclick="filterSelection('dark')"> Dark</button>
-				<button class="typecard type-dragon btn" onclick="filterSelection('dragon')"> Dragon</button><br>
-				<button class="typecard type-electric btn" onclick="filterSelection('electric')"> Electric</button>
-				<button class="typecard type-fairy btn" onclick="filterSelection('fairy')"> Fairy</button>
-				<button class="typecard type-fighting btn" onclick="filterSelection('fighting')"> Fighting</button><br>
-				<button class="typecard type-fire btn" onclick="filterSelection('fire')"> Fire</button>
-				<button class="typecard type-flying btn" onclick="filterSelection('flying')"> Flying</button>
-				<button class="typecard type-ghost btn" onclick="filterSelection('ghost')"> Ghost</button><br>
-				<button class="typecard type-grass btn" onclick="filterSelection('grass')"> Grass</button>
-				<button class="typecard type-ground btn" onclick="filterSelection('ground')"> Ground</button>
-				<button class="typecard type-ice btn" onclick="filterSelection('ice')"> Ice</button><br>
-				<button class="typecard type-normal btn" onclick="filterSelection('normal')"> Normal</button>
-				<button class="typecard type-poison btn" onclick="filterSelection('poison')"> Poison</button>
-				<button class="typecard type-psychic btn" onclick="filterSelection('psychic')"> Psychic</button><br>
-				<button class="typecard type-rock btn" onclick="filterSelection('rock')"> Rock</button>
-				<button class="typecard type-steel btn" onclick="filterSelection('steel')"> Steel</button>
-				<button class="typecard type-water btn" onclick="filterSelection('water')"> Water</button>
-			</div>
+
 		
-		<input type="text" class="align-right" placeholder="Søk.." id="searchInput" onkeyup="textFilterFunction()">
+
 		<br>
 
 	</div>

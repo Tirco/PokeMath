@@ -79,12 +79,14 @@ function w3RemoveClass(element, name) {
 // Add active class to the current control button (highlight it)
 var btnContainer = document.getElementById("filterButtons");
 var btns = btnContainer.getElementsByClassName("btn");
+var typecard = document.getElementById("typedropdown")
 for (var i = 0; i < btns.length; i++) {
   btns[i].addEventListener("click", function() {
     if(this.id == "filterAllBtn") {
           var current = document.getElementsByClassName("active");
           while(current.length > 0) {
             current[0].className = current[0].className.replace(" active", "");
+            typecard.className = "altbtn typedropdown"
           }
           
           this.className += " active";
@@ -93,17 +95,19 @@ for (var i = 0; i < btns.length; i++) {
           this.classList.toggle("active");
           if(document.getElementsByClassName("active").length == 0) {
             document.getElementById("filterAllBtn").className = "btn active"
+            typecard.className = "altbtn typedropdown"
           } else {
             document.getElementById("filterAllBtn").className = "btn"
+            if(this.classList.contains("typecard2")) {
+              typecard.className = "altbtn typedropdown altactive"
+            }
           }
           
     }
-
-    //var current = document.getElementsByClassName("active");
-    //current[0].className = current[0].className.replace(" active", "");
-    //this.className += " active";
   });
 }
+
+
 
 function textFilterFunction() {
   var input, filter, ul, li, a, i;
