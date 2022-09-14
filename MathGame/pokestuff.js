@@ -105,11 +105,20 @@ function createSpecificPokemon(id) {
       timeout: 5000,
     })
     .then((res) => addToDexFromRes(pokeNumber,generateShiny(),res))
-    .catch((err) => console.log(err))
-
+    .catch((err) => warnErrorLoading(id))
 
 }
 
+function warnErrorLoading(id) {
+  const toast = new Toast({
+    text: "Advarsel! En feil skjedde når vi lastet inn denne pokemonen. (" + id + ")",
+    position: "top-right",
+    pauseOnHover: true,
+    pauseOnFocusLoss: true,
+    canClose: true,
+    badToast: true,
+  })
+}
 
 /**
  * Should they get a shiny?

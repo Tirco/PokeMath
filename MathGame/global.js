@@ -388,7 +388,7 @@ function loadAll() {
   }
 
   state.username = getStorageString('username')
-  if(state.username.length > 15) {
+  if(state.username.length > 22) {
     state.username = "Ash";
     window.localStorage.setItem('username',JSON.stringify("Ash"))
     const toast = new Toast({

@@ -739,7 +739,7 @@ a.tag:hover {
   display: none;
   position: absolute;
   right: -200px;
-  width: 300px;
+  min-width: 300px;
   left: auto;
   padding-right: 0px;
   min-width: 160px;
