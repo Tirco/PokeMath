@@ -6,10 +6,10 @@
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Pokémath</title>
-	<link rel="stylesheet" href="globalstyle.css?v=8">
+	<link rel="stylesheet" href="globalstyle.css?v=9">
 	<!--<link rel="stylesheet" href="cookies.css?v=1">-->
-	<link rel="stylesheet" href="menustyle.css?v=8">
-	<link rel="stylesheet" href="about.css?v=8">
+	<link rel="stylesheet" href="menustyle.css?v=9">
+	<link rel="stylesheet" href="about.css?v=9">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 	<!-- <link rel="stylesheet" href="https://www.jsdelivr.com/package/npm/bulma> -->
 </head>
@@ -18,14 +18,14 @@
 		<h2 class="cookie-header">Cookie Policy</h2>
 		<div class="">
 			<p class="cookie-text">
-				Denne siden bruker Cookies. Disse bruker vi for å kunne lagre pokèmonene og spillerdataen din på din enhet. Ved å bruke denne siden godkjenner du vår <a href="about.html#cookies">Cookie Policy </a>(Engelsk). Velger du å trykke "Nei takk" vil siden prøve å lukke seg selv.
+				Denne siden bruker Cookies. Disse bruker vi for å kunne lagre pokèmonene og spillerdataen din på din enhet. Ved å bruke denne siden godkjenner du vår <a href="about.html#cookies">Cookie Policy </a>(Engelsk). Siden vil ikke fungere optimalt om du ikke godkjenner bruken av cookies.
 			</p>
 			<button class="button-1" onClick="acceptCookies()">
 				Okay!
 			</button>
-			<button class="button-2" onclick="window.open('', '_self', ''); window.close();">
-				Nei takk.
-			</button>
+			<a class="button-2" href="about.html#cookies">
+				Mer informasjon.
+			</a>
 		</div>
 	</div>
 	<div>
@@ -187,13 +187,15 @@
 		<article class="content">
 			<h2 class="section-title">Nyheter</h1>
 				<p>14.09.2022</p>
-				- La til egenvalgt modus.<br>
+				- La til egenvalgt modus. (Beta)<br>
 				- La til funksjoner som tillater desimaltall.<br>
+				- Gjorde interne endringer på hvordan godkjenning av svar fungerer.<br>
 				- Fikset småfeil i lenker.<br>
 				- Fikset at feil bilde ble brukt på Hisuian Goodra. Om du allerede har fanget denne pokemonen vil feilen vedvare.<br>
 				- Fikset Cookie Consent pop-up.<br>
 				- La til en offentlig Cookie Policy.<br>
 				- La til en offentlig Privacy Notice.<br>
+				- Sørget for at siden er GDPR-vennlig.<br>
 				<p>27.08.2022</p>
 				- Oppdaterte Om siden.<br>
 				- Startet arbeid for en ny funksjon når man klikker på en fanget pokemon. Denne er ikke klar enda.<br>
@@ -382,7 +384,7 @@
 </div>
 
 	  <!--<script src="main.js?v=1"></script>>-->
-	  <script src="global.js?v=8"></script>
+	  <script src="global.js?v=9"></script>
 	  <!--<script src="cookies.js?v=1"></script>-->
 </body>
 <!-- https://icon-icons.com/users/RoundIcons/icon-sets/ Ikoner laget av RoundIcons 

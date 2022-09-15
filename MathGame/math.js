@@ -36,6 +36,7 @@ function onLoad(){
 	let params = new URLSearchParams(location.search);
 	
 	if(params.get('custom') == "true" ) {
+		console.log("Custom mode enabled!")
 		mathValues.stage = 3;
 		mathValues.operations = [];
 		if(params.get("san") == "f") {
@@ -67,17 +68,19 @@ function onLoad(){
 			mathValues.divisionDecimals = Number(params.get("ddec"));
 			mathValues.operations.push("/")
 		}
+		mathValues.stage = 3;
 		updateProblem();
 		return;
 	}
 	
+	mathValues.stage = params.get('stage');
 	if(mathValues.stage == null || Number(mathValues.stage) == 0) {
-		mathValues.stage = 3;
+		mathValues.stage = 3;		
 	}
-	//console.log("stage: " + mathValues.stage);
+	console.log("Starting on stage: " + mathValues.stage);
 	
-	switch(mathValues.stage){
-	case '1':
+	switch(Number(mathValues.stage)){
+	case 1:
 		mathValues.additionMin = 0;
 		mathValues.additionMax = 10;
 		mathValues.subtractionMin = 0;
@@ -85,7 +88,7 @@ function onLoad(){
 		mathValues.subAllowNegative = false;
 		mathValues.operations = ['+','-'];
 		break;
-	case '2':
+	case 2:
 		mathValues.additionMin = 0;
 		mathValues.additionMax = 25;
 		mathValues.subtractionMin = 0;
@@ -93,7 +96,7 @@ function onLoad(){
 		mathValues.subAllowNegative = false;
 		mathValues.operations = ['+','-'];
 		break;
-	case '3':
+	case 3:
 		mathValues.additionMin = 0;
 		mathValues.additionMax = 10;
 		mathValues.subtractionMin = 0;
@@ -106,7 +109,7 @@ function onLoad(){
 		mathValues.divisionMultiplierMax = 10,
 		mathValues.operations = ['+','-','x','/'];
 		break;
-	case '4':
+	case 4:
 		mathValues.additionMin = 10;
 		mathValues.additionMax = 100;
 		mathValues.subtractionMin = 10;
@@ -119,7 +122,7 @@ function onLoad(){
 		mathValues.divisionMultiplierMax = 100,
 		mathValues.operations = ['+','-','x','/'];
 		break;
-	case '5':
+	case 5:
 		mathValues.additionMin = 1000;
 		mathValues.additionMax = 10000;
 		mathValues.subtractionMin = 1000;
@@ -196,12 +199,12 @@ function generateNumber(max) {
 	return (Math.floor(Math.random() * (max + 1)))
 }
 function generateNumber(min, max) {
-	console.log("Gen Number: min" + min + " max " + max)
+	//console.log("Gen Number: min" + min + " max " + max)
 	return min + (Math.floor(Math.random() * (max + 1 - min)))
 }
 function generateNumber(min, max, decimals) {
 	let num = min + (Math.random() * (max - min));
-	console.log("Gen Number: min" + min + " max " + max + " dec " + decimals + " result: " + num + " numFix " + Number(num.toFixed(decimals)))
+	//console.log("Gen Number: min" + min + " max " + max + " dec " + decimals + " result: " + num + " numFix " + Number(num.toFixed(decimals)))
 	return Number(num.toFixed(decimals))
 }
 
@@ -326,11 +329,11 @@ function handleSubmit(e) {
 	} else {
 		//TODO make popup with amount of Decimals.
 		
-		console.log(countDecimals("Answer Decimals:" + correctAnswer))
-		console.log(countDecimals("Your Decimals:" + playerAnswer))
-		console.log("Converted Answer: " + Number(correctAnswer.toFixed(mathValues.divisionDecimals)))
-		console.log("Your converted Answer: " + Number(playerAnswer.toFixed(mathValues.divisionDecimals)))
-		console.log("Do they match? " + (Number(correctAnswer.toFixed(mathValues.divisionDecimals)) == Number(playerAnswer.toFixed(mathValues.divisionDecimals))))
+//		console.log(countDecimals("Answer Decimals:" + correctAnswer))
+//		console.log(countDecimals("Your Decimals:" + playerAnswer))
+//		console.log("Converted Answer: " + Number(correctAnswer.toFixed(mathValues.divisionDecimals)))
+//		console.log("Your converted Answer: " + Number(playerAnswer.toFixed(mathValues.divisionDecimals)))
+//		console.log("Do they match? " + (Number(correctAnswer.toFixed(mathValues.divisionDecimals)) == Number(playerAnswer.toFixed(mathValues.divisionDecimals))))
 
 		state.wrongAnswers++
 		state.streak = 0;
@@ -383,9 +386,6 @@ function resetGame() {
  	newCatchInfo.innerHTML = ""
   	resetButton.classList.add("is-hidden")
   	saveAll()
-/* 	if(pokeball.classList.contains("is-hidden") === false) {
-		pokeball.classList.add("is-hidden")
-	} */
 }
 
 function renderProgressBar(){

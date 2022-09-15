@@ -293,6 +293,19 @@ function loadPlayerIcon(){
 }
 
 function saveAll(){
+  if(checkACookieExists("cookies")) {
+    console.log("Saving all - Cookies are accepted")
+  } else {
+    const toast = new Toast({
+      text: "Du har ikke godkjent bruken av Cookies, så vi kan ikke lagre din spillerdate på din enhet.",
+      position: "top-right",
+      pauseOnHover: true,
+      pauseOnFocusLoss: true,
+      canClose: true,
+      badToast: true,
+    })
+    return;
+  }
   if(!isNaN(state.totalScore)) {
     window.localStorage.setItem('money',JSON.stringify(state.totalScore))
   }
