@@ -11,7 +11,6 @@ const defaultLives = 3 //hvor mange forsøk man har.
 const money = document.querySelector(".money")
 const goodMessages = ["Flott jobbet!","Nice!","Ny pokémon!","Trykk på ballen!","Enda en til samlingen!","Fortsett sånn!","Stå på!","Du er super!","Oh, hva får du nå?","Eyy! Bra jobbet!"]
 
-
 let mathValues = {
 	stage: 3,
 	additionMin: 0,
@@ -29,7 +28,119 @@ let mathValues = {
 	additionDecimals: 0,
 	subtractionDecimals: 0,
 	multiplicationDecimals: 0,
-	divisionDecimals: 0
+	divisionDecimals: 0,
+	difficultyModifier: 0
+}
+
+function calculateCustomDifficulty() {
+	values = [];
+	if(mathValues.operations.includes("+")) {
+		var addition = (Math.abs(mathValues.additionMin - mathValues.additionMax) * (10 ** mathValues.additionDecimals));
+		if(addition > 9000) {
+			values.push(5);
+		} else if (addition > 999) {
+			values.push(4);
+		} else if (addition > 99) {
+			values.push(3);
+		} else if (addition > 24) {
+			values.push(2);
+		} else if (addition > 2){
+			values.push(1);
+		} else {
+			//Addition is busted!
+			values.push(0);
+		}
+	}
+	if(mathValues.operations.includes("-")) {
+		var subtraction = (Math.abs(mathValues.subtractionMin - mathValues.subtractionMax) * (10 ** mathValues.subtractionDecimals));
+		if(subtraction > 9000) {
+			values.push(5);
+		} else if (subtraction > 999) {
+			values.push(4);
+		} else if (subtraction > 99) {
+			values.push(3);
+		} else if (subtraction > 24) {
+			values.push(2);
+		} else if (subtraction > 2){
+			values.push(1);
+		} else {
+			//Subtraction is busted!
+			values.push(0);
+		}
+	}
+	if(mathValues.operations.includes("x")) {
+		var multiplication = (Math.abs(mathValues.multiplicationMin - mathValues.multiplicationMax) * (10 ** mathValues.multiplicationDecimals));
+		if(multiplication > 999) {
+			values.push(5);
+		} else if (multiplication > 99) {
+			values.push(4);
+		} else if (multiplication > 9) {
+			values.push(3);
+		} else if (multiplication > 4) {
+			values.push(2);
+		} else if (multiplication > 2) {
+			values.push(1);
+		} else {
+			values.push(0);
+		}
+	}
+	if(mathValues.operations.includes("/")) {
+		var division = (Math.abs(mathValues.divisionMultiplierMax - mathValues.divisionMin) * (10 ** mathValues.divisionDecimals));
+		if(Math.abs(mathValues.divisionMultiplierMax - mathValues.divisionMultiplierMin) < 2 || Math.abs(mathValues.divisionMax - mathValues.divisionMin) < 2) {
+			values.push(0)
+		} else {
+			if(division > 999) {
+				values.push(5);
+			} else if (division > 99) {
+				values.push(4);
+			} else if (division > 9) {
+				values.push(3);
+			} else if (division > 4) {
+				values.push(2);
+			} else if (division > 2) {
+				values.push(1);
+			} else {
+				values.push(0)
+			}
+		}
+
+	}
+
+	if(values.includes(0)){
+		const toast = new Toast({
+			text: "En eller fler av dine egendefinerte valg er for lette, du kan derfor ikke fange pokemon på dette nivået.",
+			position: "top-right",
+			pauseOnHover: true,
+			pauseOnFocusLoss: true,
+			canClose: true,
+			badToast: true,
+		  })
+		console.log("stage is now " + mathValues.stage)
+		return 0;
+	}
+
+	var total = 0;
+	for(var i = 0; i < values.length; i++) {
+		total += values[i];
+	}
+	var avg = total / values.length;
+
+	console.log("avg = " + avg)
+	avg = Math.round(avg);
+	console.log("avg round = " + avg)
+	if(avg > 5) { avg = 5; }
+	else if(avg < 1) { avg = 1};
+
+	mathValues.stage = avg;
+	const toast = new Toast({
+		text: "Vanskelighetsgraden har blitt kalkulert til nivå " + avg + "",
+		position: "top-right",
+		pauseOnHover: true,
+		pauseOnFocusLoss: true,
+		canClose: true,
+		badToast: false,
+	  })
+
 }
 
 function onLoad(){
@@ -47,6 +158,7 @@ function onLoad(){
 			mathValues.additionMax = Number(params.get("amax"));
 			mathValues.additionDecimals = Number(params.get("adec"));
 			mathValues.operations.push("+");
+			console.log(mathValues.difficultyModifier)
 		}
 		if(params.get("sub") == "t") {
 			mathValues.subtractionMin = Number(params.get("smin"));
@@ -64,11 +176,11 @@ function onLoad(){
 			mathValues.divisionMin = Number(params.get("dmin"));
 			mathValues.divisionMax = Number(params.get("dmax"));
 			mathValues.divisionMultiplierMin = Number(params.get("dmmin"));
-			mathValues.divisionMultiplierMax = Number(params.get("dmmin"));
+			mathValues.divisionMultiplierMax = Number(params.get("dmmax"));
 			mathValues.divisionDecimals = Number(params.get("ddec"));
 			mathValues.operations.push("/")
 		}
-		mathValues.stage = 3;
+		mathValues.stage = calculateCustomDifficulty();
 		updateProblem();
 		return;
 	}
@@ -161,7 +273,7 @@ function addMoney(){
 			value = 50;
 			break;
 		default:
-			value = 10;
+			value = 0;
 			break;
 	}
 	money.dataset.added = '+' + value;
@@ -258,7 +370,6 @@ function swapNegative(){
 }
 
 function handleSubmit(e) {
-	console.log("triggered")
 	e.preventDefault()
 
   if(ourField.value == "") {
@@ -293,18 +404,31 @@ function handleSubmit(e) {
 	} else {
 		correctAnswer = "?"
 	}
-
-	console.log(correctAnswer);
 	
 	if(playerAnswer == correctAnswer || convertedPlayerAnswer == correctAnswer) {
+		console.log(mathValues.stage + " = ditt nivå")
+
+		if(mathValues.stage == 0) { //Juksepave pipelort!
+			state.score++
+			state.streak++
+			pointsNeeded.textContent = 5 - state.score
+			mainUI.classList.add("ui-animate-correct")
+			setTimeout(() =>  mainUI.classList.remove("ui-animate-correct"), 1001)
+			updateProblem();
+			renderProgressBar();
+			checkLogic()
+			return;
+		}
+
 		state.score++
 		state.streak++
 		pointsNeeded.textContent = 5 - state.score
 		addMoney()
     	mainUI.classList.add("ui-animate-correct")
     	setTimeout(() =>  mainUI.classList.remove("ui-animate-correct"), 1001)
-		updateProblem()
-		renderProgressBar()
+		updateProblem();
+		renderProgressBar();
+
 		//Update tier solved.
 		switch(mathValues.stage) {
 			case '1':
@@ -345,8 +469,7 @@ function handleSubmit(e) {
     	mainUI.classList.add("ui-animate-wrong")
     	setTimeout(() =>  mainUI.classList.remove("ui-animate-wrong"), 1001)
 	}
-	checkLogic()
-		
+	checkLogic()		
 }
 
 function countDecimals(number) { //Thank you https://stackoverflow.com/questions/17369098/simplest-way-of-getting-the-number-of-decimals-in-a-number-in-javascript
@@ -364,7 +487,24 @@ function countDecimals(number) { //Thank you https://stackoverflow.com/questions
 function checkLogic() {
 	//If you win
 	if(state.score === winScore) {
-	  endMessage.textContent = goodMessages[Math.floor(Math.random()* (Object.keys(goodMessages).length))]
+		if(mathValues.stage == 0) {
+			state.score = 0
+			state.wrongAnswers = 0
+			pointsNeeded.textContent = winScore
+			mistakesAllowed.textContent = (defaultLives -1)
+			renderProgressBar()
+			resetGame();
+			const toast = new Toast({
+				text: "En eller fler av dine egendefinerte valg er for lette, du kan derfor ikke fange pokemon på dette nivået.",
+				position: "top-right",
+				pauseOnHover: true,
+				pauseOnFocusLoss: true,
+				canClose: true,
+				badToast: true,
+			  })
+			return;
+		}
+	  endMessage.textContent = goodMessages[Math.floor(Math.random() * (Object.keys(goodMessages).length))]
 	  document.body.classList.add("overlay-is-open")
       pokeball.classList.remove("is-hidden")
 	}
@@ -391,6 +531,5 @@ function resetGame() {
 function renderProgressBar(){
 	progressBar.style.transform = `scaleX(${state.score/winScore})`
 }
-
 
 onLoad()	
