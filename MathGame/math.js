@@ -131,7 +131,6 @@ function calculateCustomDifficulty() {
 	if(avg > 5) { avg = 5; }
 	else if(avg < 1) { avg = 1};
 
-	mathValues.stage = avg;
 	const toast = new Toast({
 		text: "Vanskelighetsgraden har blitt kalkulert til nivå " + avg + "",
 		position: "top-right",
@@ -139,8 +138,8 @@ function calculateCustomDifficulty() {
 		pauseOnFocusLoss: true,
 		canClose: true,
 		badToast: false,
-	  })
-
+	})
+	return avg;
 }
 
 function onLoad(){
