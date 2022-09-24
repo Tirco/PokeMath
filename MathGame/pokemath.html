@@ -117,8 +117,16 @@
 		</form>
 	  </div>
 <body>
-	<div class="main-ui">
+	<div class="halloween-egg is-hidden" id="halloween-egg">
+		<img id="halloween-egg-image" src="images/events/halloween/halloween-egg-01.png" width="150" 
+		height="150" class="halloween-egg-image mt-2 mb-6 egg animate__animated animate__wobble "/>
+		<button class="halloween-egg-closer" onclick="toggleHalloweenBox()"></button>
+		<div class="halloween-egg-progress">
+			<div class="halloween-progress-inner" onclick="captureHalloweenPokemon()"></div>
+		</div>
 
+	</div>
+	<div class="main-ui">
 		<p class="problem"></p> 
 		<div class="input">		
 			<button class="flip-btn" onClick="swapNegative()">+/-</button>
@@ -127,7 +135,6 @@
 				<button style="height: 50px">Svar</button>
 			</form></div>
 
-		
 		<p class="status">Du trenger <span class="points-needed">5</span> flere poeng, og kan gjøre <span class="mistakes-allowed">2</span> feil.</p>
 		
 		<div class="progress">
@@ -147,7 +154,7 @@
     </div>
 	
 	<div class="overlay">
-		<class="overlay-inner">
+		<div class="overlay-inner">
 			<p class="end-message"></p>
 			<br>
 			<a id="pokeball" class="pokeball animate__animated animate__wobble animate__repeat-3 mt-2 mb-6 is-hidden"></a> <!-- Pokeball animasjonsparameterene er fra lesekloden.no-->

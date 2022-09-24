@@ -13,8 +13,23 @@ const splashOptions = ["Gotta solve 'em all!","Created by Tirco","Almost as fun 
 const splashText = document.getElementById("logotext")
 
 function load(){
+  //Check date
+  const d = new Date();
+  let month = d.getMonth();
+  if(month == 9) { //Måned 9 = oktober
+    let eventSplashes = ["Spoopy Season!","Spooky Season!","Ghastly, I choose you!",
+    "Happy Halloween!","Spooky numbers?","Boo! Did I scare you?","Gengar! I choose you!","Spooky Scary Skeletons!",
+    "Hatch the egg!","October <3!","It's the Nightmare before Christmas!","This is halloween!","Trick or treat!"];
+    splashText.textContent = eventSplashes[Math.floor(Math.random()*eventSplashes.length)]
+    let logo = document.getElementById("logo");
+    logo.style.backgroundImage="url(images/logo-halloween.png)";
+  } else if(month == 11) { //Måned 11 = desember
+    let eventSplashes = ["Ho Ho Ho!","Merry Christmas!","X-Mas Time!"];
+    splashText.textContent = eventSplashes[Math.floor(Math.random()*eventSplashes.length)]
+  } else {
+    splashText.textContent = splashOptions[Math.floor(Math.random()*splashOptions.length)]
+  }
   var number = (Math.floor(Math.random() * (3)))+1;
-  splashText.textContent = splashOptions[Math.floor(Math.random()*splashOptions.length)]
   menuOne.innerHTML = ` <div class="card-image" style="background-image: url('images/starter-${number}-1.png'); height: 128px; width: 128px; background-size: cover;">&nbsp;</div>`
   menuTwo.innerHTML = ` <div class="card-image" style="background-image: url('images/starter-${number}-2.png'); height: 128px; width: 128px; background-size: cover;">&nbsp;</div>`
   menuThree.innerHTML = ` <div class="card-image" style="background-image: url('images/starter-${number}-3.png'); height: 128px; width: 128px; background-size: cover;">&nbsp;</div>`

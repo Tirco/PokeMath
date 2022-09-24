@@ -1002,3 +1002,92 @@ hr {
 .cookie-text{
   font-weight: 500;
 }
+
+.halloween-egg {
+  position: fixed;
+  display: block;
+  z-index: 1000;
+  width: 180px;
+  height: 180px;
+  border-radius: 0 10px 10px 0;
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 10%), 0 4px 6px 4px rgb(0 0 0 / 30%);
+  background-color: rgb(246, 158, 104);
+  transition: transform 2s;
+}
+
+.hide-egg {
+  transform: translateX(-160px);
+}
+
+.halloween-egg-image {
+  display: relative;
+  justify-content: center;
+  width: 150px;
+  height: 150px;
+  max-width: 150px;
+  max-height: 150px;
+}
+
+.halloween-egg-progress{
+  position: absolute;
+  left: 5px;
+  width: 150px;
+  max-width: 150px;
+  height: 20px;
+  max-height: 20px;
+  float: left;
+  background-color: #fbc2c2;
+}
+
+.halloween-egg-closer{
+  display:block;
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  height: 100%;
+  width: 20px;
+  max-width: 20px;
+  border-radius: 0 10px 10px 0;
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+  text-align: center;
+  box-shadow: 0 4px 4px 4px rgb(0 0 0 / 10%);
+  background-color: rgb(249, 105, 16);
+}
+
+.halloween-egg-closer:hover{
+  background-color: rgb(240, 156, 105);
+  cursor: pointer;
+}
+
+.halloween-progress-inner {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #7ecc00;
+  opacity: .57;
+  transform: scaleX(0);
+  transform-origin: center left;
+  transition: transform .4s ease-out;
+}
+
+.hallowenOpenEgg {
+  background-color: #9cf808;
+  
+}
+.hallowenOpenEgg::after {
+  content: "Åpne!";
+  text-align: center;
+  align-items: center;
+  position:fixed;
+  color: white;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+}
+
+.hallowenOpenEgg:hover {
+  background-color: rgb(240, 156, 105);
+  cursor: pointer;
+}

@@ -11,6 +11,11 @@ const defaultLives = 3 //hvor mange forsøk man har.
 const money = document.querySelector(".money")
 const goodMessages = ["Flott jobbet!","Nice!","Ny pokémon!","Trykk på ballen!","Enda en til samlingen!","Fortsett sånn!","Stå på!","Du er super!","Oh, hva får du nå?","Eyy! Bra jobbet!"]
 
+const halloweenProgressBar = document.querySelector(".halloween-progress-inner")
+const halloweenEgg = document.querySelector(".halloween-egg-image")
+let halloweenEvent = false;
+
+
 let mathValues = {
 	stage: 3,
 	additionMin: 0,
@@ -143,6 +148,23 @@ function calculateCustomDifficulty() {
 }
 
 function onLoad(){
+  	//Event stuff 
+  	//Check date
+  	const d = new Date();
+  	let month = d.getMonth();
+
+  	//Halloween
+  	if(month == 9) { //9 = oktober.
+    	console.log("Happy Halloween!")
+		halloweenEvent = true;
+		loadHalloween();
+    	if(halloweenbox != null) {
+    	  halloweenbox.classList.remove("is-hidden")
+	    }
+  	} else {
+    	console.log("Ikke Halloween")
+  	}
+
 	let params = new URLSearchParams(location.search);
 	
 	if(params.get('custom') == "true" ) {
@@ -315,6 +337,7 @@ function generateNumber(min, max) {
 }
 function generateNumber(min, max, decimals) {
 	let num = min + (Math.random() * (max - min));
+	if(decimals > 5) { decimals = 5;} //begrens desimaler
 	//console.log("Gen Number: min" + min + " max " + max + " dec " + decimals + " result: " + num + " numFix " + Number(num.toFixed(decimals)))
 	return Number(num.toFixed(decimals))
 }
@@ -503,9 +526,10 @@ function checkLogic() {
 			  })
 			return;
 		}
-	  endMessage.textContent = goodMessages[Math.floor(Math.random() * (Object.keys(goodMessages).length))]
-	  document.body.classList.add("overlay-is-open")
-      pokeball.classList.remove("is-hidden")
+		progressHalloweenEgg()
+	  	endMessage.textContent = goodMessages[Math.floor(Math.random() * (Object.keys(goodMessages).length))]
+	  	document.body.classList.add("overlay-is-open")
+      	pokeball.classList.remove("is-hidden")
 	}
 	//If you lost
 	if(state.wrongAnswers === defaultLives) {
@@ -531,4 +555,116 @@ function renderProgressBar(){
 	progressBar.style.transform = `scaleX(${state.score/winScore})`
 }
 
-onLoad()	
+
+/*
+~~~ Halloween ~~~
+*/
+
+let halloweenStats = {
+  eggId: 0,
+  eggNeeded: 3,
+  eggStatus: 0,
+  eggSolved: 0,
+  eventYear: 2000
+}
+
+function toggleHalloweenBox(){
+	if(halloweenbox == null) {
+	  return;
+	}
+	if(halloweenbox.classList.contains("hide-egg")){
+	  console.log("egg is already hidden")
+	  halloweenbox.classList.remove("hide-egg")
+	} else {
+	  console.log("egg is not hidden")
+	  halloweenbox.classList.add("hide-egg")
+	}
+  
+}
+
+function progressHalloweenEgg() {
+	if(!halloweenEvent) {
+		return;
+	}
+	halloweenStats.eggStatus++;
+	if(halloweenStats.eggStatus < halloweenStats.eggNeeded) {
+		halloweenProgressBar.style.transform = `scaleX(${halloweenStats.eggStatus/halloweenStats.eggNeeded})`;
+		halloweenEgg.classList.add("animate__repeat-1");
+		halloweenEgg.classList.remove("animate__repeat-1");
+	} else {
+		halloweenProgressBar.style.transform = `scaleX(${1})`;
+		halloweenProgressBar.classList.add("hallowenOpenEgg");
+		halloweenEgg.classList.add("animate__infinite");
+	}
+
+	saveHalloween();
+	saveAll();
+}
+
+function captureHalloweenPokemon() {
+	if(true){//halloweenStats.eggStatus >= halloweenStats.eggNeeded) {
+		let SpookyNormalPokemon = [19,20,52,53,88,89,92,93,94,105,187,198,200,215,222,228,228,261,262,264,275,302,353,354,355,356,359,425,426,429,430,434,435,442,452,461,477,478,479,487,491,509,510,562,563,570,571,607,608,609,629,630,633,634,635,679,680,681,708,709,710,711,717,720,769,770,778,781,792,799,800,802,827,828,854,855,859,860,861,862,864,867,877,885,886,887,893,897,898]
+		document.body.classList.add("overlay-is-open")
+		pokeball.classList.remove("is-hidden")
+		if(Math.random() > 0.7) {
+			createEventPokemon("halloween");
+		} else {
+			createSpecificPokemon(SpookyNormalPokemon[Math.floor(Math.random()* (Object.keys(SpookyNormalPokemon).length))])
+		}
+		halloweenProgressBar.style.transform = `scaleX(${0})`;
+		halloweenProgressBar.classList.remove("hallowenOpenEgg");
+		halloweenEgg.classList.remove("animate__infinite");
+		halloweenStats.eggStatus = 0;
+		halloweenStats.eggNeeded++;
+		halloweenStats.eggId = Math.floor(Math.random() * 5)+1;
+		updateEggImage();
+
+
+	} else {
+		return;
+	}
+
+}
+
+function updateEggImage(){
+	let path = "images/events/halloween/halloween-egg-0" + halloweenStats.eggId +".png";
+	halloweenEgg.src= path;
+}
+
+function saveHalloween(){
+	if(checkACookieExists("cookies") &&  halloweenEvent) {
+	  
+	} else {
+		//Ikke cookie-tilatelse.
+	  return;
+	}
+	if(!isNaN(halloweenStats.eggId)) {
+	  window.localStorage.setItem('he-eggid',JSON.stringify(halloweenStats.eggId))
+	}
+	if(!isNaN(halloweenStats.eggNeeded)) {
+		window.localStorage.setItem('he-eggneeded',JSON.stringify(halloweenStats.eggNeeded))
+	}
+	if(!isNaN(halloweenStats.eggSolved)) {
+		window.localStorage.setItem('he-eggsolved',JSON.stringify(halloweenStats.eggSolved))
+	}
+	if(!isNaN(halloweenStats.eggStatus)) {
+		window.localStorage.setItem('he-eggstatus',JSON.stringify(halloweenStats.eggStatus))
+	}
+	window.localStorage.setItem('he-year',JSON.stringify(new Date().getFullYear()))
+}
+
+function loadHalloween() {
+	halloweenStats.eventYear = getStorageInt('he-year');
+	if(halloweenStats.eventYear != new Date().getFullYear()) {
+		console.log('Year is wrong - starting over!')
+		return;
+	}
+	halloweenStats.eggId = getStorageInt('he-eggid');
+	updateEggImage();
+	halloweenStats.eggNeeded = getStorageInt('he-eggneeded');
+	halloweenStats.eggStatus = getStorageInt('he-eggsolved');
+	halloweenStats.eggSolved = getStorageInt('he-eggstatus');
+	halloweenProgressBar.style.transform = `scaleX(${halloweenStats.eggStatus/halloweenStats.eggNeeded})`;
+  }
+
+onLoad()

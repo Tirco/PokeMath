@@ -109,6 +109,22 @@ function createSpecificPokemon(id) {
 
 }
 
+function createEventPokemon(eventName) {
+  pokeball.classList.add("is-hidden")
+  resetButton.classList.remove("is-hidden")
+
+    let randomVariety = Math.floor(Math.random()* (Object.keys(eventData[eventName]).length))+1
+    console.log(randomVariety);
+
+    const pkmnId = eventData[eventName][randomVariety].id
+    let specialId = pkmnId + "-" + eventData[eventName][randomVariety].specialId;
+    const pkmnName = eventData[eventName][randomVariety].name
+    const pkmnTypes = eventData[eventName][randomVariety].types
+    const imageId = eventData[eventName][randomVariety].imageid
+
+    addToPokedex(specialId, pkmnName, pkmnTypes, imageId, generateShiny(), pkmnId)
+}
+
 function warnErrorLoading(id) {
   const toast = new Toast({
     text: "Advarsel! En feil skjedde når vi lastet inn denne pokemonen. (" + id + ")",

@@ -1259,3 +1259,133 @@ var alternateFormsData = {
 
 
 }
+var eventData = {
+  "halloween": {
+        "1": {
+              "id": 249,
+              "specialId": "H1",
+              "name": "shadow lugia",
+              "imageid": 50001,
+              "types": ["dark","flying"]
+            },
+        "2": {
+              "id": 150,
+              "specialId": "H1",
+              "name": "shadow mewtwo",
+              "imageid": 10033,
+              "types": ["psychic","dark"]
+            },
+        "3": {
+              "id": 1,
+              "specialId": "H1",
+              "name": "pumpkin bulbasaur",
+              "imageid": 50016,
+              "types": ["grass","ghost"]
+            },
+        "4": {
+              "id": 133,
+              "specialId": "H1",
+              "name": "fall eevee",
+              "imageid": 50017,
+              "types": ["normal"]
+            },
+        "5": {
+              "id": 387,
+              "specialId": "H1",
+              "name": "fall turtwig",
+              "imageid": 50018,
+              "types": ["grass"]
+            },
+        "6": {
+              "id": 388,
+              "specialId": "H1",
+              "name": "fall grotle",
+              "imageid": 50019,
+              "types": ["grass"]
+            },
+        "7": {
+              "id": 389,
+              "specialId": "H1",
+              "name": "fall torterra",
+              "imageid": 50020,
+              "types": ["grass","ground"]
+            },
+        "8": {
+              "id": 470,
+              "specialId": "H1",
+              "name": "fall leafeon",
+              "imageid": 50021,
+              "types": ["grass","ground"]
+            },
+        "9": {
+              "id": 26,
+              "specialId": "H1",
+              "name": "vampire raichu",
+              "imageid": 50022,
+              "types": ["dark","electric"]
+            },
+        "10": {
+              "id": 27,
+              "specialId": "H1",
+              "name": "mummy sandshrew",
+              "imageid": 50023,
+              "types": ["dark","ground"]
+            },
+        "11": {
+              "id": 39,
+              "specialId": "H1",
+              "name": "devil jigglypuff",
+              "imageid": 50024,
+              "types": ["dark"]
+            },
+        "12": {
+              "id": 54,
+              "specialId": "H1",
+              "name": "frankenstein psyduck",
+              "imageid": 50025,
+              "types": ["dark","water"]
+            },
+        "13": {
+              "id": 175,
+              "specialId": "H1",
+              "name": "pumpkin togepi",
+              "imageid": 50026,
+              "types": ["dark","fairy"]
+            },
+        "14": {
+              "id": 194,
+              "specialId": "H1",
+              "name": "devil wooper",
+              "imageid": 50027,
+              "types": ["dark","water"]
+            },
+        "15": {
+              "id": 609,
+              "specialId": "H1",
+              "name": "Jack-O-Lantern chandelure",
+              "imageid": 50028,
+              "types": ["ghost","fire"]
+            },
+        "16": {
+              "id": 716,
+              "specialId": "H1",
+              "name": "shadow xerneas",
+              "imageid": 50029,
+              "types": ["dark","fairy"]
+            },
+        "17": {
+              "id": 742,
+              "specialId": "H1",
+              "name": "candy corn cutiefly",
+              "imageid": 50030,
+              "types": ["dark","fairy"]
+            },
+        "18": {
+              "id": 806,
+              "specialId": "H1",
+              "name": "ghost king blacephalon",
+              "imageid": 50031,
+              "types": ["fire","ghost"]
+            }
+        }
+  }

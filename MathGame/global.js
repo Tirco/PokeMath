@@ -1,6 +1,8 @@
 const newsButton = document.getElementById("update-log")
 const cookiePolicy = document.getElementById("cookie-container")
 
+//Halloween
+const halloweenbox = document.getElementById("halloween-egg")
 
 /**
  * Toast stuff
@@ -386,7 +388,6 @@ function loadAll() {
     window.localStorage.setItem('username',JSON.stringify(name))
   }
 
-
   state.totalScore = getStorageInt('money')
   state.pkmnCaught = getStorageInt('pkmncaught')
   state.pkmnList = getStorageArray('pokemonlist','|')
@@ -466,7 +467,13 @@ function acceptCookies(){
   if(cookiePolicy != null) {
     cookiePolicy.style = "display: none";
   }
-  document.cookie = "cookies=true"
+  const d = new Date();
+  d.setTime(d.getTime() + (90*24*60*60*1000)); //90 days from 1970
+  let expires = "expires="+ d.toUTCString();
+  document.cookie = "cookies=true;" + expires +";path=/"
 }
 
 loadAll();
+
+
+
