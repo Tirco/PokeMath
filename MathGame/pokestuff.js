@@ -248,7 +248,7 @@ function addToPokedex(id, pkmnName, pkmnTypes, imageId, generateShiny, baseId) {
       <div class="card ${shiny} ${legendary}">
         <div class="card-content">
           <div class="has-text-centered card-image">
-            <div class="card-image" style="background-image: url('${imageLink}'); height: 128px; width: 128px; background-size: cover; background-position: center; display: block;"></div>
+            <div class="card-image" style="background-image: url('${imageLink}');"></div>
             <div class="card-id"> #${randomPokemon}</div>
             <div id="cardcounter" class="card-counter">x${repeats}</div>
           </div>
@@ -272,4 +272,70 @@ function addToPokedex(id, pkmnName, pkmnTypes, imageId, generateShiny, baseId) {
   // Add to dex
   
   //Done!
+}
+
+function loadAllFromList(){
+
+}
+
+function loadAmountFromList(amount) {
+  for (var i = 0; i < amount; i++) {
+
+  }
+}
+
+function loadFromList(entry) {
+  var pokeList = state.pkmnList;
+  if(entry == null || entry == "") {
+    console.log("Error - No entry provided during LoadFromList!")
+    return;
+  }
+  //shiny, id, special-form, amount, legendary, mythic
+  var shiny = (Array.from(entry)[0]=='S');
+  console.log("Shiny: " + shiny);
+  var amount = getOccurrence(pokeList, entry);
+  console.log("Amount: " + amount);
+  var id = 0;
+  var halloweenPkmn = false;
+  var specialFormVariation = 0;
+  var legendary = ""
+  var legendaryText = ""
+  
+  if(entry.includes('-')) { //There's something Special!
+    var splitEntry = entry.split("-");
+    idString = splitEntry[0].replace(/\D/g,'');
+    id = Number(idString);
+    
+    if(splitEntry[1].includes('H')) {
+      halloweenPkmn = true;
+    } else if(splitEntry[1].includes('C')){
+      //TODO xmas
+    }
+    specialFormString = splitEntry[1].replace(/\D/g,'');
+    specialFormVariation = Number(specialFormString);
+    
+  } else {
+    idString = entry.replace(/\D/g,'');
+    id = Number(idString);
+  }
+  console.log("ID=" + id);
+  console.log("Halloween Pokemon = " + halloweenPkmn)
+  console.log("Special Form Variation:" + specialFormVariation)
+
+  //Is it legendary?
+    if(legendaries.includes(id)) {
+      legendary = `legendary`
+      legendaryText = "Legendarisk "
+    } else if(mythics.includes(id)) {
+      legendary = `mythic`
+      legendaryText = "Mytisk "
+    }
+    console.log("Spesielle variasjoner: " + legendaryText);
+
+}
+
+function getOccurrence(array, value) {
+  var count = 0;
+  array.forEach((v) => (v === value && count++));
+  return count;
 }

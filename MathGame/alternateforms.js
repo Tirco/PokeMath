@@ -167,7 +167,7 @@ var alternateFormsData = {
     },
     "38": {
       "1": {
-            "name": "alolan rapidash",
+            "name": "alolan ninetales",
             "imageid": 10104,
             "types": ["ice"]
           }

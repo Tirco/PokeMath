@@ -273,6 +273,14 @@ body.overlay-is-open .main-ui,
   color: #F8F8F8;
 }
 
+.card-image {
+  height: 128px; 
+  width: 128px; 
+  background-size: cover; 
+  background-position: center; 
+  display: block;
+}
+
 .type-normal {
   background-color: #A8A878;
   border-top-color: #f3f3a9;
