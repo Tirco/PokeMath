@@ -74,6 +74,7 @@ input {
   visibility: hidden;
   transition: all .33s ease-out;
   transform: scale(1.2);
+  z-index: 10000;
 }
 
 .overlay-inner {

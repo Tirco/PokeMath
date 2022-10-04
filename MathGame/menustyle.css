@@ -110,3 +110,36 @@
   }
 }
 
+.alert{
+  width:50%;
+  margin:20px auto;
+  padding:30px;
+  position: fixed;
+  bottom: 50px;
+  border-radius:5px;
+  box-shadow:0 0 15px 5px #ccc;
+}
+.close{
+  position:absolute;
+  width:30px;
+  height:30px;
+  opacity:0.5;
+  border-width:1px;
+  border-style:solid;
+  border-radius:50%;
+  right:15px;
+  top:25px;
+  text-align:center;
+  font-size:1.6em;
+  cursor:pointer;
+}
+
+.simple-alert {
+  background-color: #ebebeb;
+  border-left: 5px solid #ebebeb80;
+}
+
+.simple-alert .close{
+  border-color: 5px solid #66060680;
+  color: #e40d0d;
+}

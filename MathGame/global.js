@@ -428,7 +428,8 @@ function loadAll() {
   document.getElementById("t4solved").textContent = state.tier4Solved;
   document.getElementById("t5solved").textContent = state.tier5Solved;
   //document.getElementById("csolved").textContent = state.customSolved;
-  loadShop()
+  loadShop();
+  countVisit();
 }
 
 function getStorageString(key) {
@@ -471,6 +472,23 @@ function acceptCookies(){
   d.setTime(d.getTime() + (90*24*60*60*1000)); //90 days from 1970
   let expires = "expires="+ d.toUTCString();
   document.cookie = "cookies=true;" + expires +";path=/"
+}
+
+async function countVisit(){
+  if(checkACookieExists("cookies") && !(getStorageString('visitCounted'))) {
+    var xhr = new XMLHttpRequest();
+    path = "https://api.countapi.xyz/hit/pokemath.online/unicount";
+    xhr.open("GET", path); //"https://api.countapi.xyz/hit/pokemath.online/test"
+    xhr.responseType = "json";
+    xhr.onload = function() {
+      window.localStorage.setItem('visitCounted','true')
+      console.log("Visit counted.")
+    }
+    xhr.send();
+  } else {
+   // console.log("Requirements failed")
+  }
+  
 }
 
 loadAll();

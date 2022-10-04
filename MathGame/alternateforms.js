@@ -1272,7 +1272,7 @@ var eventData = {
               "id": 150,
               "specialId": "H1",
               "name": "shadow mewtwo",
-              "imageid": 10033,
+              "imageid": 50014,
               "types": ["psychic","dark"]
             },
         "3": {

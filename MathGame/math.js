@@ -587,6 +587,12 @@ function progressHalloweenEgg() {
 		return;
 	}
 	halloweenStats.eggStatus++;
+	updateHalloweenEggBar();
+	saveHalloween();
+	saveAll();
+}
+
+function updateHalloweenEggBar() {
 	if(halloweenStats.eggStatus < halloweenStats.eggNeeded) {
 		halloweenProgressBar.style.transform = `scaleX(${halloweenStats.eggStatus/halloweenStats.eggNeeded})`;
 		halloweenEgg.classList.add("animate__repeat-1");
@@ -596,9 +602,6 @@ function progressHalloweenEgg() {
 		halloweenProgressBar.classList.add("hallowenOpenEgg");
 		halloweenEgg.classList.add("animate__infinite");
 	}
-
-	saveHalloween();
-	saveAll();
 }
 
 function captureHalloweenPokemon() {
@@ -618,7 +621,7 @@ function captureHalloweenPokemon() {
 		halloweenStats.eggNeeded++;
 		halloweenStats.eggId = Math.floor(Math.random() * 5)+1;
 		updateEggImage();
-
+		saveHalloween();
 
 	} else {
 		return;
@@ -662,9 +665,36 @@ function loadHalloween() {
 	halloweenStats.eggId = getStorageInt('he-eggid');
 	updateEggImage();
 	halloweenStats.eggNeeded = getStorageInt('he-eggneeded');
-	halloweenStats.eggStatus = getStorageInt('he-eggsolved');
-	halloweenStats.eggSolved = getStorageInt('he-eggstatus');
+	halloweenStats.eggStatus = getStorageInt('he-eggstatus');
+	halloweenStats.eggSolved = getStorageInt('he-eggsolved');
 	halloweenProgressBar.style.transform = `scaleX(${halloweenStats.eggStatus/halloweenStats.eggNeeded})`;
+
+	updateHalloweenEggBar()
+
+	console.log("Buggfix")
+	let pokedex = document.getElementById("pokedex"); //Fix MewTwo
+	if(pokedex != null && pokedex.contains(document.getElementById("N150-H1"))) {
+		console.log("Found card")
+		card = pokedex.querySelector("#" + "N150-H1");
+		if(card == null) {
+			console.log("Error when updating MewTwo - Returning (Card)");
+			return;
+		}
+		console.log(card)
+		card.href = "images/pokemon/normal/50014.png";
+		console.log("Changed href!")
+		console.log(card);
+		image = card.querySelector(".card-image .card-image");
+		if(image == null) {
+			console.log("Error when updating MewTwo - Returning (Image)");
+			return;
+		}
+		console.log(image);
+		image.style = "background-image: url('images/pokemon/normal/50014.png');"
+		console.log("Changed image");
+	} else {
+		console.log("Could not find card")
+	}
   }
 
 onLoad()

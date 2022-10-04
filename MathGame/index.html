@@ -100,6 +100,8 @@
 		</div>
 	</div>
 <image src="" alt="" id="background"></image>
+
+
 <div id="id01" class="modal">
 	<span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
 	<form class="modal-content">
@@ -319,16 +321,24 @@
 </div>
 <div class="botbar">
 	<a href="https://docs.google.com/forms/d/e/1FAIpQLSfPSaP6xBqByUcgBCzj9akRM7vRFeUD0QuWZ2Z0uIyOqJHcPA/viewform?usp=sf_link">Hjelp oss med å bli bedre! Trykk her for å svare på en undersøkelse, og gi oss en tilbakemelding! (Google Forms)</a>
-	<a>Besøkende:</a>
+	<!--<a>Besøkende:</a>
 	<a id="visits">...</a>
 	<script>
 		function cb(response) {
 			document.getElementById('visits').innerText = response.value;
 		}
-	</script>
+	</script>-->
 	<script async src="https://api.countapi.xyz/hit/pokemath.online/visits?callback=cb"></script>
 	<a id="update-log" class="align-right" href="about.html#news">Nytt</a>
 </div>
+
+
+<div id="alertbox" class="alert simple-alert is-hidden"> <!-- is-hidden if hidden-->
+	<h3>Feilmelding</h3>
+	<p>Dette er en test.</p>
+	<a class="close" onclick="closeAlert()">&times;</a>
+</div>
+
 
 
 

@@ -37,4 +37,8 @@ function load(){
   menuFive.innerHTML = ` <div class="card-image" style="background-image: url('images/starter-${number}-5.png'); height: 128px; width: 128px; background-size: cover;">&nbsp;</div>`
 }
 
+function closeAlert() {
+  document.getElementById("alertbox").style.display = "none"
+}
+
 load()
