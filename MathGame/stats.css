@@ -1,0 +1,22 @@
+
+.statsCard {
+  background-color: rgb(46, 46, 46);
+  box-shadow: 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.5), 0 0 0 1px rgba(10, 10, 10, 0.2);
+  color: #1ed16f;
+  position: relative;
+	margin-left: 5px;
+	margin-right: 5px;
+  text-align: center;
+  margin-bottom: 10px;
+  font-size: 20 px;
+  font: Arial, Helvetica, sans-serif;
+  width: 260px;
+  height: 80px;
+  padding: 30px;
+  align-items: center;
+}
+
+.countup {
+  font-size: 50px;
+  font: Arial, Helvetica, sans-serif;
+}

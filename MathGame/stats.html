@@ -4,10 +4,15 @@
 <head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Pokémath</title>
-	<link rel="stylesheet" href="globalstyle.css??v=9">
-	<!--<link rel="stylesheet" href="cookies.css?v=1">-->
-	<link rel="stylesheet" href="menustyle.css??v=9">
+	<title>Pokémath - Stats</title>
+	<meta name="title" content="Pokémath - Stats">
+	<meta name="description" content="Statistikk for Pokémath.">
+	<meta name="robots" content="noindex, nofollow">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="author" content="Tirco">
+	<link rel="stylesheet" href="globalstyle.css?v=21">
+	<link rel="stylesheet" href="stats.css?v=21">
+	<link rel="stylesheet" href="menustyle.css?v=21">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 	<!-- <link rel="stylesheet" href="https://www.jsdelivr.com/package/npm/bulma> -->
 </head>
@@ -117,27 +122,95 @@
 		  </div>
 		</form>
 	  </div>
-<div class="main">
-	<div>
-		<a id="visits">...</a>
-		<script>
-			function cb(response) {
-				document.getElementById('visits').innerText = response.value;
+	<div class="main">
+		<SCRIPT language="JavaScript">
+			var password; 
+			//FUllstendig klar over at passordet står i klartekst.
+			//Ddet er til for å begrense antall mennesker som laster inn disse tallene. 
+			//Kan du lese koden, er du velkommen til å se på statistikksiden! :) (Bidra gjerne til utviklingen av nettsiden på Github!)
+			var pass1="jegkanlesekode"; 
+			password=prompt('Enter Password',' '); 
+			if (password==pass1) 
+				alert('Correct Password! Click OK to Enter!'); 
+			else { window.location="http://pokemath.online/"; 
 			}
-		</script>
-		<script async src="https://api.countapi.xyz/info/pokemath.online/visits?callback=cb"></script>
-		<button onClick="call()">Test</button>
-		<a id="btnClicks">...</a><br>
-		<a>Unique: </a><a id="uniCount">...</a>
+		</SCRIPT>
+		<div class="columns is-mobile is-multiline">
+			<div class="statsCard is-centered">
+				<a id="visits" class="countup">0</a><br>
+				<a>Front Page Loads</a>
+			</div>
+			
+			<div class="statsCard is-centered">
+				<a id="uniCount" class="countup">0</a><br>
+				<a>Created Players</a>
+			</div>
+
+			<div class="statsCard is-centered">
+				<a id="btnClicks" class="countup">0</a><br>
+				<a>Button Clicks</a>
+			</div>
+			<div class="statsCard is-centered">
+				<a id="mathLoads" class="countup">0</a><br>
+				<a>Math loads</a>
+			</div>
+			<div class="statsCard is-centered">
+				<a id="customizerLoads" class="countup">0</a><br>
+				<a>Customizer loads</a>
+			</div>
+			<div class="statsCard is-centered">
+				<a id="shopLoads" class="countup">0</a><br>
+				<a>Shop loads</a>
+			</div>
+			<div class="statsCard is-centered">
+				<a id="aboutLoads" class="countup">0</a><br>
+				<a>About loads</a>
+			</div>
+			<div class="statsCard is-centered">
+				<a id="statLoads" class="countup">0</a><br>
+				<a>Stats loads</a>
+			</div>
+			<div class="statsCard is-centered">
+				<a id="dexLoads" class="countup">0</a><br>
+				<a>Dex loads</a>
+			</div>
+			<div class="statsCard is-centered">
+				<a id="coinsEarned" class="countup">0</a><br>
+				<a>Coins Earned</a>
+			</div>
+			<div class="statsCard is-centered">
+				<a id="coinsSpendt" class="countup">0</a><br>
+				<a>Coins Spendt</a>
+			</div>
+			<div class="statsCard is-centered">
+				<a id="pokemonCaught" class="countup">0</a><br>
+				<a>Pokemon Caught</a>
+			</div>
+			<div class="statsCard is-centered">
+				<a id="tasksSolved" class="countup">0</a><br>
+				<a>Tasks Solved</a>
+			</div>
+			<div class="statsCard is-centered">
+				<a id="wrongAnswers" class="countup">0</a><br>
+				<a>Wrong Answers</a>
+			</div>
+			<div class="statsCard is-centered">
+				<a id="gf" class="countup">99999</a><br>
+				<a>Amount of Times my GF wanted my attention while making this</a>
+			</div>
+		</div> 
+
+		<button class="button-1" onClick="btnCall()">Test</button>
 	</div>
 </div>
 
 <div class="botbar">
 	<a id="update-log" class="align-right" href="about.html#news">Nytt</a>
 </div>
-
-<script src="global.js?v=9"></script>
-<script src="stats.js?v=9"></script>
+<script async src="https://api.countapi.xyz/hit/pokemath.online/statsVisited?callback=cb"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="global.js?v=21"></script>
+<script src="stats.js?v=21"></script>
 </body>
 
 </html>

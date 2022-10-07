@@ -120,7 +120,7 @@ function calculateCustomDifficulty() {
 			canClose: true,
 			badToast: true,
 		  })
-		console.log("stage is now " + mathValues.stage)
+		//console.log("stage is now " + mathValues.stage)
 		return 0;
 	}
 
@@ -130,9 +130,9 @@ function calculateCustomDifficulty() {
 	}
 	var avg = total / values.length;
 
-	console.log("avg = " + avg)
+	//console.log("avg = " + avg)
 	avg = Math.round(avg);
-	console.log("avg round = " + avg)
+	//console.log("avg round = " + avg)
 	if(avg > 5) { avg = 5; }
 	else if(avg < 1) { avg = 1};
 
@@ -162,7 +162,7 @@ function onLoad(){
     	  halloweenbox.classList.remove("is-hidden")
 	    }
   	} else {
-    	console.log("Ikke Halloween")
+    	//console.log("Ikke Halloween")
   	}
 
 	let params = new URLSearchParams(location.search);
@@ -295,11 +295,12 @@ function addMoney(){
 			break;
 		default:
 			value = 0;
-			break;
+			return;
 	}
 	money.dataset.added = '+' + value;
 	money.dataset.total = state.totalScore += value;
 	money.textContent = "";
+	statCounterAmount("update","coinsEarned",value);
 	if (state.totalScore) money.classList.add('animate');
   
 	setTimeout(() => {
@@ -314,6 +315,7 @@ function addFixedMoney(value){
 	money.dataset.added = '+' + value;
 	money.dataset.total = state.totalScore += value;
 	money.textContent = "";
+	statCounterAmount("update","coinsEarned",value);
 	if (state.totalScore) money.classList.add('animate');
   
 	setTimeout(() => {
@@ -428,8 +430,6 @@ function handleSubmit(e) {
 	}
 	
 	if(playerAnswer == correctAnswer || convertedPlayerAnswer == correctAnswer) {
-		console.log(mathValues.stage + " = ditt nivå")
-
 		if(mathValues.stage == 0) { //Juksepave pipelort!
 			state.score++
 			state.streak++
@@ -444,6 +444,7 @@ function handleSubmit(e) {
 
 		state.score++
 		state.streak++
+		statCounter("hit","tasksSolved");
 		pointsNeeded.textContent = 5 - state.score
 		addMoney()
     	mainUI.classList.add("ui-animate-correct")
@@ -483,6 +484,7 @@ function handleSubmit(e) {
 
 		state.wrongAnswers++
 		state.streak = 0;
+		statCounter("hit","wrongAnswers");
     	ourField.value = ""
 		mistakesAllowed.textContent = 2-state.wrongAnswers
 		ourField.focus()
@@ -605,7 +607,7 @@ function updateHalloweenEggBar() {
 }
 
 function captureHalloweenPokemon() {
-	if(true){//halloweenStats.eggStatus >= halloweenStats.eggNeeded) {
+	if(halloweenStats.eggStatus >= halloweenStats.eggNeeded){//halloweenStats.eggStatus >= halloweenStats.eggNeeded) {
 		let SpookyNormalPokemon = [19,20,52,53,88,89,92,93,94,105,187,198,200,215,222,228,228,261,262,264,275,302,353,354,355,356,359,425,426,429,430,434,435,442,452,461,477,478,479,487,491,509,510,562,563,570,571,607,608,609,629,630,633,634,635,679,680,681,708,709,710,711,717,720,769,770,778,781,792,799,800,802,827,828,854,855,859,860,861,862,864,867,877,885,886,887,893,897,898]
 		document.body.classList.add("overlay-is-open")
 		pokeball.classList.remove("is-hidden")
@@ -671,30 +673,30 @@ function loadHalloween() {
 
 	updateHalloweenEggBar()
 
-	console.log("Buggfix")
+	//Bugfix - Remove soon ish.
 	let pokedex = document.getElementById("pokedex"); //Fix MewTwo
 	if(pokedex != null && pokedex.contains(document.getElementById("N150-H1"))) {
-		console.log("Found card")
+		//console.log("Found card")
 		card = pokedex.querySelector("#" + "N150-H1");
 		if(card == null) {
-			console.log("Error when updating MewTwo - Returning (Card)");
+			//console.log("Error when updating MewTwo - Returning (Card)");
 			return;
 		}
-		console.log(card)
+		//console.log(card)
 		card.href = "images/pokemon/normal/50014.png";
-		console.log("Changed href!")
-		console.log(card);
+		//console.log("Changed href!")
+		//console.log(card);
 		image = card.querySelector(".card-image .card-image");
 		if(image == null) {
 			console.log("Error when updating MewTwo - Returning (Image)");
 			return;
 		}
-		console.log(image);
+		//console.log(image);
 		image.style = "background-image: url('images/pokemon/normal/50014.png');"
-		console.log("Changed image");
+		//console.log("Changed image");
 	} else {
 		console.log("Could not find card")
 	}
-  }
+}
 
 onLoad()

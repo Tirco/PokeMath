@@ -99,8 +99,8 @@ function createSpecificPokemon(id) {
 
   }
   
-  //Do normal fetch stuff
-  axios //Originalt fra Lesekloden.no TODO vurder å bytte ut.
+  //Do normal fetch stuff //Originalt fra Lesekloden.no TODO vurder å bytte ut.
+  axios
     .get(`https://pokeapi.co/api/v2/pokemon/${pokeNumber}`, {
       timeout: 5000,
     })
@@ -172,6 +172,7 @@ function addToPokedex(id, pkmnName, pkmnTypes, imageId, generateShiny, baseId) {
   let randomPokemon = id;
   //Update the statistics
   state.pkmnCaught++
+  statCounter("hit","pokemonCaught");
   pkmncaught.textContent = state.pkmnCaught
 
   
@@ -278,10 +279,28 @@ function loadAllFromList(){
 
 }
 
-function loadAmountFromList(amount) {
-  for (var i = 0; i < amount; i++) {
+function loadAmountFromList(amount, reverse) {
+  pokedex.innerHTML = "";
 
+  let fetchFrom = state.pkmnList;
+  if(reverse) {
+    fetchFrom.reverse();
   }
+  let fetched = [];
+  for (var i = 0; i < amount; i++) {
+    console.log("Loading #" + i + " of amount: " + amount)
+    if(fetchFrom[i] == null){
+      console.log("No more pokemon to fetch from - Breaking at " + i)
+      break;
+    } else if(!fetched.includes(fetchFrom[i])){
+      loadFromList(fetchFrom[i]);
+      fetched.push(fetchFrom[i]);
+    } else {
+      console.log(i + " was already loaded - increasig amount.")
+      amount++;
+    }
+  }
+  console.log("Finished! Fetched contains  " + fetched.length + " and has the following: " + fetched)
 }
 
 function loadFromList(entry) {
@@ -293,37 +312,77 @@ function loadFromList(entry) {
   //shiny, id, special-form, amount, legendary, mythic
   var shiny = (Array.from(entry)[0]=='S');
   console.log("Shiny: " + shiny);
-  var amount = getOccurrence(pokeList, entry);
-  console.log("Amount: " + amount);
+  var repeats = getOccurrence(pokeList, entry);
+  console.log("Amount: " + repeats);
   var id = 0;
+  var cardId = entry.substring(1);
   var halloweenPkmn = false;
   var specialFormVariation = 0;
   var legendary = ""
   var legendaryText = ""
+  var pkmnTypes = [];
+  var shinyTag = ``
+  var shinyText = ``
+  var pkmnName = "";
+  var imageId = 0;
+  var imageLink = "";
   
   if(entry.includes('-')) { //There's something Special!
     var splitEntry = entry.split("-");
     idString = splitEntry[0].replace(/\D/g,'');
     id = Number(idString);
-    
-    if(splitEntry[1].includes('H')) {
-      halloweenPkmn = true;
-    } else if(splitEntry[1].includes('C')){
-      //TODO xmas
-    }
     specialFormString = splitEntry[1].replace(/\D/g,'');
     specialFormVariation = Number(specialFormString);
+    if(splitEntry[1].includes('H')) {
+      halloweenPkmn = true;
+      pkmnName = eventData["halloween"][specialFormVariation].name
+      pkmnTypes = eventData["halloween"][specialFormVariation].types
+      imageId = eventData["halloween"][specialFormVariation].imageid
+    } else if(splitEntry[1].includes('C')){
+      //TODO xmas
+    } else {
+
+      pkmnTypes = alternateFormsData[id][specialFormVariation].types;
+      pkmnName = alternateFormsData[id][specialFormVariation].name
+      imageId = alternateFormsData[id][specialFormVariation].imageid
+    }
+
     
   } else {
     idString = entry.replace(/\D/g,'');
     id = Number(idString);
+    axios //Originalt fra Lesekloden.no TODO vurder å bytte ut.
+    .get(`https://pokeapi.co/api/v2/pokemon/${id}`, {
+      timeout: 5000,
+    })
+    .then((res) => {
+      pkmnName = res.data["name"];
+      res.data.types.forEach((type) => {
+        pkmnTypes.push(type.type.name);
+      });
+    })
+    .catch((err) => warnErrorLoading(id));
+    imageId = id;
+
+  } 
+
+
+  if(shiny == true) {
+    //SHINY - set the values.
+    shinyTag = `pokemon-shiny`
+    shinyText = `Shiny `
+    imageLink = `images/pokemon/shiny/${imageId}.png`
+  } else {
+    imageLink = `images/pokemon/normal/${imageId}.png`
   }
+
+
   console.log("ID=" + id);
   console.log("Halloween Pokemon = " + halloweenPkmn)
   console.log("Special Form Variation:" + specialFormVariation)
 
   //Is it legendary?
-    if(legendaries.includes(id)) {
+  if(legendaries.includes(id)) {
       legendary = `legendary`
       legendaryText = "Legendarisk "
     } else if(mythics.includes(id)) {
@@ -332,7 +391,37 @@ function loadFromList(entry) {
     }
     console.log("Spesielle variasjoner: " + legendaryText);
 
-}
+    let filterText = ("filtered "+entry+shinyText+legendaryText+" #"+id+" " + pkmnName);
+    let pkmnType = ''
+    const types = pkmnTypes.forEach((type) => {
+      pkmnType += `<span class="typecard type-${type}">${type}</span>`
+      filterText += " " + type;
+    })
+
+    pokedex.innerHTML = `
+    <a id=${entry} class="column is-narrow ${filterText}" style="cursor: pointer;" href=${imageLink} target="_blank">
+      <div class="card ${shinyTag} ${legendary}">
+        <div class="card-content">
+          <div class="has-text-centered card-image">
+            <div class="card-image" style="background-image: url('${imageLink}');"></div>
+            <div class="card-id"> #${cardId}</div>
+            <div id="cardcounter" class="card-counter">x${repeats}</div>
+          </div>
+        <div class="card-footer">
+          <p class="card-footer-item">
+            <strong style="text-transform: capitalize;">${pkmnName}&nbsp;</strong> 
+          </p>
+        </div>
+        <footer class="card-footer">
+          <p class="card-footer-item" style="text-transform: capitalize;">
+            ${pkmnType}
+          </p>
+        </footer>
+        </div>
+      </div>
+    </a>
+  ` + pokedex.innerHTML;
+}  
 
 function getOccurrence(array, value) {
   var count = 0;

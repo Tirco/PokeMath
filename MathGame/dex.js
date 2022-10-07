@@ -10,6 +10,8 @@ function sortOnLoad() {
   }).forEach( function ( elem ) {
     main.appendChild( elem );
   });
+
+  //Update bottom text
   document.getElementById("amountCaught2").textContent = document.getElementsByClassName('card').length
   document.getElementById("amountCaught").textContent = state.pkmnCaught;
 }

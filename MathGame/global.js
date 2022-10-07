@@ -296,7 +296,7 @@ function loadPlayerIcon(){
 
 function saveAll(){
   if(checkACookieExists("cookies")) {
-    console.log("Saving all - Cookies are accepted")
+    //console.log("Saving all - Cookies are accepted")
   } else {
     const toast = new Toast({
       text: "Du har ikke godkjent bruken av Cookies, så vi kan ikke lagre din spillerdate på din enhet.",
@@ -476,6 +476,9 @@ function acceptCookies(){
 
 async function countVisit(){
   if(checkACookieExists("cookies") && !(getStorageString('visitCounted'))) {
+    statCounter("hit","unicount");
+    window.localStorage.setItem('visitCounted','true')
+    /*
     var xhr = new XMLHttpRequest();
     path = "https://api.countapi.xyz/hit/pokemath.online/unicount";
     xhr.open("GET", path); //"https://api.countapi.xyz/hit/pokemath.online/test"
@@ -484,14 +487,45 @@ async function countVisit(){
       window.localStorage.setItem('visitCounted','true')
       console.log("Visit counted.")
     }
-    xhr.send();
+    xhr.send(); */
   } else {
    // console.log("Requirements failed")
   }
   
 }
 
+window.addEventListener( "pageshow", function ( event ) {
+  var historyTraversal = event.persisted || 
+                         ( typeof window.performance != "undefined" && 
+                         window.performance.getEntriesByType("navigation")[0].type === "back_forward" );
+  if ( historyTraversal ) {
+    // Handle page restore.
+    console.log("Forcing reload")
+    //window.location.reload();
+    loadAll();
+  }
+});
+
+async function statCounter(type, key){
+  var xhr = new XMLHttpRequest();
+  path = "https://api.countapi.xyz/" + type + "/pokemath.online/" + key;
+  xhr.open("GET", path); //"https://api.countapi.xyz/hit/pokemath.online/test"
+  xhr.responseType = "json";
+  xhr.onload = function() {
+    //console.log("Hit " + key + "!")
+  }
+  xhr.send();
+}
+
+async function statCounterAmount(type, key, amount){
+  var xhr = new XMLHttpRequest();
+  path = "https://api.countapi.xyz/" + type + "/pokemath.online/" + key + "?amount=" + amount;
+  xhr.open("GET", path); //"https://api.countapi.xyz/hit/pokemath.online/test"
+  xhr.responseType = "json";
+  xhr.onload = function() {
+    //console.log(type + " " + key + " with value " + amount + "! " + path)
+  }
+  xhr.send();
+}
+
 loadAll();
-
-
-

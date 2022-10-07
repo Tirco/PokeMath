@@ -465,6 +465,7 @@ function shopButtonUpgrade(btn){
 
 function moneySubAnimation(value) {
     money = document.querySelector(".money");
+    statCounterAmount("update","coinsSpendt",value);
     money.dataset.added = '-' + value;
 	money.dataset.total = state.totalScore;
 	money.textContent = "";

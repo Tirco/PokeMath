@@ -4,6 +4,7 @@
         "categoryname",
         "customizerform",
         "pokeball",
+        "pokedex",
         "trainercard"
     ],
     "editor.fontSize": 14
