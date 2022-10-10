@@ -276,13 +276,13 @@ function addToPokedex(id, pkmnName, pkmnTypes, imageId, generateShiny, baseId) {
 }
 
 function loadAllFromList(){
-
+  loadAmountFromList(state.pkmnList.length, true)
 }
 
 function loadAmountFromList(amount, reverse) {
   pokedex.innerHTML = "";
 
-  let fetchFrom = state.pkmnList;
+  let fetchFrom =  state.pkmnList.map((x) => x);
   if(reverse) {
     fetchFrom.reverse();
   }
@@ -311,9 +311,9 @@ function loadFromList(entry) {
   }
   //shiny, id, special-form, amount, legendary, mythic
   var shiny = (Array.from(entry)[0]=='S');
-  console.log("Shiny: " + shiny);
+  //console.log("Shiny: " + shiny);
   var repeats = getOccurrence(pokeList, entry);
-  console.log("Amount: " + repeats);
+  //console.log("Amount: " + repeats);
   var id = 0;
   var cardId = entry.substring(1);
   var halloweenPkmn = false;
@@ -351,19 +351,9 @@ function loadFromList(entry) {
   } else {
     idString = entry.replace(/\D/g,'');
     id = Number(idString);
-    axios //Originalt fra Lesekloden.no TODO vurder å bytte ut.
-    .get(`https://pokeapi.co/api/v2/pokemon/${id}`, {
-      timeout: 5000,
-    })
-    .then((res) => {
-      pkmnName = res.data["name"];
-      res.data.types.forEach((type) => {
-        pkmnTypes.push(type.type.name);
-      });
-    })
-    .catch((err) => warnErrorLoading(id));
+    pkmnTypes = pokemondata[id].types;
+    pkmnName = pokemondata[id].name
     imageId = id;
-
   } 
 
 
@@ -377,9 +367,9 @@ function loadFromList(entry) {
   }
 
 
-  console.log("ID=" + id);
-  console.log("Halloween Pokemon = " + halloweenPkmn)
-  console.log("Special Form Variation:" + specialFormVariation)
+  //console.log("ID=" + id);
+  //console.log("Halloween Pokemon = " + halloweenPkmn)
+  //console.log("Special Form Variation:" + specialFormVariation)
 
   //Is it legendary?
   if(legendaries.includes(id)) {
@@ -389,7 +379,7 @@ function loadFromList(entry) {
       legendary = `mythic`
       legendaryText = "Mytisk "
     }
-    console.log("Spesielle variasjoner: " + legendaryText);
+    //console.log("Spesielle variasjoner: " + legendaryText);
 
     let filterText = ("filtered "+entry+shinyText+legendaryText+" #"+id+" " + pkmnName);
     let pkmnType = ''

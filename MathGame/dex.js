@@ -3,6 +3,7 @@ filterSelection("all")
 
 
 function sortOnLoad() {
+
   var main = document.getElementById("pokedex");
 
   [].map.call( main.children, Object ).sort( function ( a, b ) {
@@ -16,6 +17,7 @@ function sortOnLoad() {
   document.getElementById("amountCaught").textContent = state.pkmnCaught;
 }
 
+loadAllFromList();
 sortOnLoad();
 
 function filterSelection(filterKeyToAdd) {
