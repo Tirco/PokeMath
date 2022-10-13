@@ -952,11 +952,19 @@ hr {
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
+  -webkit-transition: all 250ms;
+  -moz-transition: all 250ms;
+  -ms-transition: all 250ms;
+  -o-transition: all 250ms;
 }
 
 .button-1:hover:not(.disabled):not(.centerposition) {
   box-shadow: rgba(44,187,99,.35) 0 -25px 18px -14px inset,rgba(44,187,99,.25) 0 1px 2px,rgba(44,187,99,.25) 0 2px 4px,rgba(44,187,99,.25) 0 4px 8px,rgba(44,187,99,.25) 0 8px 16px,rgba(44,187,99,.25) 0 16px 32px;
   transform: scale(1.05) rotate(-1deg);
+  -webkit-transform: scale(1.05) rotate(-1deg);
+  -moz-transform: scale(1.05) rotate(-1deg);
+  -ms-transform: scale(1.05) rotate(-1deg);
+  -o-transform: scale(1.05) rotate(-1deg);
 }
 
 /* CSS */
@@ -977,6 +985,10 @@ hr {
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
+  -webkit-transition: all 250ms;
+  -moz-transition: all 250ms;
+  -ms-transition: all 250ms;
+  -o-transition: all 250ms;
 }
 .cookie-container{
   position: fixed;
@@ -1013,10 +1025,18 @@ hr {
   box-shadow: 0 10px 15px -3px rgb(0 0 0 / 10%), 0 4px 6px 4px rgb(0 0 0 / 30%);
   background-color: rgb(246, 158, 104);
   transition: transform 2s;
+  -webkit-transition: transform 2s;
+  -moz-transition: transform 2s;
+  -ms-transition: transform 2s;
+  -o-transition: transform 2s;
 }
 
 .hide-egg {
   transform: translateX(-160px);
+  -webkit-transform: translateX(-160px);
+  -moz-transform: translateX(-160px);
+  -ms-transform: translateX(-160px);
+  -o-transform: translateX(-160px);
 }
 
 .halloween-egg-image {
@@ -1053,6 +1073,8 @@ hr {
   text-align: center;
   box-shadow: 0 4px 4px 4px rgb(0 0 0 / 10%);
   background-color: rgb(249, 105, 16);
+  -webkit-writing-mode: vertical-rl;
+  -ms-writing-mode: vertical-rl;
 }
 
 .halloween-egg-closer:hover{
@@ -1070,6 +1092,14 @@ hr {
   transform: scaleX(0);
   transform-origin: center left;
   transition: transform .4s ease-out;
+  -webkit-transform: scaleX(0);
+  -moz-transform: scaleX(0);
+  -ms-transform: scaleX(0);
+  -o-transform: scaleX(0);
+  -webkit-transition: transform .4s ease-out;
+  -moz-transition: transform .4s ease-out;
+  -ms-transition: transform .4s ease-out;
+  -o-transition: transform .4s ease-out;
 }
 
 .hallowenOpenEgg {
@@ -1085,6 +1115,10 @@ hr {
   top:50%;
   left:50%;
   transform:translate(-50%,-50%);
+  -webkit-transform:translate(-50%,-50%);
+  -moz-transform:translate(-50%,-50%);
+  -ms-transform:translate(-50%,-50%);
+  -o-transform:translate(-50%,-50%);
 }
 
 .hallowenOpenEgg:hover {
@@ -1092,3 +1126,20 @@ hr {
   cursor: pointer;
 }
 
+.center {
+  margin: auto;
+  width: 50%;
+  padding: 10px;
+}
+
+.datasection {
+  background-color: rgba(255, 255, 255, 0.377);
+  padding: 50px;
+  margin-bottom: 20px;
+}
+
+.saveupload {
+  display: block;
+  width: 100%;
+  cursor: pointer;
+}

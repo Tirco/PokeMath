@@ -397,9 +397,10 @@ function loadAll() {
   state.tier4Solved = getStorageInt('tier4Solved')
   state.tier5Solved = getStorageInt('tier5Solved')
   state.customSolved = getStorageInt('customSolved')
+  /**
   if(document.getElementById("pokedex")!=null){
     document.getElementById("pokedex").innerHTML = getStorageString('pokedex')
-  }
+  } */
 
   state.username = getStorageString('username')
   if(state.username.length > 22) {

@@ -11,16 +11,18 @@ const mythics = Object.freeze([151,251,385,386,489,490,492,493,494,647,648,649,7
 const specialforms = Object.freeze([3,6,9,12,15,18,19,20,25,26,27,28,37,38,50,51,52,53,58,59,65,68,74,75,76,77,78,79,80,83,88,89,94,99,100,101,103,105,110,115,122,127,130,131,133,142,143,144,145,146,150,157,181,199,208,211,212,214,215,222,229,248,254,257,260,263,264,282,302,303,306,308,310,319,323,334,351,354,359,362,373,376,380,381,382,383,384,386,413,428,445,448,460,475,479,483,484,492,503,531,549,550,554,555,562,569,570,571,618,628,641,642,645,646,647,648,658,681,705,706,710,711,713,718,719,720,724,741,778,809,812,815,818,823,826,834,839,841,842,844,849,851,858,861,869,879,884,890,892,905])
 const specialbonus = 3
 
-var shinyChance = (512 + 5 - ((mathValues.stage*10) + (shopOptions.shinyLevel * 3)));
+var shinyChance = (301 - (shopOptions.shinyLevel * 2)); //Shinycharm max value = 150. 150*2 = 300
 
 //For use in informational bits. Currently only used in console.
 function shinyChancePercentage(partialValue, totalValue) {
   return "" + (100 / shinyChance).toFixed(4) + "%"
 } 
-//Special stuff for Pokémon with multiple forms and event pokemon.
-pokeball.addEventListener('click', () => { 
-  createRandomPokemon()
-})
+
+if(pokeball != null) {
+  pokeball.addEventListener('click', () => { 
+    createRandomPokemon()
+  })
+}
 
 /**
  * Function to always create a special pokemon. 
@@ -78,52 +80,72 @@ function createRandomPokemon(){
  * @param {} id The ID of the pokemon to give to the user.
  * @returns 
  */
+
 function createSpecificPokemon(id) {
 
   let pokeNumber = id;
   pokeball.classList.add("is-hidden")
   resetButton.classList.remove("is-hidden")
 
+  let pokemonObjectSet = pokemondata[id];
+  let specialId = id;
+  let imageId = id;
+
   if(specialforms.includes(id)) {
     let randomVariety = Math.floor(Math.random()* (Object.keys(alternateFormsData[id]).length+1))
-    if(randomVariety != 0 && (Math.random() > (0.7 - ((Number(mathValues.stage) * 0.1))))) {
+    if(randomVariety != 0 && (Math.random() > (0.4))) {
       //Get a special variety
-      let specialId = id + "-" + randomVariety;
-      const pkmnName = alternateFormsData[id][randomVariety].name
-      const pkmnTypes = alternateFormsData[id][randomVariety].types
-      const imageId = alternateFormsData[id][randomVariety].imageid
-
-      addToPokedex(specialId, pkmnName, pkmnTypes, imageId, generateShiny(), id)
-      return; //Don't do the rest!
+      specialId = id + "-" + randomVariety;
+      pokemonObjectSet = alternateFormsData[id][randomVariety];
+      imageId = pokemonObjectSet.imageid
+    } else {
+      randomVariety = "";
     }
 
   }
-  
-  //Do normal fetch stuff //Originalt fra Lesekloden.no TODO vurder å bytte ut.
-  axios
-    .get(`https://pokeapi.co/api/v2/pokemon/${pokeNumber}`, {
-      timeout: 5000,
-    })
-    .then((res) => addToDexFromRes(pokeNumber,generateShiny(),res))
-    .catch((err) => warnErrorLoading(id))
+  //Load the normal pokemon.
+  let pkmnName = pokemonObjectSet.name
+  let pkmnTypes = pokemonObjectSet.types
 
+  //Failsafes
+  if(pkmnName == "" || pkmnName == null) {
+    pkmnName = "???";
+  }
+  if(pkmnTypes == null || pkmnTypes.length === 0) {
+    pkmnTypes = ["Unknown"];
+  }
+  addToPokedex(specialId, pkmnName, pkmnTypes, imageId, generateShiny(), id);
 }
 
 function createEventPokemon(eventName) {
   pokeball.classList.add("is-hidden")
   resetButton.classList.remove("is-hidden")
 
-    let randomVariety = Math.floor(Math.random()* (Object.keys(eventData[eventName]).length))+1
-    console.log(randomVariety);
-
-    const pkmnId = eventData[eventName][randomVariety].id
-    let specialId = pkmnId + "-" + eventData[eventName][randomVariety].specialId;
-    const pkmnName = eventData[eventName][randomVariety].name
-    const pkmnTypes = eventData[eventName][randomVariety].types
-    const imageId = eventData[eventName][randomVariety].imageid
+    let eventKeys = eventData[eventName];
+    console.log(eventKeys);
+    let randomID = getRandomProperty(eventKeys)
+    console.log("Random Object from " + eventName + ":")
+    console.log(randomID);
+    let eventSubKeys = randomID;
+    console.log("Event sub keys:")
+    console.log(eventSubKeys);
+    console.log("Random Variety Object:")
+    let randomVarietyObject = getRandomProperty(eventSubKeys);
+    console.log(randomVarietyObject);
+    const pkmnId = randomVarietyObject.id;
+    let specialId = pkmnId + "-" + randomVarietyObject.specialId;
+    const pkmnName = randomVarietyObject.name
+    const pkmnTypes = randomVarietyObject.types
+    const imageId = randomVarietyObject.imageid
 
     addToPokedex(specialId, pkmnName, pkmnTypes, imageId, generateShiny(), pkmnId)
 }
+
+function getRandomProperty(obj){
+  var keys = Object.keys(obj);
+  return obj[keys[ keys.length * Math.random() << 0]];
+};
+
 
 function warnErrorLoading(id) {
   const toast = new Toast({
@@ -150,6 +172,7 @@ function generateShiny() {
  * @param {*} generateShiny Should the player get a shiny?
  * @param {*} res The pokemon json bit.
  */
+/** Outdated as of Oct 2022
 function addToDexFromRes(randomPokemon,generateShiny,res){
   const pkmnName = res.data["name"]
   const pkmnTypes = []
@@ -158,7 +181,7 @@ function addToDexFromRes(randomPokemon,generateShiny,res){
   })
   let imageId = randomPokemon;
   addToPokedex(randomPokemon, pkmnName, pkmnTypes, imageId, generateShiny, randomPokemon)
-}
+}*/
 
 
  //Deler av denne koden er originalt fra Lesekloden.no TODO vurder å bytte ut.
@@ -316,7 +339,6 @@ function loadFromList(entry) {
   //console.log("Amount: " + repeats);
   var id = 0;
   var cardId = entry.substring(1);
-  var halloweenPkmn = false;
   var specialFormVariation = 0;
   var legendary = ""
   var legendaryText = ""
@@ -335,9 +357,9 @@ function loadFromList(entry) {
     specialFormVariation = Number(specialFormString);
     if(splitEntry[1].includes('H')) {
       halloweenPkmn = true;
-      pkmnName = eventData["halloween"][specialFormVariation].name
-      pkmnTypes = eventData["halloween"][specialFormVariation].types
-      imageId = eventData["halloween"][specialFormVariation].imageid
+      pkmnName = eventData["halloween"][id][specialFormVariation].name
+      pkmnTypes = eventData["halloween"][id][specialFormVariation].types
+      imageId = eventData["halloween"][id][specialFormVariation].imageid
     } else if(splitEntry[1].includes('C')){
       //TODO xmas
     } else {

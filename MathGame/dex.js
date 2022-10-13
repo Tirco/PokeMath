@@ -4,13 +4,29 @@ filterSelection("all")
 
 function sortOnLoad() {
 
-  var main = document.getElementById("pokedex");
+  var mylist = document.getElementById("pokedex");
 
+  var divs = mylist.getElementsByTagName('card');
+  var listitems = [];
+  for (i = 0; i < divs.length; i++) {
+    listitems.push(divs.item(i));
+  }
+
+  listitems.sort(function(a, b) {
+    var compA = a.getAttribute('id').toUpperCase();
+    var compB = b.getAttribute('id').toUpperCase();
+    return (compA < compB) ? -1 : (compA > compB) ? 1 : 0;
+  });
+  
+  for (i = 0; i < listitems.length; i++) {
+    mylist.appendChild(listitems[i]);
+  }
+  /** 
   [].map.call( main.children, Object ).sort( function ( a, b ) {
     return +a.id.match( /\d+/ ) - +b.id.match( /\d+/ );
   }).forEach( function ( elem ) {
     main.appendChild( elem );
-  });
+  });*/
 
   //Update bottom text
   document.getElementById("amountCaught2").textContent = document.getElementsByClassName('card').length
