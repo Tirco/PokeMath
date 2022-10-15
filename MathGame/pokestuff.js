@@ -192,6 +192,23 @@ function addToDexFromRes(randomPokemon,generateShiny,res){
  * @param {*} generateShiny = 0 for shiny, 1+ for not.
  */
 function addToPokedex(id, pkmnName, pkmnTypes, imageId, generateShiny, baseId) {
+  if(true) {
+    let entry = "";
+    if(generateShiny === 0) {
+      entry = "S"+id;
+    } else {
+      entry = "N"+id;
+    }
+    
+    state.pkmnCaught++
+    statCounter("hit","pokemonCaught");
+    pkmncaught.textContent = state.pkmnCaught
+    state.pkmnList.push(entry);
+    loadFromList(entry,false,true);
+    return;
+  }
+  
+  /** Behind here is old stuff */
   let randomPokemon = id;
   //Update the statistics
   state.pkmnCaught++
@@ -266,7 +283,7 @@ function addToPokedex(id, pkmnName, pkmnTypes, imageId, generateShiny, baseId) {
       filterText += " " + type;
     })
 
-    //Add a new pokemon card to the dex. //Originalt fra Lesekloden.no TODO vurder å bytte ut.
+    //Add a new pokemon card to the dex.
     pokedex.innerHTML = `
     <a id=${identifier} class="column is-narrow ${filterText}" style="cursor: pointer;" href=${imageLink} target="_blank">
       <div class="card ${shiny} ${legendary}">
@@ -316,7 +333,7 @@ function loadAmountFromList(amount, reverse) {
       console.log("No more pokemon to fetch from - Breaking at " + i)
       break;
     } else if(!fetched.includes(fetchFrom[i])){
-      loadFromList(fetchFrom[i]);
+      loadFromList(fetchFrom[i],true, false);
       fetched.push(fetchFrom[i]);
     } else {
       console.log(i + " was already loaded - increasig amount.")
@@ -326,12 +343,21 @@ function loadAmountFromList(amount, reverse) {
   console.log("Finished! Fetched contains  " + fetched.length + " and has the following: " + fetched)
 }
 
-function loadFromList(entry) {
+function loadFromList(entry, firstLoad, capture) {
+  if(firstLoad == null) {
+    firstLoad = false;
+  }
+  if(capture == null) {
+    capture = false;
+  }
+
   var pokeList = state.pkmnList;
+  
   if(entry == null || entry == "") {
     console.log("Error - No entry provided during LoadFromList!")
     return;
   }
+
   //shiny, id, special-form, amount, legendary, mythic
   var shiny = (Array.from(entry)[0]=='S');
   //console.log("Shiny: " + shiny);
@@ -348,7 +374,7 @@ function loadFromList(entry) {
   var pkmnName = "";
   var imageId = 0;
   var imageLink = "";
-  
+
   if(entry.includes('-')) { //There's something Special!
     var splitEntry = entry.split("-");
     idString = splitEntry[0].replace(/\D/g,'');
@@ -378,6 +404,15 @@ function loadFromList(entry) {
     imageId = id;
   } 
 
+    
+  //Is it legendary?
+  if(legendaries.includes(id)) {
+    legendary = `legendary`
+    legendaryText = "Legendarisk "
+  } else if(mythics.includes(id)) {
+    legendary = `mythic`
+    legendaryText = "Mytisk "
+  }
 
   if(shiny == true) {
     //SHINY - set the values.
@@ -388,29 +423,52 @@ function loadFromList(entry) {
     imageLink = `images/pokemon/normal/${imageId}.png`
   }
 
-
-  //console.log("ID=" + id);
-  //console.log("Halloween Pokemon = " + halloweenPkmn)
-  //console.log("Special Form Variation:" + specialFormVariation)
-
-  //Is it legendary?
-  if(legendaries.includes(id)) {
-      legendary = `legendary`
-      legendaryText = "Legendarisk "
-    } else if(mythics.includes(id)) {
-      legendary = `mythic`
-      legendaryText = "Mytisk "
-    }
-    //console.log("Spesielle variasjoner: " + legendaryText);
-
-    let filterText = ("filtered "+entry+shinyText+legendaryText+" #"+id+" " + pkmnName);
-    let pkmnType = ''
-    const types = pkmnTypes.forEach((type) => {
+  let filterText = ("filtered #"+entry+shinyText+legendaryText+" #"+id+" " + pkmnName);
+  let pkmnType = ''
+  const types = pkmnTypes.forEach((type) => {
       pkmnType += `<span class="typecard type-${type}">${type}</span>`
       filterText += " " + type;
-    })
+  })
 
-    pokedex.innerHTML = `
+    /** Are we capturing this? */
+  if(capture) {
+      const toast = new Toast({
+          text: `Du fanget en ${shinyText}${legendaryText}${pkmnName}`,
+          position: "top-right",
+          pauseOnHover: true,
+          pauseOnFocusLoss: true,
+          canClose: true,
+          badToast: false,
+      })
+      // Display on screen
+      endMessage.textContent = `Du fanget en ${shinyText}${legendaryText}${pkmnName}!`
+      newCatchInfo.innerHTML = 
+      `<div class="has-text-centered">
+        <div style="background-image: url('${imageLink}'); height: 128px; width: 128px; background-size: cover; display: block;margin-left:auto; margin-right:auto;">&nbsp;</div>
+      </div>`
+  }
+
+        //Check if pokedex has the identifier already, if it does, update it.
+  if(repeats > 1 && !firstLoad && capture) {
+      //Update existing pokemon.
+      let card = document.getElementById(entry);
+      var repeatMoney = (100 + (shopOptions.coinLevel * 20));
+      endMessage.textContent = `Du fanget en ${shinyText}${legendaryText}${pkmnName}!\r\nSiden du allerede har denne pokémonen, fikk du ${repeatMoney} mynter istedet.`
+      addFixedMoney(repeatMoney)
+      if(pokedex.contains(document.getElementById(entry))) {
+        console.log("dex has entry")
+      }
+      if(card == null) {
+        //Just create the card
+      } else {
+        //Update existing card
+        counter = card.querySelector("#cardcounter")
+        counter.textContent = ("x" + repeats);
+        return;
+      }
+  }
+
+    let inputHTML = `
     <a id=${entry} class="column is-narrow ${filterText}" style="cursor: pointer;" href=${imageLink} target="_blank">
       <div class="card ${shinyTag} ${legendary}">
         <div class="card-content">
@@ -432,7 +490,13 @@ function loadFromList(entry) {
         </div>
       </div>
     </a>
-  ` + pokedex.innerHTML;
+  `;
+    if(firstLoad) {
+      pokedex.innerHTML = pokedex.innerHTML + inputHTML;
+    } else {
+      pokedex.innerHTML = inputHTML + pokedex.innerHTML;
+    }
+    
 }  
 
 function getOccurrence(array, value) {

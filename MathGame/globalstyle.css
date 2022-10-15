@@ -601,7 +601,7 @@ a.tag:hover {
   display: none;
   position: absolute;
   right: 0;
-  width: 150px;
+  width: 160px;
   left: auto;
   float: right;
   padding-right: 0px;
@@ -614,10 +614,13 @@ a.tag:hover {
 .dropdown-content a {
   background-color: #333;
   color: #f2f2f2;
-  padding: 12px 16px;
+  padding: 8px;
   text-decoration: none;
+  height: fit-content;
   display: block;
   text-align: left;
+  font-size: 16;
+  margin-top: auto;
 }
 
 /* Add a grey background color to dropdown links on hover */
@@ -1133,9 +1136,12 @@ hr {
 }
 
 .datasection {
-  background-color: rgba(255, 255, 255, 0.377);
-  padding: 50px;
+  background-color: rgba(255, 255, 255, 0.656);
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 10%), 0 4px 6px 4px rgb(0 0 0 / 30%);
+  padding: 20px;
   margin-bottom: 20px;
+  z-index:1;
+  border-radius: 10px;
 }
 
 .saveupload {
@@ -1143,3 +1149,51 @@ hr {
   width: 100%;
   cursor: pointer;
 }
+
+.img-downloadSection{
+  background-image: url("./images/down-arrow.png");
+  background-repeat: no-repeat;
+  background-position: bottom right;
+  background-size: 5vw;
+  display: block;
+  margin-left: auto;
+  z-index:-10;
+}
+
+.img-uploadSection{
+  background-image: url("./images/up-arrow.png");
+  background-repeat: no-repeat;
+  background-position: top right;
+  background-size: 5vw;
+  display: block;
+  margin-left: auto;
+  z-index:-10;
+}
+
+.cd-faq__items {
+  position: fixed;
+  height: 100%;
+  width: 90%;
+  top: 0;
+  right: 0;
+  transform: translateZ(0) translateX(100%);
+  transition: transform .3s;
+}
+
+.cd-faq__items--slide-in {
+  transform: translateX(0);
+}
+
+  .cd-faq {
+    display: flex;
+  }
+
+  .cd-faq__categories {
+    position: sticky;
+    top: 20px;
+    width: 200px;
+  }
+
+  .cd-faq__items {
+    flex-grow: 1;
+  }

@@ -4,33 +4,20 @@ filterSelection("all")
 
 function sortOnLoad() {
 
-  var mylist = document.getElementById("pokedex");
-
-  var divs = mylist.getElementsByTagName('card');
-  var listitems = [];
-  for (i = 0; i < divs.length; i++) {
-    listitems.push(divs.item(i));
-  }
-
-  listitems.sort(function(a, b) {
-    var compA = a.getAttribute('id').toUpperCase();
-    var compB = b.getAttribute('id').toUpperCase();
-    return (compA < compB) ? -1 : (compA > compB) ? 1 : 0;
+  var main = document.getElementById("pokedex");
+  [].map.call( main.children, Object ).sort((a,b) => a.id.localeCompare(b.id,'en', {numeric: true})).forEach( function ( elem ) {
+    main.appendChild( elem );
   });
-  
-  for (i = 0; i < listitems.length; i++) {
-    mylist.appendChild(listitems[i]);
-  }
-  /** 
-  [].map.call( main.children, Object ).sort( function ( a, b ) {
+  /**  [].map.call( main.children, Object ).sort( function ( a, b ) {
     return +a.id.match( /\d+/ ) - +b.id.match( /\d+/ );
   }).forEach( function ( elem ) {
     main.appendChild( elem );
-  });*/
+  }); */
 
   //Update bottom text
   document.getElementById("amountCaught2").textContent = document.getElementsByClassName('card').length
   document.getElementById("amountCaught").textContent = state.pkmnCaught;
+  filterSelection("all");
 }
 
 loadAllFromList();

@@ -672,31 +672,6 @@ function loadHalloween() {
 	halloweenProgressBar.style.transform = `scaleX(${halloweenStats.eggStatus/halloweenStats.eggNeeded})`;
 
 	updateHalloweenEggBar()
-
-	//Bugfix - Remove soon ish.
-	let pokedex = document.getElementById("pokedex"); //Fix MewTwo
-	if(pokedex != null && pokedex.contains(document.getElementById("N150-H1"))) {
-		//console.log("Found card")
-		card = pokedex.querySelector("#" + "N150-H1");
-		if(card == null) {
-			//console.log("Error when updating MewTwo - Returning (Card)");
-			return;
-		}
-		//console.log(card)
-		card.href = "images/pokemon/normal/50014.png";
-		//console.log("Changed href!")
-		//console.log(card);
-		image = card.querySelector(".card-image .card-image");
-		if(image == null) {
-			console.log("Error when updating MewTwo - Returning (Image)");
-			return;
-		}
-		//console.log(image);
-		image.style = "background-image: url('images/pokemon/normal/50014.png');"
-		//console.log("Changed image");
-	} else {
-		console.log("Could not find card")
-	}
 }
 
 onLoad()
