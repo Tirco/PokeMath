@@ -5,8 +5,8 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Pokémath</title>
-	<link rel="stylesheet" href="globalstyle.css?v=21">
-	<link rel="stylesheet" href="menustyle.css?v=21">
+	<link rel="stylesheet" href="globalstyle.css?v=22">
+	<link rel="stylesheet" href="menustyle.css?v=22">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 	<meta name="title" content="Pokemath">
 	<meta name="description" content="En nettside hvor man kan øve på de fire regneartene og få informasjon om ulike pokemon når man løser nok oppgaver.">
@@ -343,11 +343,27 @@
 
 
 <div id="alertbox" class="alert simple-alert is-hidden-"> <!-- is-hidden if hidden-->
+	<h3>Oppdatering <a class="date">16.10.2022</a></h3>
+	<p>Her kommer en større oppdatering med noen store endringer, og mange små. For fullstending liste over alle endringene, <a href="about.html#news">trykk her.</a></p>
+	<p>Nå er all informasjon om pokemon lagret på vår lokale database. Dette betyr at vi ikke er avhengig av PokeAPI eller andre ting for å hente ut informasjon. 
+		Dette betyr også at mengden arbeid som vår nettside må gjøre, øker. Derfor har vi gjort noen valg: <br><br>
+			- Du vil ikke lenger se alle dine pokemon på mattesiden. Der vil du se de 5 forrige du fanget, og alle du har fanget nå. Dette gjør så vi ikke trenger å sende så mye informasjon til deg når du laster inn siden, og det vil gå raskere for spillere med mange pokemon å laste inn mattesiden.<br>
+			- Du kan fortsatt se alle pokemonene dine på pokedexen.</p>
+	<p>Vi har laget en side hvor du kan laste ned en lagringsfil. Dette er mest for de elevene som ikke får lagret pokemon på sin egen enhet, eller som ofte må bytte på datamaskiner. Du finner funksjonen under <a href="saveandload.html">lagre og last inn.</a> (Beta funksjon)</p>
+	<p>Vi har laget en side for ofte stilte spørsmål (FAQ). <a href="faq.html">Den finner du under "FAQ".</a> </p>
+	<h3>Statistikk <a class="date">16.10.2022</a></h3>
+	<p>Den siste uken har vi kjørt en del målinger for å se bruken av pokemath.<br>På 1 uke har dere vist noen helt utrolige tall!<br><br>
+		#1: Antall brukere: 29 800 (Dette er også brukere som har startet på nytt.)<br>
+		#2: Antall oppgaver løst: 5 658 316<br>
+		#3: Antall feil svar: 543 162<br>
+		#4: Antall pokemon fanget: 1 514 997<br>
+		#5: Antall mynter tjent: 526 808 694<br>
+		#6: Antall mynter brukt: 436 643 228<br><br>
+		Vi har kun anonym statistikk, så vi vet ikke hvor mye hver enkelt person har bidratt med.
+	</p>
 	<h3>Feilmeldinger <a class="date">07.10.2022</a></h3>
 	<p>Om du oppdager en feil, eller vil fortelle oss om idèene dine, så kan du finne skjemaer for det <a href="http://pokemath.online/about.html#contact">ved å trykke her</a> eller gå inn på siden for "kontakt oss". 
 	Takk for alle svarene på undersøkelsen vi hadde. Det var nesten 500 av dere som har svart, og kommet med tilbakemeldinger! Nå vet vi hva vi skal jobbe med videre.</p>
-	<h3>Noen spillere får ikke pokemon. <a class="date">07.10.2022</a></h3>
-	<p>Det ble på fredag rapportert at flere spillere fikk fanget pokemon. Dette var fordi pokemath ikke fikk kontakt med den ene tjenesten vi bruker for å hente informasjon om de forskjellige pokemonene. Det jobbes med et alternativ hvor vi ikke vil være avhengig av andre tjenester, men dette vil ta tid for å få på plass.</p>
 	<a class="close" onclick="closeAlert()">&times;</a>
 	<br>
 	<br>
@@ -360,9 +376,9 @@
 
 
 	  <!--<script src="main.js?v=1"></script>>-->
-	  <script src="global.js?v=21"></script>
+	  <script src="global.js?v=22"></script>
 	  <!--<script src="cookies.js?v=1"></script>-->
-	  <script src="menu.js?v=21"></script>
+	  <script src="menu.js?v=22"></script>
 </body>
 
 </html>

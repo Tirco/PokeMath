@@ -1,0 +1,25 @@
+#Set the error document for not found.
+ErrorDocument 404  /notfound.html
+
+#Remove need for www.
+RewriteEngine On
+RewriteBase /
+RewriteCond %{HTTP_HOST} ^pokemath.online [NC]
+RewriteRule ^(.*)$ http://pokemath.online/$1 [L,R=301]
+
+
+# Set time zone
+SetEnv TZ Europe/Oslo
+
+#Sign this stuff
+ServerSignature EMail
+SetEnv SERVER_ADMIN tirco@tirco.tv
+
+# disable directory browsing
+Options All -Indexes
+
+#ikke tillat å se bildemapper
+<Files /images>
+order allow,deny
+deny from all
+</Files>

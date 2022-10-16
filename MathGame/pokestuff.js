@@ -11,12 +11,32 @@ const mythics = Object.freeze([151,251,385,386,489,490,492,493,494,647,648,649,7
 const specialforms = Object.freeze([3,6,9,12,15,18,19,20,25,26,27,28,37,38,50,51,52,53,58,59,65,68,74,75,76,77,78,79,80,83,88,89,94,99,100,101,103,105,110,115,122,127,130,131,133,142,143,144,145,146,150,157,181,199,208,211,212,214,215,222,229,248,254,257,260,263,264,282,302,303,306,308,310,319,323,334,351,354,359,362,373,376,380,381,382,383,384,386,413,428,445,448,460,475,479,483,484,492,503,531,549,550,554,555,562,569,570,571,618,628,641,642,645,646,647,648,658,681,705,706,710,711,713,718,719,720,724,741,778,809,812,815,818,823,826,834,839,841,842,844,849,851,858,861,869,879,884,890,892,905])
 const specialbonus = 3
 
-var shinyChance = (301 - (shopOptions.shinyLevel * 2)); //Shinycharm max value = 150. 150*2 = 300
+function calculateShinyChance(level){
+   var chance = 55 - (level/3.3) - (state.streak/1000);
+   if(chance < 0) { 
+    chance = 0;
+   }
+   return chance;
+}
 
 //For use in informational bits. Currently only used in console.
 function shinyChancePercentage(partialValue, totalValue) {
-  return "" + (100 / shinyChance).toFixed(4) + "%"
-} 
+  return "" + ((1 / calculateShinyChance(shopOptions.shinyLevel))*100).toFixed(4) + "%"
+}
+
+function simulateShiny(level) {
+  var chance = 55 - (level/3.3) - (state.streak/1000);
+  var value = Math.floor(Math.random() * chance);
+  var percentage = (1/chance)*100 + "%";
+  console.log("Level: " + level + " Highest: " + chance + " value: " + value + " percentage: " + percentage)
+}
+/**
+ * Should they get a shiny?
+ * This function will check their shinyChance and compare it to a generated number.
+ */
+ function generateShiny() {
+  return Math.floor(Math.random() * calculateShinyChance(shopOptions.shinyLevel)) //Here shinyChance is defined.
+}
 
 if(pokeball != null) {
   pokeball.addEventListener('click', () => { 
@@ -34,6 +54,32 @@ function createSpecialPokemon(){
   createSpecificPokemon(randomPokemon);
 }
 
+function canCaptureLegendary() {
+  var value = (Math.floor(Math.random() * (20-(Number(mathValues.stage) + shopOptions.legendLevel+ (state.streak/1000)))));
+  console.log("legend check: " + value);
+  if(value < 0) {
+    value = 0;
+  }
+  var boolean = value === 0;
+  if(boolean) {
+    state.streak = 0; //Reset streak
+  }
+  return boolean;
+}
+
+function canCaptureMythic() {
+  var value = (Math.floor(Math.random() * (30-(Number(mathValues.stage) + shopOptions.mythicLevel + (state.streak/1000)))));
+  console.log("mythic check: " + value);
+  if(value < 0) {
+    value = 0;
+  }
+  var boolean = value === 0;
+  if(boolean) {
+    state.streak = 0; //Reset streak
+  }
+  return boolean;
+}
+
 /**
  * Function to make any random pokemon.
  * @returns 
@@ -47,28 +93,16 @@ function createRandomPokemon(){
 
   if(legendaries.includes(randomPokemon)) {
     //Legendaries should be 5x more rare than any other pokemon. Let us see if they get to keep it, or we will reroll.
-    if((Math.floor(Math.random() * (20-(Number(mathValues.stage) + shopOptions.legendLevel)))) === 0) {
-      //keep the legendary.
-      //console.log("kept legendary")
-    } else {
-      //reroll
-      //console.log("rerolled legendary")
+    if(!canCaptureLegendary()) {
       createRandomPokemon()
       return
     }
-    
   } else if(mythics.includes(randomPokemon)) {
     //Legendaries should be 5x more rare than any other pokemon. Let us see if they get to keep it, or we will reroll.
-    if((Math.floor(Math.random() * (30-(Number(mathValues.stage) + shopOptions.mythicLevel)))) === 0) {
-      //keep the legendary.
-      //console.log("kept mythic")
-    } else {
-      //reroll
-      //console.log("rerolled mythic")
+    if(!canCaptureMythic()) {
       createRandomPokemon()
       return
     }
-    
   }
 
   createSpecificPokemon(randomPokemon);
@@ -82,14 +116,11 @@ function createRandomPokemon(){
  */
 
 function createSpecificPokemon(id) {
-
-  let pokeNumber = id;
   pokeball.classList.add("is-hidden")
   resetButton.classList.remove("is-hidden")
 
   let pokemonObjectSet = pokemondata[id];
   let specialId = id;
-  let imageId = id;
 
   if(specialforms.includes(id)) {
     let randomVariety = Math.floor(Math.random()* (Object.keys(alternateFormsData[id]).length+1))
@@ -97,7 +128,6 @@ function createSpecificPokemon(id) {
       //Get a special variety
       specialId = id + "-" + randomVariety;
       pokemonObjectSet = alternateFormsData[id][randomVariety];
-      imageId = pokemonObjectSet.imageid
     } else {
       randomVariety = "";
     }
@@ -107,14 +137,8 @@ function createSpecificPokemon(id) {
   let pkmnName = pokemonObjectSet.name
   let pkmnTypes = pokemonObjectSet.types
 
-  //Failsafes
-  if(pkmnName == "" || pkmnName == null) {
-    pkmnName = "???";
-  }
-  if(pkmnTypes == null || pkmnTypes.length === 0) {
-    pkmnTypes = ["Unknown"];
-  }
-  addToPokedex(specialId, pkmnName, pkmnTypes, imageId, generateShiny(), id);
+
+  addToPokedex(specialId);
 }
 
 function createEventPokemon(eventName) {
@@ -122,23 +146,12 @@ function createEventPokemon(eventName) {
   resetButton.classList.remove("is-hidden")
 
     let eventKeys = eventData[eventName];
-    console.log(eventKeys);
     let randomID = getRandomProperty(eventKeys)
-    console.log("Random Object from " + eventName + ":")
-    console.log(randomID);
     let eventSubKeys = randomID;
-    console.log("Event sub keys:")
-    console.log(eventSubKeys);
-    console.log("Random Variety Object:")
     let randomVarietyObject = getRandomProperty(eventSubKeys);
-    console.log(randomVarietyObject);
     const pkmnId = randomVarietyObject.id;
     let specialId = pkmnId + "-" + randomVarietyObject.specialId;
-    const pkmnName = randomVarietyObject.name
-    const pkmnTypes = randomVarietyObject.types
-    const imageId = randomVarietyObject.imageid
-
-    addToPokedex(specialId, pkmnName, pkmnTypes, imageId, generateShiny(), pkmnId)
+    addToPokedex(specialId)
 }
 
 function getRandomProperty(obj){
@@ -147,55 +160,17 @@ function getRandomProperty(obj){
 };
 
 
-function warnErrorLoading(id) {
-  const toast = new Toast({
-    text: "Advarsel! En feil skjedde når vi lastet inn denne pokemonen. (" + id + ")",
-    position: "top-right",
-    pauseOnHover: true,
-    pauseOnFocusLoss: true,
-    canClose: true,
-    badToast: true,
-  })
-}
-
-/**
- * Should they get a shiny?
- * This function will check their shinyChance and compare it to a generated number.
- */
-function generateShiny() {
-    return Math.floor(Math.random() * shinyChance) //Here shinyChance is defined.
-}
-
-/**
- * Adds a pokemon to the players dex from axios result.
- * @param {*} randomPokemon The pokemons ID
- * @param {*} generateShiny Should the player get a shiny?
- * @param {*} res The pokemon json bit.
- */
-/** Outdated as of Oct 2022
-function addToDexFromRes(randomPokemon,generateShiny,res){
-  const pkmnName = res.data["name"]
-  const pkmnTypes = []
-  res.data.types.forEach((type) => {
-    pkmnTypes.push(type.type.name);
-  })
-  let imageId = randomPokemon;
-  addToPokedex(randomPokemon, pkmnName, pkmnTypes, imageId, generateShiny, randomPokemon)
-}*/
-
-
- //Deler av denne koden er originalt fra Lesekloden.no TODO vurder å bytte ut.
-
 /**
  * Add a pokemon to the pokedex
  * @param {*} randomPokemon = ID of pokemon to add
  * @param {*} generateShiny = 0 for shiny, 1+ for not.
  */
-function addToPokedex(id, pkmnName, pkmnTypes, imageId, generateShiny, baseId) {
+function addToPokedex(id) {
   if(true) {
     let entry = "";
-    if(generateShiny === 0) {
+    if(generateShiny() === 0) {
       entry = "S"+id;
+      state.streak = 0; //Reset streak
     } else {
       entry = "N"+id;
     }
@@ -207,112 +182,6 @@ function addToPokedex(id, pkmnName, pkmnTypes, imageId, generateShiny, baseId) {
     loadFromList(entry,false,true);
     return;
   }
-  
-  /** Behind here is old stuff */
-  let randomPokemon = id;
-  //Update the statistics
-  state.pkmnCaught++
-  statCounter("hit","pokemonCaught");
-  pkmncaught.textContent = state.pkmnCaught
-
-  
-  let imageLink = `images/pokemon/normal/${imageId}.png`
-  if(generateShiny === 0) {
-    imageLink = `images/pokemon/shiny/${imageId}.png`
-  }
-
-
-  let shiny = ""
-  let shinyText = ""
-  let legendary = ""
-  let legendaryText = ""
-  
-  //Is it legendary?
-  if(legendaries.includes(baseId)) {
-    legendary = `legendary`
-    legendaryText = "Legendarisk "
-  } else if(mythics.includes(baseId)) {
-    legendary = `mythic`
-    legendaryText = "Mytisk "
-  }
-  let identifier = ("N"+randomPokemon)
-  if(generateShiny === 0) {
-    //SHINY - set the values.
-    shiny = `pokemon-shiny`
-    shinyText = `Shiny `
-  //save pokemon to cookie
-    identifier = ("S"+randomPokemon);
-  }
-  
-  state.pkmnList.push(identifier);
-  const toast = new Toast({
-    text: `Du fanget en ${shinyText}${legendaryText}${pkmnName}`,
-    position: "top-right",
-    pauseOnHover: true,
-    pauseOnFocusLoss: true,
-    canClose: true,
-    badToast: false,
-  })
-
-    // Display on screen
-    endMessage.textContent = `Du fanget en ${shinyText}${legendaryText}${pkmnName}!`
-    newCatchInfo.innerHTML = 
-    `<div class="has-text-centered">
-      <div style="background-image: url('${imageLink}'); height: 128px; width: 128px; background-size: cover; display: block;margin-left:auto; margin-right:auto;">&nbsp;</div>
-    </div>`
-
-  //Check if pokedex has the identifier already, if it does, update it.
-  let repeats = 1;
-  if(pokedex.contains(document.getElementById(identifier))) {
-    //Update existing pokemon.
-    card = pokedex.querySelector("#" + identifier);
-    counter = card.querySelector("#cardcounter")
-    var number = parseInt(counter.textContent.substring(1));
-    repeats += number;
-    counter.textContent = ("x" + repeats);
-    var repeatMoney = (100 + (shopOptions.coinLevel * 20));
-    endMessage.textContent = `Du fanget en ${shinyText}${legendaryText}${pkmnName}!\r\nSiden du allerede har denne pokémonen, fikk du ${repeatMoney} mynter istedet.`
-    addFixedMoney(repeatMoney)
-
-  } else {
-    //Make new
-    let filterText = ("filtered "+id+shinyText+legendaryText+" #"+baseId+" " + pkmnName);
-    let pkmnType = ''
-    const types = pkmnTypes.forEach((type) => {
-      pkmnType += `<span class="typecard type-${type}">${type}</span>`
-      filterText += " " + type;
-    })
-
-    //Add a new pokemon card to the dex.
-    pokedex.innerHTML = `
-    <a id=${identifier} class="column is-narrow ${filterText}" style="cursor: pointer;" href=${imageLink} target="_blank">
-      <div class="card ${shiny} ${legendary}">
-        <div class="card-content">
-          <div class="has-text-centered card-image">
-            <div class="card-image" style="background-image: url('${imageLink}');"></div>
-            <div class="card-id"> #${randomPokemon}</div>
-            <div id="cardcounter" class="card-counter">x${repeats}</div>
-          </div>
-        <div class="card-footer">
-          <p class="card-footer-item">
-            <strong style="text-transform: capitalize;">${pkmnName}&nbsp;</strong> 
-          </p>
-        </div>
-        <footer class="card-footer">
-          <p class="card-footer-item" style="text-transform: capitalize;">
-            ${pkmnType}
-          </p>
-        </footer>
-        </div>
-      </div>
-    </a>
-  ` + pokedex.innerHTML
-  }
-
-  //else:
-  // Add to dex
-  
-  //Done!
 }
 
 function loadAllFromList(){
@@ -328,19 +197,19 @@ function loadAmountFromList(amount, reverse) {
   }
   let fetched = [];
   for (var i = 0; i < amount; i++) {
-    console.log("Loading #" + i + " of amount: " + amount)
+    //console.log("Loading #" + i + " of amount: " + amount)
     if(fetchFrom[i] == null){
-      console.log("No more pokemon to fetch from - Breaking at " + i)
+      //console.log("No more pokemon to fetch from - Breaking at " + i)
       break;
     } else if(!fetched.includes(fetchFrom[i])){
       loadFromList(fetchFrom[i],true, false);
       fetched.push(fetchFrom[i]);
     } else {
-      console.log(i + " was already loaded - increasig amount.")
+      //console.log(i + " was already loaded - increasig amount.")
       amount++;
     }
   }
-  console.log("Finished! Fetched contains  " + fetched.length + " and has the following: " + fetched)
+  //console.log("Finished! Fetched contains  " + fetched.length + " and has the following: " + fetched)
 }
 
 function loadFromList(entry, firstLoad, capture) {
@@ -402,7 +271,15 @@ function loadFromList(entry, firstLoad, capture) {
     pkmnTypes = pokemondata[id].types;
     pkmnName = pokemondata[id].name
     imageId = id;
-  } 
+  }
+
+  //Failsafes
+  if(pkmnName == "" || pkmnName == null) {
+      pkmnName = "???";
+  }
+  if(pkmnTypes == null || pkmnTypes.length === 0) {
+      pkmnTypes = ["Unknown"];
+  }
 
     
   //Is it legendary?

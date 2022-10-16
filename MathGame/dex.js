@@ -20,8 +20,11 @@ function sortOnLoad() {
   filterSelection("all");
 }
 
-loadAllFromList();
-sortOnLoad();
+window.onload = function(){
+  loadAllFromList();
+  sortOnLoad();
+}
+
 
 function filterSelection(filterKeyToAdd) {
   var x, i;

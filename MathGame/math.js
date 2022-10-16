@@ -621,6 +621,9 @@ function captureHalloweenPokemon() {
 		halloweenEgg.classList.remove("animate__infinite");
 		halloweenStats.eggStatus = 0;
 		halloweenStats.eggNeeded++;
+		if(halloweenStats.eggNeeded > 25) {
+			halloweenStats.eggNeeded = 5;
+		}
 		halloweenStats.eggId = Math.floor(Math.random() * 5)+1;
 		updateEggImage();
 		saveHalloween();

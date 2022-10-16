@@ -317,9 +317,10 @@ function saveAll(){
   if(state.pokemonlist != "") {
     window.localStorage.setItem('pokemonlist',JSON.stringify(state.pkmnList.join('|')))
   }
+  /**
   if(document.getElementById("pokedex")!=null) {
     window.localStorage.setItem('pokedex',JSON.stringify(document.getElementById("pokedex").innerHTML))
-  }
+  } */
   if(state.username != "") {
     window.localStorage.setItem('username',JSON.stringify(state.username))
   } else {
