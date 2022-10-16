@@ -166,29 +166,23 @@ function getRandomProperty(obj){
  * @param {*} generateShiny = 0 for shiny, 1+ for not.
  */
 function addToPokedex(id) {
-  if(true) {
-    let entry = "";
-    if(generateShiny() === 0) {
-      entry = "S"+id;
-      state.streak = 0; //Reset streak
-    } else {
-      entry = "N"+id;
-    }
-    
-    state.pkmnCaught++
-    statCounter("hit","pokemonCaught");
-    pkmncaught.textContent = state.pkmnCaught
-    state.pkmnList.push(entry);
-    loadFromList(entry,false,true);
-    return;
+  let entry = "";
+  if(generateShiny() === 0) {
+    entry = "S"+id;
+    state.streak = 0; //Reset streak
+  } else {
+    entry = "N"+id;
   }
+  
+  state.pkmnCaught++
+  statCounter("hit","pokemonCaught");
+  pkmncaught.textContent = state.pkmnCaught
+  state.pkmnList.push(entry);
+  loadFromList(entry,false,true);
+  return;
 }
 
-function loadAllFromList(){
-  loadAmountFromList(state.pkmnList.length, true)
-}
-
-function loadAmountFromList(amount, reverse) {
+async function loadAmountFromList(amount, reverse, log) {
   pokedex.innerHTML = "";
 
   let fetchFrom =  state.pkmnList.map((x) => x);
@@ -197,22 +191,37 @@ function loadAmountFromList(amount, reverse) {
   }
   let fetched = [];
   for (var i = 0; i < amount; i++) {
-    //console.log("Loading #" + i + " of amount: " + amount)
+    console.log("Loading #" + i + " of amount: " + amount)
     if(fetchFrom[i] == null){
       //console.log("No more pokemon to fetch from - Breaking at " + i)
       break;
     } else if(!fetched.includes(fetchFrom[i])){
       loadFromList(fetchFrom[i],true, false);
+      console.log(fetchFrom[i])
       fetched.push(fetchFrom[i]);
-    } else {
-      //console.log(i + " was already loaded - increasig amount.")
-      amount++;
+
+    } else {   
+      if(amount < fetchFrom.length){
+        amount++;
+      }
     }
   }
   //console.log("Finished! Fetched contains  " + fetched.length + " and has the following: " + fetched)
 }
 
-function loadFromList(entry, firstLoad, capture) {
+function removeItemAll(arr, value) {
+  var i = 0;
+  while (i < arr.length) {
+    if (arr[i] === value) {
+      arr.splice(i, 1);
+    } else {
+      ++i;
+    }
+  }
+  return arr;
+}
+
+async function loadFromList(entry, firstLoad, capture) {
   if(firstLoad == null) {
     firstLoad = false;
   }

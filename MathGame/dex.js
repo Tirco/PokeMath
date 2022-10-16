@@ -21,8 +21,7 @@ function sortOnLoad() {
 }
 
 window.onload = function(){
-  loadAllFromList();
-  sortOnLoad();
+  loadAllFromList(true);
 }
 
 
@@ -133,4 +132,49 @@ function textFilterFunction() {
       a[i].style.display = "none";
     }
   }
+}
+
+
+async function loadAllFromList(log){
+  if(log == null) {
+    log = false;
+  }
+
+  console.log("Starting load all")
+
+
+  pokedex.innerHTML = "";
+
+  let fetchFrom =  state.pkmnList.map((x) => x);
+  var progressbar = document.getElementById("dexLoadStatus");
+
+  let fetched = [];
+  for (var i = 0; i < fetchFrom.length; i++) {
+    console.log("Loading #" + i + " of amount: " + fetchFrom.length)
+    if(fetchFrom[i] == null){
+      //console.log("No more pokemon to fetch from - Breaking at " + i)
+      break;
+    } else if(!fetched.includes(fetchFrom[i])){
+      loadFromList(fetchFrom[i],true, false);
+      console.log(fetchFrom[i])
+      fetched.push(fetchFrom[i]);
+
+    } else {   
+      //removeItemAll(fetchFrom,fetchFrom[i]);
+    }
+
+    await sleep(1, i, fetchFrom.length, progressbar);
+  }
+
+  sortOnLoad();
+  progressbar.textContent = "Lastet!";
+}
+
+const sleep = (time, i, length, progressbar) => {
+  return new Promise((resolve) => {
+    return setTimeout(function () {
+      resolve()
+      progressbar.textContent = "Laster: " + i + "/" + length;
+    }, time)
+  })
 }
