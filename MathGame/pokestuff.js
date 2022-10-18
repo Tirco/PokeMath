@@ -119,7 +119,6 @@ function createSpecificPokemon(id) {
   pokeball.classList.add("is-hidden")
   resetButton.classList.remove("is-hidden")
 
-  let pokemonObjectSet = pokemondata[id];
   let specialId = id;
 
   if(specialforms.includes(id)) {
@@ -133,9 +132,6 @@ function createSpecificPokemon(id) {
     }
 
   }
-  //Load the normal pokemon.
-  let pkmnName = pokemonObjectSet.name
-  let pkmnTypes = pokemonObjectSet.types
 
 
   addToPokedex(specialId);
@@ -178,7 +174,7 @@ function addToPokedex(id) {
   statCounter("hit","pokemonCaught");
   pkmncaught.textContent = state.pkmnCaught
   state.pkmnList.push(entry);
-  loadFromList(entry,false,true);
+  loadFromList(entry,false,true,false);
   return;
 }
 
@@ -196,7 +192,7 @@ async function loadAmountFromList(amount, reverse, log) {
       //console.log("No more pokemon to fetch from - Breaking at " + i)
       break;
     } else if(!fetched.includes(fetchFrom[i])){
-      loadFromList(fetchFrom[i],true, false);
+      loadFromList(fetchFrom[i],true, false, false);
       console.log(fetchFrom[i])
       fetched.push(fetchFrom[i]);
 
@@ -221,7 +217,7 @@ function removeItemAll(arr, value) {
   return arr;
 }
 
-async function loadFromList(entry, firstLoad, capture) {
+function loadFromList(entry, firstLoad, capture, returnString) {
   if(firstLoad == null) {
     firstLoad = false;
   }
@@ -275,11 +271,19 @@ async function loadFromList(entry, firstLoad, capture) {
 
     
   } else {
-    idString = entry.replace(/\D/g,'');
-    id = Number(idString);
-    pkmnTypes = pokemondata[id].types;
-    pkmnName = pokemondata[id].name
-    imageId = id;
+      idString = entry.replace(/\D/g,'');
+      id = Number(idString);
+      imageId = id;
+    if(pokemondata[id] == null ) {
+      pkmnTypes = ["Unknown ("+id+")"];
+      cardId = "???"
+      pkmnName = "Missing No.";
+      id = 0;
+      imageId = 0;
+    } else {
+      pkmnTypes = pokemondata[id].types;
+      pkmnName = pokemondata[id].name;
+    }
   }
 
   //Failsafes
@@ -334,15 +338,15 @@ async function loadFromList(entry, firstLoad, capture) {
       </div>`
   }
 
-        //Check if pokedex has the identifier already, if it does, update it.
-  if(repeats > 1 && !firstLoad && capture) {
+  //Check if pokedex has the identifier already, if it does, update it.
+  if(capture && repeats > 1 && !firstLoad) {
       //Update existing pokemon.
       let card = document.getElementById(entry);
       var repeatMoney = (100 + (shopOptions.coinLevel * 20));
       endMessage.textContent = `Du fanget en ${shinyText}${legendaryText}${pkmnName}!\r\nSiden du allerede har denne pokémonen, fikk du ${repeatMoney} mynter istedet.`
       addFixedMoney(repeatMoney)
       if(pokedex.contains(document.getElementById(entry))) {
-        console.log("dex has entry")
+        //console.log("dex has entry")
       }
       if(card == null) {
         //Just create the card
@@ -377,7 +381,9 @@ async function loadFromList(entry, firstLoad, capture) {
       </div>
     </a>
   `;
-    if(firstLoad) {
+    if(returnString) {
+      return inputHTML;
+    } else if(firstLoad) {
       pokedex.innerHTML = pokedex.innerHTML + inputHTML;
     } else {
       pokedex.innerHTML = inputHTML + pokedex.innerHTML;

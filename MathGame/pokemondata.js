@@ -902,4 +902,5 @@ pokemondata = {"0":{"name":"Error","types":["water","fire"]},
 "901":{"name":"ursaluna","types":["ground","normal"]},
 "902":{"name":"basculegion-male","types":["water","ghost"]},
 "903":{"name":"sneasler","types":["fighting","poison"]},
-"904":{"name":"overqwil","types":["dark","poison"]}}
+"904":{"name":"overqwil","types":["dark","poison"]},
+"905":{"name":"enamorus","types":["fairy","flying"]}}

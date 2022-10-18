@@ -372,3 +372,8 @@ body.overlay-is-open .main-ui,
   border-top-color: #F5CAD1;
   border-bottom-color: #905F63;
 }
+.type-unknown {
+  background-color: #333333;
+  border-top-color: #191213;
+  border-bottom-color: #8a8a8a;
+}

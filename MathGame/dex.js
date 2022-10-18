@@ -1,3 +1,5 @@
+const progressBar = document.getElementById("dexLoadStatus");
+
 var filterKeys = [""]
 filterSelection("all")
 
@@ -135,46 +137,42 @@ function textFilterFunction() {
 }
 
 
-async function loadAllFromList(log){
-  if(log == null) {
-    log = false;
-  }
-
-  console.log("Starting load all")
-
-
+async function loadAllFromList(){
   pokedex.innerHTML = "";
 
-  let fetchFrom =  state.pkmnList.map((x) => x);
-  var progressbar = document.getElementById("dexLoadStatus");
-
-  let fetched = [];
+  let fetchFromArray =  state.pkmnList.map((x) => x);
+  let fetchFrom = [...new Set(fetchFromArray)];
+  var returned = [];
   for (var i = 0; i < fetchFrom.length; i++) {
-    console.log("Loading #" + i + " of amount: " + fetchFrom.length)
-    if(fetchFrom[i] == null){
-      //console.log("No more pokemon to fetch from - Breaking at " + i)
-      break;
-    } else if(!fetched.includes(fetchFrom[i])){
-      loadFromList(fetchFrom[i],true, false);
-      console.log(fetchFrom[i])
-      fetched.push(fetchFrom[i]);
-
-    } else {   
-      //removeItemAll(fetchFrom,fetchFrom[i]);
-    }
-
-    await sleep(1, i, fetchFrom.length, progressbar);
+    //console.log("Loading #" + i + " of amount: " + fetchFrom.length)
+    returned.push(loadFromList(fetchFrom[i],true, false,true));
+    progressBar.textContent = "Laster inn (1/2): " + i + "/" + fetchFrom.length;
+    await sleep(1);
   }
 
+  await addAllToInnerHTML(returned);
   sortOnLoad();
-  progressbar.textContent = "Lastet!";
+  progressBar.textContent = "Lastet!";
 }
 
-const sleep = (time, i, length, progressbar) => {
+
+const sleep = (time) => {
   return new Promise((resolve) => {
     return setTimeout(function () {
-      resolve()
-      progressbar.textContent = "Laster: " + i + "/" + length;
+      resolve();
     }, time)
   })
+}
+
+
+async function addAllToInnerHTML(array) {
+  progressBar.textContent = "Setter sammen...";
+  let size = array.length;
+  let string = "";
+  for (var i = 0; i < array.length; i++) {
+    string+= array[i];
+    progressBar.textContent = "Setter sammen (2/2): " + i + "/" + size;
+    await sleep(1);
+  }
+  pokedex.innerHTML = string;
 }
