@@ -20,8 +20,12 @@ let mathValues = {
 	stage: 3,
 	additionMin: 0,
 	additionMax: 10,
+	additionMinB: 0,
+	additionMaxB: 10,
 	subtractionMin:  0,
 	subtractionMax:  10,
+	subtractionMinB:  0,
+	subtractionMaxB:  10,
 	subAllowNegative: true,
 	multiplicationMin:  0,
 	multiplicationMax:  10,
@@ -40,7 +44,9 @@ let mathValues = {
 function calculateCustomDifficulty() {
 	values = [];
 	if(mathValues.operations.includes("+")) {
-		var addition = (Math.abs(mathValues.additionMin - mathValues.additionMax) * (10 ** mathValues.additionDecimals));
+		var addition = (Math.abs((mathValues.additionMaxB - mathValues.additionMinB)
+		 + (mathValues.additionMax-mathValues.additionMin)) * (10 ** mathValues.additionDecimals));
+		
 		if(addition > 9000) {
 			values.push(5);
 		} else if (addition > 999) {
@@ -49,7 +55,7 @@ function calculateCustomDifficulty() {
 			values.push(3);
 		} else if (addition > 24) {
 			values.push(2);
-		} else if (addition > 2){
+		} else if (addition > 4){
 			values.push(1);
 		} else {
 			//Addition is busted!
@@ -57,7 +63,8 @@ function calculateCustomDifficulty() {
 		}
 	}
 	if(mathValues.operations.includes("-")) {
-		var subtraction = (Math.abs(mathValues.subtractionMin - mathValues.subtractionMax) * (10 ** mathValues.subtractionDecimals));
+		var subtraction = (Math.abs((mathValues.subtractionMaxB - mathValues.subtractionMinB)
+		+ (mathValues.subtractionMax-mathValues.subtractionMin)) * (10 ** mathValues.subtractionDecimals));
 		if(subtraction > 9000) {
 			values.push(5);
 		} else if (subtraction > 999) {
@@ -177,6 +184,18 @@ function onLoad(){
 		if(params.get("add") == "t") {
 			mathValues.additionMin = Number(params.get("amin"));
 			mathValues.additionMax = Number(params.get("amax"));
+			if(mathValues.additionMin > mathValues.additionMax) {
+				let temp = mathValues.additionMin;
+				mathValues.additionMin = mathValues.additionMax;
+				mathValues.additionMax = temp;
+			}
+			mathValues.additionMinB = Number(params.get("aminb"));
+			mathValues.additionMaxB = Number(params.get("amaxb"));
+			if(mathValues.additionMinB > mathValues.additionMaxB) {
+				let temp = mathValues.additionMinB;
+				mathValues.additionMinB = mathValues.additionMaxB;
+				mathValues.additionMaxB = temp;
+			}
 			mathValues.additionDecimals = Number(params.get("adec"));
 			mathValues.operations.push("+");
 			console.log(mathValues.difficultyModifier)
@@ -184,6 +203,18 @@ function onLoad(){
 		if(params.get("sub") == "t") {
 			mathValues.subtractionMin = Number(params.get("smin"));
 			mathValues.subtractionMax = Number(params.get("smax"));
+			if(mathValues.subtractionMin > mathValues.subtractionMax) {
+				let temp = mathValues.subtractionMin;
+				mathValues.subtractionMin = mathValues.subtractionMax;
+				mathValues.subtractionMax = temp;
+			}
+			mathValues.subtractionMinB = Number(params.get("sminb"));
+			mathValues.subtractionMaxB = Number(params.get("smaxb"));
+			if(mathValues.subtractionMinB > mathValues.subtractionMaxB) {
+				let temp = mathValues.subtractionMinB;
+				mathValues.subtractionMinB = mathValues.subtractionMaxB;
+				mathValues.subtractionMaxB = temp;
+			}
 			mathValues.subtractionDecimals = Number(params.get("sdec"));
 			mathValues.operations.push("-")
 		}
@@ -216,24 +247,36 @@ function onLoad(){
 	case 1:
 		mathValues.additionMin = 0;
 		mathValues.additionMax = 10;
+		mathValues.additionMinB = 0;
+		mathValues.additionMaxB = 10;
 		mathValues.subtractionMin = 0;
 		mathValues.subtractionMax = 10;
+		mathValues.subtractionMinB = 0;
+		mathValues.subtractionMaxB = 10;
 		mathValues.subAllowNegative = false;
 		mathValues.operations = ['+','-'];
 		break;
 	case 2:
 		mathValues.additionMin = 0;
 		mathValues.additionMax = 25;
+		mathValues.additionMinB = 0;
+		mathValues.additionMaxB = 25;
 		mathValues.subtractionMin = 0;
 		mathValues.subtractionMax = 25;
+		mathValues.subtractionMinB = 0;
+		mathValues.subtractionMaxB = 25;
 		mathValues.subAllowNegative = false;
 		mathValues.operations = ['+','-'];
 		break;
 	case 3:
 		mathValues.additionMin = 0;
 		mathValues.additionMax = 10;
+		mathValues.additionMinB = 0;
+		mathValues.additionMaxB = 10;
 		mathValues.subtractionMin = 0;
 		mathValues.subtractionMax = 10;
+		mathValues.subtractionMinB = 0;
+		mathValues.subtractionMaxB = 10;
 		mathValues.multiplicationMin = 0;
 		mathValues.multiplicationMax = 10;
 		mathValues.divisionMin = 1;
@@ -245,8 +288,12 @@ function onLoad(){
 	case 4:
 		mathValues.additionMin = 10;
 		mathValues.additionMax = 100;
+		mathValues.additionMinB = 10;
+		mathValues.additionMaxB = 100;
 		mathValues.subtractionMin = 10;
 		mathValues.subtractionMax = 100;
+		mathValues.subtractionMinB = 10;
+		mathValues.subtractionMaxB = 100;
 		mathValues.multiplicationMin = 10;
 		mathValues.multiplicationMax = 100;
 		mathValues.divisionMin = 1;
@@ -258,8 +305,12 @@ function onLoad(){
 	case 5:
 		mathValues.additionMin = 1000;
 		mathValues.additionMax = 10000;
+		mathValues.additionMinB = 1000;
+		mathValues.additionMaxB = 10000;
 		mathValues.subtractionMin = 1000;
 		mathValues.subtractionMax = 10000;
+		mathValues.subtractionMinB = 1000;
+		mathValues.subtractionMaxB = 10000;
 		mathValues.multiplicationMin = 10;
 		mathValues.multiplicationMax = 999;
 		mathValues.divisionMin = 10;
@@ -351,11 +402,11 @@ function generateProblem() {
   switch(operator) {
 	case '+':
 		numberOne = generateNumber(mathValues.additionMin, mathValues.additionMax, mathValues.additionDecimals);
-		numberTwo = generateNumber(mathValues.additionMin, mathValues.additionMax, mathValues.additionDecimals);
+		numberTwo = generateNumber(mathValues.additionMinB, mathValues.additionMaxB, mathValues.additionDecimals);
 		break;
 	case '-':
 		numberOne = generateNumber(mathValues.subtractionMin, mathValues.subtractionMax, mathValues.subtractionDecimals);
-		numberTwo = generateNumber(mathValues.subtractionMin, mathValues.subtractionMax, mathValues.subtractionDecimals);
+		numberTwo = generateNumber(mathValues.subtractionMinB, mathValues.subtractionMaxB, mathValues.subtractionDecimals);
 		break;
 	case 'x':
 		numberOne = generateNumber(mathValues.multiplicationMin, mathValues.multiplicationMax, mathValues.multiplicationDecimals);

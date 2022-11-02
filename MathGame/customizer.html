@@ -135,11 +135,17 @@
 		</div>
 
 		<div class="form-group col-md-6" id="addSection" style="display: none;">
-			<label for="first"> Laveste ledd: </label>
+			<label for="first"> Laveste ledd A: </label>
 			<input type="number" value="0" id="addMinSel" required autocomplete="off">
 			
-			<label for="first"> Høyeste ledd: </label>
+			<label for="first"> Høyeste ledd A: </label>
 			<input type="number" value="100" id="addMaxSel" required autocomplete="off">
+
+			<label for="first"> Laveste ledd B: </label>
+			<input type="number" value="0" id="addMinSelB" required autocomplete="off">
+			
+			<label for="first"> Høyeste ledd B: </label>
+			<input type="number" value="100" id="addMaxSelB" required autocomplete="off">
 			
 			<label for="quantity"> Desimaler (0-5): </label>
 			<input type="number" value="0" id="addDecSel" min="0" max="5" required autocomplete="off">
@@ -151,11 +157,17 @@
 			<label for="subtractioncheck">  </label>
 		</div>
 		<div class="form-group col-md-6" id="subSection" style="display: none;">
-			<label for="first">Laveste ledd:</label>
+			<label for="first">Laveste ledd A:</label>
 			<input type="number" id="subMinSel" value="0" class="form-control" required autocomplete="off">
 
-			<label for="first">Høyeste ledd:</label>
+			<label for="first">Høyeste ledd A:</label>
 			<input type="number" id="subMaxSel" value="100" class="form-control" required autocomplete="off">
+
+			<label for="first">Laveste ledd B:</label>
+			<input type="number" id="subMinSelB" value="0" class="form-control" required autocomplete="off">
+
+			<label for="first">Høyeste ledd B:</label>
+			<input type="number" id="subMaxSelB" value="100" class="form-control" required autocomplete="off">
 
 			<label for="quantity"> Desimaler (0-5): </label>
 			<input type="number" id="subDecSel" value="0" id="subDec" min="0" max="5" required autocomplete="off">
@@ -213,7 +225,44 @@
 	</form>
 	
 </div>
+<div class="columns is-multiline is-mobile">
+	<div id="presetCard-1" class="card" style="padding: 5px">
+		<h2 class="card-title">Lagring #1</h2>
+		<button class="button-1 save-btn" id="useform" onClick="savePreset(1)" type="button"> Lagre </button>
+		<button class="button-1 disabled load-btn" id="useform" onClick="loadPreset(1)" type="button"> Last inn </button> 
+		<button class="button-2 disabled del-btn" id="useform" onClick="deletePreset(1)" type="button"> Slett </button> 
+		<h5>Preset #1</h5>
+	</div>
+	<div id="presetCard-2" class="card" style="padding: 5px">
+		<h2 class="card-title">Lagring #2</h2>
+		<button class="button-1 save-btn" id="useform" onClick="savePreset(2)" type="button"> Lagre </button>
+		<button class="button-1 disabled load-btn" id="useform" onClick="loadPreset(2)" type="button"> Last inn </button> 
+		<button class="button-2 disabled del-btn" id="useform" onClick="deletePreset(2)" type="button"> Slett </button> 
+		<h5>Preset #2</h5>
+	</div>
+	<div id="presetCard-3" class="card" style="padding: 5px">
+		<h2 class="card-title">Lagring #3</h2>
+		<button class="button-1 save-btn" id="useform" onClick="savePreset(3)" type="button"> Lagre </button>
+		<button class="button-1 disabled load-btn" id="useform" onClick="loadPreset(3)" type="button"> Last inn </button> 
+		<button class="button-2 disabled del-btn" id="useform" onClick="deletePreset(3)" type="button"> Slett </button>
+		<h5>Preset #3</h5>
+	</div>
+	<div id="presetCard-4" class="card" style="padding: 5px">
+		<h2 class="card-title">Lagring #4</h2>
+		<button class="button-1 save-btn" id="useform" onClick="savePreset(4)" type="button"> Lagre </button>
+		<button class="button-1 disabled load-btn" id="useform" onClick="loadPreset(4)" type="button"> Last inn </button> 
+		<button class="button-2 disabled del-btn" id="useform" onClick="deletePreset(4)" type="button"> Slett </button>
+		<h5>Preset #4</h5>
+	</div>
+	<div id="presetCard-5" class="card" style="padding: 5px">
+		<h2 class="card-title">Lagring #5</h2>
+		<button class="button-1 save-btn" id="useform" onClick="savePreset(5)" type="button"> Lagre </button>
+		<button class="button-1 disabled load-btn" id="useform" onClick="loadPreset(5)" type="button"> Last inn </button> 
+		<button class="button-2 disabled del-btn" id="useform" onClick="deletePreset(5)" type="button"> Slett </button>
+		<h5>Preset #5</h5>
+	</div>
 	
+</div>
 
 </div>
 
