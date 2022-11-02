@@ -216,7 +216,11 @@ function savePreset(id) {
     delbtn.classList.remove("disabled")
     if(name.length> 20) {
         name = name.substring(0,20)
+
+
     }
+    name = name.replaceAll('|',"-")
+    name = name.replaceAll(/^\s+|\s+$/g, '');
     title.textContent = name;
 
     //TODO store in localstorage

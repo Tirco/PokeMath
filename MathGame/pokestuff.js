@@ -12,7 +12,10 @@ const specialforms = Object.freeze([3,6,9,12,15,18,19,20,25,26,27,28,37,38,50,51
 const specialbonus = 3
 
 function calculateShinyChance(level){
-   var chance = 55 - (level/3.3) - (state.streak/1000);
+  if(mathValues.stage == null) {
+    mathValues.stage = 1;
+  }
+   var chance = 55 + (15 - mathValues.stage * 3) - (level/3.3) - (state.streak/1000);
    if(chance < 0) { 
     chance = 0;
    }
@@ -25,7 +28,7 @@ function shinyChancePercentage(partialValue, totalValue) {
 }
 
 function simulateShiny(level) {
-  var chance = 55 - (level/3.3) - (state.streak/1000);
+  var chance = calculateShinyChance(level);
   var value = Math.floor(Math.random() * chance);
   var percentage = (1/chance)*100 + "%";
   console.log("Level: " + level + " Highest: " + chance + " value: " + value + " percentage: " + percentage)
@@ -55,7 +58,7 @@ function createSpecialPokemon(){
 }
 
 function canCaptureLegendary() {
-  var value = (Math.floor(Math.random() * (20-(Number(mathValues.stage) + shopOptions.legendLevel+ (state.streak/1000)))));
+  var value = (Math.floor(Math.random() * (31-((Number(mathValues.stage)*3) + shopOptions.legendLevel+ (state.streak/1000)))));
   console.log("legend check: " + value);
   if(value < 0) {
     value = 0;
@@ -68,7 +71,7 @@ function canCaptureLegendary() {
 }
 
 function canCaptureMythic() {
-  var value = (Math.floor(Math.random() * (30-(Number(mathValues.stage) + shopOptions.mythicLevel + (state.streak/1000)))));
+  var value = (Math.floor(Math.random() * (41-((Number(mathValues.stage)*3) + shopOptions.mythicLevel + (state.streak/1000)))));
   console.log("mythic check: " + value);
   if(value < 0) {
     value = 0;
@@ -248,6 +251,7 @@ function loadFromList(entry, firstLoad, capture, returnString) {
   var pkmnName = "";
   var imageId = 0;
   var imageLink = "";
+  var repeatMultiplier = 1;
 
   if(entry.includes('-')) { //There's something Special!
     var splitEntry = entry.split("-");
@@ -299,13 +303,16 @@ function loadFromList(entry, firstLoad, capture, returnString) {
   if(legendaries.includes(id)) {
     legendary = `legendary`
     legendaryText = "Legendarisk "
+    repeatMultiplier = repeatMultiplier * 2
   } else if(mythics.includes(id)) {
     legendary = `mythic`
     legendaryText = "Mytisk "
+    repeatMultiplier = repeatMultiplier * 3
   }
 
   if(shiny == true) {
     //SHINY - set the values.
+    repeatMultiplier = repeatMultiplier * 2
     shinyTag = `pokemon-shiny`
     shinyText = `Shiny `
     imageLink = `images/pokemon/shiny/${imageId}.png`
@@ -342,7 +349,7 @@ function loadFromList(entry, firstLoad, capture, returnString) {
   if(capture && repeats > 1 && !firstLoad) {
       //Update existing pokemon.
       let card = document.getElementById(entry);
-      var repeatMoney = (100 + (shopOptions.coinLevel * 20));
+      var repeatMoney = (100 + (shopOptions.coinLevel * 20)) * repeatMultiplier;
       endMessage.textContent = `Du fanget en ${shinyText}${legendaryText}${pkmnName}!\r\nSiden du allerede har denne pokémonen, fikk du ${repeatMoney} mynter istedet.`
       addFixedMoney(repeatMoney)
       if(pokedex.contains(document.getElementById(entry))) {
