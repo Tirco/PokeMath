@@ -15,6 +15,8 @@ const halloweenProgressBar = document.querySelector(".halloween-progress-inner")
 const halloweenEgg = document.querySelector(".halloween-egg-image")
 let halloweenEvent = false;
 
+const xmasPresent = document.querySelector(".xmas-present");
+
 
 let mathValues = {
 	stage: 3,
@@ -168,8 +170,14 @@ function onLoad(){
     	if(halloweenbox != null) {
     	  halloweenbox.classList.remove("is-hidden")
 	    }
-  	} else {
-    	//console.log("Ikke Halloween")
+  	} else if(month == 10) { //11 = desember
+		console.log("Merry X-Mas!")
+		var timeout =  1000 * 180 * Math.random() + 30000;
+		console.log("next present in " + (timeout / 1000) + " seconds.")
+		setTimeout(function() {
+			moveXmasPresent(xmasPresent);
+    		xmasPresent.classList.remove("is-hidden");
+  		}, timeout);
   	}
 
 	let params = new URLSearchParams(location.search);
@@ -726,6 +734,35 @@ function loadHalloween() {
 	halloweenProgressBar.style.transform = `scaleX(${halloweenStats.eggStatus/halloweenStats.eggNeeded})`;
 
 	updateHalloweenEggBar()
+}
+
+
+/*
+~~~ Christmas ~~~
+*/
+
+xmasPresent.addEventListener("click", openXmasPresent.bind());
+//openDoor = (path, event) =>
+function openXmasPresent(event) {
+  console.log("clicked!");
+  //TODO GIVE POKEMON
+  moveXmasPresent(event.target);
+  document.body.classList.add("overlay-is-open");
+  pokeball.classList.remove("is-hidden");
+  createEventPokemon("christmas");
+  var timeout =  1000 * 180 * Math.random() + 30000;
+  console.log("next present in " + (timeout / 1000) + " seconds.")
+  setTimeout(function() {
+    event.target.classList.remove("is-hidden");
+  }, timeout);
+}
+
+function moveXmasPresent(element){
+  element.classList.add("is-hidden")
+  var id = Math.floor(Math.random() * 7 + 1);
+  element.style.backgroundImage = `url(./images/events/christmas/present-${id}.png)`;
+  element.style.top = (92*Math.random()) + "%";
+  element.style.left = (92*Math.random()) + "%";
 }
 
 onLoad()

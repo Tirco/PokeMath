@@ -1256,13 +1256,12 @@ var alternateFormsData = {
             "types": ["fairy","flying"]
           }
     }
-
-
 }
+
 var eventData = {
   "halloween": {
         "249": {
-          1:
+          "1":
             {
               "id": 249,
               "specialId": "H1",
@@ -1272,7 +1271,7 @@ var eventData = {
             }
           },
         "150": {
-          1:
+          "1":
             {
               "id": 150,
               "specialId": "H1",
@@ -1282,7 +1281,7 @@ var eventData = {
             }
           },
         "1": {
-          1:
+          "1":
             {
               "id": 1,
               "specialId": "H1",
@@ -1292,7 +1291,7 @@ var eventData = {
             }
           },
         "133": {
-          1:
+          "1":
             {
               "id": 133,
               "specialId": "H1",
@@ -1302,7 +1301,7 @@ var eventData = {
             }
           },
         "387": {
-          1:
+          "1":
             {
               "id": 387,
               "specialId": "H1",
@@ -1312,7 +1311,7 @@ var eventData = {
             }
           },
         "388": {
-          1:
+          "1":
             {
               "id": 388,
               "specialId": "H1",
@@ -1322,7 +1321,7 @@ var eventData = {
             }
           },
         "389": {
-          1:
+          "1":
             {
               "id": 389,
               "specialId": "H1",
@@ -1332,7 +1331,7 @@ var eventData = {
             }
           },
         "470": {
-          1:
+          "1":
             {
               "id": 470,
               "specialId": "H1",
@@ -1342,7 +1341,7 @@ var eventData = {
             }
           },
         "26": {
-          1:
+          "1":
             {
               "id": 26,
               "specialId": "H1",
@@ -1352,7 +1351,7 @@ var eventData = {
             }
           },
         "27": {
-          1:
+          "1":
             {
               "id": 27,
               "specialId": "H1",
@@ -1362,7 +1361,7 @@ var eventData = {
             }
           },
         "39": {
-          1:
+          "1":
             {
               "id": 39,
               "specialId": "H1",
@@ -1372,7 +1371,7 @@ var eventData = {
             }
           },
         "54": { 
-          1:
+          "1":
             {
               "id": 54,
               "specialId": "H1",
@@ -1382,7 +1381,7 @@ var eventData = {
             }
           },
         "175": {
-          1:
+          "1":
             {
               "id": 175,
               "specialId": "H1",
@@ -1392,7 +1391,7 @@ var eventData = {
             }
           },
         "194": {
-          1:
+          "1":
             {
               "id": 194,
               "specialId": "H1",
@@ -1402,7 +1401,7 @@ var eventData = {
             }
           },
         "609": {
-          1:
+          "1":
             {
               "id": 609,
               "specialId": "H1",
@@ -1412,7 +1411,7 @@ var eventData = {
             }
           },
         "716": {
-          1:
+          "1":
             {
               "id": 716,
               "specialId": "H1",
@@ -1422,7 +1421,7 @@ var eventData = {
             }
           },
         "742": {
-          1:
+          "1":
             {
               "id": 742,
               "specialId": "H1",
@@ -1432,7 +1431,7 @@ var eventData = {
             }
           },
         "806": {
-          1:
+          "1":
             {
               "id": 806,
               "specialId": "H1",
@@ -1441,5 +1440,377 @@ var eventData = {
               "types": ["fire","ghost"]
             }
           }
-        }
+  },
+  "christmas": {
+        "25": {
+            "1":
+              {
+                "id": 25,
+                "specialId": "C1",
+                "name": "snowman pikachu",
+                "imageid": 50054,
+                "types": ["electric","ice"]
+              }
+            },
+        "37": {
+            "1":
+              {
+                "id": 37,
+                "specialId": "C1",
+                "name": "reindeer vulpix",
+                "imageid": 50033,
+                "types": ["fire"]
+              }
+            },
+        "50": {
+            "1":
+              {
+                "id": 50,
+                "specialId": "C1",
+                "name": "angel diglett",
+                "imageid": 50034,
+                "types": ["ground"]
+              }
+            },
+        "77": {
+            "1":
+              {
+                "id": 77,
+                "specialId": "C1",
+                "name": "elsa galarian ponyta",
+                "imageid": 50053,
+                "types": ["ice"]
+              }
+            },
+        "79": {
+              "1":
+                {
+                  "id": 79,
+                  "specialId": "C1",
+                  "name": "snowy slowpoke",
+                  "imageid": 50056,
+                  "types": ["water","psychic"]
+                }
+              },
+        "83": {
+              "1":
+                {
+                  "id": 83,
+                  "specialId": "C1",
+                  "name": "festive farfetch'd",
+                  "imageid": 50007,
+                  "types": ["normal","flying"]
+                }
+              },
+        "104": {
+              "1":
+                {
+                  "id": 104,
+                  "specialId": "C1",
+                  "name": "drummer boy cubone",
+                  "imageid": 50013,
+                  "types": ["ground"]
+                }
+              },
+        "105": {
+              "1":
+                {
+                  "id": 105,
+                  "specialId": "C1",
+                  "name": "candy cane marowak",
+                  "imageid": 50035,
+                  "types": ["ground"]
+                }
+              },
+        "124": {
+              "1":
+                {
+                  "id": 124,
+                  "specialId": "C1",
+                  "name": "Mrs. Claus Jynx",
+                  "imageid": 50036,
+                  "types": ["ice","psychic"]
+                }
+              },
+        "155": {
+              "1":
+                {
+                  "id": 155,
+                  "specialId": "C1",
+                  "name": "ice cyndaquill",
+                  "imageid": 50052,
+                  "types": ["ice"]
+                }
+              },
+        "174": {
+              "1":
+                {
+                  "id": 174,
+                  "specialId": "C1",
+                  "name": "mistletoe igglybuff",
+                  "imageid": 50012,
+                  "types": ["normal","fairy"]
+                }
+              },
+        "179": {
+              "1":
+                {
+                  "id": 179,
+                  "specialId": "C1",
+                  "name": "christmas mareep",
+                  "imageid": 50037,
+                  "types": ["electric"]
+                }
+              },
+        "185": {
+              "1":
+                {
+                  "id": 185,
+                  "specialId": "C1",
+                  "name": "christmas sudowoodo",
+                  "imageid": 50002,
+                  "types": ["rock"]
+                }
+              },
+        "198": {
+              "1":
+                {
+                  "id": 198,
+                  "specialId": "C1",
+                  "name": "festive murkrow",
+                  "imageid": 50005,
+                  "types": ["dark","flying"]
+                }
+              },
+        "225": {
+              "1":
+                {
+                  "id": 225,
+                  "specialId": "C1",
+                  "name": "santa delibird",
+                  "imageid": 50038,
+                  "types": ["ice","flying"]
+                }
+              },
+        "241": {
+              "1":
+                {
+                  "id": 241,
+                  "specialId": "C1",
+                  "name": "festive miltank",
+                  "imageid": 50009,
+                  "types": ["normal"]
+                }
+              },
+        "255": {
+              "1":
+                {
+                  "id": 255,
+                  "specialId": "C1",
+                  "name": "festive torchic",
+                  "imageid": 50004,
+                  "types": ["fire"]
+                }
+              },
+        "282": {
+              "1":
+                {
+                  "id": 282,
+                  "specialId": "C1",
+                  "name": "festive gardevoir",
+                  "imageid": 50010,
+                  "types": ["psychic","fairy"]
+                }
+              },
+        "325": {
+              "1":
+                {
+                  "id": 325,
+                  "specialId": "C1",
+                  "name": "ornaments spoink",
+                  "imageid": 50039,
+                  "types": ["psychic"]
+                }
+              },
+        "436": {
+              "1":
+                {
+                  "id": 436,
+                  "specialId": "C1",
+                  "name": "snowflake bronzor",
+                  "imageid": 50048,
+                  "types": ["steel","psychic"]
+                }
+              },
+        "475": {
+              "1":
+                {
+                  "id": 475,
+                  "specialId": "C1",
+                  "name": "festive gallade",
+                  "imageid": 50011,
+                  "types": ["psychic","fighting"]
+                }
+              },
+        "519": {
+              "1":
+                {
+                  "id": 519,
+                  "specialId": "C1",
+                  "name": "festive pidove",
+                  "imageid": 50003,
+                  "types": ["normal","flying"]
+                }
+              },
+        "549": {
+              "1":
+                {
+                  "id": 549,
+                  "specialId": "C1",
+                  "name": "poinsettia lilligant",
+                  "imageid": 50049,
+                  "types": ["grass"]
+                }
+              },
+        "581": {
+              "1":
+                {
+                  "id": 581,
+                  "specialId": "C1",
+                  "name": "festive swanna",
+                  "imageid": 50008,
+                  "types": ["water","flying"]
+                }
+              },
+        "586": {
+              "1":
+                {
+                  "id": 586,
+                  "specialId": "C1",
+                  "name": "cold winter sawsbuck",
+                  "imageid": 50055,
+                  "types": ["normal","grass"]
+                }
+              },
+        "636": {
+              "1":
+                {
+                  "id": 636,
+                  "specialId": "C1",
+                  "name": "crysal larvesta",
+                  "imageid": 50050,
+                  "types": ["bug","fire"]
+                }
+              },
+        "698": {
+              "1":
+                {
+                  "id": 698,
+                  "specialId": "C1",
+                  "name": "snowy amaura",
+                  "imageid": 50051,
+                  "types": ["rock","ice"]
+                }
+              },
+        "720": {
+              "1":
+                {
+                  "id": 720,
+                  "specialId": "C1",
+                  "name": "festive hoopa",
+                  "imageid": 50006,
+                  "types": ["psychic","ghost"]
+                }
+              },
+        "722": {
+              "1":
+                {
+                  "id": 722,
+                  "specialId": "C1",
+                  "name": "christmas rowlet",
+                  "imageid": 50041,
+                  "types": ["grass","flying"]
+                }
+              },
+        "764": {
+              "1":
+                {
+                  "id": 764,
+                  "specialId": "C1",
+                  "name": "christmas wreath comfey",
+                  "imageid": 50042,
+                  "types": ["fairy"]
+                }
+              },
+        "771": {
+              "1":
+                {
+                  "id": 771,
+                  "specialId": "C1",
+                  "name": "ornaments pyukumuku",
+                  "imageid": 50043,
+                  "types": ["water"]
+                }
+              },
+        "775": {
+              "1":
+                {
+                  "id": 775,
+                  "specialId": "C1",
+                  "name": "presents komala",
+                  "imageid": 50044,
+                  "types": ["normal"]
+                }
+              },
+        "830": {
+              "1":
+                {
+                  "id": 830,
+                  "specialId": "C1",
+                  "name": "ornaments eldegoss",
+                  "imageid": 50045,
+                  "types": ["grass"]
+                }
+              },
+        "842": {
+              "1":
+                {
+                  "id": 842,
+                  "specialId": "C1",
+                  "name": "christmas cake appletun",
+                  "imageid": 50046,
+                  "types": ["grass","dragon"]
+                }
+              },
+        "854": {
+              "1":
+                {
+                  "id": 854,
+                  "specialId": "C1",
+                  "name": "choco sinistea",
+                  "imageid": 50049,
+                  "types": ["ghost"]
+                }
+              },
+        "859": {
+              "1":
+                {
+                  "id": 859,
+                  "specialId": "C1",
+                  "name": "elf impidimp",
+                  "imageid": 50047,
+                  "types": ["dark","fairy"]
+                }
+              },
+        "896": {
+              "1":
+                {
+                  "id": 896,
+                  "specialId": "C1",
+                  "name": "primal glastrier",
+                  "imageid": 50057,
+                  "types": ["ice"]
+                }
+              }
   }
+}

@@ -1,0 +1,131 @@
+@import url("https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&display=swap");
+
+
+.main {   
+  background-size: cover;
+  font-family: "Mountains of Christmas", cursive;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(#123, #111);
+  overflow: hidden;
+  height: 150%;
+  margin-bottom: 0px;
+}
+.above-calendar {
+  font-family: 'Source Sans Pro', sans-serif;
+  color: #fff;
+  text-align: center;
+  padding: 10px;
+}
+.not-christmas-yet {
+  
+  margin: auto;
+  width: 50%;
+  height: 70%;
+  text-align: center;
+  font-size: 3.5em;
+  padding: 50px;
+  color: #fff;
+}
+
+/* calendar layout */
+.calendar-container {
+  box-sizing: border-box;
+  width: 90%;
+  aspect-ratio: 16 / 9;
+  border: 5px solid rgb(250, 208, 93);
+  margin: 15px auto;
+  background-image: url("./images/backgrounds/bg-019.png");
+  background-size: cover;
+  box-shadow: 0px 0px 20px rgb(240, 207, 117);
+  display: grid;
+  grid-template-columns: repeat(4, 25%);
+  grid-template-rows: repeat(6, 1fr);
+  
+  grid-template-areas: 
+  "door9 door6 door11 door7"
+  "door3 door20 door16 door2"
+  "door14 door12 door19 door15"
+  "door22 door1 door5 door23"
+  "door17 door10 door24 door21"
+  "door8 door18 door4 door13";
+}
+
+@keyframes animatedBackground {
+  from {
+    background-position: center 250;
+  }
+  to {
+    background-position: center center;
+  }
+}
+
+.calendar-image-opened {
+  background-image: none;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  max-width: 100%;
+  max-height: 100%;
+  border: 2px dashed rgba(0, 0, 0, 0.2);
+  border-radius: 0.6rem;
+  transform-origin: 0% 50%;
+  transition: all 2.5s, opacity 1s;
+  animation: animatedBackground 4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+}
+
+
+.calendar-image {
+  background-image: none;
+  background-size: cover;
+  background-position: center;
+  text-align: center;
+}
+
+
+.text {
+  height: 100%;
+  width: 100%;
+  color: white;
+  padding: 10px;
+}
+
+@media only screen and (min-width: 576px) {
+  .calendar-grid .title h1 {
+    font-size: 5rem;
+    flex-direction: column;
+  }
+}
+.calendar-grid .door {
+  width: 100%;
+  transform-style: preserve-3d;
+  transition: all 300ms;
+  border: 2px dashed rgba(0, 0, 0, 0.2);
+  border-radius: 0.6rem;
+}
+
+.calendar-grid .door div {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  border-radius: 0.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #10303c;
+  font-size: 3em;
+  font-weight: bold;
+  text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.btn-start {
+  background-color: #fa923f;
+  color: white;
+  border: 2px solid #512751;
+  border-radius: 15px;
+  margin: 15px auto;
+  display: block;
+  width: 10rem;
+  height: 2rem;
+}

@@ -9,7 +9,7 @@ const halloweenbox = document.getElementById("halloween-egg")
  */
 
  const DEFAULT_OPTIONS = {
-  autoClose: 5000,
+  autoClose: 8000,
   position: "top-right",
   onClose: () => {},
   canClose: true,
@@ -277,6 +277,10 @@ function loadShop() {
 }
 
 function loadBackground(){
+  if(document.getElementById("background") == null) {
+    console.log("This page did not have a background element. Unable to load global background variable")
+    return;
+  }
   if(shopOptions.background != "") {
     document.getElementById("background").setAttribute('src',"images/backgrounds/"+shopOptions.background+".png")
   } else {

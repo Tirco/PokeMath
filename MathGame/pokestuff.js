@@ -11,6 +11,8 @@ const mythics = Object.freeze([151,251,385,386,489,490,492,493,494,647,648,649,7
 const specialforms = Object.freeze([3,6,9,12,15,18,19,20,25,26,27,28,37,38,50,51,52,53,58,59,65,68,74,75,76,77,78,79,80,83,88,89,94,99,100,101,103,105,110,115,122,127,130,131,133,142,143,144,145,146,150,157,181,199,208,211,212,214,215,222,229,248,254,257,260,263,264,282,302,303,306,308,310,319,323,334,351,354,359,362,373,376,380,381,382,383,384,386,413,428,445,448,460,475,479,483,484,492,503,531,549,550,554,555,562,569,570,571,618,628,641,642,645,646,647,648,658,681,705,706,710,711,713,718,719,720,724,741,778,809,812,815,818,823,826,834,839,841,842,844,849,851,858,861,869,879,884,890,892,905])
 const specialbonus = 3
 
+
+
 function calculateShinyChance(level){
   if(mathValues.stage == null) {
     mathValues.stage = 1;
@@ -181,7 +183,30 @@ function addToPokedex(id) {
   return;
 }
 
+function addSpecificToPokedex(entry) {  
+  state.pkmnCaught++
+  statCounter("hit","pokemonCaught");
+  state.pkmnList.push(entry);
+  if(checkACookieExists("cookies")) {
+    window.localStorage.setItem('pokemonlist',JSON.stringify(state.pkmnList.join('|')))
+  } else {
+    const toast = new Toast({
+      text: "Du har ikke godkjent bruken av Cookies, så vi kan ikke lagre din spillerdate på din enhet. Last inn siden på nytt og godkjenn cookies for at dette skal fungere.",
+      position: "top-right",
+      pauseOnHover: true,
+      pauseOnFocusLoss: true,
+      canClose: true,
+      badToast: true,
+    })
+  }
+  return;
+}
+
 async function loadAmountFromList(amount, reverse, log) {
+  if(pokedex == null) {
+    console.log("Attempted to load " + amount + "from list, but there was no pokedex")
+    return; //cancel, there is no dex
+  }
   pokedex.innerHTML = "";
 
   let fetchFrom =  state.pkmnList.map((x) => x);
@@ -260,12 +285,13 @@ function loadFromList(entry, firstLoad, capture, returnString) {
     specialFormString = splitEntry[1].replace(/\D/g,'');
     specialFormVariation = Number(specialFormString);
     if(splitEntry[1].includes('H')) {
-      halloweenPkmn = true;
       pkmnName = eventData["halloween"][id][specialFormVariation].name
       pkmnTypes = eventData["halloween"][id][specialFormVariation].types
       imageId = eventData["halloween"][id][specialFormVariation].imageid
     } else if(splitEntry[1].includes('C')){
-      //TODO xmas
+      pkmnName = eventData["christmas"][id][specialFormVariation].name
+      pkmnTypes = eventData["christmas"][id][specialFormVariation].types
+      imageId = eventData["christmas"][id][specialFormVariation].imageid
     } else {
 
       pkmnTypes = alternateFormsData[id][specialFormVariation].types;

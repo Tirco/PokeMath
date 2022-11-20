@@ -74,7 +74,7 @@ input {
   visibility: hidden;
   transition: all .33s ease-out;
   transform: scale(1.2);
-  z-index: 10000;
+  z-index: 11000;
 }
 
 .overlay-inner {
@@ -255,10 +255,12 @@ body.overlay-is-open .main-ui,
 }
 
 .legendary {
-  outline: solid rgba(252, 93, 20, 0.4);
+  outline: solid rgba(247, 184, 11, 0.547);
+  outline-width: 5px;
 }
 .mythic {
   outline: solid rgba(219, 33, 210, 0.4);
+  outline-width: 5px;
 }
 
 .typecard {
@@ -376,4 +378,27 @@ body.overlay-is-open .main-ui,
   background-color: #333333;
   border-top-color: #191213;
   border-bottom-color: #8a8a8a;
+}
+
+.xmas-present {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  background-size: contain;
+  z-index: 10001;
+}
+
+.floating { 
+  animation-name: floating;
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+  margin-left: 30px;
+  margin-top: 5px;
+}
+
+@keyframes floating {
+  0% { transform: translate(0,  0px); }
+  50%  { transform: translate(0, 15px); }
+  100%   { transform: translate(0, -0px); }   
 }

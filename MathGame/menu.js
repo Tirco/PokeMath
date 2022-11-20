@@ -1,3 +1,4 @@
+const snowflakes = document.querySelector(".snowflakecontainer");
 const menuOne = document.getElementById("menu-image-1")
 const menuTwo = document.getElementById("menu-image-2")
 const menuThree = document.getElementById("menu-image-3")
@@ -23,9 +24,13 @@ function load(){
     splashText.textContent = eventSplashes[Math.floor(Math.random()*eventSplashes.length)]
     let logo = document.getElementById("logo");
     logo.style.backgroundImage="url(images/logo-halloween.png)";
-  } else if(month == 11) { //Måned 11 = desember
+  } else if(month == 10) { //Måned 11 = desember
     let eventSplashes = ["Ho Ho Ho!","Merry Christmas!","X-Mas Time!"];
     splashText.textContent = eventSplashes[Math.floor(Math.random()*eventSplashes.length)]
+    for(let i = 0; i < 10; i++) {
+      snowflakes.innerHTML += '<div class="snowflake">❅</div>';
+    }
+    document.getElementById("xmas").classList.remove("is-hidden");
   } else {
     splashText.textContent = splashOptions[Math.floor(Math.random()*splashOptions.length)]
   }

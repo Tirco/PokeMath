@@ -127,11 +127,29 @@
 	</form>
   </div>
 <div class="main">
+	<div class="snowflakecontainer"></div>
 	<div id="logo" class="logo">
 		<text id="logotext" class="tilt pop"> </text>
 	</div>
 
 	<div class="columns is-multiline is-mobile" id="stageselect">
+		<div class="bigcard is-hidden" id="xmas" onclick="location.href='christmas.html';">
+			<div class="card-content">
+				<div class="has-text-centered">
+					<div class="card-image" style="background-image: url('images/events/christmas/calendar.png'); height: 128px; width: 128px; background-size: cover;">&nbsp;</div>
+				</div>
+				<div class="card-footer">
+					<p class="card-footer-item">
+					  <strong style="text-transform: capitalize;">Julekalender</strong>
+					</p>
+				</div>
+				<div class="card-footer">
+					<p class="card-footer-item">
+					  <a style="text-transform: capitalize;">Fra 1. til 24.<br> desember!</a>
+					</p>
+				  </div>
+			</div>
+		</div>
 		<div class="bigcard" id="stage-one" onclick="location.href='pokemath.html?stage=1';">
 			<div class="card-content">
 				<div class="has-text-centered" id="menu-image-1"></div>
@@ -141,22 +159,11 @@
 				  <strong style="text-transform: capitalize;">Nivå 1</strong>
 				</p>
 			</div>
-			<footer class="card-footer">
+			<div class="card-footer">
 				<p class="card-footer-item">
-					<b>Addisjon (+):&nbsp;&nbsp;</b> 0 - 10
+				  <a style="text-transform: capitalize;">Pluss & Minus <br> 0 - 10</a>
 				</p>
-			</footer>
-			<footer class="card-footer">
-				<p class="card-footer-item">
-					<b>Subtraksjon (-):&nbsp;&nbsp;</b> 0 - 10
-				</p>
-			</footer>
-			<footer class="card-footer">
-				<p class="card-footer-item"></p>
-			</footer>
-			<footer class="card-footer">
-				<p class="card-footer-item"></p>
-			</footer>
+			  </div>
 	   </div>
 
 		<div class="bigcard"  id="stage-two" onclick="location.href='pokemath.html?stage=2';">
@@ -169,22 +176,11 @@
 				  <strong style="text-transform: capitalize;">Nivå 2</strong>
 				</p>
 			  </div>
-			  <footer class="card-footer">
+			  <div class="card-footer">
 				<p class="card-footer-item">
-					<b>Addisjon (+):&nbsp;</b> 0 - 25
+				  <a style="text-transform: capitalize;">Pluss & Minus <br> 0 - 25</a>
 				</p>
-			</footer>
-			<footer class="card-footer">
-				<p class="card-footer-item">
-					<b>Subtraksjon (-):&nbsp;</b> 0 - 25
-				</p>
-			</footer>
-			<footer class="card-footer">
-				<p class="card-footer-item"></p>
-			</footer>
-			<footer class="card-footer">
-				<p class="card-footer-item"></p>
-			</footer>
+			  </div>
 		</div>
 
 		<div class="bigcard" id="stage-three" onclick="location.href='pokemath.html?stage=3';">
@@ -197,32 +193,11 @@
 				  <strong style="text-transform: capitalize;">Nivå 3</strong>
 				</p>
 			  </div>
-			  <footer class="card-footer">
+			  <div class="card-footer">
 				<p class="card-footer-item">
-					<b>Addisjon (+):&nbsp;&nbsp;</b> 0 - 10
+				  <a style="text-transform: capitalize;">4 regnearter <br> Små tall</a>
 				</p>
-				
-			</footer>
-			<footer class="card-footer">
-				<p class="card-footer-item">
-					<b>Subtraksjon (-):&nbsp;&nbsp;</b> 0 - 10
-				</p>
-			</footer>
-			<footer class="card-footer">
-				<p class="card-footer-item">
-					<b>Multiplikasjon (x):&nbsp;&nbsp;</b> 0 - 10
-				</p>
-			</footer>
-			<footer class="card-footer-divisjon">
-				<p class="card-footer-item-divisjon">
-					<b>Divisjon (/):&nbsp;</b>
-					<div class="fraction">
-						<span class="fup">0 - 100</span>
-						<span class="bar">/</span>
-						<span class="fdn">1 - 10</span>
-					  </div>
-				</p>
-			</footer>
+			  </div>
 		</div>
 
 		<div class="bigcard" id="stage-four" onclick="location.href='pokemath.html?stage=4';">
@@ -235,31 +210,11 @@
 				  <strong style="text-transform: capitalize;">Nivå 4</strong>
 				</p>
 			  </div>
-			  <footer class="card-footer">
+			  <div class="card-footer">
 				<p class="card-footer-item">
-					<b>Addisjon (+):&nbsp;&nbsp;</b> 10 - 100
+				  <a style="text-transform: capitalize;">4 Regnearter <br> Store tall</a>
 				</p>
-			</footer>
-			<footer class="card-footer">
-				<p class="card-footer-item">
-					<b>Subtraksjon (-):&nbsp;&nbsp;</b> 10 - 100
-				</p>
-			</footer>
-			<footer class="card-footer">
-				<p class="card-footer-item">
-					<b>Multiplikasjon (x):&nbsp;&nbsp;</b> 10 - 100
-				</p>
-			</footer>
-			<footer class="card-footer-divisjon">
-				<p class="card-footer-item-divisjon">
-					<b>Divisjon (/):&nbsp;</b>
-					<div class="fraction">
-						<span class="fup">10 - 1000</span>
-						<span class="bar">/</span>
-						<span class="fdn">1 - 10</span>
-					  </div>
-				</p>
-			</footer>
+			  </div>
 		</div>
 
 		<div class="bigcard"  id="stage-five" onclick="location.href='pokemath.html?stage=5';">
@@ -272,32 +227,13 @@
 				  <strong style="text-transform: capitalize;">Nivå 5</strong>
 				</p>
 			  </div>
-			  <footer class="card-footer">
+			  <div class="card-footer">
 				<p class="card-footer-item">
-					<b>Addisjon (+):&nbsp;&nbsp;</b> 1000 - 10 000
+				  <a style="text-transform: capitalize;">4 regnearter <br> Veldig Store tall</a>
 				</p>
-			</footer>
-			<footer class="card-footer">
-				<p class="card-footer-item">
-					<b>Subtraksjon (-):&nbsp;&nbsp;</b> 1000 - 10 000
-				</p>
-			</footer>
-			<footer class="card-footer">
-				<p class="card-footer-item">
-					<b>Multiplikasjon (x):&nbsp;&nbsp;</b> 10 - 999
-				</p>
-			</footer>
-			<footer class="card-footer-divisjon">
-				<p class="card-footer-item-divisjon">
-					<b>Divisjon (/):&nbsp;</b>
-					<div class="fraction">
-						<span class="fup">100 - 1 000 000</span>
-						<span class="bar">/</span>
-						<span class="fdn">10 - 100</span>
-					  </div>
-				</p>
-			</footer>
+			  </div>
 		</div>
+
 		<div class="bigcard"  id="stage-custom" onclick="location.href='customizer.html';">
 			<div class="card-content">
 			  <div class="has-text-centered" id="menu-image-c">
@@ -309,24 +245,12 @@
 				<strong style="text-transform: capitalize;">Eget Nivå</strong>
 			  </p>
 			</div>
-			<footer class="card-footer">
-			  <p class="card-footer-item">
-				  Still inn ditt eget nivå.
-			  </p>
-		  	</footer>
-			<footer class="card-footer">
+			<div class="card-footer">
 				<p class="card-footer-item">
-				(Beta)
+				  <a style="text-transform: capitalize;">alle muligheter <br> Velg selv</a>
 				</p>
-			</footer>
-			<footer class="card-footer">
-				<p class="card-footer-item"></p>
-			</footer>
-			<footer class="card-footer">
-				<p class="card-footer-item">
-				</p>
-			</footer>
-	  </div>
+			  </div>
+	    </div>
 	</div>
 </div>
 <div class="botbar">
@@ -341,7 +265,7 @@
 	<a id="update-log" class="align-right" href="about.html#news">Nytt</a>
 </div>
 
-<div id="alertbox" class="alert simple-alert is-hidden-"> <!-- is-hidden if hidden-->
+<div id="alertbox" class="alert simple-alert is-hidden"> <!-- is-hidden if hidden-->
 	<h3>November <a class="date">02.11.2022</a></h3>
 	<p>Nå er vi over i November, og det betyr at Halloween-egget er borte for denne gang! <br>
 	Men frykt ikke, det kommer nok tilbake neste år, med flere skumle pokemon.<br><br>
