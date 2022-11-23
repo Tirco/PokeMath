@@ -40,6 +40,8 @@ async function call() {
     getHitCounter("info","pokemonCaught",document.getElementById("pokemonCaught"));
     getHitCounter("info","tasksSolved",document.getElementById("tasksSolved"));
     getHitCounter("info","wrongAnswers",document.getElementById("wrongAnswers"));
+    getHitCounter("info","filesaves",document.getElementById("fileSaves"));
+    getHitCounter("info","fileloads",document.getElementById("fileLoads"));
     //https://api.countapi.xyz/hit/pokemath.online/unicount
     //https://api.countapi.xyz/create?namespace=pokemath.online&key=statsVisited&update_lowerbound=0
     //https://api.countapi.xyz/create?namespace=pokemath.online&key=mathVisited&update_lowerbound=0

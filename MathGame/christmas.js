@@ -182,7 +182,7 @@ function addMoney(value) {
 	money.textContent = "";
 	statCounterAmount("update","coinsEarned",value);
 	if (state.totalScore) money.classList.add('animate');
-  
+    saveAll();
 	setTimeout(() => {
 		money.classList.remove('animate');
 	}, 1000)

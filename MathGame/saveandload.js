@@ -11,9 +11,11 @@ function download(filename, text) {
     document.body.removeChild(element);
 }
 
+
+/* //for internal use...
 let dex = {0: {"name":"Error","types" : ["water","fire"]}}
 
-function makeJsonFile() {
+function makeJsonFile() { 
     let s = "";
 
     let promises = [];
@@ -55,7 +57,7 @@ function fetchResValues(res,i) {
     console.log(id + " " + pkmn);
     dex[id] = pkmn;
     return(pkmn);
-}
+} */
 
 function createSaveFile(){
     let date = new Date();
@@ -82,6 +84,7 @@ function createSaveFile(){
     content = btoa(content);
     download(filename,content);
     //console.log(atob(content));
+    statCounter("hit","filesaves");
 }
 
 function toJSONLocal (date) {
@@ -139,7 +142,7 @@ function init(){
     shopOptions.legendLevel = shopText[6];
     shopOptions.specialLevel = shopText[7];
     shopOptions.coinLevel = shopText[8];
-
+    window.localStorage.setItem('visitCounted','true');
     saveAll();
     loadAll();
 
@@ -152,8 +155,8 @@ function init(){
         badToast: false,
       })
 
-    
-
+    //Update stats on how many loaded.
+    statCounter("hit","fileloads");
 
     //document.getElementById('fileContent').textContent = atob(event.target.result);
   }

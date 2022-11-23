@@ -10,9 +10,9 @@
 	<meta name="robots" content="noindex, nofollow">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta name="author" content="Tirco">
-	<link rel="stylesheet" href="../globalstyle.css?v=23">
-	<link rel="stylesheet" href="../stats.css?v=23">
-	<link rel="stylesheet" href="../menustyle.css?v=23">
+	<link rel="stylesheet" href="./globalstyle.css?v=23">
+	<link rel="stylesheet" href="./stats.css?v=23">
+	<link rel="stylesheet" href="./menustyle.css?v=23">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 </head>
 <body>
@@ -32,26 +32,26 @@
 	</div>
 	<div>
 		<div class="topbar">
-			<a href="../index.html" id="backbutton">&#8249;</a>
-			<a href="../shop.html" id="money" class="topbar-icon-left">
-				<img id="coinimage" src="../money.svg" width="50" 
+			<a href="./index.html" id="backbutton">&#8249;</a>
+			<a href="./shop.html" id="money" class="topbar-icon-left">
+				<img id="coinimage" src="./money.svg" width="50" 
 				height="50"/>
 				<text id="cointext" class="topbar-icontext-left money score"
 				data-added="0" data-total="0"></text>
 			</a>
-			<a href="../dex.html" id="caught" class="topbar-icon-left">
-				<img id="ballimage" src="../pokeball.svg" width="50" 
+			<a href="./dex.html" id="caught" class="topbar-icon-left">
+				<img id="ballimage" src="./pokeball.svg" width="50" 
 				height="50"/>
 				<text id="balltext" class="topbar-icontext-left">0</text>
 			</a>
 			<div id="playercard" class="topbar-icon-left playercard">
-				<a class="playerbtn"><img id="playerimage" src="../images/player.png" width="50" 
+				<a class="playerbtn"><img id="playerimage" src="./images/player.png" width="50" 
 				height="50"/>
 				<text id="playertext" class="topbar-icontext-left">Ash</text></a>
 				<div class="playercard-content">
 					<div class="trainercard">
 						<div class="card-avatar">
-							<img id="playerimagebig" src="../images/player.png" width="100%"></img>
+							<img id="playerimagebig" src="./images/player.png" width="100%"></img>
 						</div>
 						<div class="trainercard-details">
 						   <div class="trainercard-name">
@@ -90,19 +90,19 @@
 			</div>
 			<div class="dropdown">
 				<button class="dropbtn">
-					<img id="gearimage" src="../images/gear.png" width="50" 
+					<img id="gearimage" src="./images/gear.png" width="50" 
 					height="50"/>
 				  <i class="fa fa-caret-down"></i>
 				</button>
 				<div class="dropdown-content">
-				  <a href="../index.html">Hovedmeny</a>
-				  <a href="../dex.html">Pokedex</a>
-				  <a href="../shop.html">Butikk</a>
-				  <a href="../about.html">Om siden</a>
-				  <a href="../about.html#contact">Kontakt oss</a>
-				  <a href="../about.html#news">Nylige oppdateringer</a>
-				  <a href="../saveandload.html">Lagre / Last Inn</a>
-				  <a href="../faq.html">FAQ</a>
+				  <a href="./index.html">Hovedmeny</a>
+				  <a href="./dex.html">Pokedex</a>
+				  <a href="./shop.html">Butikk</a>
+				  <a href="./about.html">Om siden</a>
+				  <a href="./about.html#contact">Kontakt oss</a>
+				  <a href="./about.html#news">Nylige oppdateringer</a>
+				  <a href="./saveandload.html">Lagre / Last Inn</a>
+				  <a href="./faq.html">FAQ</a>
 				  <a href="#"> </a>
 				  <a onclick="resetPrompt()">Tilbakestill (Slett alt)</a>
 				</div>
@@ -196,6 +196,14 @@
 				<a>Wrong Answers</a>
 			</div>
 			<div class="statsCard is-centered">
+				<a id="fileSaves" class="countup">0</a><br>
+				<a>Files Saved</a>
+			</div>
+			<div class="statsCard is-centered">
+				<a id="fileLoads" class="countup">0</a><br>
+				<a>Files Loaded</a>
+			</div>
+			<div class="statsCard is-centered">
 				<a id="gf" class="countup">99999</a><br>
 				<a>Amount of Times my GF wanted my attention while making this</a>
 			</div>
@@ -210,8 +218,8 @@
 </div>
 <script async src="https://api.countapi.xyz/hit/pokemath.online/statsVisited?callback=cb"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-<script src="../global.js?v=23"></script>
-<script src="../stats.js?v=23"></script>
+<script src="./global.js?v=23"></script>
+<script src="./stats.js?v=23"></script>
 </body>
 
 </html>

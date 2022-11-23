@@ -377,6 +377,12 @@ function checkACookieExists(name) {
 
 
 function loadAll() {
+  //Log to console
+  console.log('%cPokeMath!', 'color: black; background: red; font-size: 30px; padding: 10px');
+  console.log('%cVi er klar over at det er mulig å endre på egne verdier for å jukse i PokeMath. Dette er en svakhet ved at vi lagrer all spillerdata på brukerens maskin, istedet for å samle det inn til en server, men det er tryggere for brukeren med GDPR i fokus.', 'color: black; font-size: 20px; padding: 10px');
+  console.log('%cHvis du er her for å jukse til deg pokemon så skal vi ikke prøve å stoppe deg, men vit at å jukse i et spill vil ødelegge mye av motivasjonen du får ellers. Du ender altså bare opp med å ødelegge for deg selv. Hvis du finner ut av noen av våre hemmeligheter (f.eks lukene i julekalender eller andre events) så setter vi pris på om du klarer å holde det hemmelig for klassekammeratene dine!', 'color: black; font-size: 20px; padding: 10px');
+  console.log('%cDu kan finne all kildekoden til PokeMath på vår GitHub side (se Kontakt Oss). Det er litt lettere å lese seg frem der, enn i nettleserens Developer Tools. Ønsker du å bidra til prosjektet så er det stedet å starte! Finner du bugs, eller sikkerhetshull, så ikke nøl med å kontakte oss.', 'color: black; font-size: 20px; padding: 10px');
+  
   //See if cookies are consented
   if(checkACookieExists("cookies")) {
     if(cookiePolicy != null) {
@@ -506,7 +512,7 @@ window.addEventListener( "pageshow", function ( event ) {
                          window.performance.getEntriesByType("navigation")[0].type === "back_forward" );
   if ( historyTraversal ) {
     // Handle page restore.
-    console.log("Forcing reload")
+    console.log("Forcing reload because browser back button was clicked.")
     //window.location.reload();
     loadAll();
   }
