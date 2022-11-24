@@ -3,6 +3,7 @@ const calendarContainer = document.querySelector(".calendar-container");
 const aboveCalendar = document.querySelector(".above-calendar")
 const money = document.querySelector(".money")
 const calendarDays = 24;
+var openedHatches = [];
 
 const openDoor = (path, event) => {
     parent = event.target.parentNode;
@@ -25,7 +26,21 @@ const openDoor = (path, event) => {
 function openHatch(date) {
     number = Number(date);
     var message = "Unknown";
-    var error = false;
+    if(checkACookieExists("cookies")) {
+        openedHatches.push(number);
+        window.localStorage.setItem('xmasOpened',JSON.stringify(openedHatches))
+    } else {
+        const toast = new Toast({
+            text: "Du har ikke godkjent bruken av Cookies, så vi kan ikke lagre din spillerdate på din enhet.",
+            position: "top-right",
+            pauseOnHover: true,
+            pauseOnFocusLoss: true,
+            canClose: true,
+            badToast: true,
+          })
+          return;
+    }
+
     switch (number) {
         case 1:
             message = "Luke 1 er åpnet, og du fikk en Christmas Sudowoodo, og 1000 mynter.";
@@ -158,7 +173,6 @@ function openHatch(date) {
             break;
         default:
             message = "Unknown date: " + number;
-            error = true;
     }
 
     const toast = new Toast({
@@ -169,11 +183,6 @@ function openHatch(date) {
         canClose: true,
         badToast: false,
       })
-
-
-    if(!error) {
-        //Add to opened.
-    }
 }
 
 function addMoney(value) {
@@ -201,13 +210,26 @@ const createCalendar = () => {
         return;
     }
 
+    if(checkACookieExists("cookies")) {
+
+    } else {
+        const toast = new Toast({
+            text: "Du har ikke godkjent bruken av Cookies, så vi kan ikke lagre din spillerdate på din enhet.",
+            position: "top-right",
+            pauseOnHover: true,
+            pauseOnFocusLoss: true,
+            canClose: true,
+            badToast: true,
+          })
+          return;
+    }
+
     //TODO ce-year.
     //Get list of opened hatches.
     //clear list if wrong year.
 
     for(let i = 0; i  < calendarDays; i++) {
         courseNumber = i + 1;
-        console.log("Creating #" + courseNumber)
         const calendarDoor = document.createElement("div");
         const calendarDoorText = document.createElement("div");
 
@@ -222,14 +244,26 @@ const createCalendar = () => {
         calendarDoor.appendChild(calendarDoorText);
 
         let coursePath = `./images/events/christmas/${courseNumber}.png`;
-        var aList = [1,2,3,4,5,6]
-        if(aList.includes(courseNumber)){
+        openedHatches = getStorageString('xmasOpened');
+
+        if(openedHatches == null || openedHatches.length == 0) {
+            openedHatches = new Array();
+        }
+
+        var eventYear = getStorageString('xmasYear');
+        if(eventYear != date.getFullYear()) {
+            window.localStorage.setItem('xmasYear',JSON.stringify(date.getFullYear()));
+            openedHatches = new Array();
+        }
+        
+
+        if(openedHatches.includes(courseNumber)){
             calendarDoor.classList = "calendar-image-opened";
             calendarDoor.style.backgroundImage = `url(${coursePath})`;
             calendarDoor.style.opacity = "100";
             calendarDoor.style.backgroundColor = "#ffffff73";
             //calendarDoor.innerHTML += '<div class="title-container"><a href="https://codepen.io/johnnyfekete/pen/ZEpGerj" target="_blank" title="Link to source code">Gingerbread cookie</a>'
-        } else if(date.getDate() == courseNumber){ //Bare la dagens luke kunne åpnes
+        } else {//if(date.getDate() == courseNumber){ //Bare la dagens luke kunne åpnes
             calendarDoorText.addEventListener("click", openDoor.bind(null,  courseNumber));
         }
     }
