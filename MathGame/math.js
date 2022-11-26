@@ -172,7 +172,7 @@ function onLoad(){
     	if(halloweenbox != null) {
     	  halloweenbox.classList.remove("is-hidden")
 	    }
-  	} else if(month == 10) { //11 = desember
+  	} else if(month == 11) { //11 = desember
 		log("Merry X-Mas!")
 		var timeout =  1000 * 180 * Math.random() + 30000;
 		xmasEvent = true;

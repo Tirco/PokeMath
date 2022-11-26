@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=impact');
+@import url('https://fonts.googleapis.com/css?family=Anton');
 
 .bigcard {
   background-color: #fff;
@@ -35,7 +35,7 @@
   color: rgb(255, 108, 108);
   text-shadow:3px 3px #3F3F00;
   position: absolute;
-  font: 2em/1 impact, sans-serif;
+  font: 2em/1 anton, sans-serif;
   font-size: 4vmin;
   right: 10%;
   left: 45%;

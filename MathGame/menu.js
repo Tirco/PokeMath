@@ -24,8 +24,11 @@ function load(){
     splashText.textContent = eventSplashes[Math.floor(Math.random()*eventSplashes.length)]
     let logo = document.getElementById("logo");
     logo.style.backgroundImage="url(images/logo-halloween.png)";
-  } else if(month == 10) { //Måned 11 = desember
-    let eventSplashes = ["Ho Ho Ho!","Merry Christmas!","X-Mas Time!"];
+  } else if(month == 11) { //Måned 11 = desember
+    let eventSplashes = ["Ho Ho Ho!","Merry Christmas!","X-Mas Time!","Santa Delibird is coming to town!","Now with falling snow!",
+    "Build a Snowman Pikachu!","Check out our Christmas Calendar!","Free presents for patient players!","Have you met St. Nick?",
+    "Give PokeMorten a x-mas hug!","Hot Chocolate, anyone?","Christmas Spirit! I choose you!","What if Santa Clause is a pokemon?",
+    "December is here!","31 Days of Joy!","Tell Santa I've been nice!","Ugly Christmas sweaters are awesome!"];
     splashText.textContent = eventSplashes[Math.floor(Math.random()*eventSplashes.length)]
     for(let i = 0; i < 10; i++) {
       snowflakes.innerHTML += '<div class="fallingsnowflake">❅</div>';

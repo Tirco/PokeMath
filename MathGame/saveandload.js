@@ -81,6 +81,19 @@ function createSaveFile(){
         console.log(`${key}: ${shopOptions[key]}`);
         content += `${shopOptions[key]}`+"|"
     });
+
+    content+= "*SPLIT*"
+    //Save xmas stuff
+    xmasOpened = []
+    if(window.localStorage.getItem("xmasOpened") != null){
+        xmasOpened = getStorageString('xmasOpened');
+    }
+    xmasYear = 2021
+    if(window.localStorage.getItem("xmasYear") != null){
+        xmasYear = getStorageInt('xmasYear');
+    }
+    content += xmasYear + "|" + xmasOpened;
+
     content = btoa(content);
     download(filename,content);
     //console.log(atob(content));
@@ -111,8 +124,8 @@ function init(){
         return;
     }
     // Let's check our result!
-    let uploadArray = uploadedText.split("SPLIT*");
-    if(uploadArray.length != 2) {
+    let uploadArray = uploadedText.split("*SPLIT*");
+    if(uploadArray.length < 2) {
         console.log("Error! The file we got had an incorrect file syntax")
         return;
     }
@@ -143,6 +156,13 @@ function init(){
     shopOptions.specialLevel = shopText[7];
     shopOptions.coinLevel = shopText[8];
     window.localStorage.setItem('visitCounted','true');
+
+    if(uploadArray[2] != null) {
+        let xmasSplit = uploadArray[2].split('|');
+        window.localStorage.setItem('xmasYear',JSON.stringify(Number(xmasSplit[0])));
+        let xmasOpenedArray = xmasSplit[1];
+        window.localStorage.setItem('xmasOpened',JSON.stringify(xmasOpenedArray));
+    }
     saveAll();
     loadAll();
 
