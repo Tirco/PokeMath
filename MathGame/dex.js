@@ -5,7 +5,6 @@ filterSelection("all")
 
 
 function sortOnLoad() {
-
   var main = document.getElementById("pokedex");
   [].map.call( main.children, Object ).sort((a,b) => a.id.localeCompare(b.id,'en', {numeric: true})).forEach( function ( elem ) {
     main.appendChild( elem );
@@ -140,19 +139,76 @@ function textFilterFunction() {
 async function loadAllFromList(){
   pokedex.innerHTML = "";
 
+  if(!checkACookieExists("cookies")) {
+    pokedex.innerHTML = "Vi trenger tilgang til Cookies for å laste inn pokedexen din.";
+    return;
+  }
+  /*// Save data to sessionStorage
+sessionStorage.setItem("key", "value");
+
+// Get saved data from sessionStorage
+let data = sessionStorage.getItem("key");
+
+// Remove saved data from sessionStorage
+sessionStorage.removeItem("key");
+
+// Remove all saved data from sessionStorage
+sessionStorage.clear();
+*/
+  let sessionDex = sessionStorage.getItem("sessionDex");
+  let sessionUsedArray = JSON.parse(sessionStorage.getItem("sessionUsedArray"));
+
+
   let fetchFromArray =  state.pkmnList.map((x) => x);
-  let fetchFrom = [...new Set(fetchFromArray)];
-  var returned = [];
-  for (var i = 0; i < fetchFrom.length; i++) {
-    //console.log("Loading #" + i + " of amount: " + fetchFrom.length)
-    returned.push(loadFromList(fetchFrom[i],true, false,true));
-    progressBar.textContent = "Laster inn (1/2): " + i + "/" + fetchFrom.length;
-    await sleep(1);
+
+  let intersection = [];
+  if(sessionUsedArray != null) {
+    intersection = getDifference(fetchFromArray, sessionUsedArray);
+  }
+  
+  if(sessionUsedArray != null && sessionDex != null && sessionUsedArray <= state.pkmnList && intersection.length < 250) {
+    progressBar.textContent = "Oppdaterer " + intersection.length + " pokemon, og laster inn " + state.pkmnList.length + " elementer fra minnet.";
+    await sleep(100);
+    pokedex.innerHTML = sessionDex;
+
+    for(var i = 0; i < intersection.length; i++) {
+      loadFromList(intersection[i], true, false,false);
+    }
+
+  } else {
+    
+    let fetchFrom = [...new Set(fetchFromArray)];
+
+    var returned = [];
+    for (var i = 0; i < fetchFrom.length; i++) {
+      //console.log("Loading #" + i + " of amount: " + fetchFrom.length)
+      returned.push(loadFromList(fetchFrom[i],true, false,true));
+      progressBar.textContent = "Laster inn (1/2): " + i + "/" + fetchFrom.length;
+      await sleep(1);
+    }
+
+    await addAllToInnerHTML(returned);
   }
 
-  await addAllToInnerHTML(returned);
+  sessionStorage.setItem("sessionUsedArray", JSON.stringify(state.pkmnList));
+  let dexString = pokedex.innerHTML.replace(/(\r\n|\n|\r)/gm, "");
+  dexString = dexString.replaceAll(/^\s+|\s+$/g, "");
+  dexString = dexString.replaceAll('\t', '');
+  dexString = dexString.replaceAll(/ +(?= )/g,'');
+  sessionStorage.setItem("sessionDex", dexString);
   sortOnLoad();
   progressBar.textContent = "Lastet!";
+  progressBar.style.opacity = "0";
+  if(pokedex.innerHTML == "") {
+    pokedex.innerHTML = "Du har ingen pokemon!"
+    progressBar.textContent = "";
+  }
+}
+
+function getDifference(a, b) {
+  return [...b.reduce( (acc, v) => acc.set(v, (acc.get(v) || 0) - 1),
+    a.reduce( (acc, v) => acc.set(v, (acc.get(v) || 0) + 1), new Map() ) 
+)].reduce( (acc, [v, count]) => acc.concat(Array(Math.abs(count)).fill(v)), [] );
 }
 
 

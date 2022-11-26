@@ -28,9 +28,10 @@ function load(){
     let eventSplashes = ["Ho Ho Ho!","Merry Christmas!","X-Mas Time!"];
     splashText.textContent = eventSplashes[Math.floor(Math.random()*eventSplashes.length)]
     for(let i = 0; i < 10; i++) {
-      snowflakes.innerHTML += '<div class="snowflake">❅</div>';
+      snowflakes.innerHTML += '<div class="fallingsnowflake">❅</div>';
     }
     document.getElementById("xmas").classList.remove("is-hidden");
+    logo.style.backgroundImage="url(images/logo-christmas.png)";
   } else {
     splashText.textContent = splashOptions[Math.floor(Math.random()*splashOptions.length)]
   }

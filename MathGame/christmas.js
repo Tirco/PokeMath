@@ -200,10 +200,10 @@ function addMoney(value) {
 const createCalendar = () => {
     var date = new Date();
     aboveCalendar.textContent += "Dagens dato: " + date.toLocaleDateString("NO");
-    for(let i = 0; i < 20; i++) {
-        aboveCalendar.innerHTML += '<div class="snowflake">❅</div>';
+    for(let i = 0; i < 10; i++) {
+        aboveCalendar.innerHTML += '<div class="fallingsnowflake">❅</div>';
     }
-    if(date.getMonth() != 10) { //11 = desember. Januar = 0.
+    if(date.getMonth() != 11) { //11 = desember. Januar = 0.
         calendarContainer.textContent = "Kom tilbake i desember!"
         calendarContainer.classList.remove("calendar-container")
         calendarContainer.classList.add("not-christmas-yet")
@@ -263,7 +263,7 @@ const createCalendar = () => {
             calendarDoor.style.opacity = "100";
             calendarDoor.style.backgroundColor = "#ffffff73";
             //calendarDoor.innerHTML += '<div class="title-container"><a href="https://codepen.io/johnnyfekete/pen/ZEpGerj" target="_blank" title="Link to source code">Gingerbread cookie</a>'
-        } else {//if(date.getDate() == courseNumber){ //Bare la dagens luke kunne åpnes
+        } else if(date.getDate() == courseNumber){ //Bare la dagens luke kunne åpnes
             calendarDoorText.addEventListener("click", openDoor.bind(null,  courseNumber));
         }
     }

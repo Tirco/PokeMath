@@ -33,7 +33,7 @@ function simulateShiny(level) {
   var chance = calculateShinyChance(level);
   var value = Math.floor(Math.random() * chance);
   var percentage = (1/chance)*100 + "%";
-  console.log("Level: " + level + " Highest: " + chance + " value: " + value + " percentage: " + percentage)
+  log("Level: " + level + " Highest: " + chance + " value: " + value + " percentage: " + percentage)
 }
 /**
  * Should they get a shiny?
@@ -61,7 +61,7 @@ function createSpecialPokemon(){
 
 function canCaptureLegendary() {
   var value = (Math.floor(Math.random() * (31-((Number(mathValues.stage)*3) + shopOptions.legendLevel+ (state.streak/1000)))));
-  console.log("legend check: " + value);
+  log("legend check: " + value);
   if(value < 0) {
     value = 0;
   }
@@ -74,7 +74,7 @@ function canCaptureLegendary() {
 
 function canCaptureMythic() {
   var value = (Math.floor(Math.random() * (41-((Number(mathValues.stage)*3) + shopOptions.mythicLevel + (state.streak/1000)))));
-  console.log("mythic check: " + value);
+  log("mythic check: " + value);
   if(value < 0) {
     value = 0;
   }
@@ -204,7 +204,7 @@ function addSpecificToPokedex(entry) {
 
 async function loadAmountFromList(amount, reverse, log) {
   if(pokedex == null) {
-    console.log("Attempted to load " + amount + "from list, but there was no pokedex")
+    log("Attempted to load " + amount + "from list, but there was no pokedex")
     return; //cancel, there is no dex
   }
   pokedex.innerHTML = "";
@@ -215,13 +215,11 @@ async function loadAmountFromList(amount, reverse, log) {
   }
   let fetched = [];
   for (var i = 0; i < amount; i++) {
-    console.log("Loading #" + i + " of amount: " + amount)
     if(fetchFrom[i] == null){
-      //console.log("No more pokemon to fetch from - Breaking at " + i)
+      //log("No more pokemon to fetch from - Breaking at " + i)
       break;
     } else if(!fetched.includes(fetchFrom[i])){
       loadFromList(fetchFrom[i],true, false, false);
-      console.log(fetchFrom[i])
       fetched.push(fetchFrom[i]);
 
     } else {   
@@ -230,7 +228,7 @@ async function loadAmountFromList(amount, reverse, log) {
       }
     }
   }
-  //console.log("Finished! Fetched contains  " + fetched.length + " and has the following: " + fetched)
+  //log("Finished! Fetched contains  " + fetched.length + " and has the following: " + fetched)
 }
 
 function removeItemAll(arr, value) {
@@ -252,19 +250,17 @@ function loadFromList(entry, firstLoad, capture, returnString) {
   if(capture == null) {
     capture = false;
   }
-
-  var pokeList = state.pkmnList;
   
   if(entry == null || entry == "") {
-    console.log("Error - No entry provided during LoadFromList!")
+    log("Error - No entry provided during LoadFromList!")
     return;
   }
 
   //shiny, id, special-form, amount, legendary, mythic
   var shiny = (Array.from(entry)[0]=='S');
-  //console.log("Shiny: " + shiny);
-  var repeats = getOccurrence(pokeList, entry);
-  //console.log("Amount: " + repeats);
+  //log("Shiny: " + shiny);
+  var repeats = getOccurrence(state.pkmnList, entry);
+  //log("Amount: " + repeats);
   var id = 0;
   var cardId = entry.substring(1);
   var specialFormVariation = 0;
@@ -378,17 +374,20 @@ function loadFromList(entry, firstLoad, capture, returnString) {
       var repeatMoney = (100 + (shopOptions.coinLevel * 20)) * repeatMultiplier;
       endMessage.textContent = `Du fanget en ${shinyText}${legendaryText}${pkmnName}!\r\nSiden du allerede har denne pokémonen, fikk du ${repeatMoney} mynter istedet.`
       addFixedMoney(repeatMoney)
-      if(pokedex.contains(document.getElementById(entry))) {
-        //console.log("dex has entry")
-      }
-      if(card == null) {
-        //Just create the card
-      } else {
+      if(card != null) {
         //Update existing card
         counter = card.querySelector("#cardcounter")
         counter.textContent = ("x" + repeats);
         return;
       }
+  } else if(!capture && repeats > 1 && firstLoad){
+    let card = document.getElementById(entry);
+    if(card != null) {
+      //Update existing card
+      counter = card.querySelector("#cardcounter")
+      counter.textContent = ("x" + repeats);
+      return;
+    }
   }
 
     let inputHTML = `

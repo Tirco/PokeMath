@@ -16,6 +16,8 @@ const halloweenEgg = document.querySelector(".halloween-egg-image")
 let halloweenEvent = false;
 
 const xmasPresent = document.querySelector(".xmas-present");
+let xmasCounter = 3;
+let xmasEvent = false;
 
 
 let mathValues = {
@@ -129,7 +131,7 @@ function calculateCustomDifficulty() {
 			canClose: true,
 			badToast: true,
 		  })
-		//console.log("stage is now " + mathValues.stage)
+		//log("stage is now " + mathValues.stage)
 		return 0;
 	}
 
@@ -139,9 +141,9 @@ function calculateCustomDifficulty() {
 	}
 	var avg = total / values.length;
 
-	//console.log("avg = " + avg)
+	//log("avg = " + avg)
 	avg = Math.round(avg);
-	//console.log("avg round = " + avg)
+	//log("avg round = " + avg)
 	if(avg > 5) { avg = 5; }
 	else if(avg < 1) { avg = 1};
 
@@ -164,26 +166,29 @@ function onLoad(){
 
   	//Halloween
   	if(month == 9) { //9 = oktober.
-    	console.log("Happy Halloween!")
+    	log("Happy Halloween!")
 		halloweenEvent = true;
 		loadHalloween();
     	if(halloweenbox != null) {
     	  halloweenbox.classList.remove("is-hidden")
 	    }
   	} else if(month == 10) { //11 = desember
-		console.log("Merry X-Mas!")
+		log("Merry X-Mas!")
 		var timeout =  1000 * 180 * Math.random() + 30000;
-		console.log("next present in " + (timeout / 1000) + " seconds.")
+		xmasEvent = true;
+		/*
+		log("next present in " + (timeout / 1000) + " seconds.")
 		setTimeout(function() {
 			moveXmasPresent(xmasPresent);
     		xmasPresent.classList.remove("is-hidden");
   		}, timeout);
+		*/
   	}
 
 	let params = new URLSearchParams(location.search);
 	
 	if(params.get('custom') == "true" ) {
-		console.log("Custom mode enabled!")
+		log("Custom mode enabled!")
 		mathValues.stage = 3;
 		mathValues.operations = [];
 		if(params.get("san") == "f") {
@@ -206,7 +211,7 @@ function onLoad(){
 			}
 			mathValues.additionDecimals = Number(params.get("adec"));
 			mathValues.operations.push("+");
-			console.log(mathValues.difficultyModifier)
+			log(mathValues.difficultyModifier)
 		}
 		if(params.get("sub") == "t") {
 			mathValues.subtractionMin = Number(params.get("smin"));
@@ -249,7 +254,7 @@ function onLoad(){
 	if(mathValues.stage == null || Number(mathValues.stage) == 0) {
 		mathValues.stage = 3;		
 	}
-	console.log("Starting on stage: " + mathValues.stage);
+	log("Starting on stage: " + mathValues.stage);
 	
 	switch(Number(mathValues.stage)){
 	case 1:
@@ -393,13 +398,13 @@ function generateNumber(max) {
 	return (Math.floor(Math.random() * (max + 1)))
 }
 function generateNumber(min, max) {
-	//console.log("Gen Number: min" + min + " max " + max)
+	//log("Gen Number: min" + min + " max " + max)
 	return min + (Math.floor(Math.random() * (max + 1 - min)))
 }
 function generateNumber(min, max, decimals) {
 	let num = min + (Math.random() * (max - min));
 	if(decimals > 5) { decimals = 5;} //begrens desimaler
-	//console.log("Gen Number: min" + min + " max " + max + " dec " + decimals + " result: " + num + " numFix " + Number(num.toFixed(decimals)))
+	//log("Gen Number: min" + min + " max " + max + " dec " + decimals + " result: " + num + " numFix " + Number(num.toFixed(decimals)))
 	return Number(num.toFixed(decimals))
 }
 
@@ -428,7 +433,7 @@ function generateProblem() {
 		}
 		numberOne = numberOne * numberTwo
 		if(countDecimals(numberOne) != mathValues.divisionDecimals) {
-			console.log("Editing decimals of division " + numberOne)
+			log("Editing decimals of division " + numberOne)
 			numberOne = Number(numberOne.toFixed(mathValues.divisionDecimals))
 		}
   }
@@ -535,11 +540,11 @@ function handleSubmit(e) {
 	} else {
 		//TODO make popup with amount of Decimals.
 		
-//		console.log(countDecimals("Answer Decimals:" + correctAnswer))
-//		console.log(countDecimals("Your Decimals:" + playerAnswer))
-//		console.log("Converted Answer: " + Number(correctAnswer.toFixed(mathValues.divisionDecimals)))
-//		console.log("Your converted Answer: " + Number(playerAnswer.toFixed(mathValues.divisionDecimals)))
-//		console.log("Do they match? " + (Number(correctAnswer.toFixed(mathValues.divisionDecimals)) == Number(playerAnswer.toFixed(mathValues.divisionDecimals))))
+//		log(countDecimals("Answer Decimals:" + correctAnswer))
+//		log(countDecimals("Your Decimals:" + playerAnswer))
+//		log("Converted Answer: " + Number(correctAnswer.toFixed(mathValues.divisionDecimals)))
+//		log("Your converted Answer: " + Number(playerAnswer.toFixed(mathValues.divisionDecimals)))
+//		log("Do they match? " + (Number(correctAnswer.toFixed(mathValues.divisionDecimals)) == Number(playerAnswer.toFixed(mathValues.divisionDecimals))))
 
 		state.wrongAnswers++
 		state.streak = 0;
@@ -587,7 +592,7 @@ function checkLogic() {
 			  })
 			return;
 		}
-		progressHalloweenEgg()
+		progressEvent()
 	  	endMessage.textContent = goodMessages[Math.floor(Math.random() * (Object.keys(goodMessages).length))]
 	  	document.body.classList.add("overlay-is-open")
       	pokeball.classList.remove("is-hidden")
@@ -634,23 +639,37 @@ function toggleHalloweenBox(){
 	  return;
 	}
 	if(halloweenbox.classList.contains("hide-egg")){
-	  console.log("egg is already hidden")
+	  log("egg is already hidden")
 	  halloweenbox.classList.remove("hide-egg")
 	} else {
-	  console.log("egg is not hidden")
+	  log("egg is not hidden")
 	  halloweenbox.classList.add("hide-egg")
 	}
   
 }
 
-function progressHalloweenEgg() {
-	if(!halloweenEvent) {
+function progressEvent() {
+	if(halloweenEvent) {
+		halloweenStats.eggStatus++;
+		updateHalloweenEggBar();
+		saveHalloween();
+		saveAll();
+	} else if(xmasEvent) {
+		xmasCounter --;
+		log("xmasCounter = " + xmasCounter)
+		if(xmasCounter == 0) {
+			log("triggering xmas countdown...")
+			var timeout =  1000 * (120 * Math.random()) + 30000 + ((15/mathValues.stage)*10000);
+			log("next present in " + (timeout / 1000) + " seconds.")
+			moveXmasPresent(xmasPresent);
+			setTimeout(function() {
+			  xmasPresent.classList.remove("is-hidden");
+			}, timeout);
+		}
+	} else {
 		return;
 	}
-	halloweenStats.eggStatus++;
-	updateHalloweenEggBar();
-	saveHalloween();
-	saveAll();
+
 }
 
 function updateHalloweenEggBar() {
@@ -723,7 +742,7 @@ function saveHalloween(){
 function loadHalloween() {
 	halloweenStats.eventYear = getStorageInt('he-year');
 	if(halloweenStats.eventYear != new Date().getFullYear()) {
-		console.log('Year is wrong - starting over!')
+		log('Year is wrong - starting over!')
 		return;
 	}
 	halloweenStats.eggId = getStorageInt('he-eggid');
@@ -744,17 +763,19 @@ function loadHalloween() {
 xmasPresent.addEventListener("click", openXmasPresent.bind());
 //openDoor = (path, event) =>
 function openXmasPresent(event) {
-  console.log("clicked!");
+  log("clicked present!");
+  xmasCounter = 2;
   //TODO GIVE POKEMON
   moveXmasPresent(event.target);
   document.body.classList.add("overlay-is-open");
   pokeball.classList.remove("is-hidden");
   createEventPokemon("christmas");
-  var timeout =  1000 * 180 * Math.random() + 30000;
-  console.log("next present in " + (timeout / 1000) + " seconds.")
+  /*
+  var timeout =  1000 * (120 * Math.random() + 30000) + ((15/mathValues.stage)*10000);
+  log("next present in " + (timeout / 1000) + " seconds.")
   setTimeout(function() {
     event.target.classList.remove("is-hidden");
-  }, timeout);
+  }, timeout);*/
 }
 
 function moveXmasPresent(element){

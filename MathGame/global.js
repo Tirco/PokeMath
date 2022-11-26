@@ -474,6 +474,7 @@ function getStorageInt(key) {
 
 function clearStorage() {
   window.localStorage.clear();
+  window.sessionStorage.clear();
 }
 
 function acceptCookies(){
@@ -538,6 +539,20 @@ async function statCounterAmount(type, key, amount){
     //console.log(type + " " + key + " with value " + amount + "! " + path)
   }
   xhr.send();
+}
+
+function log(message){
+  if(state.username == "debugger") {
+    console.log(message);
+    const toast = new Toast({
+      text: "DEBUG: " + message,
+      position: "top-right",
+      pauseOnHover: true,
+      pauseOnFocusLoss: true,
+      canClose: true,
+      badToast: true,
+    })
+  }
 }
 
 loadAll();
