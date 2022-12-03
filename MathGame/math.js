@@ -764,12 +764,17 @@ xmasPresent.addEventListener("click", openXmasPresent.bind());
 //openDoor = (path, event) =>
 function openXmasPresent(event) {
   log("clicked present!");
+  if(xmasCounter > 0 || event.target.classList.contains("is-hidden")) {
+	//Hotfix for å trykke på usynlige div-element
+	return;
+  }
   xmasCounter = 2;
   //TODO GIVE POKEMON
   moveXmasPresent(event.target);
   document.body.classList.add("overlay-is-open");
   pokeball.classList.remove("is-hidden");
   createEventPokemon("christmas");
+  statCounter("hit","xmasPresentOpened");
   /*
   var timeout =  1000 * (120 * Math.random() + 30000) + ((15/mathValues.stage)*10000);
   log("next present in " + (timeout / 1000) + " seconds.")

@@ -121,24 +121,24 @@ function openHatch(date) {
             addMoney(1000);
             break;
         case 17:
-            if(shopOptions.boughtBackgrounds.includes("bg-019")){
+            if(shopOptions.boughtBackgrounds.includes("bg-020")){
                 addMoney(100000);
                 message = "Luke 19 - Her skulle du ha fått en ny bakgrunn, men denne har du allerede, så du får pengene tilbake!";
             } else {
                 //give background
-                shopOptions.boughtBackgrounds.push("bg-019");
+                shopOptions.boughtBackgrounds.push("bg-020");
                 message = "Luke 19 - Her får du en av julebakgrunnene!";
                 saveAll();
             }
             break;
         case 18:
-            message = "Luke 18 - Festive Gallade er klar til kamp!";
-            addSpecificToPokedex("N475-C1");
+            message = "Luke 18 - En Unik Pokemon! Festive Mew er klar for Julen! (+1000 mynter)";
+            addSpecificToPokedex("N151-U1");
             addMoney(1000);
             break;
         case 19:
-            message = "Luke 19 - Christmas Cake Appletun sørger for en god lukt på kjøkkenet! (+1000 mynter)";
-            addSpecificToPokedex("N842-C1");
+            message = "Luke 19 - En Unik Pokemon! Snorlax og vennene er klare for Julen! (+1000 mynter)";
+            addSpecificToPokedex("N143-U1");
             addMoney(1000);
             break;
         case 20:
@@ -161,14 +161,28 @@ function openHatch(date) {
             addMoney(1000);
             break;
         case 24:
-            if(shopOptions.boughtBackgrounds.includes("bg-020")){
+            if(shopOptions.boughtBackgrounds.includes("bg-019")){
                 addMoney(500000);
                 message = "Luke 24 - God Jul! Skulle du ha fått julekalenderen som bakgrunn, men den har du allerede, så du får pengene tilbake!";
             } else {
                 //give background
-                shopOptions.boughtBackgrounds.push("bg-020");
+                shopOptions.boughtBackgrounds.push("bg-019");
                 message = "Luke 24 - God Jul! Her får du en versjon av julekalenderen som du kan bruke som bakgrunn!";
                 saveAll();
+            }
+            if(openedHatches.length > 23) {
+                const toast = new Toast({
+                    text: "DU HAR ÅPNET ALLE LUKENE! Derfor får du to spesielle shiny pokemon, som man bare kan få fra kalenderen!",
+                    position: "top-right",
+                    pauseOnHover: true,
+                    pauseOnFocusLoss: true,
+                    canClose: true,
+                    badToast: false,
+                  })
+                addSpecificToPokedex("S151-U1");
+                addSpecificToPokedex("S143-U1");
+                statCounter("hit","allXmasHatchesOpened");
+                createFireworks();
             }
             break;
         default:
@@ -183,6 +197,8 @@ function openHatch(date) {
         canClose: true,
         badToast: false,
       })
+
+    statCounter("hit","xmasHatchesOpened");
 }
 
 function addMoney(value) {
@@ -263,9 +279,27 @@ const createCalendar = () => {
             calendarDoor.style.opacity = "100";
             calendarDoor.style.backgroundColor = "#ffffff73";
             //calendarDoor.innerHTML += '<div class="title-container"><a href="https://codepen.io/johnnyfekete/pen/ZEpGerj" target="_blank" title="Link to source code">Gingerbread cookie</a>'
-        } else if(date.getDate() == courseNumber){ //Bare la dagens luke kunne åpnes
+        } else {//if(date.getDate() == courseNumber){ //Bare la dagens luke kunne åpnes
             calendarDoorText.addEventListener("click", openDoor.bind(null,  courseNumber));
         }
+
     }
+    if(openedHatches.length > 23) {
+        createFireworks();
+    }
+}
+
+function createFireworks() {
+    const fireworksContainer = document.createElement("div");
+    const fireworks = document.createElement("div");
+    const fireworks2 = document.createElement("div");
+    const fireworks3 = document.createElement("div");
+    fireworks.classList.add("firework");
+    fireworks2.classList.add("firework");
+    fireworks3.classList.add("firework");
+    fireworksContainer.appendChild(fireworks);
+    fireworksContainer.appendChild(fireworks2);
+    fireworksContainer.appendChild(fireworks3);
+    calendarContainer.appendChild(fireworksContainer);
 }
 createCalendar();

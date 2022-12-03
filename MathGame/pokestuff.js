@@ -288,6 +288,10 @@ function loadFromList(entry, firstLoad, capture, returnString) {
       pkmnName = eventData["christmas"][id][specialFormVariation].name
       pkmnTypes = eventData["christmas"][id][specialFormVariation].types
       imageId = eventData["christmas"][id][specialFormVariation].imageid
+    } else if(splitEntry[1].includes('U')){
+      pkmnName = eventData["unique"][id][specialFormVariation].name
+      pkmnTypes = eventData["unique"][id][specialFormVariation].types
+      imageId = eventData["unique"][id][specialFormVariation].imageid
     } else {
 
       pkmnTypes = alternateFormsData[id][specialFormVariation].types;
@@ -342,7 +346,7 @@ function loadFromList(entry, firstLoad, capture, returnString) {
     imageLink = `images/pokemon/normal/${imageId}.png`
   }
 
-  let filterText = ("filtered #"+entry+shinyText+legendaryText+" #"+id+" " + pkmnName);
+  let filterText = ("filtered #"+entry+ " " + shinyText+" " + legendaryText+ pkmnName);
   let pkmnType = ''
   const types = pkmnTypes.forEach((type) => {
       pkmnType += `<span class="typecard type-${type}">${type}</span>`

@@ -1812,5 +1812,27 @@ var eventData = {
                   "types": ["ice"]
                 }
               }
+  },
+  "unique": {
+    "143": {
+      "1":
+        {
+          "id": 143,
+          "specialId": "U1",
+          "name": "Snorlax and Friends",
+          "imageid": 130002,
+          "types": ["normal"]
+        }
+      },
+    "151": {
+      "1":
+        {
+          "id": 151,
+          "specialId": "U1",
+          "name": "Christmas Mew",
+          "imageid": 130001,
+          "types": ["psychic"]
+        }
+      }
   }
 }
