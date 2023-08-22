@@ -11,57 +11,14 @@ function download(filename, text) {
     document.body.removeChild(element);
 }
 
-
-/* //for internal use...
-let dex = {0: {"name":"Error","types" : ["water","fire"]}}
-
-function makeJsonFile() { 
-    let s = "";
-
-    let promises = [];
-    let responses = [];
-    for(i = 1; i < 906; i++) {
-        console.log(i);
-        promises.push(
-            axios
-            .get(`https://pokeapi.co/api/v2/pokemon/${i}`, {
-            timeout: 5000,
-            })
-            .then((res) => responses.push(res))
-        ) //fetchResValues(res)
-    }
-    Promise.all(promises).then(() => 
-        {
-            for(var i = 1; i < responses.length; i++) {
-                fetchResValues(responses[i-1],i);
-                //Do something
-            };
-        }
-    )
-    //console.log("Dex is: " + dex)
-    //download("pkmn.json",JSON.stringify(dex));
-}
-
-function donwloadJS(){
-    download("pkmn.json",JSON.stringify(dex));
-}
-
-function fetchResValues(res,i) {
-    let id = res.data["id"]
-    let pkmnName = res.data["name"]
-    let pkmnTypes = []
-    res.data.types.forEach((type) => {
-      pkmnTypes.push(type.type.name);
-    })
-    var pkmn = {"name" : pkmnName, "types" : pkmnTypes}
-    console.log(id + " " + pkmn);
-    dex[id] = pkmn;
-    return(pkmn);
-} */
-
 function createSaveFile(){
     let date = new Date();
     let dateString = toJSONLocal(date)
+    var format = /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
+    if(format.test(state.username)) {
+        state.username = "Username_Error"
+        log("Renamed username.");
+    }
     let filename = (state.username + "_savefile_" + dateString + ".pkmth");// + date.getDay + "." + date.getMonth + "." + date.getFullYear + "_" + date.getHours + ":" + date.getMinutes;
     console.log(filename);
     let content = ""
@@ -69,7 +26,7 @@ function createSaveFile(){
     //Loop through State
     let keys = Object.keys(state);
     keys.forEach((key, index) => {
-        console.log(`${key}: ${state[key]}`);
+        //console.log(`${key}: ${state[key]}`);
         content += `${state[key]}`+"|"
     });
 
@@ -83,8 +40,9 @@ function createSaveFile(){
     });
 
     content+= "*SPLIT*"
+    
     //Save xmas stuff
-    xmasOpened = []
+    xmasOpened = [];
     if(window.localStorage.getItem("xmasOpened") != null){
         xmasOpened = getStorageString('xmasOpened');
     }
@@ -108,30 +66,31 @@ function toJSONLocal (date) {
 
 function init(){
     document.getElementById('fileInput').addEventListener('change', handleFileSelect, false);
-  }
+}
   
-  function handleFileSelect(event){
+function handleFileSelect(event){
     const reader = new FileReader()
     reader.onload = handleFileLoad;
     reader.readAsText(event.target.files[0])
-  }
+}
   
-  function handleFileLoad(event){
+function handleFileLoad(event){
     console.log(event);
     var uploadedText = atob(event.target.result);
     if(uploadedText == null || uploadedText.length == 0) {
-        console.log("Error! no readable text found in file.")
+        log("Error! no readable text found in file.")
+        toast("Filen du lastet opp hadde ingenting vi kunne lese.", true);
         return;
     }
     // Let's check our result!
     let uploadArray = uploadedText.split("*SPLIT*");
     if(uploadArray.length < 2) {
-        console.log("Error! The file we got had an incorrect file syntax")
+        log("Error! The file we got had an incorrect file syntax")
+        toast("Filen du lastet opp er satt sammen på feil måte.",true);
         return;
     }
     let stateText = uploadArray[0].split('|');
     let shopText = uploadArray[1].split('|');
-    console.log(stateText, shopText)
 
     state.username = stateText[0];
     state.totalScore = stateText[1];
@@ -158,6 +117,7 @@ function init(){
     window.localStorage.setItem('visitCounted','true');
 
     if(uploadArray[2] != null) {
+        log("loading xmas stuff :)")
         let xmasSplit = uploadArray[2].split('|');
         window.localStorage.setItem('xmasYear',JSON.stringify(Number(xmasSplit[0])));
         let xmasOpenedArray = xmasSplit[1];
@@ -173,13 +133,13 @@ function init(){
         pauseOnFocusLoss: true,
         canClose: true,
         badToast: false,
-      })
+    })
 
     //Update stats on how many loaded.
     statCounter("hit","fileloads");
 
     //document.getElementById('fileContent').textContent = atob(event.target.result);
-  }
+}
 
 ////////////////////////////////
 /**
@@ -234,4 +194,53 @@ let shopOptions = {
   legendLevel: 0,
   specialLevel: 0,
   coinLevel: 0
+} */
+
+
+
+/* //for internal use...
+let dex = {0: {"name":"Error","types" : ["water","fire"]}}
+
+function makeJsonFile() { 
+    let s = "";
+
+    let promises = [];
+    let responses = [];
+    for(i = 1; i < 906; i++) {
+        console.log(i);
+        promises.push(
+            axios
+            .get(`https://pokeapi.co/api/v2/pokemon/${i}`, {
+            timeout: 5000,
+            })
+            .then((res) => responses.push(res))
+        ) //fetchResValues(res)
+    }
+    Promise.all(promises).then(() => 
+        {
+            for(var i = 1; i < responses.length; i++) {
+                fetchResValues(responses[i-1],i);
+                //Do something
+            };
+        }
+    )
+    //console.log("Dex is: " + dex)
+    //download("pkmn.json",JSON.stringify(dex));
+}
+
+function donwloadJS(){
+    download("pkmn.json",JSON.stringify(dex));
+}
+
+function fetchResValues(res,i) {
+    let id = res.data["id"]
+    let pkmnName = res.data["name"]
+    let pkmnTypes = []
+    res.data.types.forEach((type) => {
+      pkmnTypes.push(type.type.name);
+    })
+    var pkmn = {"name" : pkmnName, "types" : pkmnTypes}
+    console.log(id + " " + pkmn);
+    dex[id] = pkmn;
+    return(pkmn);
 } */

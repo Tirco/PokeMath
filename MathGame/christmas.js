@@ -279,7 +279,7 @@ const createCalendar = () => {
             calendarDoor.style.opacity = "100";
             calendarDoor.style.backgroundColor = "#ffffff73";
             //calendarDoor.innerHTML += '<div class="title-container"><a href="https://codepen.io/johnnyfekete/pen/ZEpGerj" target="_blank" title="Link to source code">Gingerbread cookie</a>'
-        } else {//if(date.getDate() == courseNumber){ //Bare la dagens luke kunne åpnes
+        } else if(date.getDate() == courseNumber){ //Bare la dagens luke kunne åpnes
             calendarDoorText.addEventListener("click", openDoor.bind(null,  courseNumber));
         }
 

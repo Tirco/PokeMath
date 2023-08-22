@@ -520,6 +520,7 @@ window.addEventListener( "pageshow", function ( event ) {
 });
 
 async function statCounter(type, key){
+  /* 
   var xhr = new XMLHttpRequest();
   path = "https://api.countapi.xyz/" + type + "/pokemath.online/" + key;
   xhr.open("GET", path); //"https://api.countapi.xyz/hit/pokemath.online/test"
@@ -528,9 +529,11 @@ async function statCounter(type, key){
     //console.log("Hit " + key + "!")
   }
   xhr.send();
+  */
 }
 
 async function statCounterAmount(type, key, amount){
+  /*
   var xhr = new XMLHttpRequest();
   path = "https://api.countapi.xyz/" + type + "/pokemath.online/" + key + "?amount=" + amount;
   xhr.open("GET", path); //"https://api.countapi.xyz/hit/pokemath.online/test"
@@ -538,7 +541,7 @@ async function statCounterAmount(type, key, amount){
   xhr.onload = function() {
     //console.log(type + " " + key + " with value " + amount + "! " + path)
   }
-  xhr.send();
+  xhr.send();*/
 }
 
 function log(message){
@@ -553,6 +556,24 @@ function log(message){
       badToast: true,
     })
   }
+}
+
+function sendToast(message, bad) {
+  if(message == null || message.isEmpty()) {
+    log("Attempted to toast empty message.");
+    return;
+  }
+  if(bad == null) {
+    bad = false;
+  }
+  const toast = new Toast({
+    text: message,
+    position: "top-right",
+    pauseOnHover: true,
+    pauseOnFocusLoss: true,
+    canClose: true,
+    badToast: bad,
+  })
 }
 
 loadAll();
