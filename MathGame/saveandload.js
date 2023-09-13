@@ -198,7 +198,7 @@ let shopOptions = {
 
 
 
-/* //for internal use...
+//for internal use...
 let dex = {0: {"name":"Error","types" : ["water","fire"]}}
 
 function makeJsonFile() { 
@@ -206,7 +206,7 @@ function makeJsonFile() {
 
     let promises = [];
     let responses = [];
-    for(i = 1; i < 906; i++) {
+    for(i = 898; i < 1011; i++) {
         console.log(i);
         promises.push(
             axios
@@ -243,4 +243,4 @@ function fetchResValues(res,i) {
     console.log(id + " " + pkmn);
     dex[id] = pkmn;
     return(pkmn);
-} */
+} 

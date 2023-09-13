@@ -251,7 +251,7 @@ function onLoad(){
 	}
 	
 	mathValues.stage = params.get('stage');
-	if(mathValues.stage == null || Number(mathValues.stage) == 0) {
+	if(mathValues.stage == null || Number(mathValues.stage) == 0 || mathValues.stage > 5) {
 		mathValues.stage = 3;		
 	}
 	log("Starting on stage: " + mathValues.stage);
