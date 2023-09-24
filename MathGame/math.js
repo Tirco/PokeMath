@@ -154,6 +154,7 @@ function calculateCustomDifficulty() {
 		pauseOnFocusLoss: true,
 		canClose: true,
 		badToast: false,
+		
 	})
 	return avg;
 }
@@ -249,10 +250,52 @@ function onLoad(){
 		updateProblem();
 		return;
 	}
+
+	function isInt(value) {
+		return !isNaN(value) && 
+			   parseInt(Number(value)) == value && 
+			   !isNaN(parseInt(value, 10));
+	  }
+	
+	function cheatForgive(){
+		setTimeout(
+			function() {
+				const toast2 = new Toast({
+					text: "Eller kansje ikke... :P",
+					position: "top-right",
+					pauseOnHover: true,
+					pauseOnFocusLoss: true,
+					canClose: false,
+					badToast: false,
+				  })
+				document.getElementById("cointext").dataset.total = state.totalScore;
+  				document.getElementById("balltext").textContent = state.pkmnCaught;
+  				document.getElementById("playertext").textContent = state.username;
+			}, 10000);
+
+	}
 	
 	mathValues.stage = params.get('stage');
-	if(mathValues.stage == null || Number(mathValues.stage) == 0 || mathValues.stage > 5) {
-		mathValues.stage = 3;		
+	if(mathValues.stage == null || Number(mathValues.stage) == 0 || mathValues.stage > 5 || !isInt(mathValues.stage)) {
+		if(!isInt(mathValues.stage)) {
+			const toast = new Toast({
+				text: "Juksing er jo ikke kult da... Kanskje jeg skal fjerne alt du har gjort?",
+				position: "top-right",
+				pauseOnHover: true,
+				pauseOnFocusLoss: true,
+				canClose: false,
+				badToast: true,
+			  })
+			  mathValues.stage = 5;
+			  document.getElementById("cointext").dataset.total = "-99999";
+			  document.getElementById("balltext").textContent = "0";
+			  document.getElementById("playertext").textContent = "Juksemaker";
+			  cheatForgive()
+
+		} else {
+			mathValues.stage = 3;
+		}
+				
 	}
 	log("Starting on stage: " + mathValues.stage);
 	
