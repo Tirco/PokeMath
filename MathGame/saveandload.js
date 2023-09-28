@@ -11,6 +11,19 @@ function download(filename, text) {
     document.body.removeChild(element);
 }
 
+function saveFileDLButton(){
+    try{createSaveFile()} catch(e){
+        const toast = new Toast({
+            text: e,
+            position: "top-right",
+            pauseOnHover: true,
+            pauseOnFocusLoss: true,
+            canClose: true,
+            badToast: true,
+        })
+    }
+}
+
 function createSaveFile(){
     let date = new Date();
     let dateString = toJSONLocal(date)
@@ -51,11 +64,18 @@ function createSaveFile(){
         xmasYear = getStorageInt('xmasYear');
     }
     content += xmasYear + "|" + xmasOpened;
+    
+    //Achi/Badge
+    content+= "*SPLIT*"
+    const storedAchievements = JSON.parse(localStorage.getItem('badges'));
+    if (storedAchievements) {
+        const achievementString = JSON.stringify(storedAchievements);
+        content +=achievementString;
+    }
 
     content = btoa(content);
     download(filename,content);
     //console.log(atob(content));
-    statCounter("hit","filesaves");
 }
 
 function toJSONLocal (date) {
@@ -122,6 +142,12 @@ function handleFileLoad(event){
         window.localStorage.setItem('xmasYear',JSON.stringify(Number(xmasSplit[0])));
         let xmasOpenedArray = xmasSplit[1];
         window.localStorage.setItem('xmasOpened',JSON.stringify(xmasOpenedArray));
+    }
+    if(uploadArray[3] != null) {
+        log("loading achievements stuff :)")
+        const loadedAchievementString = uploadArray[3]; // Load this string from the text file
+        const achievements = JSON.parse(loadedAchievementString); // Parse the string into an object
+        localStorage.setItem('badges', JSON.stringify(achievements)); 
     }
     saveAll();
     loadAll();

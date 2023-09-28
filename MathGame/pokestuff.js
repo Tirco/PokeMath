@@ -152,6 +152,7 @@ function createEventPokemon(eventName) {
     let randomVarietyObject = getRandomProperty(eventSubKeys);
     const pkmnId = randomVarietyObject.id;
     let specialId = pkmnId + "-" + randomVarietyObject.specialId;
+    log(specialId);
     addToPokedex(specialId)
 }
 
@@ -330,10 +331,16 @@ function loadFromList(entry, firstLoad, capture, returnString) {
     legendary = `legendary`
     legendaryText = "Legendarisk "
     repeatMultiplier = repeatMultiplier * 2
+    if(capture) {
+      incrementProgress(21,1);
+    }
   } else if(mythics.includes(id)) {
     legendary = `mythic`
     legendaryText = "Mytisk "
     repeatMultiplier = repeatMultiplier * 3
+    if(capture) {
+      incrementProgress(22,1);
+    }
   }
 
   if(shiny == true) {
@@ -342,6 +349,9 @@ function loadFromList(entry, firstLoad, capture, returnString) {
     shinyTag = `pokemon-shiny`
     shinyText = `Shiny `
     imageLink = `images/pokemon/shiny/${imageId}.png`
+    if(capture) {
+      incrementProgress(23,1);
+    }
   } else {
     imageLink = `images/pokemon/normal/${imageId}.png`
   }
@@ -369,6 +379,8 @@ function loadFromList(entry, firstLoad, capture, returnString) {
       `<div class="has-text-centered">
         <div style="background-image: url('${imageLink}'); height: 128px; width: 128px; background-size: cover; display: block;margin-left:auto; margin-right:auto;">&nbsp;</div>
       </div>`
+      progressPokemonTrainerBadge();
+      pkmnTypes.forEach((type) => {progressTypeAchievement(type)})
   }
 
   //Check if pokedex has the identifier already, if it does, update it.

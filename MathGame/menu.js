@@ -10,7 +10,7 @@ const splashOptions = ["Gotta solve 'em all!","Created by Tirco","Almost as fun 
 "I am the Flaming Moltres!","Let's make our pokédex bigger!","We hope to see you again!","Let's Go!",
 "“Wherever there is number, there is beauty.”-Proclus","“The only way to learn mathematics is to do mathematics.”- Paul R. Halmos.",
 "Throw a pokéball at it!","“Pure mathematics is the world’s best game.”- Richard J. Trudeau.",
-"Why are all of these in English?"]
+"Why are all of these in English?","Laget i Norge!"]
 const splashText = document.getElementById("logotext")
 
 function load(){

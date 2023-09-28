@@ -6,7 +6,7 @@ const pointsNeeded = document.querySelector(".points-needed")
 const mistakesAllowed = document.querySelector(".mistakes-allowed")
 const progressBar = document.querySelector(".progress-inner")
 const resetButton = document.querySelector(".reset-button")
-const winScore = 5 //hvor mange poeng som trengs.
+let winScore = 5 //hvor mange poeng som trengs.
 const defaultLives = 3 //hvor mange forsøk man har.
 const money = document.querySelector(".money")
 const goodMessages = ["Flott jobbet!","Nice!","Ny pokémon!","Trykk på ballen!","Enda en til samlingen!","Fortsett sånn!","Stå på!","Du er super!","Oh, hva får du nå?","Eyy! Bra jobbet!"]
@@ -166,7 +166,7 @@ function onLoad(){
   	let month = d.getMonth();
 
   	//Halloween
-  	if(month == 9) { //9 = oktober.
+  	if(month == 8) { //9 = oktober.
     	log("Happy Halloween!")
 		halloweenEvent = true;
 		loadHalloween();
@@ -298,6 +298,14 @@ function onLoad(){
 				
 	}
 	log("Starting on stage: " + mathValues.stage);
+	if(mathValues.stage == 4) {
+		winScore = 4;
+		document.getElementById("box5").remove();
+	} else if(mathValues.stage == 5) {
+		winScore = 3;
+		document.getElementById("box5").remove();
+		document.getElementById("box4").remove();
+	}
 	
 	switch(Number(mathValues.stage)){
 	case 1:
@@ -406,6 +414,7 @@ function addMoney(){
 	}
 	money.dataset.added = '+' + value;
 	money.dataset.total = state.totalScore += value;
+	incrementProgress(19,value);
 	money.textContent = "";
 	statCounterAmount("update","coinsEarned",value);
 	if (state.totalScore) money.classList.add('animate');
@@ -421,6 +430,7 @@ function addFixedMoney(value){
 	}
 	money.dataset.added = '+' + value;
 	money.dataset.total = state.totalScore += value;
+	incrementProgress(19,value);
 	money.textContent = "";
 	statCounterAmount("update","coinsEarned",value);
 	if (state.totalScore) money.classList.add('animate');
@@ -563,18 +573,23 @@ function handleSubmit(e) {
 		switch(mathValues.stage) {
 			case '1':
 				state.tier1Solved ++;
+				incrementProgress(24,1);
 				break;
 			case '2':
 				state.tier2Solved ++;
+				incrementProgress(25,1);
 				break;
 			case '3':
 				state.tier3Solved ++;
+				incrementProgress(26,1);
 				break;
 			case '4':
 				state.tier4Solved ++;
+				incrementProgress(27,1);
 				break;
 			case '5':
 				state.tier5Solved ++;
+				incrementProgress(28,1);
 				break;
 			default:
 				state.customSolved ++;

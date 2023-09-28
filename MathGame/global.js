@@ -252,6 +252,7 @@ let shopOptions = {
   playerIcon: "",
   boughtBackgrounds: [],
   boughtPlayerIcons: [],
+  claimedSecrets: [],
   shinyLevel: 1,
   mythicLevel: 0,
   legendLevel: 0,
@@ -264,6 +265,7 @@ function loadShop() {
   shopOptions.boughtBackgrounds = getStorageArray('boughtBackgrounds','|')
   shopOptions.playerIcon = getStorageString('playerIcon')//"images/backgrounds/bg-001.png"//
   shopOptions.boughtPlayerIcons = getStorageArray('boughtPlayerIcons','|')
+  shopOptions.claimedSecrets = getStorageArray('claimedSecrets','|')
   shopOptions.shinyLevel = getStorageInt('shinyLevel')
   if(shopOptions.shinyLevel == 0) {
     shopOptions.shinyLevel = 1
@@ -343,6 +345,9 @@ function saveAll(){
   window.localStorage.setItem('shopBackground',JSON.stringify(shopOptions.background))
   if(shopOptions.boughtBackgrounds != "") {
     window.localStorage.setItem('boughtBackgrounds',JSON.stringify(shopOptions.boughtBackgrounds.join('|')))
+  }
+  if(shopOptions.claimedSecrets != "") {
+    window.localStorage.setItem('claimedSecrets',JSON.stringify(shopOptions.claimedSecrets.join('|')))
   }
   window.localStorage.setItem('playerIcon',JSON.stringify(shopOptions.playerIcon))
   if(shopOptions.boughtPlayerIcons != "") {
@@ -575,5 +580,213 @@ function sendToast(message, bad) {
     badToast: bad,
   })
 }
+
+const defaultAchievements = {
+  version: '1.0',
+  badges: [
+  { id: 1, name: 'Normal-Type Trener', description: 'Fang 250 Normal-type pokemon.', achieved: false, progress: 0, goal: 250 },
+  { id: 2, name: 'Fire-Type Trener', description: 'Fang 250 Fire-type pokemon.', achieved: false, progress: 0, goal: 250 },
+  { id: 3, name: 'Fighting-Type Trener', description: 'Fang 250 Fighting-type pokemon.', achieved: false, progress: 0, goal: 250 },
+  { id: 4, name: 'Water-Type Trener', description: 'Fang 250 Water-type pokemon.', achieved: false, progress: 0, goal: 250 },
+  { id: 5, name: 'Flying-Type Trener', description: 'Fang 250 Flying-type pokemon.', achieved: false, progress: 0, goal: 250 },
+  { id: 6, name: 'Grass-Type Trener', description: 'Fang 250 Grass-type pokemon.', achieved: false, progress: 0, goal: 250 },
+  { id: 7, name: 'Poison-Type Trener', description: 'Fang 250 Poison-type pokemon.', achieved: false, progress: 0, goal: 250 },
+  { id: 8, name: 'Electric-Type Trener', description: 'Fang 250 Electric-type pokemon.', achieved: false, progress: 0, goal: 250 },
+  { id: 9, name: 'Ground-Type Trener', description: 'Fang 250 Ground-type pokemon.', achieved: false, progress: 0, goal: 250 },
+  { id: 10, name: 'Psychic-Type Trener', description: 'Fang 250 Psychic-type pokemon.', achieved: false, progress: 0, goal: 250 },
+  { id: 11, name: 'Rock-Type Trener', description: 'Fang 250 Rock-type pokemon.', achieved: false, progress: 0, goal: 250 },
+  { id: 12, name: 'Ice-Type Trener', description: 'Fang 250 Ice-type pokemon.', achieved: false, progress: 0, goal: 250 },
+  { id: 13, name: 'Bug-Type Trener', description: 'Fang 250 Bug-type pokemon.', achieved: false, progress: 0, goal: 250 },
+  { id: 14, name: 'Dragon-Type Trener', description: 'Fang 250 Dragon-type pokemon.', achieved: false, progress: 0, goal: 250 },
+  { id: 15, name: 'Ghost-Type Trener', description: 'Fang 250 Ghost-type pokemon.', achieved: false, progress: 0, goal: 250 },
+  { id: 16, name: 'Dark-Type Trener', description: 'Fang 250 Dark-type pokemon.', achieved: false, progress: 0, goal: 250 },
+  { id: 17, name: 'Steel-Type Trener', description: 'Fang 250 Steel-type pokemon.', achieved: false, progress: 0, goal: 250 },
+  { id: 18, name: 'Fairy-Type Trener', description: 'Fang 250 Fairy-type pokemon.', achieved: false, progress: 0, goal: 250 },
+  { id: 19, name: 'Big Earner', description: 'Få 10.000.000 mynter, totalt.', achieved: false, progress: 0, goal: 10000000 },
+  { id: 20, name: 'Big Spender', description: 'Bruk 5.000.000 mynter, totalt.', achieved: false, progress: 0, goal: 5000000 },
+  { id: 21, name: 'Legendarisk Trener', description: 'Fang 25 Legendariske pokemon.', achieved: false, progress: 0, goal: 25 },
+  { id: 22, name: 'Mytisk Trener', description: 'Fang 25 Mytiske pokemon.', achieved: false, progress: 0, goal: 25 },
+  { id: 23, name: 'Shiny Trener', description: 'Fang 100 Shiny pokemon.', achieved: false, progress: 0, goal: 100 },
+  { id: 24, name: 'Nivå 1 Mester', description: 'Løs 1000 oppgaver på Nivå 1.', achieved: false, progress: 0, goal: 1000 },
+  { id: 25, name: 'Nivå 2 Mester', description: 'Løs 1000 oppgaver på Nivå 2.', achieved: false, progress: 0, goal: 1000 },
+  { id: 26, name: 'Nivå 3 Mester', description: 'Løs 1000 oppgaver på Nivå 3.', achieved: false, progress: 0, goal: 1000 },
+  { id: 27, name: 'Nivå 4 Mester', description: 'Løs 1000 oppgaver på Nivå 4.', achieved: false, progress: 0, goal: 1000 },
+  { id: 28, name: 'Nivå 5 Mester', description: 'Løs 1000 oppgaver på Nivå 5.', achieved: false, progress: 0, goal: 1000 },
+  { id: 29, name: 'Rookie Trener', description: 'Fang 100 pokemon.', achieved: false, progress: 0, goal: 100 },
+  { id: 30, name: 'Rising Star', description: 'Fang 500 pokemon.', achieved: false, progress: 0, goal: 500 },
+  { id: 31, name: 'Challenger', description: 'Fang 1500 pokemon.', achieved: false, progress: 0, goal: 1500 },
+  { id: 32, name: 'Gym Leader', description: 'Fang 5000 pokemon.', achieved: false, progress: 0, goal: 5000 },
+  { id: 33, name: 'Pokemon Mester', description: 'Fang 10.000 pokemon.', achieved: false, progress: 0, goal: 10000 }
+  ],
+};
+
+function progressPokemonTrainerBadge() {
+  incrementProgress(29,1);
+  incrementProgress(30,1);
+  incrementProgress(31,1);
+  incrementProgress(32,1);
+  incrementProgress(33,1);
+}
+
+function progressTypeAchievement(type) {
+  let id = 1;
+  log(type + " was submitted.")
+  switch (type) {
+    case "normal": 
+      id = 1;
+      break;
+    case "fire":
+      id = 2;
+      break;
+    case "fighting":
+      id = 3;
+      break;
+    case "water":
+      id = 4;
+      break;
+    case "flying":
+      id = 5;
+      break;
+    case "grass":
+      id = 6;
+      break;
+    case "poison":
+      id = 7;
+      break;
+    case "electric":
+      id = 8;
+      break;
+    case "ground":
+      id = 9;
+      break;
+    case "psychic":
+      id = 10;
+      break;
+    case "rock":
+      id = 11;
+      break;
+    case "ice":
+      id = 12;
+      break;
+    case "bug":
+      id = 13;
+      break;
+    case "dragon":
+      id = 14;
+      break;
+    case "ghost":
+      id = 15;
+      break;
+    case "dark":
+      id = 16;
+      break;
+    case "steel":
+      id = 17;
+      break;
+    case "fairy":
+      id = 18;
+      break;
+    default:
+      return;
+  }
+  incrementProgress(id,1);
+}
+
+// Load achievements from LocalStorage or set default values
+const storedAchievements = JSON.parse(localStorage.getItem('badges')) || achievements;
+if (storedAchievements) {
+  // Check the version of stored achievements
+  if (storedAchievements.version === '1.0') {
+    // Migrate data from version 1.0 to 1.1
+    storedAchievements.version = '1.1';
+    // Perform any other necessary migrations here
+  }
+  
+  // After migrations, update the stored achievements in localStorage
+  localStorage.setItem('badges', JSON.stringify(storedAchievements));
+
+  // Update the achievements in memory
+  storedAchievements.badges.forEach(achievement => {
+    const storedAchievement = storedAchievements.badges.find(a => a.id === achievement.id);
+    if (storedAchievement) {
+      achievement.achieved = storedAchievement.achieved;
+      achievement.progress = storedAchievement.progress;
+    }
+  });
+} else {
+  // If there are no stored achievements, store the default achievements
+  localStorage.setItem('badges', JSON.stringify(defaultAchievements));
+}
+
+// Render achievements
+const achievementGrid = document.querySelector('.achievement-grid');
+if (achievementGrid) {
+    storedAchievements.badges.forEach(achievement => {
+        const achievementDiv = document.createElement('div');
+        achievementDiv.className = 'achievement' + (achievement.achieved ? ' achieved' : '');
+        achievementDiv.innerHTML = `
+            <img src="images/badges/${achievement.id}.png" alt="${achievement.name}">
+            <div class="badgetooltip">
+                <strong>${achievement.name}</strong>
+                <br>${achievement.description} (Fremgang: ${achievement.progress}/${achievement.goal})
+            </div>
+        `;
+        achievementGrid.appendChild(achievementDiv);
+        
+        // Add event listener for click
+        achievementDiv.addEventListener('click', () => {
+            achievementDiv.classList.toggle('active');
+        });
+    });
+}
+
+function incrementProgress(id, amount = 1) {
+  const achievement = storedAchievements.badges.find(a => a.id === id);
+  if (achievement && !achievement.achieved) {
+      achievement.progress += amount;
+      if (achievement.progress >= achievement.goal) {
+          achievement.achieved = true;
+          notifyAchievement(achievement);
+      }
+      localStorage.setItem('badges', JSON.stringify(storedAchievements));
+      updateProgressDisplay(achievement);
+  }
+}
+
+// Function to update the displayed progress
+function updateProgressDisplay(achievement) {
+  const achievementDiv = document.querySelector(`.achievement:nth-child(${achievement.id}) .badgetooltip`);
+  if (achievementDiv) {
+      //log("div found - updating")
+      achievementDiv.innerHTML = `<strong>${achievement.name}</strong><br>${achievement.description} (Fremgang: ${achievement.progress}/${achievement.goal})`;
+  } else {
+    //log("achi div not found")
+  }
+}
+
+// Function to display achievement notifications
+function notifyAchievement(achievement) {
+  const notificationContainer = document.getElementById('notification-container');
+  
+  // Create the notification element
+  const notification = document.createElement('div');
+  notification.className = 'notification';
+  
+  // Add the badge image and achievement name to the notification
+  notification.innerHTML = `
+      <img src="images/badges/${achievement.id}.png" alt="${achievement.name}" width="250">
+      <p>Merke Låst Opp: ${achievement.name}</p>
+  `;
+  
+  // Append the notification to the container
+  notificationContainer.appendChild(notification);
+  
+  // Remove the notification after the animation completes
+  setTimeout(() => notificationContainer.removeChild(notification), 8000);
+}
+
+// Assuming you have a button with id 'clickButton'
+//const clickButton = document.getElementById('clickButton');
+//clickButton.addEventListener('click', () => incrementProgress(1));
 
 loadAll();

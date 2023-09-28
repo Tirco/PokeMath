@@ -175,6 +175,7 @@ function shopButtonBuy(btn){
 
     //Let's buy it!
         state.totalScore -= price;
+        incrementProgress(20,price);
         moneySubAnimation(price);
         
         var buyButton = parent.querySelector('.buy');
@@ -284,6 +285,7 @@ function shopButtonUse(btn) {
 
     //Let's buy it!
         state.totalScore -= price;
+        incrementProgress(20,price);
         moneySubAnimation(price);
         
         var buyButton = parent.querySelector('.buy');
@@ -426,6 +428,7 @@ function shopButtonUpgrade(btn){
 
     //Let's buy it!
         state.totalScore -= price;
+        incrementProgress(20,price);
 
         var upgString = "Ukjent oppgradering."
         //Probably a better way to do this?

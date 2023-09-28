@@ -1260,14 +1260,84 @@ var alternateFormsData = {
 
 var eventData = {
   "halloween": {
-        "249": {
+        "1": {
           "1":
             {
-              "id": 249,
+              "id": 1,
               "specialId": "H1",
-              "name": "shadow lugia",
-              "imageid": 50001,
-              "types": ["dark","flying"]
+              "name": "pumpkin bulbasaur",
+              "imageid": 50016,
+              "types": ["grass","ghost"]
+            }
+          },
+        "26": {
+          "1":
+            {
+              "id": 26,
+              "specialId": "H1",
+              "name": "vampire raichu",
+              "imageid": 50022,
+              "types": ["dark","electric"]
+            }
+          },
+        "27": {
+          "1":
+            {
+              "id": 27,
+              "specialId": "H1",
+              "name": "mummy sandshrew",
+              "imageid": 50023,
+              "types": ["dark","ground"]
+            }
+          },
+        "38": {
+          "1":
+            {
+              "id": 38,
+              "specialId": "H1",
+              "name": "dark ninetales",
+              "imageid": 50076,
+              "types": ["grass"]
+            }
+          },
+        "39": {
+          "1":
+            {
+              "id": 39,
+              "specialId": "H1",
+              "name": "devil jigglypuff",
+              "imageid": 50024,
+              "types": ["dark"]
+            }
+          },
+        "54": { 
+          "1":
+            {
+              "id": 54,
+              "specialId": "H1",
+              "name": "frankenstein psyduck",
+              "imageid": 50025,
+              "types": ["dark","water"]
+            }
+          },
+        "78": {
+            "1":
+              {
+                "id": 78,
+                "specialId": "H1",
+                "name": "fall rapidash",
+                "imageid": 50072,
+                "types": ["fire","grass"]
+              }
+            },
+        "133": {
+          "1":
+            {
+              "id": 133,
+              "specialId": "H1",
+              "name": "fall eevee",
+              "imageid": 50017,
+              "types": ["normal"]
             }
           },
         "150": {
@@ -1280,24 +1350,44 @@ var eventData = {
               "types": ["psychic","dark"]
             }
           },
-        "1": {
+        "152": {
+            "1":
+              {
+                "id": 672,
+                "specialId": "H1",
+                "name": "fall chikorita",
+                "imageid": 50071,
+                "types": ["grass"]
+              }
+            },
+        "175": {
           "1":
             {
-              "id": 1,
+              "id": 175,
               "specialId": "H1",
-              "name": "pumpkin bulbasaur",
-              "imageid": 50016,
-              "types": ["grass","ghost"]
+              "name": "pumpkin togepi",
+              "imageid": 50026,
+              "types": ["dark","fairy"]
             }
           },
-        "133": {
+        "194": {
           "1":
             {
-              "id": 133,
+              "id": 194,
               "specialId": "H1",
-              "name": "fall eevee",
-              "imageid": 50017,
-              "types": ["normal"]
+              "name": "devil wooper",
+              "imageid": 50027,
+              "types": ["dark","water"]
+            }
+          },
+        "249": {
+          "1":
+            {
+              "id": 249,
+              "specialId": "H1",
+              "name": "shadow lugia",
+              "imageid": 50001,
+              "types": ["dark","flying"]
             }
           },
         "387": {
@@ -1340,66 +1430,26 @@ var eventData = {
               "types": ["grass","ground"]
             }
           },
-        "26": {
-          "1":
-            {
-              "id": 26,
-              "specialId": "H1",
-              "name": "vampire raichu",
-              "imageid": 50022,
-              "types": ["dark","electric"]
-            }
-          },
-        "27": {
-          "1":
-            {
-              "id": 27,
-              "specialId": "H1",
-              "name": "mummy sandshrew",
-              "imageid": 50023,
-              "types": ["dark","ground"]
-            }
-          },
-        "39": {
-          "1":
-            {
-              "id": 39,
-              "specialId": "H1",
-              "name": "devil jigglypuff",
-              "imageid": 50024,
-              "types": ["dark"]
-            }
-          },
-        "54": { 
-          "1":
-            {
-              "id": 54,
-              "specialId": "H1",
-              "name": "frankenstein psyduck",
-              "imageid": 50025,
-              "types": ["dark","water"]
-            }
-          },
-        "175": {
-          "1":
-            {
-              "id": 175,
-              "specialId": "H1",
-              "name": "pumpkin togepi",
-              "imageid": 50026,
-              "types": ["dark","fairy"]
-            }
-          },
-        "194": {
-          "1":
-            {
-              "id": 194,
-              "specialId": "H1",
-              "name": "devil wooper",
-              "imageid": 50027,
-              "types": ["dark","water"]
-            }
-          },
+        "495": {
+            "1":
+              {
+                "id": 495,
+                "specialId": "H1",
+                "name": "fall snivy",
+                "imageid": 50073,
+                "types": ["grass"]
+              }
+            },
+        "513": {
+            "1":
+              {
+                "id": 513,
+                "specialId": "H1",
+                "name": "fall pansear",
+                "imageid": 50074,
+                "types": ["fire","grass"]
+              }
+            },
         "609": {
           "1":
             {
@@ -1410,6 +1460,26 @@ var eventData = {
               "types": ["ghost","fire"]
             }
           },
+        "672": {
+            "1":
+              {
+                "id": 672,
+                "specialId": "H1",
+                "name": "fall skiddo",
+                "imageid": 50075,
+                "types": ["grass"]
+              }
+            },
+        "703": {
+            "1":
+              {
+                "id": 703,
+                "specialId": "H1",
+                "name": "dark carbink",
+                "imageid": 50077,
+                "types": ["ghost","fairy"]
+              }
+            },
         "716": {
           "1":
             {
