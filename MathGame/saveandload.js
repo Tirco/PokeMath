@@ -232,11 +232,11 @@ function makeJsonFile() {
 
     let promises = [];
     let responses = [];
-    for(i = 898; i < 1011; i++) {
+    for(i = 1; i < 100; i++) {
         console.log(i);
         promises.push(
             axios
-            .get(`https://pokeapi.co/api/v2/pokemon/${i}`, {
+            .get(`https://pokeapi.co/api/v2/pokemon-species//${i}`, {
             timeout: 5000,
             })
             .then((res) => responses.push(res))

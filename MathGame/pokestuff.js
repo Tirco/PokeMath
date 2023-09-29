@@ -407,7 +407,7 @@ function loadFromList(entry, firstLoad, capture, returnString) {
   }
 
     let inputHTML = `
-    <a id=${entry} class="column is-narrow ${filterText}" style="cursor: pointer;" href=${imageLink} target="_blank">
+    <a id=${entry} class="column is-narrow ${filterText}" style="cursor: pointer;" href=./pokeviewer.html?pokemonId=${id} target="_blank">
       <div class="card ${shinyTag} ${legendary}">
         <div class="card-content">
           <div class="has-text-centered card-image">

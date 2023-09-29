@@ -166,7 +166,7 @@ function onLoad(){
   	let month = d.getMonth();
 
   	//Halloween
-  	if(month == 8) { //9 = oktober.
+  	if(month == 9) { //9 = oktober.
     	log("Happy Halloween!")
 		halloweenEvent = true;
 		loadHalloween();
