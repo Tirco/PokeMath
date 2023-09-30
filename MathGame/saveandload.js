@@ -72,6 +72,12 @@ function createSaveFile(){
         const achievementString = JSON.stringify(storedAchievements);
         content +=achievementString;
     }
+    content+= "*SPLIT*"
+    const storedCodes = JSON.parse(localStorage.getItem('redeemedCodes'));
+    if (storedCodes) {
+        const storedCodesString = JSON.stringify(storedCodes);
+        content +=storedCodesString;
+    }
 
     content = btoa(content);
     download(filename,content);
@@ -149,6 +155,13 @@ function handleFileLoad(event){
         const achievements = JSON.parse(loadedAchievementString); // Parse the string into an object
         localStorage.setItem('badges', JSON.stringify(achievements)); 
     }
+    if(uploadArray[4] != null) {
+        log("loading code stuff :)")
+        const loadedCodesString = uploadArray[4]; // Load this string from the text file
+        const codes = JSON.parse(loadedCodesString); // Parse the string into an object
+        localStorage.setItem('redeemedCodes', JSON.stringify(codes)); 
+    }
+
     saveAll();
     loadAll();
 
