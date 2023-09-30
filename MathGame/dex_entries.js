@@ -1,4 +1,7 @@
 var dexEntries = {
+    "0": {
+        "dex_entry": "YOU HAVE SEEN NOTHING. I DO NOT EXIST. I AM THE BE ALL-END ALL. Error is known as MissingNo. in the official pokemon games. "
+    },
     "1": {
         "dex_entry": "While it is young, it uses the nutrients that are\nstored in the seed on its back in order to grow."
     },

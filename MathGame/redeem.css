@@ -1,0 +1,53 @@
+.redemptionContainer {
+  font-family: 'Arial', sans-serif; /* replace with the combined height of your top and bottom bars */
+  display: flex;
+  height: calc(100vh - 100px);
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;  /* added */
+  top: 50%;            /* added */
+  transform: translateY(0); /* added */
+}
+
+#redemptionForm {
+  background: linear-gradient(45deg, #4CAF50, #FFC107);
+  border-radius: 10px;
+  padding: 20px 40px;
+  box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.75);
+  margin-bottom: 10px;
+}
+
+#secretCodeInput {
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  margin-right: 10px;
+  width: 200px;
+  box-sizing: border-box;
+  outline: none;
+  transition: transform 0.2s;
+}
+
+#secretCodeInput:focus {
+  transform: scale(1.05);
+}
+
+button {
+  background-color: #3e3e3e;
+  color: #ffffff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+button:hover {
+  background-color: #555555;
+  transform: scale(1.05);
+}
+
+#response {
+  color: #FF5722;
+  font-weight: bold;
+}

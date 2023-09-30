@@ -693,7 +693,7 @@ function progressTypeAchievement(type) {
 }
 
 // Load achievements from LocalStorage or set default values
-const storedAchievements = JSON.parse(localStorage.getItem('badges')) || achievements;
+const storedAchievements = JSON.parse(localStorage.getItem('badges')) || defaultAchievements;
 if (storedAchievements) {
   // Check the version of stored achievements
   if (storedAchievements.version === '1.0') {

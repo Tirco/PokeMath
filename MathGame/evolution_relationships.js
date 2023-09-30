@@ -1,4 +1,8 @@
 var evolutionRelationships = {
+    "0": {
+        "evolves_from": null,
+        "evolves_to": []
+    },
     "1": {
         "evolves_from": null,
         "evolves_to": [

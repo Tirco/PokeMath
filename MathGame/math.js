@@ -277,7 +277,7 @@ function onLoad(){
 	
 	mathValues.stage = params.get('stage');
 	if(mathValues.stage == null || Number(mathValues.stage) == 0 || mathValues.stage > 5 || !isInt(mathValues.stage)) {
-		if(!isInt(mathValues.stage)) {
+		if(!isInt(mathValues.stage) && mathValues.stage != null) {
 			const toast = new Toast({
 				text: "Juksing er jo ikke kult da... Kanskje jeg skal fjerne alt du har gjort?",
 				position: "top-right",

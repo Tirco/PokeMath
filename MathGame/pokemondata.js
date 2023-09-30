@@ -1,4 +1,5 @@
-pokemondata = {"0":{"name":"Error","types":["water","fire"]},
+pokemondata = {
+"0":{"name":"error","types":["bird","normal","999"]},
 "1":{"name":"bulbasaur","types":["grass","poison"]},
 "2":{"name":"ivysaur","types":["grass","poison"]},
 "3":{"name":"venusaur","types":["grass","poison"]},

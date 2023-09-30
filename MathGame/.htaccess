@@ -2,10 +2,10 @@
 ErrorDocument 404  /notfound.html
 
 #Remove need for www.
-RewriteEngine On
-RewriteBase /
-RewriteCond %{HTTP_HOST} ^pokemath.online [NC]
-RewriteRule ^(.*)$ http://pokemath.online/$1 [L,R=301]
+#RewriteEngine On
+#RewriteBase /
+#RewriteCond %{HTTP_HOST} ^pokemath.online [NC]
+#RewriteRule ^(.*)$ http://pokemath.online/$1 [L,R=301]
 
 
 # Set time zone
@@ -23,3 +23,8 @@ Options All -Indexes
 order allow,deny
 deny from all
 </Files>
+
+#Bilder?
+<FilesMatch "\.(ico|pdf|jpg|jpeg|png|webp|gif|html|htm|xml|txt|xsl|css)$">
+Header set Cache-Control "max-age=31536050"
+</FilesMatch>

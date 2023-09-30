@@ -3,12 +3,24 @@ const mainPokemonWrapper = document.getElementById('main-pokemon-wrapper');
 const nextPokemonWrapper = document.getElementById('next-evolution-wrapper');
 const prevButton = document.getElementById('prevButtonBG');
 const nextButton = document.getElementById('nextButtonBG');
-const maxId = 1010; 
-const minId = 1;
+
 let shiny = false;
+const maxId = 1010; 
+
+function determineMinId() {
+  const prefixes = shiny ? ["S0", "S0-U1", "S0-U2", "S0-U3"] : ["N0", "N0-U1", "N0-U2", "N0-U3"];
+
+  for (const prefix of prefixes) {
+      if (state.pkmnList.includes(prefix)) {
+          return 0;
+      }
+  }
+  return 1;
+}
+const minId = determineMinId();
 
 let currentId = 1;
-let prevId = 1010;
+let prevId = 0;
 let nextId = 2;
 
 shinycheck.onchange = function() {
@@ -49,7 +61,7 @@ document.getElementById('searchBar').addEventListener('keypress', function(e) {
 function searchPokemon(searchId) {
     const searchBar = document.getElementById('searchBar');
     
-    let searchTerm = searchId || searchBar.value.trim().toLowerCase();
+    let searchTerm = searchId !== undefined ? searchId : searchBar.value.trim().toLowerCase();
 
     if (searchId) {
         searchBar.value = searchId; 
@@ -58,9 +70,9 @@ function searchPokemon(searchId) {
     let pokemon = null;
     let pokemonId = null;
 
-    if (!isNaN(searchTerm)) {
-        pokemonId = searchTerm;
-        pokemon = pokemondata[searchTerm];
+    if (!isNaN(searchTerm) && searchTerm >= minId && searchTerm <= maxId) {
+      pokemonId = searchTerm;
+      pokemon = pokemondata[searchTerm];
     } else {
         for (const id in pokemondata) {
             if (pokemondata[id].name.toLowerCase() === searchTerm) {
@@ -72,6 +84,7 @@ function searchPokemon(searchId) {
     }
 
     currentId = parseInt(pokemonId);
+    console.log(pokemon);
     displayPokemon(pokemon);
 
 }
@@ -85,16 +98,27 @@ document.getElementById('nextButton').addEventListener('click', function() {
 });
 
 function updatePokemon(direction) {
-    currentId = direction === 'next' ? (currentId >= maxId ? minId : currentId + 1) : (currentId <= minId ? maxId : currentId - 1);
-    searchPokemon(currentId);
+  let newId = currentId;
+
+  if (direction === 'next') {
+      newId = currentId >= maxId ? minId : currentId + 1;
+  } else if (direction === 'prev') {
+      newId = currentId <= minId ? maxId : currentId - 1;
+  }
+
+  if (newId !== currentId) {
+      currentId = newId;
+      searchPokemon(currentId);
+  }
 }
 
 function displayPokemon(pokemon) {
   if (pokemon) {
-    nextId = currentId < maxId ? currentId + 1 : 1;
+    nextId = currentId < maxId ? currentId + 1 : minId;
     prevId = currentId > minId ? currentId - 1 : maxId;
 
     const shinyString = shiny ? "shiny" : "normal";
+    let shinyBG = shiny ? "pokemon-shiny" : "";
 
     const isUnlocked = shiny ? state.pkmnList.includes(`S${currentId}`) : state.pkmnList.includes(`N${currentId}`);
   
@@ -104,7 +128,7 @@ function displayPokemon(pokemon) {
       mainPokemonContainer.innerHTML = '';
     } else {
       mainPokemonContainer = document.createElement('div');
-      mainPokemonContainer.className = 'main-pokemon-container';
+      mainPokemonContainer.className = `main-pokemon-container ${shinyBG}`;
       if(mainPokemonWrapper) {
         mainPokemonWrapper.innerHTML = '';
         mainPokemonWrapper.appendChild(mainPokemonContainer);
@@ -112,7 +136,8 @@ function displayPokemon(pokemon) {
 
     }
 
-    const entry = isUnlocked ? dexEntries[currentId]?.dex_entry : "???";;
+    const entry = isUnlocked ? dexEntries[currentId]?.dex_entry : "???";
+
     
     let brightness = isUnlocked ? "brightness(100%)" : "brightness(0%)"
     let nameString = isUnlocked ? pokemon.name : "???";
@@ -152,7 +177,7 @@ function displayPokemon(pokemon) {
       prevPokemonContainer.innerHTML = '';
     } else {
       prevPokemonContainer = document.createElement('div');
-      prevPokemonContainer.className = 'prev-pokemon-container';
+      prevPokemonContainer.className = 'prev-pokemon-container ';
       if(prevPokemonWrapper) {
         prevPokemonWrapper.innerHTML = '';
         prevPokemonWrapper.appendChild(prevPokemonContainer);
@@ -177,7 +202,7 @@ function displayPokemon(pokemon) {
   
         prevPokemonContainer.innerHTML = `<div class="evotitle">Utvikles fra:</div>
         <a style="cursor: pointer;"href="./pokeviewer.html?pokemonId=${prevId}">
-        <div class="small-poke-container">
+        <div class="small-poke-container  ${shinyBG}">
           <img src="images/pokemon/${shinyString}/${prevId}.png" alt="${prevPokemon.name}" class="poke-image" style="filter: ${prevEvoBrightness}; pointer-events: none;">
           <p class="poke-name-box">${prevEvoNameString}
             <a class="poke-id">#${prevId}</a>
@@ -215,7 +240,7 @@ function displayPokemon(pokemon) {
           });
           nextPokemonContainer.innerHTML += `
           <a style="cursor: pointer;"href="./pokeviewer.html?pokemonId=${evolutionId}">
-          <div class="small-poke-container">
+          <div class="small-poke-container ${shinyBG}">
             <img src="images/pokemon/${shinyString}/${evolutionId}.png" alt="${nextPokemon.name}" class="poke-image" style="filter: ${nextEvoBrightness}; pointer-events: none;">
             <p class="poke-name-box">${nextEvoNameString}
               <a class="poke-id">#${evolutionId}</a>
@@ -245,9 +270,7 @@ function displayPokemon(pokemon) {
   const xmasForms = eventData["christmas"][currentId]
   const uniqueForms = eventData["unique"][currentId]
     if (alternateForms) {
-      console.log("Alternate forms found!")
       Object.entries(alternateForms).forEach(([key, item]) => {
-        console.log("Key:", key, "Name:", item.name, "Image ID:", item.imageid, "Types:", item.types);
         let altId=currentId + "-" + key;
 
         let altIsUnlocked = shiny ? state.pkmnList.includes(`S${altId}`) : state.pkmnList.includes(`N${altId}`);
@@ -260,7 +283,7 @@ function displayPokemon(pokemon) {
 
         alternatePokemonWrapper.innerHTML += `
         <a style="cursor: pointer;"href="./pokeviewer.html?pokemonId=${currentId}">
-        <div class="small-poke-container" style="display: block;">
+        <div class="small-poke-container ${shinyBG}" style="display: block;">
           <img src="images/pokemon/${shinyString}/${item.imageid}.png" alt="${item.name}" class="poke-image" style="filter: ${altBrightness}; pointer-events: none;">
           <p class="poke-name-box">${altNameString}
             <a class="poke-id">#${altId}</a>
@@ -270,11 +293,8 @@ function displayPokemon(pokemon) {
       });
     }
     if (halloweenForms) {
-      console.log("Alternate forms found!")
       Object.entries(halloweenForms).forEach(([key, item]) => {
-        console.log("Key:", key, "Name:", item.name, "Image ID:", item.imageid, "Types:", item.types);
         let altId=currentId + "-H" + key;
-
         let altIsUnlocked = shiny ? state.pkmnList.includes(`S${altId}`) : state.pkmnList.includes(`N${altId}`);
         let altBrightness = altIsUnlocked ? "brightness(100%)" : "brightness(0%)";
         let altNameString = altIsUnlocked ? item.name : "???";
@@ -295,9 +315,7 @@ function displayPokemon(pokemon) {
       });
     }
     if (xmasForms) {
-      console.log("Xmas forms found!")
       Object.entries(xmasForms).forEach(([key, item]) => {
-        console.log("Key:", key, "Name:", item.name, "Image ID:", item.imageid, "Types:", item.types);
         let altId=currentId + "-C" + key;
 
         let altIsUnlocked = shiny ? state.pkmnList.includes(`S${altId}`) : state.pkmnList.includes(`N${altId}`);
@@ -320,9 +338,7 @@ function displayPokemon(pokemon) {
       });
     }
     if (uniqueForms) {
-      console.log("Xmas forms found!")
       Object.entries(uniqueForms).forEach(([key, item]) => {
-        console.log("Key:", key, "Name:", item.name, "Image ID:", item.imageid, "Types:", item.types);
         let altId=currentId + "-U" + key;
 
         let altIsUnlocked = shiny ? state.pkmnList.includes(`S${altId}`) : state.pkmnList.includes(`N${altId}`);

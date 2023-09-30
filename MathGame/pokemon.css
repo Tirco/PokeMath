@@ -334,6 +334,16 @@ body.overlay-is-open .main-ui,
   border-top-color: #C8C0F8;
   border-bottom-color: #705898;
 }
+.type-bird {
+  background-color: #A890F0;
+  border-top-color: #C8C0F8;
+  border-bottom-color: #705898;
+}
+.type-999 {
+  background-color: #A890F0;
+  border-top-color: #C8C0F8;
+  border-bottom-color: #705898;
+}
 .type-psychic {
   background-color: #F85888;
   border-top-color: #F8C0B0;

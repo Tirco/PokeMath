@@ -1884,6 +1884,32 @@ var eventData = {
               }
   },
   "unique": {
+    "0": {
+      "1":
+        {
+          "id": 0,
+          "specialId": "U1",
+          "name": "MissingNo.",
+          "imageid": 130003,
+          "types": ["bird","normal"]
+        },
+      "2":
+        {
+          "id": 0,
+          "specialId": "U2",
+          "name": "MissingNo.",
+          "imageid": 130004,
+          "types": ["normal","999"]
+        },
+      "3":
+        {
+          "id": 0,
+          "specialId": "U3",
+          "name": "MissingNo.",
+          "imageid": 130005,
+          "types": ["normal","999"]
+        }
+      },
     "143": {
       "1":
         {
