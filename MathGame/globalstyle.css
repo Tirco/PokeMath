@@ -1425,3 +1425,9 @@ hr {
 .achievement.active .badgetooltip {
   display: block;
 }
+
+.tracker > p{
+  padding: 0;
+  color: black;
+  height: 10px;
+}

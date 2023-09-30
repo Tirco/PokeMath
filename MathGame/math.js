@@ -563,7 +563,8 @@ function handleSubmit(e) {
 		state.streak++
 		statCounter("hit","tasksSolved");
 		pointsNeeded.textContent = 5 - state.score
-		addMoney()
+		addMoney();
+		incrementData(mathValues.stage)
     	mainUI.classList.add("ui-animate-correct")
     	setTimeout(() =>  mainUI.classList.remove("ui-animate-correct"), 1001)
 		updateProblem();
@@ -848,5 +849,127 @@ function moveXmasPresent(element){
   element.style.top = (92*Math.random()) + "%";
   element.style.left = (92*Math.random()) + "%";
 }
+
+function getCurrentDate() {
+    const today = new Date();
+    return `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+}
+
+function incrementData(level) {
+    saveData(level, 1);
+    populateData();  // Optional: Refresh the display after incrementing
+}
+
+function saveData(level, count) {
+    const currentDate = getCurrentDate();
+    let data = JSON.parse(localStorage.getItem('mathProblems') || '{}');
+    
+    if (!data[currentDate]) {
+        data[currentDate] = {};
+    }
+    if (!data[currentDate][level]) {
+        data[currentDate][level] = 0;
+    }
+    data[currentDate][level] += count;
+    
+    localStorage.setItem('mathProblems', JSON.stringify(data));
+}
+
+function fetchDataForPeriod() {
+    const today = new Date();
+    const currentDate = getCurrentDate();
+    let data = JSON.parse(localStorage.getItem('mathProblems') || '{}');
+    
+    let aggregatedData = {
+        today: { total: 0, levels: {} },
+        week: { total: 0, levels: {} },
+        month: { total: 0, levels: {} }
+    };
+    
+    for (let date in data) {
+        const [year, month, day] = date.split('-').map(Number);
+        const dataDate = new Date(year, month - 1, day);
+
+        for (let level in data[date]) {
+            // For the current month
+            if (today.getMonth() === dataDate.getMonth() && today.getFullYear() === dataDate.getFullYear()) {
+                if (!aggregatedData.month.levels[level]) {
+                    aggregatedData.month.levels[level] = 0;
+                }
+                aggregatedData.month.levels[level] += data[date][level];
+                aggregatedData.month.total += data[date][level];
+            }
+
+            // For the current week
+            const startOfWeek = new Date(today);
+            startOfWeek.setDate(today.getDate() - today.getDay());
+            const endOfWeek = new Date(startOfWeek);
+            endOfWeek.setDate(startOfWeek.getDate() + 6);
+
+            if (dataDate >= startOfWeek && dataDate <= endOfWeek) {
+                if (!aggregatedData.week.levels[level]) {
+                    aggregatedData.week.levels[level] = 0;
+                }
+                aggregatedData.week.levels[level] += data[date][level];
+                aggregatedData.week.total += data[date][level];
+            }
+
+            // For today
+            if (date === currentDate) {
+                if (!aggregatedData.today.levels[level]) {
+                    aggregatedData.today.levels[level] = 0;
+                }
+                aggregatedData.today.levels[level] += data[date][level];
+                aggregatedData.today.total += data[date][level];
+            }
+        }
+    }
+
+	    // Cull data older than the last month
+		for (let date in data) {
+			const [year, month, day] = date.split('-').map(Number);
+			if (isOlderThanOneMonth(year, month)) {
+				delete data[date];  // Remove this old entry
+			}
+		}
+	
+		// Save the culled data back to localStorage
+		localStorage.setItem('mathProblems', JSON.stringify(data));
+    
+    return aggregatedData;
+}
+
+function populateData() {
+    const data = fetchDataForPeriod();
+
+    let levelDetailsHtml = '<h3>Arbeidsoversikt:</h3>';
+
+    levelDetailsHtml += '<h4>I dag:</h4>';
+    for (let level in data.today.levels) {
+        levelDetailsHtml += `<p>${level}: ${data.today.levels[level]} oppgave(r)</p>`;
+    }
+
+    levelDetailsHtml += '<h4>Denne uken:</h4>';
+    for (let level in data.week.levels) {
+        levelDetailsHtml += `<p>${level}: ${data.week.levels[level]} oppgave(r)</p>`;
+    }
+
+    levelDetailsHtml += '<h4>Denne måneden:</h4>';
+    for (let level in data.month.levels) {
+        levelDetailsHtml += `<p>${level}: ${data.month.levels[level]} oppgave(r)</p>`;
+    }
+
+    document.getElementById('levelDetails').innerHTML = levelDetailsHtml;
+}
+
+function isOlderThanOneMonth(year, month) {
+    const today = new Date();
+    const lastMonthDate = new Date(today.getFullYear(), today.getMonth() - 1, today.getDate()); // Date from one month ago
+
+    const checkDate = new Date(year, month - 1, 1);
+    return checkDate < lastMonthDate;
+}
+
+populateData();
 
 onLoad()
