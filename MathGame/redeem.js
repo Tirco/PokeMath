@@ -62,6 +62,24 @@ const secretCodeActions = {
       addSpecificToPokedex("N0");
     },
     repeatable: false
+  },
+  '76a9cd20e1c5faab05fe3116c1a2e4e9c991a4fdb3ba75efa3572e2a20c0db31': {
+    id: '9',
+    action: function() {
+      triggerAchievementOverlay("images/pokemon/normal/580.png", "Maria sier QUACK!");
+    },
+    repeatable: true
+  },
+  '2444781c3000c3e53b73fa9dc8f8a5d258e5ec0ae8fc87d2aeaf4fd3ccc52429': {
+    id: '10',
+    action: function() {
+      triggerAchievementOverlay("images/pokemon/normal/380.png", "Latios og Latioas har blitt med i alle sine former!");
+      addSpecificToPokedex("N380");
+      addSpecificToPokedex("N380-1");
+      addSpecificToPokedex("N381");
+      addSpecificToPokedex("N381-1");
+    },
+    repeatable: false
   }
   // Add other hashed codes and their actions here...
 };

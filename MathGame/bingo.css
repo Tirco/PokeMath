@@ -1,0 +1,89 @@
+#main {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* This centers the child elements horizontally */
+  width: 100%;
+  padding: 20px; /* Just to give some space */
+}
+
+/* Fancy header styling */
+.pokebingo-header {
+  text-align: center;
+  font-size: 3em;
+  margin: 20px 0; /* Add some space above and below the header */
+  font-family: 'Arial', sans-serif; /* A generic font, but consider something more unique if you have preferences */
+  color: #FF6347; /* Initial color as tomato red */
+  background: -webkit-linear-gradient(left, #FF6347, #FF4500); /* A gradient from tomato red to orange-red */
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent; /* Makes the gradient visible */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* A soft shadow for depth */
+  border: 2px solid #FF6347; /* Border around the text */
+  padding: 10px 40px; /* Padding around the text */
+  border-radius: 20px; /* Rounded corners */
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2); /* Shadow for the entire header element */
+  display: inline-block; /* To allow for padding and border styling */
+}
+
+/* Add some interactive hover effects */
+.pokebingo-header:hover {
+  transform: scale(1.05); /* Slightly enlarges the header */
+  box-shadow: 6px 6px 15px rgba(0, 0, 0, 0.3); /* Increases the shadow depth */
+}
+
+#bingoCard td {
+  border: 2px solid #000; /* Example border, adjust as needed */
+  text-align: center;
+  vertical-align: middle;
+  padding: 10px;
+  width: 15vw;
+  height: 15vh;
+  text-align: center;
+  vertical-align: middle;
+  background-color: white;
+  cursor: pointer; /* Make it obvious the cells are clickable */
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.3); /* Subtle shadow for 3D effect */
+
+  transition: all 0.3s; /* Smooth transitions for hover effects */
+}
+
+#bingoCard td:hover {
+  transform: scale(1.05); /* Slight scaling on hover */
+  box-shadow: 3px 3px 10px rgba(0,0,0,0.5); /* Darker shadow on hover */
+}
+
+/* Bingo Card table styling */
+#bingoCard {
+  border-collapse: collapse; /* Removes spacing between cells */
+  margin-top: 20px; /* Some space at the top */
+}
+
+table {
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+td img {
+  width: 50px; 
+  height: 50px;
+}
+
+#bingoCard td.toggled {
+  background-color: #00C957; /* Bright green */
+  color: #fff; /* White text for toggled cells */
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.5); /* Inset shadow for "pressed" effect */
+}
+
+.task-description {
+  font-size: 0.9em; /* Adjusts the size of the description text */
+}
+
+#bingoCard td.free-space {
+  cursor: default; /* Prevent clicking on the free space */
+  background-color: green;
+}
+.task-description {
+  font-size: 0.9em;
+  color: #555;
+}

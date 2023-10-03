@@ -901,12 +901,14 @@ function fetchDataForPeriod() {
             }
 
             // For the current week
-            const startOfWeek = new Date(today);
-            startOfWeek.setDate(today.getDate() - today.getDay());
-            const endOfWeek = new Date(startOfWeek);
-            endOfWeek.setDate(startOfWeek.getDate() + 6);
+        	const dayOfWeek = today.getDay();
+        	const daysToSubtract = (dayOfWeek === 0) ? 6 : dayOfWeek - 1; 
+        	const startOfWeek = new Date(today);
+        	startOfWeek.setDate(today.getDate() - daysToSubtract);
+       		const endOfWeek = new Date(startOfWeek);
+        	endOfWeek.setDate(startOfWeek.getDate() + 6);
 
-            if (dataDate >= startOfWeek && dataDate <= endOfWeek) {
+        	if (dataDate >= startOfWeek && dataDate <= endOfWeek) {
                 if (!aggregatedData.week.levels[level]) {
                     aggregatedData.week.levels[level] = 0;
                 }

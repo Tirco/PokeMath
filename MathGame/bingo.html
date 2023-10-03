@@ -2,19 +2,16 @@
 <html lang="en">
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <head>
-	<title>Pokémath - Pokéviewer</title>
-	<meta name="title" content="Pokémath - Pokéviewer">
-	<meta name="description" content="Se på dine Pokémon.">
-	<meta name="robots" content="noindex, nofollow">
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<meta name="author" content="Tirco">
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Pokémath</title>
 	<link rel="stylesheet" href="globalstyle.css?v=29">
+	<!--<link rel="stylesheet" href="cookies.css?v=1">-->
 	<link rel="stylesheet" href="menustyle.css?v=29">
-	<link rel="stylesheet" href="shop.css?v=29">
-	<link rel="stylesheet" href="pokeviewer.css?v=29">
+	<link rel="stylesheet" href="bingo.css?v=29">
 	<link rel="stylesheet" href="pokemon.css?v=29">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+	<!-- <link rel="stylesheet" href="https://www.jsdelivr.com/package/npm/bulma> -->
 </head>
 <body>
 	<div class="cookie-container" id="cookie-container">
@@ -114,6 +111,7 @@
 			</div>
 		</div>
 	<image src="" alt="" id="background"></image>
+	<div id="notification-container"></div>
 	<div id="id01" class="modal">
 		<span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
 		<form class="modal-content">
@@ -128,48 +126,26 @@
 		  </div>
 		</form>
 	  </div>
-<div class="main">
-	<div id="navbar">
-		<button id="prevButton" class="navButton searchButton">
-			<div class="button-bg" id="prevButtonBG">Forrige</div>
-		</button>
-		<div class="toggle-pill-color">
-			<a class="categoryname">Shiny</a>	
-			<input type="checkbox" id="shinycheck" name="shiny">
-			<label for="shinycheck">  </label>
-		</div>
-		<input type="text" id="searchBar" placeholder="Search by Name or ID" />
-		<button id="searchButton" class="searchButton">Search</button>
-		<button id="nextButton" class="navButton searchButton">
-			<div class="button-bg" id="nextButtonBG">Neste</div>
-		</button>
-	</div>
-	<div id="pokemondata">
-		<div id="poke-details">
-			<div id="prev-evolution-wrapper" class="evolution-wrapper poke-container">
-				<div class="evotitle">Utvikles fra:</div>
-			</div>
-			<div id="main-pokemon-wrapper" class="main-pokemon-wrapper poke-container">
-				
-			</div>
-			<div id="next-evolution-wrapper" class="evolution-wrapper right poke-container">
-				<div class="evotitle">Utvikles til:</div>
-			</div>
-			<br>
-	</div>
-	<div id="alternate-forms-wrapper" class="alternate-forms-wrapper">
-		<div class="evotitle">Alternative Former:</div>
-	</div>
+<div id="main" class="main">
+	<select id="difficulty">
+        <option value="easy">Easy</option>
+        <option value="medium">Medium</option>
+        <option value="hard">Hard</option>
+		<option value="extreme">Extreme</option>
+    </select>
+    <button onclick="generateCard()">Generate Bingo Card</button>
+	<h1 class="pokebingo-header">PokeBingo</h1>
+    <table id="bingoCard">
+        <!-- This will be populated by JS -->
+    </table>
 </div>
+
 <div class="botbar">
 	<a id="update-log" class="align-right" href="about.html#news">Nytt</a>
 </div>
-	  <script src="dex_entries.js?v=29"></script>
-	  <script src="alternateforms.js?v=29"></script>
-	  <script src="evolution_relationships.js?v=29"></script>
-	  <script src="global.js?v=29"></script>
-	  <script src="pokemondata.js?v=29"></script>
-	  <script src="pokeviewer.js?v=29"></script>
+
+<script src="global.js?v=29"></script>
+<script src="bingo.js?v=29"></script>
 </body>
 
 </html>

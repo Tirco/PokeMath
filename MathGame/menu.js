@@ -86,9 +86,23 @@ function load(){
   const d = new Date();
   let month = d.getMonth();
   if(month == 9) { //Måned 9 = oktober
-    let eventSplashes = ["Spoopy Season!","Spooky Season!","Ghastly, I choose you!",
-    "Happy Halloween!","Spooky numbers?","Boo! Did I scare you?","Gengar! I choose you!","Spooky Scary Skeletons!",
-    "Hatch the egg!","October <3!","It's the Nightmare before Christmas!","This is halloween!","Trick or treat!"];
+    let eventSplashes = ["Spoopy Season!",
+    "Spooky Season!",
+    "Ghastly, I choose you!",
+    "Happy Halloween!",
+    "Spooky numbers?",
+    "Boo! Did I scare you?",
+    "Gengar! I choose you!",
+    "Spooky Scary Skeletons!",
+    "Hatch the egg!","October <3!",
+    "It's the Nightmare before Christmas!",
+    "This is halloween!",
+    "Trick or treat!",
+    "Don't let math scare you – catch 'em all!",
+    "Mimikyu's disguise hides a world of numbers.",
+    "Use a Dusk Stone to evolve your equations!",
+    "Beware of the MissingNo. in your calculations!",
+    "Mimikyu's mimicry mocks mathematical mistakes!"];
     splashText.textContent = eventSplashes[Math.floor(Math.random()*eventSplashes.length)]
     let logo = document.getElementById("logo");
     logo.style.backgroundImage="url(images/logo-halloween.png)";
