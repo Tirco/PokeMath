@@ -3,7 +3,7 @@
 const shinyMaxLevel = 150;
 const legendMaxLevel = 15;
 const mythicMaxLevel = 25;
-const coinMaxLevel = 50;
+const coinMaxLevel = 150;
 const shinyBasePrice = 100;
 const legendBasePrice = 1000;
 const mythicBasePrice = 2000;
@@ -110,7 +110,12 @@ function loadShopLocal(){
                 maxLevel = coinMaxLevel;
                 level = shopOptions.coinLevel;
                 levelIndicator.dataset.level =  level;
-                price = Math.ceil((coinBasePrice * (level ** 1.1))/100)*100 + coinBasePrice;
+                if(level < 50) {
+                    price = Math.ceil((coinBasePrice * (level ** 1.1))/100)*100 + coinBasePrice;
+                } else {
+                    price = Math.ceil(((coinBasePrice+20000) * ((level - 49) ** 1.3))/100)*200 + coinBasePrice;
+                }
+                
                 priceTag.dataset.price = price;
             }
             //Do other button types.

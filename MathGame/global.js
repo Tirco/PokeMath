@@ -560,6 +560,8 @@ function log(message){
       canClose: true,
       badToast: true,
     })
+  } else {
+    console.log(message);
   }
 }
 

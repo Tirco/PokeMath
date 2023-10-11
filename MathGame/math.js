@@ -394,17 +394,22 @@ function addMoney(){
 	var value = 1
 	switch(Number(mathValues.stage)){
 		case 1:
+		case '1':	
 			value = 4;
 			break;
 		case 2:
+		case '2':	
 			value = 8;
 			break;
 		case 3:
+		case '3':	
 			value = 10;
 			break;
 		case 4:
+		case '4':	
 			value = 20;
 			break;
+		case '5':	
 		case 5:
 			value = 50;
 			break;
@@ -561,7 +566,7 @@ function handleSubmit(e) {
 
 		state.score++
 		state.streak++
-		statCounter("hit","tasksSolved");
+		//statCounter("hit","tasksSolved");
 		pointsNeeded.textContent = 5 - state.score
 		addMoney();
 		incrementData(mathValues.stage)
@@ -570,32 +575,41 @@ function handleSubmit(e) {
 		updateProblem();
 		renderProgressBar();
 
+		log("Testing...")
 		//Update tier solved.
 		switch(mathValues.stage) {
+			case 1:
 			case '1':
 				state.tier1Solved ++;
 				incrementProgress(24,1);
+				log("Stage 1 incremented");
 				break;
+			case 2:
 			case '2':
 				state.tier2Solved ++;
 				incrementProgress(25,1);
 				break;
+			case 3:
 			case '3':
 				state.tier3Solved ++;
 				incrementProgress(26,1);
 				break;
+			case 4:
 			case '4':
 				state.tier4Solved ++;
 				incrementProgress(27,1);
 				break;
+			case 5:
 			case '5':
 				state.tier5Solved ++;
 				incrementProgress(28,1);
 				break;
 			default:
 				state.customSolved ++;
+				log("Stage custom incremented");
 				break;
 		}
+		log("Test ended")
 	} else {
 		//TODO make popup with amount of Decimals.
 		
