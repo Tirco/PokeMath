@@ -149,18 +149,32 @@ function handleFileLoad(event){
         let xmasOpenedArray = xmasSplit[1];
         window.localStorage.setItem('xmasOpened',JSON.stringify(xmasOpenedArray));
     }
-    if(uploadArray[3] != null) {
-        log("loading achievements stuff :)")
-        const loadedAchievementString = uploadArray[3]; // Load this string from the text file
-        const achievements = JSON.parse(loadedAchievementString); // Parse the string into an object
-        localStorage.setItem('badges', JSON.stringify(achievements)); 
+    if(uploadArray[3] != null) {        
+      log("loading achievements stuff :)")
+      const loadedAchievementString = uploadArray[3]; // Load this string from the text file	
+      if (loadedAchievementString && loadedAchievementString.trim() !== "") {		
+        try {
+          const achievements = JSON.parse(loadedAchievementString); // Parse the string into an object
+          localStorage.setItem('badges', JSON.stringify(achievements)); 
+        } catch (error) {
+          console.error("Error parsing loadedAchievementString:", error);
+        }
+      }
     }
-    if(uploadArray[4] != null) {
-        log("loading code stuff :)")
-        const loadedCodesString = uploadArray[4]; // Load this string from the text file
-        const codes = JSON.parse(loadedCodesString); // Parse the string into an object
-        localStorage.setItem('redeemedCodes', JSON.stringify(codes)); 
+  
+  if(uploadArray[4] != null) {
+    log("loading code stuff :)");
+    const loadedCodesString = uploadArray[4];
+    log(loadedCodesString);
+    if (loadedCodesString && loadedCodesString.trim() !== "") {
+      try {
+        const codes = JSON.parse(loadedCodesString);
+        localStorage.setItem('redeemedCodes', JSON.stringify(codes));
+      } catch (error) {
+        console.error("Error parsing loadedCodesString:", error);
+      }
     }
+  }
 
     saveAll();
     loadAll();
