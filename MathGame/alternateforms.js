@@ -1929,6 +1929,26 @@ var eventData = {
           "imageid": 130001,
           "types": ["psychic"]
         }
-      }
+      },
+    "235": {
+        "1":
+          {
+            "id": 235,
+            "specialId": "U1",
+            "name": "Fishing Smeargle",
+            "imageid": 130006,
+            "types": ["normal"]
+          }
+        },
+    "361": {
+            "1":
+              {
+                "id": 361,
+                "specialId": "U1",
+                "name": "Tent Snorunt",
+                "imageid": 130007,
+                "types": ["ice"]
+              }
+            }
   }
 }
