@@ -23,6 +23,20 @@ const openDoor = (path, event) => {
     openHatch(path);
 }
 
+async function getCurrentDateFromAPI() {
+    try {
+        let response = await fetch('http://worldtimeapi.org/api/ip');
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        let data = await response.json();
+        return new Date(data.datetime);
+    } catch (error) {
+        console.error('Unable to fetch current date from API, using local date: ', error);
+        return new Date(); // Return local date as a fallback
+    }
+}
+
 function openHatch(date) {
     number = Number(date);
     var message = "Unknown";
@@ -181,7 +195,6 @@ function openHatch(date) {
                   })
                 addSpecificToPokedex("S151-U1");
                 addSpecificToPokedex("S143-U1");
-                statCounter("hit","allXmasHatchesOpened");
                 createFireworks();
             }
             break;
@@ -213,9 +226,13 @@ function addMoney(value) {
 	}, 1000)
 }
 
-const createCalendar = () => {
-    var date = new Date();
-    aboveCalendar.textContent += "Dagens dato: " + date.toLocaleDateString("NO");
+const createCalendar = async () => {
+    var date = await getCurrentDateFromAPI();
+    let now;
+    if (date instanceof Date) {
+       now = date.toLocaleDateString('NO', { day: 'numeric', month: 'long', year: 'numeric' });
+    } 
+    aboveCalendar.textContent = "God Jul! Dagens dato: " + now;
     for(let i = 0; i < 10; i++) {
         aboveCalendar.innerHTML += '<div class="fallingsnowflake">❅</div>';
     }
@@ -243,6 +260,16 @@ const createCalendar = () => {
     //TODO ce-year.
     //Get list of opened hatches.
     //clear list if wrong year.
+    openedHatches = getStorageString('xmasOpened');
+    let today = date.getDate();
+    if(openedHatches.some(day => day > today)) {
+        openedHatches = openedHatches.filter(day => day <= today);
+        console.log("Removed days greater than today. Remaining Elements - " + openedHatches);
+        window.localStorage.setItem('xmasOpened',JSON.stringify(openedHatches))
+        // saveAll(); // Uncomment this if you want to save the updated array
+    } else {
+        console.log("No days greater than today. No changes made.");
+    }
 
     for(let i = 0; i  < calendarDays; i++) {
         courseNumber = i + 1;
@@ -272,14 +299,13 @@ const createCalendar = () => {
             openedHatches = new Array();
         }
         
-
-        if(openedHatches.includes(courseNumber)){
+        if(openedHatches.includes(courseNumber) && date.getDate() >= courseNumber) {
             calendarDoor.classList = "calendar-image-opened";
             calendarDoor.style.backgroundImage = `url(${coursePath})`;
             calendarDoor.style.opacity = "100";
             calendarDoor.style.backgroundColor = "#ffffff73";
             //calendarDoor.innerHTML += '<div class="title-container"><a href="https://codepen.io/johnnyfekete/pen/ZEpGerj" target="_blank" title="Link to source code">Gingerbread cookie</a>'
-        } else if(date.getDate() == courseNumber){ //Bare la dagens luke kunne åpnes
+        } else if(date.getDate() >= courseNumber){
             calendarDoorText.addEventListener("click", openDoor.bind(null,  courseNumber));
         }
 
