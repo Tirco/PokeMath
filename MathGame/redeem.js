@@ -236,6 +236,74 @@ const secretCodeActions = {
       addSpecificToPokedex("S"+id);
     },
     repeatable: false
+  },
+  'e9fbbdf3800ed7a8ef5e417e303ae9ca9065a7dfb50c0265389f0a81e99b7848': {
+    id: '27',
+    action: function() {      //Solveig -- best
+      var randomIndex = Math.floor(Math.random() * mythics.length);
+      var id = mythics[randomIndex];
+      triggerAchievementOverlay("images/pokemon/shiny/" + id + ".png", "En tilfeldig shiny mytisk pokemon ble lagt til!");
+      addSpecificToPokedex("S"+id);
+    },
+    repeatable: false
+  },
+  '41a37306b537765cc1e490fe81e76d7a3bc5e9d3f651da4e0b0be644732dcd78': {
+    id: '28',
+    action: function() {      //GrisensGruppe
+      var randomIndex = Math.floor(Math.random() * mythics.length);
+      var id = mythics[randomIndex];
+      triggerAchievementOverlay("images/pokemon/shiny/" + id + ".png", "En tilfeldig shiny mytisk pokemon ble lagt til!");
+      addSpecificToPokedex("S"+id);
+    },
+    repeatable: false
+  },
+  '8324ba3e0b3b1d734f172c36035d002f4b99e7945cc56b72ed6af83a9fd08586': {
+    id: '29',
+    action: function() {      //GrisensGruppe 2
+      var randomIndex = Math.floor(Math.random() * mythics.length);
+      var id = mythics[randomIndex];
+      triggerAchievementOverlay("images/pokemon/shiny/" + id + ".png", "En tilfeldig shiny mytisk pokemon ble lagt til!");
+      addSpecificToPokedex("S"+id);
+    },
+    repeatable: false
+  },
+  'd338ad43f584a7aa95fe394b43c31af186822800f7dc616bbe7ed37bc4144193': {
+    id: '30',
+    action: function() {      //GrisensGruppe 3
+      var randomIndex = Math.floor(Math.random() * mythics.length);
+      var id = mythics[randomIndex];
+      triggerAchievementOverlay("images/pokemon/shiny/" + id + ".png", "En tilfeldig shiny mytisk pokemon ble lagt til!");
+      addSpecificToPokedex("S"+id);
+    },
+    repeatable: false
+  },
+  'db7f495d9938c0fca4fe2934579c22c855e64a57cf65fbec5ef45e15bdf39806': {
+    id: '31',
+    action: function() {      //GrisensGruppe 4
+      var randomIndex = Math.floor(Math.random() * mythics.length);
+      var id = mythics[randomIndex];
+      triggerAchievementOverlay("images/pokemon/shiny/" + id + ".png", "En tilfeldig shiny mytisk pokemon ble lagt til!");
+      addSpecificToPokedex("S"+id);
+    },
+    repeatable: false
+  },
+  '12a2c6f6eb78aa1992d0baa9616dc92a8e2bc723ad60eb43019956c13c73bdb3': {
+    id: '32',
+    action: function() {      //GrisensGruppe 4
+      var randomIndex = Math.floor(Math.random() * mythics.length);
+      var id = mythics[randomIndex];
+      triggerAchievementOverlay("images/pokemon/shiny/" + id + ".png", "En tilfeldig shiny mytisk pokemon ble lagt til!");
+      addSpecificToPokedex("S"+id);
+    },
+    repeatable: false
+  },
+  'dc04d899b119fdfcaf7db1c44718aa4e2a2c215340df0b23f01a658756f8ac05': {
+    id: '33',
+    action: function() {      //Griseflaks
+      triggerAchievementOverlay("images/events/christmas/14.png", "250.000 Mynter!");
+      addMoney(250000);
+    },
+    repeatable: false
   }
   // Add other hashed codes and their actions here...
 };

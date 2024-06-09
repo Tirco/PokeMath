@@ -25,7 +25,7 @@ const openDoor = (path, event) => {
 
 async function getCurrentDateFromAPI() {
     try {
-        let response = await fetch('http://worldtimeapi.org/api/ip');
+        let response = await fetch('https://worldtimeapi.org/api/ip');
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
@@ -41,8 +41,16 @@ function openHatch(date) {
     number = Number(date);
     var message = "Unknown";
     if(checkACookieExists("cookies")) {
+        if (!Array.isArray(openedHatches)) {
+            //console.error('openedHatches is not an array:', openedHatches)
+            try{
+                openedHatches = JSON.parse(openedHatches)
+            } catch (e) {
+                console.error('Error parsing openedHatches:', e);
+            }
+        }
         openedHatches.push(number);
-        window.localStorage.setItem('xmasOpened',JSON.stringify(openedHatches))
+        window.localStorage.setItem('xmasOpened',JSON.stringify(openedHatches));
     } else {
         const toast = new Toast({
             text: "Du har ikke godkjent bruken av Cookies, så vi kan ikke lagre din spillerdate på din enhet.",
@@ -226,6 +234,10 @@ function addMoney(value) {
 	}, 1000)
 }
 
+function getStorageString(key) {
+    return window.localStorage.getItem(key);
+}
+
 const createCalendar = async () => {
     var date = await getCurrentDateFromAPI();
     let now;
@@ -260,7 +272,27 @@ const createCalendar = async () => {
     //TODO ce-year.
     //Get list of opened hatches.
     //clear list if wrong year.
-    openedHatches = getStorageString('xmasOpened');
+    let openedHatchesString = getStorageString('xmasOpened');
+    
+    if (openedHatchesString) {
+        console.log(openedHatchesString)
+        try {
+            let parsedHatches = JSON.parse(openedHatchesString);
+            if (Array.isArray(parsedHatches)) {
+                openedHatches = parsedHatches;
+            } else {
+                console.error('Parsed data is not an array:', parsedHatches);
+                // Don't reset openedHatches here as it might already contain valid data
+            }
+        } catch (e) {
+            console.error('Error parsing openedHatches:', e);
+            // Don't reset openedHatches here as it might already contain valid data
+        }
+    } else {
+        console.log('xmasOpened not found or is empty. Initializing openedHatches as empty array.');
+        openedHatches = []; // Initialize as empty only if xmasOpened is not found or empty
+    }
+
     let today = date.getDate();
     if(openedHatches.some(day => day > today)) {
         openedHatches = openedHatches.filter(day => day <= today);

@@ -30,10 +30,10 @@ function createSaveFile(){
     var format = /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
     if(format.test(state.username)) {
         state.username = "Username_Error"
-        log("Renamed username.");
+        log("Renamed username. Format did not fit.");
     }
     let filename = (state.username + "_savefile_" + dateString + ".pkmth");// + date.getDay + "." + date.getMonth + "." + date.getFullYear + "_" + date.getHours + ":" + date.getMinutes;
-    console.log(filename);
+    log("Filename: " + filename);
     let content = ""
 
     //Loop through State
@@ -80,6 +80,7 @@ function createSaveFile(){
     }
 
     content = btoa(content);
+    log("Attempting to download file... If nothing happens, please check device permissions!")
     download(filename,content);
     //console.log(atob(content));
 }
@@ -93,7 +94,7 @@ function toJSONLocal (date) {
 function init(){
     document.getElementById('fileInput').addEventListener('change', handleFileSelect, false);
 }
-  
+
 function handleFileSelect(event){
     const reader = new FileReader()
     reader.onload = handleFileLoad;
@@ -131,15 +132,17 @@ function handleFileLoad(event){
     state.tier4Solved = stateText[10];
     state.tier5Solved = stateText[11];
     state.customSolved = stateText[12];
+    //SPLIT
     shopOptions.background = shopText[0];
     shopOptions.playerIcon = shopText[1];
     shopOptions.boughtBackgrounds = shopText[2].split(',');
     shopOptions.boughtPlayerIcons = shopText[3].split(',');
-    shopOptions.shinyLevel = shopText[4];
-    shopOptions.mythicLevel = shopText[5];
-    shopOptions.legendLevel = shopText[6];
-    shopOptions.specialLevel = shopText[7];
-    shopOptions.coinLevel = shopText[8];
+    shopOptions.claimedSecrets = shopText[4].split(',');
+    shopOptions.shinyLevel = shopText[5];
+    shopOptions.mythicLevel = shopText[6];
+    shopOptions.legendLevel = shopText[7];
+    shopOptions.specialLevel = shopText[8];
+    shopOptions.coinLevel = shopText[9];
     window.localStorage.setItem('visitCounted','true');
 
     if(uploadArray[2] != null) {
@@ -214,11 +217,12 @@ function handleFileLoad(event){
  * 1 - playericon
  * 2 - boughtBackgrounds
  * 3 - boughtPlayerIcons
- * 4 - shinyLevel
- * 5 - mythicLevel 
- * 6 - legendLevel 
- * 7 - specialLevel
- * 8 - coinLevel
+ * 4 - claimedSecrets
+ * 5 - shinyLevel
+ * 6 - mythicLevel 
+ * 7 - legendLevel 
+ * 8 - specialLevel
+ * 9 - coinLevel
  */
 /**
  * let state = {
