@@ -31,8 +31,10 @@ let mathValues = {
 	subtractionMinB:  0,
 	subtractionMaxB:  10,
 	subAllowNegative: true,
-	multiplicationMin:  0,
-	multiplicationMax:  10,
+	multiplicationMinA:  0,
+	multiplicationMaxA:  10,
+	multiplicationMinB:  0,
+	multiplicationMaxB:  10,
 	divisionMin:  0,
 	divisionMax:  10,
 	divisionMultiplierMin:  0,
@@ -85,7 +87,9 @@ function calculateCustomDifficulty() {
 		}
 	}
 	if(mathValues.operations.includes("x")) {
-		var multiplication = (Math.abs(mathValues.multiplicationMin - mathValues.multiplicationMax) * (10 ** mathValues.multiplicationDecimals));
+		var rangeA = Math.abs(mathValues.multiplicationMinA - mathValues.multiplicationMaxA) * (10 ** mathValues.multiplicationDecimals);
+		var rangeB = Math.abs(mathValues.multiplicationMinB - mathValues.multiplicationMaxB) * (10 ** mathValues.multiplicationDecimals);
+		var multiplication = rangeA * rangeB;
 		if(multiplication > 999) {
 			values.push(5);
 		} else if (multiplication > 99) {
@@ -233,9 +237,11 @@ function onLoad(){
 			mathValues.operations.push("-")
 		}
 		if(params.get("mul") == "t") {
-			mathValues.multiplicationMin = Number(params.get("mumin"));
-			mathValues.multiplicationMax = Number(params.get("mumax"));
-			mathValues.multiplicationDecimals = Number(params.get("mudec"));
+			mathValues.multiplicationMinA = Number(params.get("mumina"));
+			mathValues.multiplicationMaxA = Number(params.get("mumaxa"));
+			mathValues.multiplicationMinB = Number(params.get("muminb"));
+			mathValues.multiplicationMaxB = Number(params.get("mumaxb"));
+			mathValues.multiplicationDecimals = Number(params.get("mudeca"));
 			mathValues.operations.push("x")
 		}
 		if(params.get("div") == "t") {
@@ -341,8 +347,10 @@ function onLoad(){
 		mathValues.subtractionMax = 10;
 		mathValues.subtractionMinB = 0;
 		mathValues.subtractionMaxB = 10;
-		mathValues.multiplicationMin = 0;
-		mathValues.multiplicationMax = 10;
+		mathValues.multiplicationMinA = 0;
+		mathValues.multiplicationMaxA = 10;
+		mathValues.multiplicationMinB = 0;
+		mathValues.multiplicationMaxB = 10;
 		mathValues.divisionMin = 1;
 		mathValues.divisionMax = 10;
 		mathValues.divisionMultiplierMin = 0,
@@ -358,8 +366,10 @@ function onLoad(){
 		mathValues.subtractionMax = 100;
 		mathValues.subtractionMinB = 10;
 		mathValues.subtractionMaxB = 100;
-		mathValues.multiplicationMin = 10;
-		mathValues.multiplicationMax = 100;
+		mathValues.multiplicationMinA = 10;
+		mathValues.multiplicationMaxA = 100;
+		mathValues.multiplicationMinB = 1;
+		mathValues.multiplicationMaxB = 10;		
 		mathValues.divisionMin = 1;
 		mathValues.divisionMax = 10;
 		mathValues.divisionMultiplierMin = 1,
@@ -375,8 +385,10 @@ function onLoad(){
 		mathValues.subtractionMax = 10000;
 		mathValues.subtractionMinB = 1000;
 		mathValues.subtractionMaxB = 10000;
-		mathValues.multiplicationMin = 10;
-		mathValues.multiplicationMax = 999;
+		mathValues.multiplicationMinA = 10;
+		mathValues.multiplicationMaxA = 999;
+		mathValues.multiplicationMinB = 100;
+		mathValues.multiplicationMaxB = 999;
 		mathValues.divisionMin = 10;
 		mathValues.divisionMax = 100;
 		mathValues.divisionMultiplierMin = 10,
@@ -480,8 +492,8 @@ function generateProblem() {
 		numberTwo = generateNumber(mathValues.subtractionMinB, mathValues.subtractionMaxB, mathValues.subtractionDecimals);
 		break;
 	case 'x':
-		numberOne = generateNumber(mathValues.multiplicationMin, mathValues.multiplicationMax, mathValues.multiplicationDecimals);
-		numberTwo = generateNumber(mathValues.multiplicationMin, mathValues.multiplicationMax, mathValues.multiplicationDecimals);
+		numberOne = generateNumber(mathValues.multiplicationMinA, mathValues.multiplicationMaxA, mathValues.multiplicationDecimals);
+		numberTwo = generateNumber(mathValues.multiplicationMinB, mathValues.multiplicationMaxB, mathValues.multiplicationDecimals);
 		break;
 	case '/':
 		numberOne = generateNumber(mathValues.divisionMultiplierMin, mathValues.divisionMultiplierMax, mathValues.divisionDecimals);

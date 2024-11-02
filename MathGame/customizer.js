@@ -19,9 +19,12 @@ var subtractionallownegative = document.getElementById("subtractionallownegative
 
 var multiplicationCheck = document.getElementById("multiplicationcheck");
 var mulSection = document.getElementById("mulSection");
-var mulMinSelect = document.getElementById("mulMinSel");
-var mulMaxSelect = document.getElementById("mulMaxSel");
+var mulMinSelectA = document.getElementById("mulMinSelA");
+var mulMaxSelectA = document.getElementById("mulMaxSelA");
 var mulDecSelect = document.getElementById("mulDecSel");
+var mulMinSelectB = document.getElementById("mulMinSelB");
+var mulMaxSelectB = document.getElementById("mulMaxSelB");
+
 
 var divisionCheck = document.getElementById("divisioncheck");
 var divSectionSelect = document.getElementById("divSection");
@@ -116,9 +119,11 @@ function loadValues(url) {
         if(params.get("mul") == "t") {
             multiplicationCheck.checked = true;
             mulSection.style.display = "";
-            checkAndUpdateValue(params, "mumin", mulMinSelect);
-            checkAndUpdateValue(params, "mumax", mulMaxSelect);
+            checkAndUpdateValue(params, "mumina", mulMinSelectA);
+            checkAndUpdateValue(params, "mumaxa", mulMaxSelectA);
             checkAndUpdateValue(params, "mudec", mulDecSelect);
+            checkAndUpdateValue(params, "muminb", mulMinSelectB);
+            checkAndUpdateValue(params, "mumaxb", mulMaxSelectB);
         } else {
             multiplicationCheck.checked = false;
             mulSection.style.display = "none";
@@ -171,11 +176,13 @@ function fetchURL(){
     }
     //MultiplicationMin
     if(multiplicationCheck.checked) {
-        var mulMin = mulMinSelect.value;
-        var mulMax = mulMaxSelect.value;
+        var mulMinA = mulMinSelectA.value;
+        var mulMaxA = mulMaxSelectA.value;
         var mulDec = mulDecSelect.value;
+        var mulMinB = mulMinSelectB.value;
+        var mulMaxB = mulMaxSelectB.value;
 
-        url +="&mul=t" + "&mumin=" + mulMin + "&mumax=" + mulMax + "&mudec=" + mulDec;
+        url +="&mul=t" + "&mumina=" + mulMinA + "&mumaxa=" + mulMaxA + "&mudec=" + mulDec+ "&muminb=" + mulMinB + "&mumaxb=" + mulMaxB;
     }
     if(divisionCheck.checked) {
         var divMinDiv = divMinDivSelect.value;
