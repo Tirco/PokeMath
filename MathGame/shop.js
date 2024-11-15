@@ -133,8 +133,6 @@ function loadShopLocal(){
     }
 }
 
-loadShopLocal();
-
 /**
  * Used when purchasing backgrounds from the carousel.
  * @param {*} btn The button clicked.
@@ -190,6 +188,7 @@ function shopButtonBuy(btn){
         shopOptions.boughtBackgrounds.push(id);
         saveAll();
         loadShop();
+        loadShopLocal();
 }
 
 /**
@@ -300,6 +299,7 @@ function shopButtonUse(btn) {
         shopOptions.boughtPlayerIcons.push(id);
         saveAll();
         loadShop();
+        loadShopLocal();
 }
 /**
  * Used when selecting a background to equip from the carousel
@@ -473,7 +473,6 @@ function shopButtonUpgrade(btn){
 
 function moneySubAnimation(value) {
     money = document.querySelector(".money");
-    statCounterAmount("update","coinsSpendt",value);
     money.dataset.added = '-' + value;
 	money.dataset.total = state.totalScore;
 	money.textContent = "";
@@ -483,3 +482,27 @@ function moneySubAnimation(value) {
 		money.classList.remove('animate');
 	}, 500)
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+    const header = document.getElementById("topbar");
+    if (header) {
+        // Directly call loadAll() if the topbar element is found
+        loadShopLocal();
+        
+    } else {
+        // Optionally retry if header may take extra time to load
+        log("ShopJS - Top Bar Not Found - Retrying.")
+        var attempt = 0;
+        const checkHeaderInterval = setInterval(() => {
+            attempt ++;
+            const header = document.getElementById("topbar");
+            if (header) {
+                log("Shop - Top Bar Finally Found after " + attempt + " attemtps - Loading initiated.")
+                clearInterval(checkHeaderInterval);
+                loadShopLocal();
+            } else {
+              log("Header not found - retrying. (" + attempt + ")")
+            }
+        }, 100); // Check every 100ms until header is found
+    }
+  });

@@ -1,0 +1,345 @@
+<DOCTYPE html>
+<html lang="en">
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>-->
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Pokémath - Om oss</title>
+	<meta name="title" content="Pokémath - Om oss">
+	<meta name="description" content="Om siden til Pokémath, med kontaktinformasjon og lignende.">
+	<meta name="robots" content="noindex, nofollow">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="author" content="Tirco">
+	<link rel="stylesheet" href="globalstyle.css?v=41">
+	<link rel="stylesheet" href="menustyle.css?v=41">
+	<link rel="stylesheet" href="about.css?v=41">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+</head>
+<div id="header"></div>
+	<script>
+    fetch('header.html')
+        .then(response => response.text())
+        .then(data => document.getElementById('header').innerHTML = data);
+
+		const cookieButton = document.getElementById("acceptCookies");
+            if (cookieButton) {
+                cookieButton.addEventListener("click", acceptCookies);
+            }
+	</script>
+<div class="main">
+	<!--<div id="cookieNotice" class="cookie-consent"> <span>Denne siden trenger tillatelse til å ta i bruk Cookies for å kunne lagre dine Pokêmon. <a href="https://www.privacypolicies.com/generic/" target="_blank" rel="noopener noreferrer" class="ml-1 text-decoration-none">Privacy policy</a> </span>
+		<div class="columns align-items-center justify-content-safe-center"> <button id="cookie-allow" class="allow-button">Tillat</button> <button id="cookie-cancel" class="allow-button">Avslå</button> </div>
+	</div>-->
+	<h1 class="header">Informasjon</h1>
+	<section id="about" class="section">
+		<div class="image-container">
+			<img class="item.image" src="images/backgrounds/bg-001.png" alt=""></img>
+		</div>
+
+		<article class="content">
+			<h2 class="section-title">Om siden</h1>
+			<p><strong>Denne siden er under utvikling og vil gjennomgå store endringer underveis.</strong></p>
+		
+			<p>Pokemath.online er en læringsrik side hvor man kan få mengdetrening i addisjon, subtraksjon, multiplikasjon og divisjon. <br>
+			Nettsiden prøver på ingen måte å tjene penger, verken ved bruk av reklame eller salg.<br>
+			Formålet med siden er å skape en motiverende læringsarena for barn (og voksne) som er interessert i pokemon.<br>
+			Den originale idèen om å få pokemon for å gjøre matte kommer fra <a href="http://www.lesekloden.no" alt="Lesekloden.no">Lesekloden.no</a>
+			</p>
+			<p>
+			Nettsiden bruker <a href="https://pokeapi.co/" alt="pokeapi.co">https://pokeapi.co/</a> sin database for å finne, og vise, informasjon om de forskjellige pokemonene.
+			Bildene er i hovedsak hentet fra poketwo.net (<a href="https://github.com/poketwo/poketwo" alt="github.com/poketwo">https://github.com/poketwo/poketwo</a>) sin bildedatabase. <br>
+			</p>
+			<p>
+			Hvis du ønsker å bidra til utviklingen av siden, kan du ta en titt på GitHub siden: <a href="https://github.com/Tirco/PokeMath" alt="PokeMath GITHub">https://github.com/Tirco/PokeMath</a>
+			</p>
+		
+			Flere av ikonene er hentet fra:<a href="https://www.flaticon.com/search?word=pokemon&type=icon" title="Flaticon.com"> Roundicons Freebies - Flaticon</a><br>
+			Noen av bakgrunnene er laget av <a href="https://pixabay.com/users/tmstbch-3040875/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1572475">Tommaso Tabacchi</a> fra <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1572475">Pixabay</a></p>
+			Noen av bakgrunnene er laget av <a href="https://pixabay.com/users/incantabiless-17625387/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=5432819">Incantabiless</a> fra <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=5432819">Pixabay</a>
+			<p>Pokémon and all elements of the Pokémon franchise are © 1995-2022 Nintendo, GAME FREAK inc. TM © and Creatures Inc.</p>
+		</article>
+	</section>
+	<section id="contact" class="section">
+		<div class="image-container">
+			<img class="item.image" src="images/backgrounds/bg-002.png" alt=""></img>
+		</div>
+		<article class="content">
+			<h2 class="section-title">Kontakt</h1>
+			<p>
+				Kontaktinformasjon:<br>
+				Mail: <a href="mailto:contact@pokemath.online">contact@pokemath.online</a><br>Hvis du har et problem du trenger hjelp til å løse, så er mailen det beste alternativet. Vi sjekker mailboxen daglig, men det kan ta litt tid å svare. (PokeMath er en hobby, ikke en jobb!)<br><br>
+				Du kan også legge igjen en feilmelding på <a href="https://forms.gle/Vi1VZ37R3UwfSpbu9">denne lenken</a> (Google Forms),<br>
+				eller en generel tilbakemelding på <a href="https://forms.gle/KJo37sLgL9St4m2D6">denne lenken</a> (Google Forms).
+				<div id="donate-button-container">
+					Hvis du ønsker å sponse meg en godbit eller tilsvarende for arbeidet lagt inn i siden, så kan du legge inn en donasjon her: 	
+					<div id="donate-button"></div>
+						<script src="https://www.paypalobjects.com/donate/sdk/donate-sdk.js" charset="UTF-8"></script>
+						<script>
+							PayPal.Donation.Button({
+							env:'production',
+							hosted_button_id:'XAMQNRWKEJWX4',
+							image: {
+							src:'https://www.paypalobjects.com/en_US/NO/i/btn/btn_donateCC_LG.gif',
+							alt:'Donate with PayPal button',
+							title:'PayPal - The safer, easier way to pay online!',
+							}
+							}).render('#donate-button');
+						</script>
+				</div>
+					
+			</p>
+		</article>
+	</section>
+	<section id="news" class="section">
+		<div class="image-container">
+			<img class="img" src="images/backgrounds/bg-003.png" alt=""></img>
+		</div>
+		<article class="content">
+			<h2 class="section-title">Nyheter</h2>
+				<p>10.11.2024</p>
+				- Endret måten sider blir lastet inn. Nå har topplinjen blitt automatisert, så jeg ikke trenger å endre på alle undersidene når topplinjen endres. <br>
+				- Ødela butikken (og fikset den igjen) <br>
+				- La til en del nye figurer i butikken. <br>
+				- La til en funksjon som sørger for at man kobler til med https. Dette burde fikse noen feil for noen brukere <br>
+				- Bingo-siden får nå en større oppdatering, og man kan forvente å oppleve store feil ved den intill videre. <br>
+				- La til flere ikoner til Bingo-funksjonen.<br>
+				- Tester ut metoder for å gjøre ting på tvers av enheter... <a href="http:www.secret.pokemath.online">:)</a> <br>
+				<p>02.11.2024</p>
+				- Lenge siden forrige offentlige oppdatering - Men det har skjedd en del ting bak sløret. <br>
+				- La til Faktor B i Egendefinert Modus for multiplikasjon. Nå kan du øve på den gangen du trenger å øve på! <br>
+				- Fikset en feil hvor Roaring Moon, Iron Valiant, Walking Wake og Iron Leaves var klassifisert som Legendariske... Det er de ikke, selv om de er Paradox Pokemon. (Takk, Halvor, for at du følger med!) <br>
+				- Fikset småfeil.<br>
+				- Til lærere: Test ut https://pokemath.online/bingo.html -> Den kan være motiverende å ha på tavlen, og la elevene klikke ut om de får en som er på bingokortet. Eller så kan de ha hvert sitt bingo-kort i en egen fane. Bruk den som dere vil, det var bare et morsomt sideprosjekt jeg hadde for en stund siden.<br>
+				- Også til lærere: Det finnes en del hemmelige koder som kan gis som ekstra belønninger til elever. Send oss en velformulert e-post fra en jobb-konto (for å filtrere ut små luringer), så kan dere få noen av de. Inkluder gjerne hvilken skole og hvilk(e) trinn dere jobber med, men dette er ikke et krav. Jeg er bare nyskjerrig!<br>
+				<p>30.09.2023</p>
+				- La til "Badges", eller "Merker" som de heter på norsk. <br>
+				- La til flere høst/halloween pokemon.<br>
+				- Fikset noen småfeil på siden.<br>
+				- Gjorde slik at nivå 4 og 5 trenger færre oppgaver løst for å få en pokemon.<br>
+				- La til et kode-system hvor jeg kan gi ut gaver basert på hemmelige ord.<br>
+				- La til sporing på hvor mange oppgaver som er gjort i dag, den siste uken og den siste måneden. (Denne blir ikke sendt inn til meg, men kan brukes av lærere for å se om du har gjort det du skal) - Sporingen blir IKKE lagret hvis du bruker "lagre/last inn" funksjonen, så ikke bruk den rett før læreren din sjekker!<br>
+				- La til flere unike pokemon.<br>
+				- La til "pokeviewer" som lar deg se utviklinger og spesielle versjoner som er linket til en pokemon.<br>
+				- Gjorde så alle bildene tar mindre lagringsplass.<br>
+				- Oppdaterte lagringssystemet for å behandle ny data.<br>
+				- Forhåpentligvis fikset feilen som gjorde at pokemath ble stengt.<br>
+				- En hemmelig kode du kan bruke i det nye kode-systemet (hvis du finner det) er "Greed". :) Pass på store og små bokstaver. :)<br>
+				<p>24.09.2023</p>
+				- Fjernet en "money glitch" (Error).<br>
+				- Fikset ID 1001 og 1002. De er nå listet som Legendary.<br>
+				<p>13.09.2023</p>
+				- Fjernet en bugg som ga for mange shinies.<br>
+				- La til Gen IX pokemon.<br>
+				<p>22.08.2023</p>
+				- Fjernet CountAPI for å laste inn enkelte elementer raskere.<br>
+				<p>25.11.2022</p>
+				- La til en feilmelding på nettlesere som ikke har JavaScript på.<br>
+				- La til jule-eventet. Du kan nå finne gaver mens du løser oppgaver.<br>
+				- Lagde en julekalender.<br>
+				- La til en hilsen til de som er litt ekstra nyskjerrige i Developer Tools<br>
+				- Removed Herobrine... Nei vent... Feil spill.<br>
+				- Endret utseendet på ikonene på startsiden. De er nå litt mindre masete, og det er lettere å se flere av knappene.<br>
+				- La til noen hemmeligheter. (Missing No.)<br>
+				- Ordnet ny e-post adresse! Wooo! Vi har nå en egen pokemath epost!<br>
+				- Oppdaterte pokedexen så den laster inn mye raskere om du går tilbake til den!<br>
+				- Endret på rammen til mytiske og legendariske pokemon.<br>
+				- Fikset fonten som er på forside splash-teksten, slik at den er lik på flere enheter.<br>
+				<p>02.11.2022</p>
+				- Halloween-eventet er automatisk fjernet.<br>
+				- Oppdaterte Customizer (lag ditt eget nivå).<br>
+				- Gjorde slik at gjentatte pokemon som er shiny, legendarisk eller mytisk gir ekstra mye penger.<br>
+				- Gikk igjennom sjansene for legendarisk, mytisk og shiny.<br>
+				<p>16.10.2022</p>
+				- Forbedret måten pokemon lagres og lastes inn på, slik at belastningen på spillet blir mindre.<br>
+				- La til en fiks for når man bruker frem og tilbake navigasjon.<br>
+				- Laget en FAQ side.<br>
+				- Laget en funksjon for å lagre og laste opp brukerdata som en fil.<br>
+				- Oppdaterte sorteringsfunksjonen på Pokedex.<br>
+				- Begrenset pokemonene som er lastet inn på mattesiden. Dette er for å begrense data som lastes ned fra nettsiden.<br>
+				- Gikk over til en lokal database for pokemon. Dette bør gjøre så feilene for å få pokemon blir sjeldnere.<br>
+				- Endret innlastningsmetoden på pokemon, slik at pokemon med feil kan fikses fortløpende.<br>
+				- La til flere nye karakterer på butikksiden.<br>
+				- Endret på sjansene for Shiny, Legendary og Mythic.<br>
+				- Gjorde sånn at om halloweenegget trenger 25 pokemon, så vil neste runde bare trenge 5.<br>
+				- La til en usynlig årsak til å ville gjøre minst mulig feil!<br>
+				<p>06.10.2022</p>
+				- Enda en hotfix! Makan til rotete kode! :P<br>
+				- La til en ny varselboks på forsiden, hvis jeg trenger å gi meldinger til brukerne.<br>
+				- La til to nye tilbakemeldingsbokser på "kontakt-oss" for de som ikke vil sende e-post.<br>
+				<p>03.10.2022</p>
+				- Hotfixet Halloween eventet:<br>
+				- Shadow MewTwo har nå riktig bilde. (OG det oppdaterer seg til riktg, etterhvert) Denne typen fix vil snart være på plass for alle de buggede pokemonene, når jeg omarbeider hvordan de lastes inn. (Så om du har Alolan "Rapidash" så blir dette fikset snart-ish)<br>
+				- Fjernet muligheten for juksing ved å laste inn på nytt. (Dette var en bugg ved innlastning)<br>
+				- Takk for alle tilbakemeldinger og feilmeldinger!<br>
+				<p>24.09.2022</p>
+				- Gjorde klar for Halloween! Gjennom hele oktober kan man fange 18 spesielle pokemon ved å bruke egget som dukker opp på regnesiden. Man kan også få ekstra mange dark og ghost-pokemon!<br>
+				- Fikset småfeil på pokedexen.<br>
+				- La til flere nye bakgrunner i butikken.<br>
+				- Fikset en feil med antall mulige desimaler.<br>
+				- Fikset flere småfeil med custom mode.<br>
+				- Takk for alle tilbakemeldingene! Jeg leser alle jeg får!<br>
+				- Fikset at Alolan Ninetales heter Alolan Rapidash i spillet. (Hvis du har denne pokemonen fra før, vil feilen bli værende.)<br>
+				<p>20.09.2022</p>
+				- Fikset en feil som gjorde at man ikke kunne få pokemon i custom mode.<br>
+				<p>19.09.2022</p>
+				- Fikset deling i egenvalgt modus.<br>
+				- Gjorde så egenvalgt modus automatisk regner ut hvilken vanskelighetsgrad du spiller på.<br>
+				- Leste igjennom tilbakemeldingene deres. (Takk!)<br>
+				- Fjernet muligheten for å missbruke egenvalgt modus til å få for lette oppgaver. Juksepaver blir ikke pokemonmestere!<br>
+				<p>14.09.2022</p>
+				- La til egenvalgt modus. (Beta)<br>
+				- La til funksjoner som tillater desimaltall.<br>
+				- Gjorde interne endringer på hvordan godkjenning av svar fungerer.<br>
+				- Fikset småfeil i lenker.<br>
+				- Fikset at feil bilde ble brukt på Hisuian Goodra. Om du allerede har fanget denne pokemonen vil feilen vedvare.<br>
+				- Fikset Cookie Consent pop-up.<br>
+				- La til en offentlig Cookie Policy.<br>
+				- La til en offentlig Privacy Notice.<br>
+				- Sørget for at siden er GDPR-vennlig.<br>
+				<p>27.08.2022</p>
+				- Oppdaterte Om siden.<br>
+				- Startet arbeid for en ny funksjon når man klikker på en fanget pokemon. Denne er ikke klar enda.<br>
+				- La til Hisuian pokemon og variasjonene deres.<br>
+				<p>01.05.2022</p>
+				- La til en GitHub side. Denne finner du i "Om siden".<br>
+				- La til spiller-ikoner i butikken.<br>
+				- La til feilmelding ved for langt navn.<br>
+				- Endret tastatur på mobile enheter.<br>
+				- Fikset småfeil.<br>
+				<p>15.04.2022</p>
+				- La til nye bakgrunner i butikken.<br>
+				- La til nye oppgraderinger i butikken.<br>
+				- La til en donasjonsknapp under "kontakt".<br>
+				- Overførte pokebildene til lokal vert. (Dette gjelder nylig fangede pokemon, og ikke de du har fra før)<br>
+				<p>15.03.2022</p>
+				- Fikset "bruk" knappen på bakgrunnen.<br>
+				- Økte effektiviteten på Shiny Charm litt.<br>
+				- Endret på prisen og maks-nivå på Shiny Charm.<br>
+				- La til et "Toast"-system som gjør at meldinger kan vises enklere.<br>
+				- La til tilfeldige meldinger når du får en pokemon, istedet for bare "flott jobbet!"<br>
+
+				<p>05.03.2022</p>
+				- Fikset noen mindre feil.<br>
+				- La til de første elementene i butikken.<br>
+				- Oppdaterte utseendet på pokedexen og hovedmenyen.<br>
+				
+				<p>16.02.2022</p>
+				- Fikset på bildet til Gigantamax Rillaboom. Hvis du allerede har fanget denne pokemonen, så vil bildet forbli feil...<br>
+				- Endret på vanskelighetsgradene til nivå 2 og 4.<br>
+				- Endret på informasjon om vanskelighetsgrad.<br>
+
+				<p>08.02.2022</p>
+				- Fikset på noen pokemon som lå inne med feil bilde. Hvis du allerede har fanget disse pokemonene, så vil bildet forbli feil...<br>
+				- Fikset på en pokemon som burde vert listet som legendarisk.<br>
+				- Endret på utseendet til informasjonssiden.<br>
+				- Forbedret deler av koden.<br>
+				- Oppdaterte utseendet til Pokédexen.<br>
+				- Gjorde klar til videre oppdateringer.<br>
+
+				<p>06.02.2022</p>
+				- Lagde en pokedex side.<br>
+				- Slettet alle pokemon fra cookies.<br>
+				- Tok i bruk et nytt lagringssystem.<br>
+				- Fikset ikonet til charizard i hovedmenyen.<br>
+				- Fikset så pengene lagrer seg og legges til ordentlig.<br>
+				- Oppdaterte utseendet på pokemon i listen.<br>
+				- La til en "slett alt"-knapp, og lagde en navigerings meny.<br>
+				- Gjorde så duplikate pokemon ikke lager nye kort.<br>
+				- Endret litt på språket på siden.<br>
+				- Fikset en bugg hvor shinies lagde uendelige normale versjoner av seg selv.<br>
+				- La til Alolan varianter.<br>
+				- La til Galarian varianter.<br>
+				- La til Gigantamax varianter.<br>
+				- La til Mega varianter.<br>
+				- La til spesielle varianter av noen pokemon.<br>
+				<p>01.02.2022</p>
+				<p>- la til flere nivåer.<br>
+				- La til nivå-meny.<br>
+				- endret på utseendet.<br>
+				- ryddet opp i kode.<br>
+				- la til ikoner for poeng og pokemon.<br>
+				- fikset småfeil.</p>
+			  <p>28.01.2022</p>
+			  <p>- La til delingsstykker.<br>
+				- Gjorde Shinies vanskeligere å finne.<br>
+				- Gjorde legendaries og mythics vanskeligere å finne.<br>
+				- Gjorde så legendaries og mythics har egne rammer i pokedexen<br>
+				- La til lagring.<br>
+				- Lagde topptekst og bunntekst<br>
+				- La til en teller for antall pokemon og poeng.<br>
+				- Tok i bruk cookies.<br>
+				- La til funksjoner som hindrer at man med et uhell kan gå forbi en pokemon.</p>
+		</article>
+	</section>
+	<section id="privacy" class="section">
+		<div class="image-container">
+			<img class="item.image" src="images/backgrounds/bg-001.png" alt=""></img>
+		</div>
+		<article class="content">
+			<h2 class="section-title">Personvernerklæring</h2>
+			<h1>Personvernerklæring for Pokemath</h1>
+			<p>Pokemath driver nettstedet www.pokemath.online, som tilbyr en tjeneste for matteøvelser.</p> 
+			<p>Denne personvernerklæringen er laget for å informere besøkende om våre retningslinjer for innsamling,
+				 bruk og beskyttelse av personlig informasjon for de som bruker tjenesten vår. 
+				 Ved å bruke nettstedet godtar du vilkårene som beskrives i denne personvernerklæringen.</p>
+				<h2>Informasjonsinnsamling og bruk</h2> 
+				<p>Vi samler kun inn informasjon som er nødvendig for å forbedre tjenesten vår og gi en best mulig brukeropplevelse. 
+					Denne informasjonen inkluderer anonyme bruksdata om hvordan nettsiden brukes, 
+					men inneholder ikke personlig identifiserbare data.</p> 
+					<h2>IP-adresser</h2> 
+					<p>Pokemath lagrer ikke IP-adresser. 
+						Hvis dette endres, vil eventuelle IP-adresser bli anonymisert slik at de ikke kan spores tilbake til enkeltbrukere.</p> 
+						<h2>Informasjonskapsler (Cookies)</h2> 
+						<p>Nettstedet vårt bruker informasjonskapsler kun til funksjonalitetsformål. 
+							Disse informasjonskapslene hjelper oss med å tilpasse og forbedre brukeropplevelsen. 
+							Du kan velge å blokkere eller slette informasjonskapsler i nettleseren din, 
+							men dette kan påvirke funksjonaliteten på nettstedet vårt. Blant annet vil det ikke være mulig å lagre fremdriften.</p> 
+							<h2>Loggdata</h2> 
+							<p>Når du besøker nettstedet vårt, kan vi samle inn loggdata fra nettleseren din, 
+								som kan omfatte informasjon som nettleserversjon, sidene du besøker på nettstedet, tidspunkt og dato for besøk, 
+								og hvor lenge du blir på de forskjellige sidene. 
+								Disse dataene er anonymiserte og brukes kun til å analysere nettsidetrafikken vår.</p> 
+								<h2>Tredjeparts tjenester</h2> 
+								<h2>Bruk av tredjepartsleverandør for hosting</h2> 
+								<p>Nettstedet Pokemath.online er vertet av DreamHost, en tredjepartsleverandør av hostingtjenester. 
+									Dette betyr at data som samles inn og lagres på vårt nettsted, også er lagret på servere hos DreamHost. 
+									DreamHost følger bransjestandarder for sikkerhet og beskyttelse av data. 
+									Vi har valgt DreamHost som vår leverandør for å sikre at nettstedet har en stabil og sikker drift. 
+									Vi har ingen direkte kontroll over deres sikkerhetspraksis, 
+									men stoler på deres tekniske kompetanse og deres overholdelse av gjeldende personvernregler.</p>
+								<h2>Sikkerhet</h2> 
+								<p>Vi tar datasikkerhet på alvor og benytter oss av bransjestandarder for å beskytte dine data. 
+									Husk at ingen metode for datalagring eller overføring via internett er 100 % sikker, 
+									og vi kan derfor ikke garantere absolutt sikkerhet.</p> 
+									<h2>Lenker til andre nettsider</h2> 
+									<p>Vår tjeneste kan inneholde lenker til eksterne nettsteder. 
+										Vi kontrollerer ikke disse nettstedene, 
+										og anbefaler at du gjennomgår personvernerklæringen til eksterne sider du besøker. 
+										Vi påtar oss ikke ansvar for innhold eller personvernpraksis på tredjeparts nettsteder.</p> 
+										
+										<h2>Barnas personvern</h2> 
+										<p>Nettstedet vårt er tilgjengelig for barn under 13 år, men vi samler ikke inn personlig informasjon fra barn. 
+											Vi tar barnas personvern på alvor, og hvis vi blir oppmerksomme på at vi har mottatt personlig informasjon 
+											fra et barn under 13 år uten samtykke fra foresatte, vil vi slette denne informasjonen umiddelbart. 
+											Foresatte som har spørsmål eller bekymringer kan kontakte oss direkte.</p> 
+											
+											<h2>Endringer i personvernerklæringen</h2> 
+											<p>Vi kan oppdatere denne personvernerklæringen etter behov. 
+												Vi anbefaler derfor at du besøker denne siden med jevne mellomrom for å holde deg oppdatert på endringer. 
+												Endringer trer i kraft umiddelbart etter at de er publisert her.</p> 
+												
+												<h2>Kontakt oss</h2> 
+												<p>Hvis du har spørsmål eller forslag angående vår personvernerklæring, vennligst <a href="about.html#contact">kontakt oss</a>.</p>
+		</article>
+	</section>
+	<a href="redeem.html">:)</a>
+</div>
+
+	  <!--<script src="main.js?v=1"></script>>-->
+	  <script src="global.js?v=41"></script>
+	  <!--<script src="cookies.js?v=1"></script>-->
+</body>
+<!-- https://icon-icons.com/users/RoundIcons/icon-sets/ Ikoner laget av RoundIcons 
+Noen bakgrunner er laget av <a href="https://pixabay.com/users/tmstbch-3040875/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1572475">Tommaso Tabacchi</a> from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1572475">Pixabay</a>-->
+</html>

@@ -1,0 +1,75 @@
+<DOCTYPE html>
+<html lang="en">
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<head>
+	<title>Pokémath - Pokéviewer</title>
+	<meta name="title" content="Pokémath - Pokéviewer">
+	<meta name="description" content="Se på dine Pokémon.">
+	<meta name="robots" content="noindex, nofollow">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="author" content="Tirco">
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="globalstyle.css?v=41">
+	<link rel="stylesheet" href="menustyle.css?v=41">
+	<link rel="stylesheet" href="shop.css?v=41">
+	<link rel="stylesheet" href="pokeviewer.css?v=41">
+	<link rel="stylesheet" href="pokemon.css?v=41">
+</head>
+<body>
+	<div id="header"></div>
+	<script>
+    fetch('header.html')
+        .then(response => response.text())
+        .then(data => document.getElementById('header').innerHTML = data);
+
+		const cookieButton = document.getElementById("acceptCookies");
+            if (cookieButton) {
+                cookieButton.addEventListener("click", acceptCookies);
+            }
+	</script>
+<div class="main">
+	<div id="navbar">
+		<button id="prevButton" class="navButton searchButton">
+			<div class="button-bg" id="prevButtonBG">Forrige</div>
+		</button>
+		<div class="toggle-pill-color">
+			<a class="categoryname">Shiny</a>	
+			<input type="checkbox" id="shinycheck" name="shiny">
+			<label for="shinycheck">  </label>
+		</div>
+		<input type="text" id="searchBar" placeholder="Search by Name or ID" />
+		<button id="searchButton" class="searchButton">Search</button>
+		<button id="nextButton" class="navButton searchButton">
+			<div class="button-bg" id="nextButtonBG">Neste</div>
+		</button>
+	</div>
+	<div id="pokemondata">
+		<div id="poke-details">
+			<div id="prev-evolution-wrapper" class="evolution-wrapper poke-container">
+				<div class="evotitle">Utvikles fra:</div>
+			</div>
+			<div id="main-pokemon-wrapper" class="main-pokemon-wrapper poke-container">
+				
+			</div>
+			<div id="next-evolution-wrapper" class="evolution-wrapper right poke-container">
+				<div class="evotitle">Utvikles til:</div>
+			</div>
+			<br>
+	</div>
+	<div id="alternate-forms-wrapper" class="alternate-forms-wrapper">
+		<div class="evotitle">Alternative Former:</div>
+	</div>
+</div>
+<div class="botbar">
+	<a id="update-log" class="align-right" href="about.html#news">Nytt</a>
+</div>
+	  <script src="dex_entries.js?v=41"></script>
+	  <script src="alternateforms.js?v=41"></script>
+	  <script src="evolution_relationships.js?v=41"></script>
+	  <script src="global.js?v=41"></script>
+	  <script src="pokemondata.js?v=41"></script>
+	  <script src="pokeviewer.js?v=41"></script>
+</body>
+
+</html>

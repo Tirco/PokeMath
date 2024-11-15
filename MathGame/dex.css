@@ -1,52 +1,66 @@
-
-
 .container {
   overflow: hidden;
 }
 
-.filtered {
-  display: none; /* Hidden by default */
+#filterButtons {
+  text-align: left;
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
 }
 
-/* The "show" class is added to the filtered elements */
+.filtered {
+  display: none;
+}
+
 .show {
   display: block;
 }
 
-/* Style the buttons */
-.btn {
-  border: 5px rgba(255, 255, 255, 0) solid;;
+/* Button styles */
+.btn, .altbtn {
+  flex: 1;
+  border: 5px rgba(255, 255, 255, 0) solid;
   outline: none;
-  padding: 14px 20px 12px;
   background-color: #f1f1f1;
   cursor: pointer;
   min-width: 80px;
-  border-bottom: 1px solid #ddd;
+  max-width: 300px;
   height: 50px;
+  border-bottom: 1px solid #ddd;
+  box-sizing: border-box;
+  margin: 0;
+  border-left: 1px solid #ddd;
+  border-right: 1px solid #ddd;
 }
 
-.altbtn {
-  border: 5px rgba(255, 255, 255, 0) solid;;
-  outline: none;
-  padding: 14px 20px 12px;
-  background-color: #f1f1f1;
-  cursor: pointer;
-  min-width: 80px;
+/* Search input with custom icon */
+#searchInput {
+  flex: 1;
+  box-sizing: border-box;
+  background-image: url('images/compass.png');
+  background-size: 25px 25px;
+  background-position: 14px 12px;
+  background-repeat: no-repeat;
+  font-size: 16px;
+  padding: 13px 20px 11px 45px;
+  border: none;
   border-bottom: 1px solid #ddd;
-  height: 50px;
+  margin-right: 1px;
 }
 
-/* Add a light grey background on mouse-over */
-.btn:hover {
+#searchInput:focus {
+  outline: 3px solid #ddd;
+}
+
+/* Hover styles */
+.btn:hover, .altbtn:hover {
   background-color: #ddd;
 }
 
-.altbtn:hover {
-  background-color: #ddd;
-}
-
+/* Type card styles */
 .typecard2 {
-  border: 5px rgba(255, 255, 255, 0) solid;;
+  border: 5px rgba(255, 255, 255, 0) solid;
   outline: none;
   padding: 12px 16px;
   background-color: #f1f1f1;
@@ -57,6 +71,7 @@
   min-height: 15px;
   align-items: center;
   border-radius: 4px;
+  box-sizing: content-box;
   display: inline-flex;
   font-size: 0.75rem;
   justify-content: center;
@@ -64,52 +79,36 @@
   padding-right: 0.75em;
   white-space: nowrap;
   color: #F8F8F8;
+  cursor: pointer;
 }
 
-/* Add a dark background to the active button */
-.typecard.active {
+/* Active styles */
+.typecard.active, .typecard2.active {
   background-color: #666;
   color: white;
   border: 5px #000 solid;
 }
-.typecard2.active {
-  background-color: #666;
-  color: white;
-  border: 5px #000 solid;
+
+/* CSS to style active filter buttons */
+.btn.active, .altbtn.active {
+  background-color: #666; /* Darker color to indicate selection */
+  color: white; /* Text color for contrast */
+  border: 2px solid #444; /* Optional: border to emphasize */
 }
 
-.btn.active {
-  background-color: rgb(56, 55, 55);
-  color: white;
-  border: 5px #000 solid;
+/* Ensure :active styles are not interfering */
+.btn:active, .altbtn:active {
+  /* Styles here only apply while the button is being clicked */
+  background-color: #999; /* Temporary darker color on click */
 }
 
-.altbtn.altactive {
-  background-color: rgb(56, 55, 55);
-  color: white;
-  border: 5px #000 solid;
-}
-
-#searchInput {
-  box-sizing: border-box;
-  background-image: url('images/compass.png');
-  background-size: 25px 25px;
-  background-position: 14px 12px;
-  background-repeat: no-repeat;
-  font-size: 16px;
-  padding: 13px 20px 11px 45px;
-  border: none;
-  border-bottom: 1px solid #ddd;
-  margin-right: 5px;
-}
-#searchInput:focus {outline: 3px solid #ddd;}
-
-.dexinfo{
+/* Layout styling */
+.dexinfo {
   padding-left: 5%;
   font-size: 50px;
 }
 
-.statisticText{
+.statisticText {
   font-size: 2vw;
   background-image: url("pokeball.svg");
   background-size: 25px;
@@ -117,28 +116,99 @@
   background-position: left;
   padding-left: 25px !important;
   color: white;
-  text-align: center center;
+  text-align: center;
 }
 
-.statisticText:after{
+.statisticText:after {
   content: attr(data-text);
 }
 
+/* Type dropdown */
 .typedropdown {
   position: relative;
   display: inline-block;
+  min-width: 255px;
 }
 
 .typecontent {
   display: none;
-  position: sticky;
+  position: absolute;
   background-color: #f9f9f9;
-  width: 240px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   padding: 12px 16px;
   z-index: 1;
+  min-width: 200px;
 }
 
 .typedropdown:hover .typecontent {
   display: block;
+}
+
+/* Dropdown button styling */
+.generationDropdown {
+  position: relative;
+  display: inline-block;
+  background-color: #f3f3f3;
+  color: #333;
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+/* Dropdown content (hidden by default) */
+.generationContent {
+  display: none;
+  position: absolute;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  min-width: 150px;
+}
+
+/* Show dropdown content on button hover */
+.generationDropdown:hover .generationContent {
+  display: block;
+}
+
+/* Checkbox label styling */
+.generationContent label {
+  display: flex;
+  align-items: center;
+  margin: 5px 0;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+/* Checkbox styling */
+.generationContent input[type="checkbox"] {
+  margin-right: 8px;
+  transform: scale(1.2);
+  cursor: pointer;
+}
+
+/* Dropdown positioning */
+.generationContent {
+  top: 100%;
+  left: 0;
+}
+
+.skeleton {
+  background: linear-gradient(90deg, #ccc 25%, #e0e0e0 50%, #ccc 75%);
+  background-size: 200% 100%;
+  width: 100%;
+  height: 100px; /* Adjust to match your card height */
+  margin-bottom: 10px;
+  border-radius: 8px;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
 }

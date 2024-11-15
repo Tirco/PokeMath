@@ -1,0 +1,58 @@
+<DOCTYPE html>
+	<html lang="en">
+	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Pokémath - Lagre</title>
+		<meta name="title" content="Pokémath - Lagre">
+		<meta name="description" content="Side for å lagre og laste opp din fremdrift!">
+		<meta name="robots" content="noindex, nofollow">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta name="author" content="Tirco">
+		<link rel="stylesheet" href="globalstyle.css?v=41">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+	</head>
+	<body>
+		<div id="header"></div>
+		<script>
+		fetch('header.html')
+			.then(response => response.text())
+			.then(data => document.getElementById('header').innerHTML = data);
+	
+			const cookieButton = document.getElementById("acceptCookies");
+				if (cookieButton) {
+					cookieButton.addEventListener("click", acceptCookies);
+				}
+		</script>
+	<div class="main">
+		<h1 class="center">Lagre og Last Opp (Beta)</h1>
+		<div id="downloadSection" class="center datasection img-downloadSection">
+			<h2>Lagre</h2>
+			<p>Her kan du lagre dataen din som en fil, og laste ned til din enhet.<br>
+			Denne funksjonen er under utvikling, og det kan derfor hende at den ikke alltid fungerer.
+			Det kan hende at filen er korrupt (altså, den kan ikke leses), eller andre feil. Hvis du møter på slike feil, vennligst rapporter de til oss via "Kontakt Oss".</p>
+			<p>Vennligst ikke del lagringsdataen din med andre spillere.</p>
+			<button onclick="createSaveFile()" class="button-1">Last ned</button>
+			<img class="img-responsive img-downloadSection"> 
+		</div>
+		<div id="uploadSection" class="center datasection img-uploadSection">
+			<h2>Last opp</h2>
+			<p>Her kan du laste opp dataen fra en fil du har lastet ned fra før.</p>
+			<h3>ADVARSEL:</h3>
+			<p>Hvis du laster opp en .pkmth fil her, vil alt du har inne fra før bli overskrevet, og slettet. Det er ingen måte å få det tilbake på, hvis du ikke har lagret en annen fil.</p>
+			<body onload="init()">
+				<input id="fileInput" type="file" name="file" class="saveupload" />
+				<pre id="fileContent"></pre>
+			</body> 
+		</div>
+	</div>
+	
+	<div class="botbar">
+		<a id="update-log" class="align-right" href="about.html#news">Nytt</a>
+	</div>
+	
+	<script src="global.js?v=41"></script>
+	<script src="saveandload.js?v=41"></script>
+</body>
+</html>

@@ -1,0 +1,146 @@
+<DOCTYPE html>
+<html lang="en">
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Pokémath - FAQ</title>
+	<meta name="title" content="Pokémath - FAQ">
+	<meta name="description" content="Ofte stilte spørsmål!">
+	<meta name="robots" content="noindex, nofollow">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="author" content="Tirco">
+	<link rel="stylesheet" href="globalstyle.css?v=41">
+	<link rel="stylesheet" href="faq.css?v=41">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+	<!-- <link rel="stylesheet" href="https://www.jsdelivr.com/package/npm/bulma> -->
+</head>
+<body>
+	<div id="header"></div>
+	<script>
+    fetch('header.html')
+        .then(response => response.text())
+        .then(data => document.getElementById('header').innerHTML = data);
+
+		const cookieButton = document.getElementById("acceptCookies");
+            if (cookieButton) {
+                cookieButton.addEventListener("click", acceptCookies);
+            }
+	</script>
+<div class="main">
+ <div class="container">
+	<div class="faq-header">Ofte Stile Spørsmål (FAQ)
+	</div>
+
+	<div class="faq-content">
+	  <div class="faq-question">
+		<input id="q1" type="checkbox" class="panel">
+		<div class="plus">+</div>
+		<label for="q1" class="panel-title">Hvorfor sletter dere pokemonene mine?</label>
+		<div class="panel-content">
+			<p>Kort forklart: Det gjør vi ikke.</p>
+			<p>All din informasjon om nivå, pokemon du har fanget, mynter, osv. er lagret på din enhet, i nettleseren din. <br>
+				Vi har ikke tilgang til din lagrede data, og vi har ikke mulighet til å endre din lagrede data.</p>
+			<p><b>Noen mulige årsaker til at dataen din forsvinner er:</b></p>
+			<p>- Du spiller i et inkognito-vindu på nettleseren. (Da blir ikke ting lagret)<br>
+			- Skolen / Kommunen din har spesielle regler, som gjør at nettsiden ikke kan lagre data.<br>
+			- Du har ikke godtatt cookies.<br>
+			- Du har et program som sletter cookies og/eller nettleserdata <br>
+			- Du spiller på en annen enhet enn du gjorde fra før.</p>
+			<p> En ting du kan gjøre, om du opplever at du hele tiden mister alt du har, er å ta i bruk den nye <ins><a href="./saveandload.html">lagre og last opp</a></ins> funksjonen.</p>
+		</div>
+	</div>
+	  
+	  <div class="faq-question">
+		<input id="q2" type="checkbox" class="panel">
+		<div class="plus">+</div>
+		<label for="q2" class="panel-title">Kan dere legge til trading / pokemon battles?</label>
+		<div class="panel-content">
+			<p>Foreløbig kan vi ikke det.<br>
+				Vi er like glad i nye funksjoner som det dere er, men trading og battles vil kreve at vi kobler sammen to enheter på en eller annen måte. Dette krever servere som kan behandle den informasjonen, og i tillegg vil det gi oss nye GDPR utfordringer.
+			</p>
+		</div>
+	  </div>
+	  
+	  <div class="faq-question">
+		<input id="q3" type="checkbox" class="panel">
+		<div class="plus">+</div>
+		<label for="q3" class="panel-title">Hvordan tjener PokeMath penger?</label>
+		<div class="panel-content">
+			<p>PokeMath tjener ikke penger, med unntak av donasjoner fra lærere og foreldre som setter pris på arbeidet.<br>
+			Faktisk så taper vi penger på å ha siden oppe, men det er heldigvis ikke mye.</p>
+			<p>Vi betaler ca. 200kr i måneden for å holde siden oppe.<br>
+			Ettersom vi ikke vil ha reklame på nettsiden, og nettsiden ikke koster penger å ta i bruk, så tjener vi ingenting på nettsiden.</p>
+		</div>
+	  </div>
+
+	  <div class="faq-question">
+		<input id="q4" type="checkbox" class="panel">
+		<div class="plus">+</div>
+		<label for="q4" class="panel-title">Jeg har mistet alle mine pokemon. Kan jeg få de tilbake?</label>
+		<div class="panel-content">
+			<p>Hvis du er uheldig og har slettet alle dine pokemon, så er det dessverre ingenting vi kan gjøre.<br>
+			All brukerdata er lagret på din egen enhet, og blir ikke sendt inn til oss. På denne måten unngår vi store GDPR problemer.<br>
+		<br>Det eneste håpet du har, er om du har en gammel nedlastet lagringsfil fra <ins><a href="./saveandload.html">lagre og last opp</a></ins> funksjonen.</p>
+		</div>
+	  </div>
+	  <div class="faq-question">
+		<input id="q5" type="checkbox" class="panel">
+		<div class="plus">+</div>
+		<label for="q5" class="panel-title">Vennene mine har funksjoner som ikke jeg har. Hvordan kan jeg få de?</label>
+		<div class="panel-content">
+			<p>Det kan hende at nettleseren "husker" en gammel versjon av nettsiden, og for å spare data, så bruker nettleseren den versjonen, istedet for å laste inn den nye.<br><br>
+			På PC kan man tvinge nettleseren til å laste inn ny informasjon, ved å holde nede CTRL knappen og trykke F5. (Refresh).<br>
+			På Mac kan man gjøre det samme med Command og F5.<br>
+			På iPad eller mobil kan du prøve å lukke nettleseren helt (kast den ut), starte enheten på nytt, og så prøve å laste inn siden på nytt. Det er ikke alltid det fungerer.<br><br>
+			Man kan også prøve å koble fra alt av internett (sett enheten i flymodus) -> Prøv å koble til pokemath. (Det vil ikke fungere, men nettsiden laster da inn ny informasjon) -> så koble til internett (skru av flymodus) og prøv å koble til på nytt.</p>
+		</div>
+	  </div>
+	  <div class="faq-question">
+		<input id="q6" type="checkbox" class="panel">
+		<div class="plus">+</div>
+		<label for="q6" class="panel-title">Når jeg bruker QR-Kode så har jeg ingen av pokemonene mine! Hvorfor?</label>
+		<div class="panel-content">
+			<p>Dette skjer om man bruker en QR-Kode app som har en egen nettleser.<br>
+			Ofte så lar disse appene deg kopiere en lenke istedet for å gå til siden. Om du kopierer lenken, og bruker den i nettleseren du vanligvis bruker, så vil du ha alle pokemonene dine.<br>
+		<br>Det fungerer også ofte å bare bruke den vanlige kamera-appen på enheten for å scanne QR-Koden. Disse vil ofte åpne lenkene i den nettleseren du bruker oftest.</p>
+		</div>
+	  </div>
+	<div class="faq-question">
+		<input id="q7" type="checkbox" class="panel">
+		<div class="plus">+</div>
+		<label for="q7" class="panel-title">Hei PokeMorten - Hva er din favoritt pokemon?</label>
+		<div class="panel-content">
+			<p><img src="./images/pokemon/normal/258.png"></p>
+		</div>
+	  </div>
+	<div class="faq-question">
+		<input id="q8" type="checkbox" class="panel">
+		<div class="plus">+</div>
+		<label for="q8" class="panel-title">Hvorfor starter ikke sesong-eventet på min enhet? (Halloween, Jul, Påske, osv.)</label>
+		<div class="panel-content">
+			<p>Noen av disse er avhengige av datoen på din enhet for å fungere. Akkuratt nå leses den datoen som:</p>
+			<p><script> document.write(new Date().toDateString()); </script></p>
+			<p>Hvis dette ikke stemmer med riktig dato, så kan det være årsaken. Hvis datoen er riktig, se spørsmålet ovenfor om "Vennene mine har funksjoner som ikke jeg har."</p>
+		</div>
+	  </div>
+	</div>
+	<div class="faq-question">
+		<input id="q99" type="checkbox" class="panel">
+		<div class="plus">+</div>
+		<label for="q99" class="panel-title">Jeg har et spørsmål som ikke står her!</label>
+		<div class="panel-content">
+			<p>Ta kontakt med oss! Bruk siden <a href="about.html#contact">Kontakt oss</a>!</p>
+		</div>
+	  </div>
+	</div>
+</div>
+
+<div class="botbar">
+	<a id="update-log" class="align-right" href="about.html#news">Nytt</a>
+</div>
+
+<script src="global.js?v=41"></script>
+</body>
+
+</html>

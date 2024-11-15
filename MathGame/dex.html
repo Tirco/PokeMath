@@ -10,168 +10,79 @@
 	<meta name="robots" content="noindex, nofollow">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta name="author" content="Tirco">
-	<link rel="stylesheet" href="globalstyle.css?v=40">
-	<link rel="stylesheet" href="dex.css?v=40">
-	<link rel="stylesheet" href="pokemon.css?v=40">
+	<link rel="stylesheet" href="globalstyle.css?v=42">
+	<link rel="stylesheet" href="dex.css?v=42">
+	<link rel="stylesheet" href="pokemon.css?v=42">
 	<!--<link rel="stylesheet" href="cookies.css?v=1">-->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 	<!-- <link rel="stylesheet" href="https://www.jsdelivr.com/package/npm/bulma> -->
 </head>
 <div>
-	<div class="cookie-container" id="cookie-container">
-		<h2 class="cookie-header">Cookie Policy</h2>
-		<div class="">
-			<p class="cookie-text">
-				Denne siden bruker Cookies. Disse bruker vi for å kunne lagre pokèmonene og spillerdataen din på din enhet. Ved å bruke denne siden godkjenner du vår <a href="about.html#cookies">Cookie Policy </a>(Engelsk). Siden vil ikke fungere optimalt om du ikke godkjenner bruken av cookies.
-			</p>
-			<button class="button-1" onClick="acceptCookies()">
-				Okay!
-			</button>
-			<a class="button-2" href="about.html#cookies">
-				Mer informasjon.
-			</a>
-		</div>
-	</div>
-	<div class="topbar">
-		<a href="index.html" id="backbutton">&#8249;</a>
-		<a href="shop.html" id="money" class="topbar-icon-left">
-			<img id="coinimage" src="money.svg" width="50" 
-			height="50"/>
-			<text id="cointext" class="topbar-icontext-left money score"
-			data-added="0" data-total="0"></text>
-		</a>
-		<a href="dex.html" id="caught" class="topbar-icon-left">
-			<img id="ballimage" src="pokeball.svg" width="50" 
-			height="50"/>
-			<text id="balltext" class="topbar-icontext-left">0</text>
-		</a>
-		<a href="badges.html" id="badges" class="topbar-icon-left">
-			<img id="badgeimage" src="images/badges/1.png" width="50" 
-			height="50"/>
-		</a>
-		<div id="playercard" class="topbar-icon-left playercard">
-			<a class="playerbtn"><img id="playerimage" src="images/player.png" width="50" 
-			height="50"/>
-			<text id="playertext" class="topbar-icontext-left">Ash</text></a>
-			<div class="playercard-content">
-				<div class="trainercard">
-					<div class="card-avatar">
-						<img id="playerimagebig" src="images/player.png" width="100%"></img>
-					</div>
-					<div class="trainercard-details">
-					   <div class="trainercard-name">
-						   <text id="playertextheader">Ketchup </text> <button id="editname" onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Endre</button></div>
-					   <div class="trainercard-occupation">Pokémon Trener</div>
-					   <br>
-					   Oppgaver løst pr Nivå:
-					   <div class="trainercard-about">
-						  <div class="trainercard-item">
-							 <span class="value">1</span>
-							 <span class="label" id="t1solved">0000</span>
-						  </div>
-						  <div class="trainercard-item">
-							 <span class="value">2</span>
-							 <span class="label" id="t2solved">0000</span>
-						  </div>
-						  <div class="trainercard-item">
-							 <span class="value">3</span>
-							 <span class="label" id="t3solved">0000</span>
-						  </div>
-						  <div class="trainercard-item">
-							<span class="value">4</span>
-							<span class="label" id="t4solved">0000</span>
-						 </div>
-						 <div class="trainercard-item">
-							<span class="value">5</span>
-							<span class="label" id="t5solved">0000</span>
-						 </div>
-					   </div>
-					   <div class="skills">
-						  <span class="value"> </span>
-					   </div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="dropdown">
-			<button class="dropbtn">
-				<img id="gearimage" src="images/gear.png" width="50" 
-				height="50"/>
-			  <i class="fa fa-caret-down"></i>
-			</button>
-			<div class="dropdown-content">
-			  <a href="index.html">Hovedmeny</a>
-			  <a href="dex.html">Pokedex</a>
-			  <a href="shop.html">Butikk</a>
-			  <a href="about.html">Om siden</a>
-			  <a href="about.html#contact">Kontakt oss</a>
-			  <a href="about.html#news">Nylige oppdateringer</a>
-			  <a href="saveandload.html">Lagre / Last Inn</a>
-			  <a href="faq.html">FAQ</a>
-			  <a href="#"> </a>
-			  <a onclick="resetPrompt()">Tilbakestill (Slett alt)</a>
-			</div>
-		</div>
-	</div>
-<image src="" alt="" id="background"></image>
-<div id="notification-container"></div>
-<div id="id01" class="modal">
-	<span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
-	<form class="modal-content">
-	  <div class="container">
-		<h1>Endre navn</h1>
-		<label for="name"><b>Navn</b></label>
-		<input type="name" placeholder="Skriv inn nytt navn" name="name" required>
-		<div class="clearfix">
-		  <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn button-1">Avbryt</button>
-		  <button type="submit" class="signupbtn button-1">Lagre</button>
-		</div>
-	  </div>
-	</form>
-  </div>
+	<div id="header"></div>
+	<script>
+    fetch('header.html')
+        .then(response => response.text())
+        .then(data => document.getElementById('header').innerHTML = data);
+
+		const cookieButton = document.getElementById("acceptCookies");
+            if (cookieButton) {
+                cookieButton.addEventListener("click", acceptCookies);
+            }
+	</script>
 <body>
 <div class="main">
 	<div id="filterButtons">
 		<input type="text" class="align-left" placeholder="Søk.." id="searchInput" onkeyup="textFilterFunction()">
-			<button id="filterAllBtn" class="btn active " onclick="filterSelection('all')"> Vis alle</button>
-			<button class="btn" onclick="filterSelection('alolan')"> Alolan</button>
-			<button class="btn" onclick="filterSelection('galarian')"> Galarian</button>
-			<button class="btn" onclick="filterSelection('hisuian')"> Hisuian</button>
-			<button class="btn" onclick="filterSelection('Shiny')"> Shiny</button>
-			<button class="btn" onclick="filterSelection('Legendarisk')"> Legendarisk</button>
-			<button class="btn" onclick="filterSelection('Mytisk')"> Mytisk</button>
-			<button class="btn" onclick="filterSelection(' mega ')"> Mega</button>
-			<button class="btn" onclick="filterSelection('gigantamax')"> Gigantamax</button>
-			<button class="btn" onclick="filterSelection('-H')"> Halloween</button>
-			<button class="btn" onclick="filterSelection('-C')"> Jul</button>
-			<button class="btn" onclick="filterSelection('-U')"> Unik</button>
-			<button class="altbtn typedropdown" id="typedropdown"> Typer &#x25BC;
-				<div class="typecontent">
-					<a class="typecard2 type-bug btn" onclick="filterSelection('bug')"> Bug</a>
-					<a class="typecard2 type-dark btn" onclick="filterSelection('dark')"> Dark</a>
-					<a class="typecard2 type-dragon btn" onclick="filterSelection('dragon')"> Dragon</a><br>
-					<a class="typecard2 type-electric btn" onclick="filterSelection('electric')"> Electric</a>
-					<a class="typecard2 type-fairy btn" onclick="filterSelection('fairy')"> Fairy</a>
-					<a class="typecard2 type-fighting btn" onclick="filterSelection('fighting')"> Fighting</a><br>
-					<a class="typecard2 type-fire btn" onclick="filterSelection('fire')"> Fire</a>
-					<a class="typecard2 type-flying btn" onclick="filterSelection('flying')"> Flying</a>
-					<a class="typecard2 type-ghost btn" onclick="filterSelection('ghost')"> Ghost</a><br>
-					<a class="typecard2 type-grass btn" onclick="filterSelection('grass')"> Grass</a>
-					<a class="typecard2 type-ground btn" onclick="filterSelection('ground')"> Ground</a>
-					<a class="typecard2 type-ice btn" onclick="filterSelection('ice')"> Ice</a><br>
-					<a class="typecard2 type-normal btn" onclick="filterSelection('normal')"> Normal</a>
-					<a class="typecard2 type-poison btn" onclick="filterSelection('poison')"> Poison</a>
-					<a class="typecard2 type-psychic btn" onclick="filterSelection('psychic')"> Psychic</a><br>
-					<a class="typecard2 type-rock btn" onclick="filterSelection('rock')"> Rock</a>
-					<a class="typecard2 type-steel btn" onclick="filterSelection('steel')"> Steel</a>
-					<a class="typecard2 type-water btn" onclick="filterSelection('water')"> Water</a>
-				</div>
-			</button>
-
 		
+		<button id="filterAllBtn" class="btn active" data-filter="all" onclick="filterSelection('all')">Vis alle</button>
+		<button class="btn" data-filter="alolan" onclick="filterSelection('alolan')">Alolan</button>
+		<button class="btn" data-filter="galarian" onclick="filterSelection('galarian')">Galarian</button>
+		<button class="btn" data-filter="hisuian" onclick="filterSelection('hisuian')">Hisuian</button>
+		<button class="btn" data-filter="Shiny" onclick="filterSelection('Shiny')">Shiny</button>
+		<button class="btn" data-filter="Legendarisk" onclick="filterSelection('Legendarisk')">Legendarisk</button>
+		<button class="btn" data-filter="Mytisk" onclick="filterSelection('Mytisk')">Mytisk</button>
+		<button class="btn" data-filter=" mega " onclick="filterSelection(' mega ')">Mega</button>
+		<button class="btn" data-filter="gigantamax" onclick="filterSelection('gigantamax')">Gigantamax</button>
+		<button class="btn" data-filter="-H" onclick="filterSelection('-H')">Halloween</button>
+		<button class="btn" data-filter="-C" onclick="filterSelection('-C')">Jul</button>
+		<button class="btn" data-filter="-U" onclick="filterSelection('-U')">Unik</button>
+	
+		<button class="altbtn typedropdown" id="typedropdown">Typer &#x25BC;
+			<div class="typecontent">
+				<a class="typecard2 type-bug btn" data-filter="bug" onclick="filterSelection('bug')">Bug</a>
+				<a class="typecard2 type-dark btn" data-filter="dark" onclick="filterSelection('dark')">Dark</a>
+				<a class="typecard2 type-dragon btn" data-filter="dragon" onclick="filterSelection('dragon')">Dragon</a><br>
+				<a class="typecard2 type-electric btn" data-filter="electric" onclick="filterSelection('electric')">Electric</a>
+				<a class="typecard2 type-fairy btn" data-filter="fairy" onclick="filterSelection('fairy')">Fairy</a>
+				<a class="typecard2 type-fighting btn" data-filter="fighting" onclick="filterSelection('fighting')">Fighting</a><br>
+				<a class="typecard2 type-fire btn" data-filter="fire" onclick="filterSelection('fire')">Fire</a>
+				<a class="typecard2 type-flying btn" data-filter="flying" onclick="filterSelection('flying')">Flying</a>
+				<a class="typecard2 type-ghost btn" data-filter="ghost" onclick="filterSelection('ghost')">Ghost</a><br>
+				<a class="typecard2 type-grass btn" data-filter="grass" onclick="filterSelection('grass')">Grass</a>
+				<a class="typecard2 type-ground btn" data-filter="ground" onclick="filterSelection('ground')">Ground</a>
+				<a class="typecard2 type-ice btn" data-filter="ice" onclick="filterSelection('ice')">Ice</a><br>
+				<a class="typecard2 type-normal btn" data-filter="normal" onclick="filterSelection('normal')">Normal</a>
+				<a class="typecard2 type-poison btn" data-filter="poison" onclick="filterSelection('poison')">Poison</a>
+				<a class="typecard2 type-psychic btn" data-filter="psychic" onclick="filterSelection('psychic')">Psychic</a><br>
+				<a class="typecard2 type-rock btn" data-filter="rock" onclick="filterSelection('rock')">Rock</a>
+				<a class="typecard2 type-steel btn" data-filter="steel" onclick="filterSelection('steel')">Steel</a>
+				<a class="typecard2 type-water btn" data-filter="water" onclick="filterSelection('water')">Water</a>
+			</div>
+		</button>
 
-		<br>
-
+		<button class="altbtn generationDropdown" id="generationDropdown">Generasjon &#x25BC;
+			<div class="generationContent">
+				<label><input type="checkbox" class="genCheckbox" value="1" checked> Gen I</label>
+				<label><input type="checkbox" class="genCheckbox" value="2" checked> Gen II</label>
+				<label><input type="checkbox" class="genCheckbox" value="3" checked> Gen III</label>
+				<label><input type="checkbox" class="genCheckbox" value="4" checked> Gen IV</label>
+				<label><input type="checkbox" class="genCheckbox" value="5" checked> Gen V</label>
+				<label><input type="checkbox" class="genCheckbox" value="6" checked> Gen VI</label>
+				<label><input type="checkbox" class="genCheckbox" value="7" checked> Gen VII</label>
+				<label><input type="checkbox" class="genCheckbox" value="8" checked> Gen VIII</label>
+				<label><input type="checkbox" class="genCheckbox" value="9" checked> Gen IX</label>
+			</div>
+		</button>
 	</div>
 
 	<div class="columns is-multiline is-mobile" id="pokedex">
@@ -192,12 +103,12 @@
 	</div>
 
 	  <!--<script src="main.js?v=1"></script>>-->
-	  <script src="global.js?v=40"></script>
+	  <script src="global.js?v=42"></script>
 	  <!--<script src="cookies.js?v=1"></script>-->
-	  <script src="pokemondata.js?v=40"></script>
-	  <script src="alternateforms.js?v=40"></script>
-	  <script src="pokestuff.js?v=40"></script>
-	  <script src="dex.js?v=40"></script>
+	  <script src="pokemondata.js?v=42"></script>
+	  <script src="alternateforms.js?v=42"></script>
+	  <script src="pokestuff.js?v=42"></script>
+	  <script src="dex.js?v=42"></script>
 </body>
 
 </html>

@@ -191,9 +191,6 @@ function handleFileLoad(event){
         badToast: false,
     })
 
-    //Update stats on how many loaded.
-    statCounter("hit","fileloads");
-
     //document.getElementById('fileContent').textContent = atob(event.target.result);
 }
 

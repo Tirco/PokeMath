@@ -8,7 +8,6 @@ const progressBar = document.querySelector(".progress-inner")
 const resetButton = document.querySelector(".reset-button")
 let winScore = 5 //hvor mange poeng som trengs.
 const defaultLives = 3 //hvor mange forsøk man har.
-const money = document.querySelector(".money")
 const goodMessages = ["Flott jobbet!","Nice!","Ny pokémon!","Trykk på ballen!","Enda en til samlingen!","Fortsett sånn!","Stå på!","Du er super!","Oh, hva får du nå?","Eyy! Bra jobbet!"]
 
 const halloweenProgressBar = document.querySelector(".halloween-progress-inner")
@@ -403,6 +402,11 @@ function onLoad(){
 }
 
 function addMoney(){
+	const money = document.querySelector(".money")
+	if(!money) {
+		log("Error: div Money is not loaded.")
+		return;
+	}
 	var value = 1
 	switch(Number(mathValues.stage)){
 		case 1:
@@ -433,7 +437,6 @@ function addMoney(){
 	money.dataset.total = state.totalScore += value;
 	incrementProgress(19,value);
 	money.textContent = "";
-	statCounterAmount("update","coinsEarned",value);
 	if (state.totalScore) money.classList.add('animate');
   
 	setTimeout(() => {
@@ -441,6 +444,11 @@ function addMoney(){
 	}, 500)
 }
 function addFixedMoney(value){
+	const money = document.querySelector(".money")
+	if(!money) {
+		log("Error: div Money is not loaded.")
+		return;
+	}
 	if(Number.isNaN(value)){
 		alert(value + " is not a number! Error on payment.")
 		return;
@@ -449,7 +457,6 @@ function addFixedMoney(value){
 	money.dataset.total = state.totalScore += value;
 	incrementProgress(19,value);
 	money.textContent = "";
-	statCounterAmount("update","coinsEarned",value);
 	if (state.totalScore) money.classList.add('animate');
   
 	setTimeout(() => {
@@ -633,7 +640,6 @@ function handleSubmit(e) {
 
 		state.wrongAnswers++
 		state.streak = 0;
-		statCounter("hit","wrongAnswers");
     	ourField.value = ""
 		mistakesAllowed.textContent = 2-state.wrongAnswers
 		ourField.focus()
@@ -859,7 +865,6 @@ function openXmasPresent(event) {
   document.body.classList.add("overlay-is-open");
   pokeball.classList.remove("is-hidden");
   createEventPokemon("christmas");
-  statCounter("hit","xmasPresentOpened");
   /*
   var timeout =  1000 * (120 * Math.random() + 30000) + ((15/mathValues.stage)*10000);
   log("next present in " + (timeout / 1000) + " seconds.")
@@ -968,6 +973,11 @@ function fetchDataForPeriod() {
 }
 
 function populateData() {
+	const levelDetailsRef = document.getElementById('levelDetails');
+	if(!levelDetailsRef) {
+		log("unable to populate Data as the referenced element is not loaded.")
+		return;
+	}
     const data = fetchDataForPeriod();
 
     let levelDetailsHtml = '<h3>Arbeidsoversikt:</h3>';
@@ -998,6 +1008,8 @@ function isOlderThanOneMonth(year, month) {
     return checkDate < lastMonthDate;
 }
 
-populateData();
-
-onLoad()
+document.addEventListener("DOMContentLoaded", () => {
+	
+	populateData();
+	onLoad()
+});

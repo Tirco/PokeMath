@@ -1,0 +1,38 @@
+<DOCTYPE html>
+<html lang="en">
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Pokémath</title>
+	<link rel="stylesheet" href="globalstyle.css?v=41">
+	<!--<link rel="stylesheet" href="cookies.css?v=1">-->
+	<link rel="stylesheet" href="menustyle.css?v=41">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+	<!-- <link rel="stylesheet" href="https://www.jsdelivr.com/package/npm/bulma> -->
+</head>
+<body>
+	<div id="header"></div>
+	<script>
+    fetch('header.html')
+        .then(response => response.text())
+        .then(data => document.getElementById('header').innerHTML = data);
+
+		const cookieButton = document.getElementById("acceptCookies");
+            if (cookieButton) {
+                cookieButton.addEventListener("click", acceptCookies);
+            }
+	</script>
+<div class="main">
+	<div id="notification-container"></div>
+    <div class="achievement-grid"></div>
+</div>
+
+<div class="botbar">
+	<a id="update-log" class="align-right" href="about.html#news">Nytt</a>
+</div>
+
+<script src="global.js?v=41"></script>
+</body>
+
+</html>

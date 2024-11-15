@@ -1,0 +1,123 @@
+/* toggle-pill-color */
+.toggle-pill-color input[type="checkbox"] {
+    display: none;
+  }
+.toggle-pill-color {
+    background-color: #b3f3c7;
+    border-radius: 1em;
+    box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.3);
+    width: 40%;
+    display: block;
+    position: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 10px;
+}
+  .toggle-pill-color input[type="checkbox"] + label {
+    display: inline-block;
+    position: relative;
+    width: 3em;
+    height: 1.6em;
+    /*margin-bottom: 20px;*/
+    border-radius: 1em;
+    background: #e84d4d;
+    box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -webkit-transition: background 0.1s ease-in-out;
+    transition: background 0.1s ease-in-out;
+  }
+  .toggle-pill-color input[type="checkbox"] + label:before {
+    content: "";
+    display: block;
+    width: 1.2em;
+    height: 1.2em;
+    border-radius: 1em;
+    background: #fff;
+    box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
+    position: absolute;
+    left: 0.2em;
+    top: 0.2em;
+    -webkit-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+  }
+  .toggle-pill-color input[type="checkbox"]:checked + label {
+    background: #47cf73;
+  }
+  .toggle-pill-color input[type="checkbox"]:checked + label:before {
+    box-shadow: -2px 0px 5px rgba(0, 0, 0, 0.2);
+    left: 1.6em;
+  }
+  /* toggle-pill-color end */
+
+  .form-group {
+    display: grid;
+    font-size: 24px;
+    background: rgba(206, 206, 206, 0.551);
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+    border-radius: 1em;
+    left: 0.2em;
+    top: 0.2em;
+    padding: 0.5em;
+    margin-left: auto;
+    margin-right: auto;
+    min-width: 150px;
+    width:50%;
+    margin-bottom: 0.5em;
+  }
+
+  .form-group input[type="number"] {
+    font-size: 20px;
+    display: flex;
+    text-align: center;
+    width:50%;
+    min-width: 100px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .customizerform {
+    width: 80%;
+    display: inline-block;
+    padding: 0.5em;
+    margin-left: auto;
+    margin-right: auto;
+    align-items: center;
+    text-align: center;
+    align-content: center;
+    justify-content: center;
+  }
+
+  .categoryname {
+    font-size: 36px;
+  }
+
+  .barcode {
+    padding: 1.5em;
+    background: rgba(206, 206, 206, 0.551);
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+
+
+  }
+  .barcode:empty {
+    -webkit-animation: fadeIn 2s;
+    animation: fadeIn 2s;
+
+  }
+
+  @-webkit-keyframes fadeIn {
+    from { opacity: 0; height: 0; size: 0}
+      to { opacity: 1; height: auto;  size: auto; }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; height: 0; size: 0}
+      to { opacity: 1; height: auto;  size: auto; }
+  }
+
+.card-title {
+    font-size: 16px;
+    overflow-wrap: break-word;
+  }

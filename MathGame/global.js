@@ -1,5 +1,4 @@
 const newsButton = document.getElementById("update-log")
-const cookiePolicy = document.getElementById("cookie-container")
 
 //Halloween
 const halloweenbox = document.getElementById("halloween-egg")
@@ -380,6 +379,90 @@ function checkACookieExists(name) {
   return false;
 }
 
+async function getOrCreateUUID(retryLimit = 3) {
+  let uuid = getCookie("playerUUID");
+
+  if (!uuid) {
+      uuid = generateUUID();
+  }
+
+  try {
+      const isUnique = await validateUUID(uuid, retryLimit);
+      if (!isUnique) {
+          uuid = generateUUID(); // Generate a new UUID if the existing one isn't unique
+          setCookie("playerUUID", uuid, 365);
+      }
+  } catch (error) {
+      console.error("Error validating UUID:", error);
+      alert("Unable to connect to the server. Please check your connection.");
+      return null; // Return null or handle fallback as needed
+  }
+
+  // Store the validated UUID in cookies if it's unique
+  setCookie("playerUUID", uuid, 365);
+  return uuid;
+}
+
+async function validateUUID(uuid, retryLimit = 3) {
+  const url = `${window.location.protocol}//${window.location.host}/validate-uuid?uuid=${uuid}&username=${state.username}`;
+  let attempts = 0;
+
+  while (attempts < retryLimit) {
+      try {
+          const response = await fetch(url);
+          if (!response.ok) {
+              throw new Error(`Server returned status ${response.status}`);
+          }
+          const data = await response.json();
+          return data.unique;
+      } catch (error) {
+          attempts++;
+          console.warn(`Attempt ${attempts} failed:`, error);
+
+          if (attempts >= retryLimit) {
+              throw new Error("Failed to connect to the server after multiple attempts.");
+          }
+
+          // Optional: Wait before retrying (e.g., 1 second)
+          await new Promise(resolve => setTimeout(resolve, 1000));
+      }
+  }
+}
+
+// Function to generate a new UUID
+function generateUUID() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+      const r = (Math.random() * 16) | 0,
+            v = c === 'x' ? r : (r & 0x3) | 0x8;
+      return v.toString(16);
+  });
+}
+
+// Helper function to set a cookie
+function setCookie(name, value, days) {
+  if(checkACookieExists("cookies")) {
+    //console.log("Saving all - Cookies are accepted")
+  } else {
+    const toast = new Toast({
+      text: "Du har ikke godkjent bruken av Cookies, så vi kan ikke lagre din spillerdate på din enhet.",
+      position: "top-right",
+      pauseOnHover: true,
+      pauseOnFocusLoss: true,
+      canClose: true,
+      badToast: true,
+    })
+    return;
+  }
+  const expires = new Date(Date.now() + days * 24 * 60 * 60 * 1000).toUTCString();
+  document.cookie = `${name}=${value}; expires=${expires}; path=/`;
+}
+
+// Helper function to get a cookie by name
+function getCookie(name) {
+  const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+  return match ? match[2] : null;
+}
+
 
 function loadAll() {
   //Log to console
@@ -390,6 +473,7 @@ function loadAll() {
   
   //See if cookies are consented
   if(checkACookieExists("cookies")) {
+    const cookiePolicy = document.getElementById("cookie-container");
     if(cookiePolicy != null) {
       cookiePolicy.style = "display: none";
     }
@@ -446,7 +530,7 @@ function loadAll() {
   document.getElementById("t5solved").textContent = state.tier5Solved;
   //document.getElementById("csolved").textContent = state.customSolved;
   loadShop();
-  countVisit();
+  document.dispatchEvent(new Event('loadAllComplete'));
 }
 
 function getStorageString(key) {
@@ -482,35 +566,18 @@ function clearStorage() {
   window.sessionStorage.clear();
 }
 
-function acceptCookies(){
-  if(cookiePolicy != null) {
-    cookiePolicy.style = "display: none";
+window.acceptCookies = function() {
+  const cookiePolicy = document.getElementById("cookie-container")
+  log("Accepting Cookies...")
+  if (cookiePolicy != null) {
+      cookiePolicy.style = "display: none";
   }
   const d = new Date();
-  d.setTime(d.getTime() + (90*24*60*60*1000)); //90 days from 1970
-  let expires = "expires="+ d.toUTCString();
-  document.cookie = "cookies=true;" + expires +";path=/"
-}
-
-async function countVisit(){
-  if(checkACookieExists("cookies") && !(getStorageString('visitCounted'))) {
-    statCounter("hit","unicount");
-    window.localStorage.setItem('visitCounted','true')
-    /*
-    var xhr = new XMLHttpRequest();
-    path = "https://api.countapi.xyz/hit/pokemath.online/unicount";
-    xhr.open("GET", path); //"https://api.countapi.xyz/hit/pokemath.online/test"
-    xhr.responseType = "json";
-    xhr.onload = function() {
-      window.localStorage.setItem('visitCounted','true')
-      console.log("Visit counted.")
-    }
-    xhr.send(); */
-  } else {
-   // console.log("Requirements failed")
-  }
-  
-}
+  d.setTime(d.getTime() + (90 * 24 * 60 * 60 * 1000)); // 90 days
+  let expires = "expires=" + d.toUTCString();
+  document.cookie = "cookies=true;" + expires + ";path=/";
+  log("Cookies Accepted!")
+};
 
 window.addEventListener( "pageshow", function ( event ) {
   var historyTraversal = event.persisted || 
@@ -523,31 +590,6 @@ window.addEventListener( "pageshow", function ( event ) {
     loadAll();
   }
 });
-
-async function statCounter(type, key){
-  /* 
-  var xhr = new XMLHttpRequest();
-  path = "https://api.countapi.xyz/" + type + "/pokemath.online/" + key;
-  xhr.open("GET", path); //"https://api.countapi.xyz/hit/pokemath.online/test"
-  xhr.responseType = "json";
-  xhr.onload = function() {
-    //console.log("Hit " + key + "!")
-  }
-  xhr.send();
-  */
-}
-
-async function statCounterAmount(type, key, amount){
-  /*
-  var xhr = new XMLHttpRequest();
-  path = "https://api.countapi.xyz/" + type + "/pokemath.online/" + key + "?amount=" + amount;
-  xhr.open("GET", path); //"https://api.countapi.xyz/hit/pokemath.online/test"
-  xhr.responseType = "json";
-  xhr.onload = function() {
-    //console.log(type + " " + key + " with value " + amount + "! " + path)
-  }
-  xhr.send();*/
-}
 
 function log(message){
   if(state.username == "debugger") {
@@ -790,5 +832,27 @@ function notifyAchievement(achievement) {
 // Assuming you have a button with id 'clickButton'
 //const clickButton = document.getElementById('clickButton');
 //clickButton.addEventListener('click', () => incrementProgress(1));
-
-loadAll();
+document.addEventListener("DOMContentLoaded", () => {
+  const header = document.getElementById("topbar");
+  if (header) {
+      // Directly call loadAll() if the topbar element is found
+      log("Top Bar Found - Loading initiated.")
+      loadAll();
+      
+  } else {
+      // Optionally retry if header may take extra time to load
+      log("Top Bar Not Found - Retrying.")
+      var attempt = 0;
+      const checkHeaderInterval = setInterval(() => {
+          attempt ++;
+          const header = document.getElementById("topbar");
+          if (header) {
+              log("Top Bar Finally Found after " + attempt + " attemtps - Loading initiated.")
+              clearInterval(checkHeaderInterval);
+              loadAll();
+          } else {
+            log("Header not found - retrying. (" + attempt + ")")
+          }
+      }, 100); // Check every 100ms until header is found
+  }
+});

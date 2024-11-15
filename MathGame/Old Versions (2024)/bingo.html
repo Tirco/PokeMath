@@ -1,0 +1,86 @@
+<DOCTYPE html>
+<html lang="en">
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Pokémath</title>
+	<link rel="stylesheet" href="globalstyle.css?v=41">
+	<!--<link rel="stylesheet" href="cookies.css?v=1">-->
+	<link rel="stylesheet" href="menustyle.css?v=41">
+	<link rel="stylesheet" href="bingo.css?v=41">
+	<link rel="stylesheet" href="pokemon.css?v=41">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+	<!-- <link rel="stylesheet" href="https://www.jsdelivr.com/package/npm/bulma> -->
+</head>
+<body>
+	<div id="header"></div>
+	<script>
+    const protocolHttp = window.location.protocol; // This will be 'http:' or 'https:' based on how the page is loaded
+    const headerUrl = `${protocolHttp}//${window.location.host}/header.html`;
+
+    fetch(headerUrl)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.text();
+        })
+        .then(data => {
+            document.getElementById('header').innerHTML = data;
+        })
+        .catch(error => {
+            console.error('Error fetching header:', error);
+        });
+
+		const cookieButton = document.getElementById("acceptCookies");
+            if (cookieButton) {
+                cookieButton.addEventListener("click", acceptCookies);
+            }
+	</script>
+<div id="main" class="main">
+	<!-- Lobby selection -->
+	<div id="lobby-selection" >
+		Denne siden er under utvikling og vil pr nå ikke fungere som den skal.
+		<button onclick="startSolo()" class="button-1">Lag en Bingo (Vanlig modus)</button>
+		<button onclick="hostLobby()" class="button-1">Lag en Online Bingo (kun for Lærere)</button>
+		<button onclick="joinLobby()" class="button-1">Bli med i en eksisterende Bingo</button>
+	</div>
+	
+	<!-- Host lobby password input -->
+	<div id="host-lobby" style="display: none;">
+		<input type="password" id="lobbyPassword" placeholder="Skriv in lærerpassordet" />
+		<button onclick="createLobby() " class="button">Lag Online Lobby</button>
+	</div>
+	
+	<!-- Join lobby code input -->
+	<div id="join-lobby" style="display: none;">
+		<input type="text" id="lobbyCode" placeholder="Skriv in lobby-koden" />
+		<button onclick="joinExistingLobby()" class="button">Bli med i en Online Lobby</button>
+	</div>
+
+	<div id="solo-mode" style="display: none;">
+		<select id="difficulty">
+			<option value="easy">Lett</option>
+			<option value="medium">Middels</option>
+			<option value="hard">Vanskelig</option>
+			<option value="extreme">Ekstrem</option>
+		</select>
+		<button onclick="generateCard()" class="button-1">Lag Bingo Brett</button>
+		<h1 class="pokebingo-header">Poke-Bingo</h1>
+		<table id="bingoCard">
+			<!-- This will be populated by JS -->
+		</table>
+	</div>
+</div>
+
+<div class="botbar">
+	<a id="update-log" class="align-right" href="about.html#news">Nytt</a>
+</div>
+
+<script src="global.js?v=41"></script>
+<script src="bingo-tasks.js?v=41"></script>
+<script src="bingo.js?v=41"></script>
+</body>
+
+</html>

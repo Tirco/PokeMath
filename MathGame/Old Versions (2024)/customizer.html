@@ -1,0 +1,187 @@
+<DOCTYPE html>
+<html lang="en">
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Pokémath - Egendefinert</title>
+	<meta name="title" content="Pokémath - Egendefinert">
+	<meta name="description" content="Lag ditt eget nivå.">
+	<meta name="robots" content="noindex, nofollow">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="author" content="Tirco">
+	<link rel="stylesheet" href="globalstyle.css?v=41">
+	<!--<link rel="stylesheet" href="cookies.css?v=1">-->
+	<link rel="stylesheet" href="menustyle.css?v=41">
+	<link rel="stylesheet" href="customizer.css?v=41">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+	<!-- <link rel="stylesheet" href="https://www.jsdelivr.com/package/npm/bulma> -->
+</head>
+<body>
+	<div id="header"></div>
+	<script>
+    fetch('header.html')
+        .then(response => response.text())
+        .then(data => document.getElementById('header').innerHTML = data);
+
+		const cookieButton = document.getElementById("acceptCookies");
+            if (cookieButton) {
+                cookieButton.addEventListener("click", acceptCookies);
+            }
+	</script>
+<div class="main">
+	<div class="columns is-mobile is-multiline">
+	<form class="customizerform" >
+		<div class="toggle-pill-color">
+			<a class="categoryname"> Addisjon</a>	
+			<input type="checkbox" id="additioncheck" name="add">
+			<label for="additioncheck">  </label>
+		</div>
+
+		<div class="form-group col-md-6" id="addSection" style="display: none;">
+			<label for="first"> Laveste ledd A: </label>
+			<input type="number" value="0" id="addMinSel" required autocomplete="off">
+			
+			<label for="first"> Høyeste ledd A: </label>
+			<input type="number" value="100" id="addMaxSel" required autocomplete="off">
+
+			<label for="first"> Laveste ledd B: </label>
+			<input type="number" value="0" id="addMinSelB" required autocomplete="off">
+			
+			<label for="first"> Høyeste ledd B: </label>
+			<input type="number" value="100" id="addMaxSelB" required autocomplete="off">
+			
+			<label for="quantity"> Desimaler (0-5): </label>
+			<input type="number" value="0" id="addDecSel" min="0" max="5" required autocomplete="off">
+		</div>
+
+		<div class="toggle-pill-color">
+			<a class="categoryname"> Subtraksjon</a>	
+			<input type="checkbox" id="subtractioncheck" name="sub">
+			<label for="subtractioncheck">  </label>
+		</div>
+		<div class="form-group col-md-6" id="subSection" style="display: none;">
+			<label for="first">Laveste ledd A:</label>
+			<input type="number" id="subMinSel" value="0" class="form-control" required autocomplete="off">
+
+			<label for="first">Høyeste ledd A:</label>
+			<input type="number" id="subMaxSel" value="100" class="form-control" required autocomplete="off">
+
+			<label for="first">Laveste ledd B:</label>
+			<input type="number" id="subMinSelB" value="0" class="form-control" required autocomplete="off">
+
+			<label for="first">Høyeste ledd B:</label>
+			<input type="number" id="subMaxSelB" value="100" class="form-control" required autocomplete="off">
+
+			<label for="quantity"> Desimaler (0-5): </label>
+			<input type="number" id="subDecSel" value="0" id="subDec" min="0" max="5" required autocomplete="off">
+
+			<a>Tillat negative differenser:</a>
+			<div class="toggle-pill-color">
+				<input type="checkbox" id="subtractionallownegative" name="san">
+				<label for="subtractionallownegative">  </label>
+			</div>
+		</div>
+
+		<div class="toggle-pill-color">
+			<a class="categoryname"> Multiplikasjon</a>	
+			<input type="checkbox" id="multiplicationcheck" name="mul">
+			<label for="multiplicationcheck">  </label>
+		</div>
+		<div class="form-group col-md-6" id="mulSection" style="display: none;">
+			<label for="first">Faktor A laveste verdi:</label>
+			<input type="number" id="mulMinSelA" value="0" class="form-control" required autocomplete="off">
+			
+			<label for="first">Faktor A høyeste verdi:</label>
+			<input type="number" id="mulMaxSelA" value="10" class="form-control" required autocomplete="off">
+
+			<label for="first">Faktor B laveste verdi:</label>
+			<input type="number" id="mulMinSelB" value="0" class="form-control" required autocomplete="off">
+			
+			<label for="first">Faktor B høyeste verdi:</label>
+			<input type="number" id="mulMaxSelB" value="10" class="form-control" required autocomplete="off">
+
+			<label for="quantity"> Desimaler (0-5): </label>
+			<input type="number" value="0" id="mulDecSel" min="0" max="5" required autocomplete="off">
+		</div>
+
+		<div class="toggle-pill-color">
+			<a class="categoryname"> Divisjon</a>	
+			<input type="checkbox" id="divisioncheck" name="div">
+			<label for="divisioncheck">  </label>
+		</div>
+		<div class="form-group col-md-6" id="divSection" style="display: none;">
+			<label for="first">Laveste divisor: </label>
+			<input type="number" id="divMinDivSel" value="1" class="form-control" required autocomplete="off">
+			
+			<label for="first">Høyeste divisor: </label>
+			<input type="number" id="divMaxDivSel" id="divMaxDiv" value="10" class="form-control" required autocomplete="off">
+
+			<label for="first">Laveste kvotient: </label>
+			<input type="number" id="divMinKvoSel" value="0" class="form-control" required autocomplete="off">
+			
+			<label for="first">Høyeste kvotient: </label>
+			<input type="number" id="divMaxKvoSel" value="10" class="form-control" required autocomplete="off">
+
+			<label for="quantity"> Desimaler (0-5): </label>
+			<input type="number" value="0" id="divDecSel" min="0" max="5" required autocomplete="off">
+		</div>
+		<button class="button-1" id="useform" onClick="handleUse()" type="button"> Bruk </button> 
+		<button class="button-1" id="copyform"onClick="handleCopy()" type="button"> Kopier </button>
+		<button class="button-1" id="qrcreate"onClick="generateBarCode()" type="button" > Lag QR-Kode </button>
+		<div>
+		<img class="barcode" id='barcode' src="https://api.qrserver.com/v1/create-qr-code/?data=Pokemath.online&amp;size=250x250" alt="" title="QR Kode" width="250" height="250" style="display: none;"/>
+		</div>
+	</form>
+	
+</div>
+<div class="columns is-multiline is-mobile">
+	<div id="presetCard-1" class="card" style="padding: 5px">
+		<h2 class="card-title">Lagring #1</h2>
+		<button class="button-1 save-btn" id="useform" onClick="savePreset(1)" type="button"> Lagre </button>
+		<button class="button-1 disabled load-btn" id="useform" onClick="loadPreset(1)" type="button"> Last inn </button> 
+		<button class="button-2 disabled del-btn" id="useform" onClick="deletePreset(1)" type="button"> Slett </button> 
+		<h5>Preset #1</h5>
+	</div>
+	<div id="presetCard-2" class="card" style="padding: 5px">
+		<h2 class="card-title">Lagring #2</h2>
+		<button class="button-1 save-btn" id="useform" onClick="savePreset(2)" type="button"> Lagre </button>
+		<button class="button-1 disabled load-btn" id="useform" onClick="loadPreset(2)" type="button"> Last inn </button> 
+		<button class="button-2 disabled del-btn" id="useform" onClick="deletePreset(2)" type="button"> Slett </button> 
+		<h5>Preset #2</h5>
+	</div>
+	<div id="presetCard-3" class="card" style="padding: 5px">
+		<h2 class="card-title">Lagring #3</h2>
+		<button class="button-1 save-btn" id="useform" onClick="savePreset(3)" type="button"> Lagre </button>
+		<button class="button-1 disabled load-btn" id="useform" onClick="loadPreset(3)" type="button"> Last inn </button> 
+		<button class="button-2 disabled del-btn" id="useform" onClick="deletePreset(3)" type="button"> Slett </button>
+		<h5>Preset #3</h5>
+	</div>
+	<div id="presetCard-4" class="card" style="padding: 5px">
+		<h2 class="card-title">Lagring #4</h2>
+		<button class="button-1 save-btn" id="useform" onClick="savePreset(4)" type="button"> Lagre </button>
+		<button class="button-1 disabled load-btn" id="useform" onClick="loadPreset(4)" type="button"> Last inn </button> 
+		<button class="button-2 disabled del-btn" id="useform" onClick="deletePreset(4)" type="button"> Slett </button>
+		<h5>Preset #4</h5>
+	</div>
+	<div id="presetCard-5" class="card" style="padding: 5px">
+		<h2 class="card-title">Lagring #5</h2>
+		<button class="button-1 save-btn" id="useform" onClick="savePreset(5)" type="button"> Lagre </button>
+		<button class="button-1 disabled load-btn" id="useform" onClick="loadPreset(5)" type="button"> Last inn </button> 
+		<button class="button-2 disabled del-btn" id="useform" onClick="deletePreset(5)" type="button"> Slett </button>
+		<h5>Preset #5</h5>
+	</div>
+	
+</div>
+
+</div>
+
+<div class="botbar">
+	<a id="update-log" class="align-right" href="about.html#news">Nytt</a>
+</div>
+
+<script src="global.js?v=41"></script>
+<script src="customizer.js?v=41"></script>
+</body>
+
+</html>

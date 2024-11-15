@@ -1,0 +1,91 @@
+<DOCTYPE html>
+<html lang="en">
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Pokémath - Pokédex</title>
+	<meta name="title" content="Pokémath - Pokedex">
+	<meta name="description" content="Pokedexen til Pokemath hvor man kan se alle pokemonene sine.">
+	<meta name="robots" content="noindex, nofollow">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="author" content="Tirco">
+	<link rel="stylesheet" href="globalstyle.css?v=41">
+	<link rel="stylesheet" href="dex.css?v=41">
+	<link rel="stylesheet" href="pokemon.css?v=41">
+	<!--<link rel="stylesheet" href="cookies.css?v=1">-->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+	<!-- <link rel="stylesheet" href="https://www.jsdelivr.com/package/npm/bulma> -->
+</head>
+<div>
+	<div id="header"></div>
+	<script>
+    fetch('header.html')
+        .then(response => response.text())
+        .then(data => document.getElementById('header').innerHTML = data);
+
+		const cookieButton = document.getElementById("acceptCookies");
+            if (cookieButton) {
+                cookieButton.addEventListener("click", acceptCookies);
+            }
+	</script>
+<body>
+<div class="main">
+	<div id="filterButtons">
+		<input type="text" class="align-left" placeholder="Søk.." id="searchInput" onkeyup="textFilterFunction()">
+			<button id="filterAllBtn" class="btn active " onclick="filterSelection('all')"> Vis alle</button><button class="btn" onclick="filterSelection('alolan')"> Alolan</button><button class="btn" onclick="filterSelection('galarian')"> Galarian</button><button class="btn" onclick="filterSelection('hisuian')"> Hisuian</button><button class="btn" onclick="filterSelection('Shiny')"> Shiny</button><button class="btn" onclick="filterSelection('Legendarisk')"> Legendarisk</button><button class="btn" onclick="filterSelection('Mytisk')"> Mytisk</button><button class="btn" onclick="filterSelection(' mega ')"> Mega</button><button class="btn" onclick="filterSelection('gigantamax')"> Gigantamax</button><button class="btn" onclick="filterSelection('-H')"> Halloween</button><button class="btn" onclick="filterSelection('-C')"> Jul</button><button class="btn" onclick="filterSelection('-U')"> Unik</button><button class="altbtn typedropdown" id="typedropdown"> Typer &#x25BC;
+				<div class="typecontent">
+					<a class="typecard2 type-bug btn" onclick="filterSelection('bug')"> Bug</a>
+					<a class="typecard2 type-dark btn" onclick="filterSelection('dark')"> Dark</a>
+					<a class="typecard2 type-dragon btn" onclick="filterSelection('dragon')"> Dragon</a><br>
+					<a class="typecard2 type-electric btn" onclick="filterSelection('electric')"> Electric</a>
+					<a class="typecard2 type-fairy btn" onclick="filterSelection('fairy')"> Fairy</a>
+					<a class="typecard2 type-fighting btn" onclick="filterSelection('fighting')"> Fighting</a><br>
+					<a class="typecard2 type-fire btn" onclick="filterSelection('fire')"> Fire</a>
+					<a class="typecard2 type-flying btn" onclick="filterSelection('flying')"> Flying</a>
+					<a class="typecard2 type-ghost btn" onclick="filterSelection('ghost')"> Ghost</a><br>
+					<a class="typecard2 type-grass btn" onclick="filterSelection('grass')"> Grass</a>
+					<a class="typecard2 type-ground btn" onclick="filterSelection('ground')"> Ground</a>
+					<a class="typecard2 type-ice btn" onclick="filterSelection('ice')"> Ice</a><br>
+					<a class="typecard2 type-normal btn" onclick="filterSelection('normal')"> Normal</a>
+					<a class="typecard2 type-poison btn" onclick="filterSelection('poison')"> Poison</a>
+					<a class="typecard2 type-psychic btn" onclick="filterSelection('psychic')"> Psychic</a><br>
+					<a class="typecard2 type-rock btn" onclick="filterSelection('rock')"> Rock</a>
+					<a class="typecard2 type-steel btn" onclick="filterSelection('steel')"> Steel</a>
+					<a class="typecard2 type-water btn" onclick="filterSelection('water')"> Water</a>
+				</div>
+			</button>
+
+		
+
+		<br>
+
+	</div>
+
+	<div class="columns is-multiline is-mobile" id="pokedex">
+		Laster...<br><br>
+    </div>
+	<div class="center" id="dexLoadStatus">
+		-
+    </div>
+	
+
+
+</div>
+	<div class="botbar">
+			<a id="amountCaught" class="statisticText" data-text=" fanget.">?</a>
+			<a id="amountCaught2" class="statisticText" data-text=" unike.">?</a>
+			<a id="amountCaught3" class="statisticText" data-text=" i valgt søk.">?</a>
+		<a id="update-log" class="align-right" href="about.html#news">Nytt</a>
+	</div>
+
+	  <!--<script src="main.js?v=1"></script>>-->
+	  <script src="global.js?v=41"></script>
+	  <!--<script src="cookies.js?v=1"></script>-->
+	  <script src="pokemondata.js?v=41"></script>
+	  <script src="alternateforms.js?v=41"></script>
+	  <script src="pokestuff.js?v=41"></script>
+	  <script src="dex.js?v=41"></script>
+</body>
+
+</html>
