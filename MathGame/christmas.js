@@ -1,9 +1,8 @@
 const calendarButton = document.querySelector(".btn-start");
 const calendarContainer = document.querySelector(".calendar-container");
 const aboveCalendar = document.querySelector(".above-calendar")
-const money = document.querySelector(".money")
 const calendarDays = 24;
-var openedHatches = [];
+let openedHatches = []
 
 const openDoor = (path, event) => {
     parent = event.target.parentNode;
@@ -25,12 +24,12 @@ const openDoor = (path, event) => {
 
 async function getCurrentDateFromAPI() {
     try {
-        let response = await fetch('https://worldtimeapi.org/api/ip');
+        let response = await fetch('https://timeapi.io/api/time/current/zone?timeZone=Europe%2FOslo');
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
         let data = await response.json();
-        return new Date(data.datetime);
+        return new Date(data.dateTime);
     } catch (error) {
         console.error('Unable to fetch current date from API, using local date: ', error);
         return new Date(); // Return local date as a fallback
@@ -40,17 +39,29 @@ async function getCurrentDateFromAPI() {
 function openHatch(date) {
     number = Number(date);
     var message = "Unknown";
+
     if(checkACookieExists("cookies")) {
+        // Ensure `openedHatches` is an array
         if (!Array.isArray(openedHatches)) {
-            //console.error('openedHatches is not an array:', openedHatches)
-            try{
-                openedHatches = JSON.parse(openedHatches)
+            try {
+                openedHatches = JSON.parse(openedHatches);
+                if (!Array.isArray(openedHatches)) {
+                    console.error("openedHatches is not an array after parsing:", openedHatches);
+                    openedHatches = [];
+                }
             } catch (e) {
-                console.error('Error parsing openedHatches:', e);
+                console.error("Error parsing openedHatches:", e);
+                openedHatches = [];
             }
         }
-        openedHatches.push(number);
-        window.localStorage.setItem('xmasOpened',JSON.stringify(openedHatches));
+
+        // Add the number to the array if not already included
+        if (!openedHatches.includes(number)) {
+            openedHatches.push(number);
+        }
+
+        // Save the updated `openedHatches` to local storage
+        window.localStorage.setItem("xmasOpened", JSON.stringify(openedHatches));
     } else {
         const toast = new Toast({
             text: "Du har ikke godkjent bruken av Cookies, så vi kan ikke lagre din spillerdate på din enhet.",
@@ -218,24 +229,18 @@ function openHatch(date) {
         canClose: true,
         badToast: false,
       })
-
-    statCounter("hit","xmasHatchesOpened");
 }
 
 function addMoney(value) {
+    let money = document.querySelector(".money")
     money.dataset.added = '+' + value;
 	money.dataset.total = state.totalScore += value;
 	money.textContent = "";
-	statCounterAmount("update","coinsEarned",value);
 	if (state.totalScore) money.classList.add('animate');
     saveAll();
 	setTimeout(() => {
 		money.classList.remove('animate');
 	}, 1000)
-}
-
-function getStorageString(key) {
-    return window.localStorage.getItem(key);
 }
 
 const createCalendar = async () => {
@@ -244,19 +249,43 @@ const createCalendar = async () => {
     if (date instanceof Date) {
        now = date.toLocaleDateString('NO', { day: 'numeric', month: 'long', year: 'numeric' });
     } 
+
     aboveCalendar.textContent = "God Jul! Dagens dato: " + now;
     for(let i = 0; i < 10; i++) {
         aboveCalendar.innerHTML += '<div class="fallingsnowflake">❅</div>';
     }
-    if(date.getMonth() != 11) { //11 = desember. Januar = 0.
+
+
+    if(date.getMonth() != 10) { //11 = desember. Januar = 0.
         calendarContainer.textContent = "Kom tilbake i desember!"
         calendarContainer.classList.remove("calendar-container")
         calendarContainer.classList.add("not-christmas-yet")
         return;
     }
 
-    if(checkACookieExists("cookies")) {
+     // Ensure `openedHatches` is an array and handle invalid data
+     let openedHatchesString = getStorageString("xmasOpened");
+     if (openedHatchesString) {
+         try {
+             let parsedHatches = JSON.parse(openedHatchesString);
+             if (Array.isArray(parsedHatches)) {
+                openedHatches.length = 0; // Clear the array without reassigning
+                openedHatches.push(...parsedHatches); // Copy parsed values into the existing array
+            } else {
+                console.error("Parsed data is not an array:", parsedHatches);
+                openedHatches.length = 0; // Reset to an empty array
+            }
+         } catch (e) {
+             console.error("Error parsing openedHatches:", e);
+             openedHatches = [];
+         }
+     } else {
+         console.log("xmasOpened not found or is empty. Initializing openedHatches as empty array.");
+         openedHatches = [];
+     }
 
+    if(checkACookieExists("cookies")) {
+        getOrCreateUUID();
     } else {
         const toast = new Toast({
             text: "Du har ikke godkjent bruken av Cookies, så vi kan ikke lagre din spillerdate på din enhet.",
@@ -269,36 +298,11 @@ const createCalendar = async () => {
           return;
     }
 
-    //TODO ce-year.
-    //Get list of opened hatches.
-    //clear list if wrong year.
-    let openedHatchesString = getStorageString('xmasOpened');
-    
-    if (openedHatchesString) {
-        console.log(openedHatchesString)
-        try {
-            let parsedHatches = JSON.parse(openedHatchesString);
-            if (Array.isArray(parsedHatches)) {
-                openedHatches = parsedHatches;
-            } else {
-                console.error('Parsed data is not an array:', parsedHatches);
-                // Don't reset openedHatches here as it might already contain valid data
-            }
-        } catch (e) {
-            console.error('Error parsing openedHatches:', e);
-            // Don't reset openedHatches here as it might already contain valid data
-        }
-    } else {
-        console.log('xmasOpened not found or is empty. Initializing openedHatches as empty array.');
-        openedHatches = []; // Initialize as empty only if xmasOpened is not found or empty
-    }
-
     let today = date.getDate();
     if(openedHatches.some(day => day > today)) {
         openedHatches = openedHatches.filter(day => day <= today);
         console.log("Removed days greater than today. Remaining Elements - " + openedHatches);
         window.localStorage.setItem('xmasOpened',JSON.stringify(openedHatches))
-        // saveAll(); // Uncomment this if you want to save the updated array
     } else {
         console.log("No days greater than today. No changes made.");
     }
@@ -319,10 +323,17 @@ const createCalendar = async () => {
         calendarDoor.appendChild(calendarDoorText);
 
         let coursePath = `./images/events/christmas/${courseNumber}.png`;
-        openedHatches = getStorageString('xmasOpened');
-
-        if(openedHatches == null || openedHatches.length == 0) {
-            openedHatches = new Array();
+        const storedHatches = getStorageString('xmasOpened');
+        if (storedHatches) {
+            try {
+                const parsedHatches = JSON.parse(storedHatches);
+                if (Array.isArray(parsedHatches)) {
+                    openedHatches.length = 0; // Clear current array
+                    openedHatches.push(...parsedHatches); // Populate with stored values
+                }
+            } catch (e) {
+                console.error('Error parsing xmasOpened:', e);
+            }
         }
 
         var eventYear = getStorageString('xmasYear');

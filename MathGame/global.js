@@ -260,9 +260,9 @@ let shopOptions = {
 }
 
 function loadShop() {
-  shopOptions.background = getStorageString('shopBackground')//"images/backgrounds/bg-001.png"//
+  shopOptions.background = sanitizeStorageValue(getStorageString('shopBackground'));//"images/backgrounds/bg-001.png"//
   shopOptions.boughtBackgrounds = getStorageArray('boughtBackgrounds','|')
-  shopOptions.playerIcon = getStorageString('playerIcon')//"images/backgrounds/bg-001.png"//
+  shopOptions.playerIcon = sanitizeStorageValue(getStorageString('playerIcon'))//"images/backgrounds/bg-001.png"//
   shopOptions.boughtPlayerIcons = getStorageArray('boughtPlayerIcons','|')
   shopOptions.claimedSecrets = getStorageArray('claimedSecrets','|')
   shopOptions.shinyLevel = getStorageInt('shinyLevel')
@@ -277,12 +277,20 @@ function loadShop() {
   loadPlayerIcon();
 }
 
+function sanitizeStorageValue(value) {
+  if (typeof value === 'string') {
+    // Remove unnecessary surrounding quotes
+    return value.replace(/^"+|"+$/g, '').trim();
+  }
+  return value || ""; // Return an empty string if undefined or null
+}
+
 function loadBackground(){
   if(document.getElementById("background") == null) {
     console.log("This page did not have a background element. Unable to load global background variable")
     return;
   }
-  if(shopOptions.background != "") {
+  if(shopOptions.background && shopOptions.background.trim() !== "") {
     document.getElementById("background").setAttribute('src',"images/backgrounds/"+shopOptions.background+".png")
   } else {
     document.getElementById("background").setAttribute('src',"")
@@ -290,7 +298,7 @@ function loadBackground(){
 }
 
 function loadPlayerIcon(){
-  if(shopOptions.playerIcon != "") {
+  if (shopOptions.playerIcon && shopOptions.playerIcon.trim() !== "") {  // weird issue with " icons after loading from file...
     document.getElementById("playerimage").setAttribute('src',"images/playericons/"+shopOptions.playerIcon+".png")
     document.getElementById("playerimagebig").setAttribute('src',"images/playericons/"+shopOptions.playerIcon+".png")
   } else {
@@ -313,60 +321,42 @@ function saveAll(){
     })
     return;
   }
-  if(!isNaN(state.totalScore)) {
-    window.localStorage.setItem('money',JSON.stringify(state.totalScore))
-  }
-  if(!isNaN(state.pkmnCaught)) {
-    window.localStorage.setItem('pkmncaught',JSON.stringify(state.pkmnCaught))
-  }
-  if(state.pokemonlist != "") {
-    window.localStorage.setItem('pokemonlist',JSON.stringify(state.pkmnList.join('|')))
-  }
-  /**
-  if(document.getElementById("pokedex")!=null) {
-    window.localStorage.setItem('pokedex',JSON.stringify(document.getElementById("pokedex").innerHTML))
-  } */
-  if(state.username != "") {
-    window.localStorage.setItem('username',JSON.stringify(state.username))
-  } else {
-    window.localStorage.setItem('username',JSON.stringify("Ash"))
-  }
+
+  window.localStorage.setItem('money', state.totalScore || 0);
+  window.localStorage.setItem('pkmncaught', state.pkmnCaught || 0);
+
+  const sanitizedPokemonList = state.pkmnList.filter(pokemon => pokemon.trim() !== "");
+  window.localStorage.setItem('pokemonlist', sanitizedPokemonList.join('|'));
+  
+  window.localStorage.setItem('username', state.username || "Ash");
+
   if(true) {
-    window.localStorage.setItem('tier1Solved',JSON.stringify(state.tier1Solved))
-    window.localStorage.setItem('tier2Solved',JSON.stringify(state.tier2Solved))
-    window.localStorage.setItem('tier3Solved',JSON.stringify(state.tier3Solved))
-    window.localStorage.setItem('tier4Solved',JSON.stringify(state.tier4Solved))
-    window.localStorage.setItem('tier5Solved',JSON.stringify(state.tier5Solved))
-    window.localStorage.setItem('customSolved',JSON.stringify(state.customSolved))
+    window.localStorage.setItem('tier1Solved', state.tier1Solved)
+    window.localStorage.setItem('tier2Solved', state.tier2Solved)
+    window.localStorage.setItem('tier3Solved', state.tier3Solved)
+    window.localStorage.setItem('tier4Solved', state.tier4Solved)
+    window.localStorage.setItem('tier5Solved', state.tier5Solved)
+    window.localStorage.setItem('customSolved', state.customSolved)
   }
 
-  //Shop stuff
-  window.localStorage.setItem('shopBackground',JSON.stringify(shopOptions.background))
-  if(shopOptions.boughtBackgrounds != "") {
-    window.localStorage.setItem('boughtBackgrounds',JSON.stringify(shopOptions.boughtBackgrounds.join('|')))
-  }
-  if(shopOptions.claimedSecrets != "") {
-    window.localStorage.setItem('claimedSecrets',JSON.stringify(shopOptions.claimedSecrets.join('|')))
-  }
-  window.localStorage.setItem('playerIcon',JSON.stringify(shopOptions.playerIcon))
-  if(shopOptions.boughtPlayerIcons != "") {
-    window.localStorage.setItem('boughtPlayerIcons',JSON.stringify(shopOptions.boughtPlayerIcons.join('|')))
-  }
-  if(shopOptions.shinyLevel != "") {
-    window.localStorage.setItem('shinyLevel',JSON.stringify(shopOptions.shinyLevel))
-  }
-  if(shopOptions.legendLevel != "") {
-    window.localStorage.setItem('legendLevel',JSON.stringify(shopOptions.legendLevel))
-  }
-  if(shopOptions.mythicLevel != "") {
-    window.localStorage.setItem('mythicLevel',JSON.stringify(shopOptions.mythicLevel))
-  }
-  if(shopOptions.specialLevel != "") {
-    window.localStorage.setItem('specialLevel',JSON.stringify(shopOptions.specialLevel))
-  }
-  if(shopOptions.coinLevel != "") {
-    window.localStorage.setItem('coinLevel',JSON.stringify(shopOptions.coinLevel))
-  }
+  // Validate shop options
+  const sanitizedPlayerIcons = shopOptions.boughtPlayerIcons.filter(icon => icon.trim() !== "");
+  window.localStorage.setItem('boughtPlayerIcons', sanitizedPlayerIcons.join('|'));
+  window.localStorage.setItem('playerIcon', shopOptions.playerIcon || "");
+
+  const sanitizedPlayerBackgrounds = shopOptions.boughtBackgrounds.filter(icon => icon.trim() !== "");
+  window.localStorage.setItem('boughtBackgrounds', sanitizedPlayerBackgrounds.join('|'));
+  window.localStorage.setItem('shopBackground', shopOptions.background || "");
+
+  if (Array.isArray(shopOptions.claimedSecrets) && shopOptions.claimedSecrets.length > 0) {
+    window.localStorage.setItem('claimedSecrets', shopOptions.claimedSecrets.join('|'));
+}
+
+  window.localStorage.setItem('shinyLevel', shopOptions.shinyLevel || 1);
+  window.localStorage.setItem('legendLevel', shopOptions.legendLevel || 0);
+  window.localStorage.setItem('mythicLevel', shopOptions.mythicLevel || 0);
+  window.localStorage.setItem('specialLevel', shopOptions.specialLevel || 0);
+  window.localStorage.setItem('coinLevel', shopOptions.coinLevel || 0);
 }
 
 const getCookieValue = (name) => (
@@ -393,8 +383,8 @@ async function getOrCreateUUID(retryLimit = 3) {
           setCookie("playerUUID", uuid, 365);
       }
   } catch (error) {
-      console.error("Error validating UUID:", error);
-      alert("Unable to connect to the server. Please check your connection.");
+      log("Error validating UUID:", error);
+      log("Unable to connect to the server. Please check your connection.");
       return null; // Return null or handle fallback as needed
   }
 
@@ -463,6 +453,30 @@ function getCookie(name) {
   return match ? match[2] : null;
 }
 
+function cleanupCorruptedData() {
+  // Clean up pokemonlist
+  const rawPokemonList = window.localStorage.getItem('pokemonlist');
+  if (rawPokemonList && (rawPokemonList.includes('"') || rawPokemonList.includes('%22'))) {
+    const cleanedList = rawPokemonList
+      .replace(/%22/g, '"') // First, convert '%22' back into quotes for consistency
+      .replace(/"/g, '') // Then remove actual quotes
+      .split('|');
+    window.localStorage.setItem('pokemonlist', cleanedList.join('|'));
+    state.pkmnList = cleanedList;
+  }
+
+  // Clean up boughtPlayerIcons
+  const rawIcons = window.localStorage.getItem('boughtPlayerIcons');
+  if (rawIcons && (rawIcons.includes('"') || rawIcons.includes('%22'))) {
+    const cleanedIcons = rawIcons
+      .replace(/%22/g, '"') // Convert '%22' back into quotes
+      .replace(/"/g, '') // Remove actual quotes
+      .split('|');
+    window.localStorage.setItem('boughtPlayerIcons', cleanedIcons.join('|'));
+    shopOptions.boughtPlayerIcons = cleanedIcons;
+  }
+}
+
 
 function loadAll() {
   //Log to console
@@ -485,12 +499,12 @@ function loadAll() {
   if(name == null || name == "") {
     //Do nothing
   } else {
-    window.localStorage.setItem('username',JSON.stringify(name))
+    window.localStorage.setItem('username', name)
   }
 
   state.totalScore = getStorageInt('money')
-  state.pkmnCaught = getStorageInt('pkmncaught')
   state.pkmnList = getStorageArray('pokemonlist','|')
+  state.pkmnCaught = state.pkmnList.length;
   state.tier1Solved = getStorageInt('tier1Solved')
   state.tier2Solved = getStorageInt('tier2Solved')
   state.tier3Solved = getStorageInt('tier3Solved')
@@ -503,19 +517,10 @@ function loadAll() {
   } */
 
   state.username = getStorageString('username')
-  if(state.username.length > 22) {
+  if(!state.username || state.username.length > 22) {
     state.username = "Ash";
-    window.localStorage.setItem('username',JSON.stringify("Ash"))
-    const toast = new Toast({
-      text: "Brukernavnet er for langt! Det har blitt tilbakestilt til Ash",
-      position: "top-right",
-      pauseOnHover: true,
-      pauseOnFocusLoss: true,
-      canClose: true,
-      badToast: true,
-    })
+    window.localStorage.setItem('username', "Ash")
   } else if(state.username.length < 1){
-    //No name = Default
     state.username = "Ash";
   
   }
@@ -530,26 +535,36 @@ function loadAll() {
   document.getElementById("t5solved").textContent = state.tier5Solved;
   //document.getElementById("csolved").textContent = state.customSolved;
   loadShop();
+  cleanupCorruptedData();
   document.dispatchEvent(new Event('loadAllComplete'));
 }
 
 function getStorageString(key) {
-  if(window.localStorage.getItem(key)) {
-    return JSON.parse(window.localStorage.getItem(key));
-  } else {
-    return "";
-  }
-}
-function getStorageArray(key,splitter) {
-  if(window.localStorage.getItem(key)) {
-    var array = getStorageString(key).split(splitter);
-    if(array.length < 1) {
-      return new Array();
+  const storedValue = window.localStorage.getItem(key);
+  if (storedValue) {
+    try {
+      // Sanitize quotes and trim
+      return storedValue.replace(/^"+|"+$/g, '').trim();
+    } catch (error) {
+      console.error(`Error parsing string for key "${key}":`, error);
+      return "";
     }
-    return array;
-  } else {
-    return new Array();
   }
+  return "";
+}
+
+function getStorageArray(key, splitter) {
+  const storedValue = window.localStorage.getItem(key);
+  if (storedValue) {
+    try {
+      // Split the string and sanitize individual items
+      return storedValue.split(splitter).map(item => item.replace(/^"+|"+$/g, '').trim());
+    } catch (error) {
+      console.error(`Error parsing array for key "${key}":`, error);
+      return [];
+    }
+  }
+  return [];
 }
 
 function getStorageInt(key) {

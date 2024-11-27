@@ -594,7 +594,6 @@ function handleSubmit(e) {
 		updateProblem();
 		renderProgressBar();
 
-		log("Testing...")
 		//Update tier solved.
 		switch(mathValues.stage) {
 			case 1:
@@ -628,7 +627,6 @@ function handleSubmit(e) {
 				log("Stage custom incremented");
 				break;
 		}
-		log("Test ended")
 	} else {
 		//TODO make popup with amount of Decimals.
 		

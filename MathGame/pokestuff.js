@@ -186,6 +186,8 @@ function addToPokedex(id) {
 
 function addSpecificToPokedex(entry) {  
   state.pkmnCaught++
+  const pkmncaught = document.getElementById("balltext")
+  pkmncaught.textContent = state.pkmnCaught
   state.pkmnList.push(entry);
   if(checkACookieExists("cookies")) {
     window.localStorage.setItem('pokemonlist',JSON.stringify(state.pkmnList.join('|')))
@@ -243,17 +245,16 @@ function removeItemAll(arr, value) {
   return arr;
 }
 
-function loadFromList(entry, firstLoad, capture, returnString) {
-  if(firstLoad == null) {
-    firstLoad = false;
-  }
-  if(capture == null) {
-    capture = false;
-  }
-  
-  if(entry == null || entry == "") {
-    log("Error - No entry provided during LoadFromList!")
+function loadFromList(entry, firstLoad = false, capture = false, returnString) { 
+  log("Parsing entry - " + entry);
+  if (entry == null || entry === "") {
+    log("Error - No entry provided during LoadFromList!");
     return;
+  }
+
+  // Normalize the entry to support old and new formats
+  if (entry.startsWith('"') && entry.endsWith('"')) {
+    entry = entry.slice(1, -1); // Remove leading and trailing quotes
   }
 
   //shiny, id, special-form, amount, legendary, mythic
@@ -275,28 +276,45 @@ function loadFromList(entry, firstLoad, capture, returnString) {
   var repeatMultiplier = 1;
 
   if(entry.includes('-')) { //There's something Special!
-    var splitEntry = entry.split("-");
-    idString = splitEntry[0].replace(/\D/g,'');
-    id = Number(idString);
-    specialFormString = splitEntry[1].replace(/\D/g,'');
-    specialFormVariation = Number(specialFormString);
-    if(splitEntry[1].includes('H')) {
-      pkmnName = eventData["halloween"][id][specialFormVariation].name
-      pkmnTypes = eventData["halloween"][id][specialFormVariation].types
-      imageId = eventData["halloween"][id][specialFormVariation].imageid
-    } else if(splitEntry[1].includes('C')){
-      pkmnName = eventData["christmas"][id][specialFormVariation].name
-      pkmnTypes = eventData["christmas"][id][specialFormVariation].types
-      imageId = eventData["christmas"][id][specialFormVariation].imageid
-    } else if(splitEntry[1].includes('U')){
-      pkmnName = eventData["unique"][id][specialFormVariation].name
-      pkmnTypes = eventData["unique"][id][specialFormVariation].types
-      imageId = eventData["unique"][id][specialFormVariation].imageid
-    } else {
-
-      pkmnTypes = alternateFormsData[id][specialFormVariation].types;
-      pkmnName = alternateFormsData[id][specialFormVariation].name
-      imageId = alternateFormsData[id][specialFormVariation].imageid
+    try{
+      var splitEntry = entry.split("-");
+      idString = splitEntry[0].replace(/\D/g,'');
+      id = Number(idString);
+      specialFormString = splitEntry[1].replace(/\D/g,'');
+      specialFormVariation = Number(specialFormString);
+      if(splitEntry[1].includes('H')) {
+        pkmnName = eventData["halloween"][id][specialFormVariation].name || "???";
+        pkmnTypes = eventData["halloween"][id][specialFormVariation].types || ["Unknown"];
+        imageId = eventData["halloween"][id][specialFormVariation].imageid
+      } else if(splitEntry[1].includes('C')){
+        pkmnName = eventData["christmas"][id][specialFormVariation].name || "???";
+        pkmnTypes = eventData["christmas"][id][specialFormVariation].types || ["Unknown"];
+        imageId = eventData["christmas"][id][specialFormVariation].imageid || id;
+      } else if(splitEntry[1].includes('U')){
+        pkmnName = eventData["unique"][id][specialFormVariation].name || "???";
+        pkmnTypes = eventData["unique"][id][specialFormVariation].types || ["Unknown"];
+        imageId = eventData["unique"][id][specialFormVariation].imageid || id;
+      } else {
+        pkmnTypes = alternateFormsData[id][specialFormVariation].types || ["Unknown"];
+        pkmnName = alternateFormsData[id][specialFormVariation].name || "???";
+        imageId = alternateFormsData[id][specialFormVariation].imageid || id;
+      }
+    } catch (error) {
+      if (error instanceof TypeError) {
+        console.error("A TypeError occurred in loadFromList:", error);
+        log("TypeError: Please check the entry format or data integrity.");
+        const toast = new Toast({
+          text: `Å nei! En pokemon kunne ikke lastes! Send en melding til PokeMorten med denne informasjonen, og lagringsfilen din: ID ` + entry,
+          position: "top-right",
+          pauseOnHover: true,
+          pauseOnFocusLoss: true,
+          canClose: true,
+          badToast: true,
+      })
+      return;
+      } else {
+        console.error("An unexpected error occurred in loadFromList:", error);
+      }
     }
 
     
@@ -317,11 +335,11 @@ function loadFromList(entry, firstLoad, capture, returnString) {
   }
 
   //Failsafes
-  if(pkmnName == "" || pkmnName == null) {
-      pkmnName = "???";
+  if (pkmnName === "" || pkmnName == null) {
+    pkmnName = "???";
   }
-  if(pkmnTypes == null || pkmnTypes.length === 0) {
-      pkmnTypes = ["Unknown"];
+  if (pkmnTypes == null || pkmnTypes.length === 0) {
+    pkmnTypes = ["Unknown"];
   }
 
     

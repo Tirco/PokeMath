@@ -27,12 +27,13 @@ function saveFileDLButton(){
 function createSaveFile(){
     let date = new Date();
     let dateString = toJSONLocal(date)
-    var format = /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
-    if(format.test(state.username)) {
-        state.username = "Username_Error"
+    if (!state.username || state.username.trim() === "" || /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/.test(state.username)) {
+        state.username = "Username_Error";
         log("Renamed username. Format did not fit.");
     }
-    let filename = (state.username + "_savefile_" + dateString + ".pkmth");// + date.getDay + "." + date.getMonth + "." + date.getFullYear + "_" + date.getHours + ":" + date.getMinutes;
+    let sanitizedUsername = state.username.replace(/[^a-zA-Z0-9_-]/g, "");
+    let sanitizedDateString = dateString.replace(/[^a-zA-Z0-9_-]/g, "");
+    let filename = `${sanitizedUsername}_savefile_${sanitizedDateString}.pkmth`;    
     log("Filename: " + filename);
     let content = ""
 
@@ -103,6 +104,7 @@ function handleFileSelect(event){
   
 function handleFileLoad(event){
     console.log(event);
+
     var uploadedText = atob(event.target.result);
     if(uploadedText == null || uploadedText.length == 0) {
         log("Error! no readable text found in file.")
@@ -118,6 +120,24 @@ function handleFileLoad(event){
     }
     let stateText = uploadArray[0].split('|');
     let shopText = uploadArray[1].split('|');
+
+    if (!Array.isArray(uploadArray) || uploadArray.length < 2) {
+        log("Error! The file we got had an incorrect file syntax.");
+        toast("Filen du lastet opp er satt sammen på feil måte.", true);
+        return;
+    }
+    
+    if (!Array.isArray(stateText) || stateText.length < 13) {
+        log("Error! State data is malformed.");
+        toast("Filen din har feil format på State-data.", true);
+        return;
+    }
+    
+    if (!Array.isArray(shopText) || shopText.length < 10) {
+        log("Error! Shop data is malformed.");
+        toast("Filen din har feil format på Shop-data.", true);
+        return;
+    }
 
     state.username = stateText[0];
     state.totalScore = stateText[1];

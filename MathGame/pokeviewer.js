@@ -41,7 +41,7 @@ document.getElementById('searchButton').addEventListener('click', function() {
     searchPokemon();
 });
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("loadAllComplete", function() {
     const pokemonId = getQueryParam('pokemonId');
     if (pokemonId) {
         document.getElementById('searchBar').value = pokemonId;

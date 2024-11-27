@@ -99,10 +99,36 @@ function filterSelection(filterKeyToAdd) {
       pokedexContainer.innerHTML = "";
       showShimmerEffect();
   }
-
-  const filteredData = filterKeys[0] === "" 
-      ? allPokemonData // No filter; show all
-      : allPokemonData.filter(pokemon => filterKeys.every(key => pokemon.includes(key)));
+  let filteredData = []; // Declare variable outside the try block
+  try {
+    filteredData = filterKeys[0] === "" 
+        ? allPokemonData // No filter; show all
+        : allPokemonData.filter(pokemon => {
+              try {
+                  return filterKeys.every(key => pokemon.includes(key));
+              } catch (error) {
+                  if (error instanceof TypeError) {
+                      console.error("Skipping corrupted Pokémon data:", pokemon, error);
+                      log("TypeError: Corrupted data detected and skipped.");
+                  } else {
+                      console.error("Unexpected error during filtering:", error);
+                  }
+                  return false; // Skip this iteration
+              }
+        });
+} catch (error) {
+    console.error("An unexpected error occurred in filterSelection:", error);
+    log("Unexpected error occurred in filtering. Check data integrity.");
+    const toast = new Toast({
+        text: `En uventet feil oppstod under filtrering av Pokémon.`,
+        position: "top-right",
+        pauseOnHover: true,
+        pauseOnFocusLoss: true,
+        canClose: true,
+        badToast: true,
+    });
+    return; // Exit the function if an unexpected error occurs
+}
 
   renderPokemon(filteredData); // Load all filtered results at once
   document.getElementById("amountCaught3").textContent = document.getElementsByClassName('show').length;
