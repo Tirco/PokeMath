@@ -49,7 +49,10 @@ document.addEventListener("loadAllComplete", function() {
     } else {
         searchPokemon(1);
     }
+
 });
+
+
 
 document.getElementById('searchBar').addEventListener('keypress', function(e) {
     if (e.key === 'Enter') {
@@ -87,6 +90,26 @@ function searchPokemon(searchId) {
     console.log(pokemon);
     displayPokemon(pokemon);
 
+    let wrapper = document.querySelector(".alternate-forms-wrapper");
+    let header = document.querySelector(".wrapper-header");
+  
+    if (!wrapper || !header) {
+      console.error("Wrapper or header element not found.");
+      return; // Exit if elements are not found
+    }
+  
+    document.addEventListener("scroll", () => {
+      let wrapperTop = wrapper.getBoundingClientRect().top;
+      let headerHeight = header.offsetHeight;
+  
+      if (wrapperTop + headerHeight <= window.innerHeight) {
+        header.style.position = "relative";
+        header.style.bottom = "auto";
+      } else {
+        header.style.position = "fixed";
+        header.style.bottom = "0";
+      }
+    });
 }
 
 document.getElementById('prevButton').addEventListener('click', function() {
@@ -228,7 +251,7 @@ function displayPokemon(pokemon) {
       }
       if (evolutionData.evolves_to.length > 0) {
 
-        nextPokemonContainer.innerHTML = `<div class="evotitle">Utvikles til:</div>`
+        nextPokemonContainer.innerHTML = `<div class="evotitle">Utvikles til (${evolutionData.evolves_to.length}):</div>`
         evolutionData.evolves_to.forEach(evolutionId => {
           nextPokemon = pokemondata[evolutionId];
           let nextEvoIsUnlocked = shiny ? state.pkmnList.includes(`S${evolutionId}`) : state.pkmnList.includes(`N${evolutionId}`);
@@ -257,11 +280,11 @@ function displayPokemon(pokemon) {
   }
   let alternatePokemonWrapper = document.getElementById('alternate-forms-wrapper');
   if(alternatePokemonWrapper) {
-    alternatePokemonWrapper.innerHTML = '<div class="evotitle">Alternative Former:</div>';
+    alternatePokemonWrapper.innerHTML = '<div class="wrapper-header">Alternative Former:</div>';
   } else {
     alternatePokemonWrapper = document.createElement('div');
     alternatePokemonWrapper.className = 'alternate-forms-wrapper';
-    alternatePokemonWrapper.innerHTML = '<div class="evotitle">Alternative Former:</div>';
+    alternatePokemonWrapper.innerHTML = '<div class="wrapper-header">Alternative Former:</div>';
 
   }
 
@@ -282,7 +305,6 @@ function displayPokemon(pokemon) {
         });
 
         alternatePokemonWrapper.innerHTML += `
-        <a style="cursor: pointer;"href="./pokeviewer.html?pokemonId=${currentId}">
         <div class="small-poke-container ${shinyBG}" style="display: block;">
           <img src="images/pokemon/${shinyString}/${item.imageid}.png" alt="${item.name}" class="poke-image" style="filter: ${altBrightness}; pointer-events: none;">
           <p class="poke-name-box">${altNameString}
@@ -304,7 +326,7 @@ function displayPokemon(pokemon) {
         });
 
         alternatePokemonWrapper.innerHTML += `
-        <a style="cursor: pointer;"href="./pokeviewer.html?pokemonId=${currentId}">
+        
         <div class="small-poke-container" style="display: block;">
           <img src="images/pokemon/${shinyString}/${item.imageid}.png" alt="${item.name}" class="poke-image" style="filter: ${altBrightness}; pointer-events: none;">
           <p class="poke-name-box">${altNameString}
@@ -327,7 +349,7 @@ function displayPokemon(pokemon) {
         });
 
         alternatePokemonWrapper.innerHTML += `
-        <a style="cursor: pointer;"href="./pokeviewer.html?pokemonId=${currentId}">
+        
         <div class="small-poke-container" style="display: block;">
           <img src="images/pokemon/${shinyString}/${item.imageid}.png" alt="${item.name}" class="poke-image" style="filter: ${altBrightness}; pointer-events: none;">
           <p class="poke-name-box">${altNameString}
@@ -350,7 +372,7 @@ function displayPokemon(pokemon) {
         });
 
         alternatePokemonWrapper.innerHTML += `
-        <a style="cursor: pointer;"href="./pokeviewer.html?pokemonId=${currentId}">
+        
         <div class="small-poke-container" style="display: block;">
           <img src="images/pokemon/${shinyString}/${item.imageid}.png" alt="${item.name}" class="poke-image" style="filter: ${altBrightness}; pointer-events: none;">
           <p class="poke-name-box">${altNameString}

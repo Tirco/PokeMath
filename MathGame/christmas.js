@@ -76,33 +76,33 @@ function openHatch(date) {
 
     switch (number) {
         case 1:
-            message = "Luke 1 er åpnet, og du fikk en Christmas Sudowoodo, og 1000 mynter.";
-            addSpecificToPokedex("N185-C1");
+            message = "Luke 1 er åpnet, og du fikk en Snowball Gastly, og 1000 mynter.";
+            addSpecificToPokedex("N92-C1");
             addMoney(1000);
             break;
         case 2:
-            message = "Julekalender, Dag 2 - Du har fått en Festive Murkrow, og 1000 mynter!";
-            addSpecificToPokedex("N198-C1");
+            message = "Luke 2 - Du har fått en Christmas Tree Smoliv, og 1000 mynter!";
+            addSpecificToPokedex("N928-C1");
             addMoney(1000);
             break;
         case 3:
-            message = "Luke 3 - Gratulerer! Mistletoe Igglybuff has blitt med i samlingen! (og 1000 mynter)";
-            addSpecificToPokedex("N174-C1");
+            message = "Luke 3 - Du har fått en Christmas Tree Dolliv, og 1000 mynter!";
+            addSpecificToPokedex("N929-C1");
             addMoney(1000);
             break;
         case 4:
-            message = "Nå er det bare 20 dager igjen til Jul! Du har fått en Drummer Boy Cubone, og 1000 mynter!!";
-            addSpecificToPokedex("N104-C1");
+            message = "Luke 4 - Du har fått en Christmas Tree Arboliva, og 1000 mynter!";
+            addSpecificToPokedex("N930-C1");
             addMoney(1000);
             break;
         case 5:
-            message = "Luke 5 - Du har fått en Reindeer Vulpix, og 1000 mynter!";
-            addSpecificToPokedex("N37-C1");
+            message = "Luke 5 - Du har fått en Ice Princess Kirlia, og 1000 mynter!";
+            addSpecificToPokedex("N281-C1");
             addMoney(1000);
             break;
         case 6:
-            message = "Luke 6 - Eeengleer daaaaler neeed i skjuuuul. (Eller under jorda - sånn som Angel Digletten du akuratt fikk sammen med 1000 mynter!)";
-            addSpecificToPokedex("N50-C1");
+            message = "Luke 6 - Du har fått en Choco Milcery, og 1000 mynter!";
+            addSpecificToPokedex("N868-C1");
             addMoney(1000);
             break;
         case 7:
@@ -110,33 +110,33 @@ function openHatch(date) {
             addMoney(20000);
             break;
         case 8:
-            message = "Luke 8 - Den nye Christmas Rowleten din ønsker deg en god jul! (+1000 mynter)";
-            addSpecificToPokedex("N722-C1");
+            message = "Luke 8 - Den nye Lights Pachirisu din ønsker deg en god jul! (+1000 mynter)";
+            addSpecificToPokedex("N417-C1");
             addMoney(1000);
             break;
         case 9:
-            message = "Luke 9 - Her har du en Christmas Wreath Comfey som du kan henge på døren! (+1000 mynter)";
-            addSpecificToPokedex("N764-C1");
+            message = "Luke 9 - Du har fått en Nutcrack Sirfetch'd, og 1000 mynter!";
+            addSpecificToPokedex("N865-C1");
             addMoney(1000);
             break;
         case 10:
-            message = "Luke 10 - Presents Komala har blitt med på laget! (+1000 mynter)";
-            addSpecificToPokedex("N775-C1");
+            message = "Luke 10 - Ice Present Eiscue har blitt med på laget! (+1000 mynter)";
+            addSpecificToPokedex("N875-C1");
             addMoney(1000);
             break;
         case 11:
-            message = "Luke 11 - Elf Impidimp kommer for å gjøre rampestreker! (+1000 mynter)";
-            addSpecificToPokedex("N859-C1");
+            message = "Luke 11 - Coal Rolycoly kommer for å varme deg! (+1000 mynter)";
+            addSpecificToPokedex("N837-C1");
             addMoney(1000);
             break;
         case 12:
-            message = "Luke 12 - En Ornaments Spoink vil gjerne henge på treet! (+1000 mynter)";
-            addSpecificToPokedex("N325-C1");
+            message = "Luke 12 - Ice Yveltal kommer frem! (+1000 mynter)";
+            addSpecificToPokedex("N717-C1");
             addMoney(1000);
             break;
         case 13:
-            message = "Luke 13 - Festive Pidove er klar for julesesongen! (+1000 mynter)";
-            addSpecificToPokedex("N519-C1");
+            message = "Luke 13 - Santa H. Zorua er klar for julesesongen! (+1000 mynter)";
+            addSpecificToPokedex("N570-C1");
             addMoney(1000);
             break;
         case 14:
@@ -144,23 +144,23 @@ function openHatch(date) {
             addMoney(30000);
             break;
         case 15:
-            message = "Luke 15 - Festive Farfetch'd funker fint! (+1000 mynter)";
-            addSpecificToPokedex("N83-C1");
+            message = "Luke 15 - Christmas Tree Snorunt er klar for feiring! (+1000 mynter)";
+            addSpecificToPokedex("N361-C1");
             addMoney(1000);
             break;
         case 16:
-            message = "Luke 16 - Festive Gardevoir har blitt med på laget! (+1000 mynter)";
-            addSpecificToPokedex("N282-C1");
+            message = "Luke 16 - Oi! En Lights Mew har blitt med på laget! (+1000 mynter)";
+            addSpecificToPokedex("N151-C1");
             addMoney(1000);
             break;
         case 17:
             if(shopOptions.boughtBackgrounds.includes("bg-020")){
                 addMoney(100000);
-                message = "Luke 19 - Her skulle du ha fått en ny bakgrunn, men denne har du allerede, så du får pengene tilbake!";
+                message = "Luke 17 - Her skulle du ha fått en ny bakgrunn, men denne har du allerede, så du får pengene tilbake!";
             } else {
                 //give background
                 shopOptions.boughtBackgrounds.push("bg-020");
-                message = "Luke 19 - Her får du en av julebakgrunnene!";
+                message = "Luke 17 - Her får du en av julebakgrunnene!";
                 saveAll();
             }
             break;
@@ -184,13 +184,13 @@ function openHatch(date) {
             addMoney(50000);
             break;
         case 22:
-            message = "Luke 22 - Santa Delibird har samlet opp gaver i hele år! (+1000 mynter)";
-            addSpecificToPokedex("N225-C1");
+            message = "Luke 22 - En unik pokemon! Pyjama Plusle & Minun koser seg! (+1000 mynter)";
+            addSpecificToPokedex("N311-U1");
             addMoney(1000);
             break;
         case 23:
-            message = "Luke 23 - Festive Hoopa blir med på laget! (+1000 mynter)";
-            addSpecificToPokedex("N720-C1");
+            message = "Luke 23 - Fireworks Cosmog er tidlig ute! (+1000 mynter)";
+            addSpecificToPokedex("N789-C1");
             addMoney(1000);
             break;
         case 24:
@@ -203,23 +203,12 @@ function openHatch(date) {
                 message = "Luke 24 - God Jul! Her får du en versjon av julekalenderen som du kan bruke som bakgrunn!";
                 saveAll();
             }
-            if(openedHatches.length > 23) {
-                const toast = new Toast({
-                    text: "DU HAR ÅPNET ALLE LUKENE! Derfor får du to spesielle shiny pokemon, som man bare kan få fra kalenderen!",
-                    position: "top-right",
-                    pauseOnHover: true,
-                    pauseOnFocusLoss: true,
-                    canClose: true,
-                    badToast: false,
-                  })
-                addSpecificToPokedex("S151-U1");
-                addSpecificToPokedex("S143-U1");
-                createFireworks();
-            }
             break;
         default:
             message = "Unknown date: " + number;
     }
+
+    triggerAchievementOverlay("images/events/christmas/" + number + ".png", message);
 
     const toast = new Toast({
         text: message,
@@ -229,6 +218,26 @@ function openHatch(date) {
         canClose: true,
         badToast: false,
       })
+
+      if(openedHatches.length > 23) {
+        setTimeout(() => {
+            triggerAchievementOverlay("images/events/christmas/present-1.png", "DU HAR ÅPNET ALLE LUKENE! Derfor får du noen unike shiny pokemon, som man bare kan få fra kalenderen!");
+        }, 5000)
+        
+        const toast = new Toast({
+            text: "DU HAR ÅPNET ALLE LUKENE! Derfor får du noen unike shiny pokemon, som man bare kan få fra kalenderen!",
+            position: "top-right",
+            pauseOnHover: true,
+            pauseOnFocusLoss: true,
+            canClose: true,
+            badToast: false,
+          })
+        addSpecificToPokedex("S151-U1");
+        addSpecificToPokedex("S143-U1");
+        addSpecificToPokedex("S311-U1");
+        addSpecificToPokedex("S789-C1");
+        createFireworks();
+    }
 }
 
 function addMoney(value) {
@@ -256,7 +265,7 @@ const createCalendar = async () => {
     }
 
 
-    if(date.getMonth() != 10) { //11 = desember. Januar = 0.
+    if(date.getMonth() != 11) { //11 = desember. Januar = 0.
         calendarContainer.textContent = "Kom tilbake i desember!"
         calendarContainer.classList.remove("calendar-container")
         calendarContainer.classList.add("not-christmas-yet")

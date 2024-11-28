@@ -823,6 +823,27 @@ function updateProgressDisplay(achievement) {
   }
 }
 
+
+function triggerAchievementOverlay(imagePath, text) {
+  const notificationContainer = document.getElementById('notification-container');
+  
+  // Create the notification element
+  const notification = document.createElement('div');
+  notification.className = 'notification';
+  
+  // Add the image and text to the notification
+  notification.innerHTML = `
+      <img src="${imagePath}" alt="${text}" width="250">
+      <p>${text}</p>
+  `;
+  
+  // Append the notification to the container
+  notificationContainer.appendChild(notification);
+  
+  // Remove the notification after the animation completes
+  setTimeout(() => notificationContainer.removeChild(notification), 8000);
+}
+
 // Function to display achievement notifications
 function notifyAchievement(achievement) {
   const notificationContainer = document.getElementById('notification-container');
