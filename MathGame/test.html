@@ -10,10 +10,10 @@
 	<meta name="robots" content="noindex, nofollow">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta name="author" content="Tirco">
-	<link rel="stylesheet" href="globalstyle.css?v=41">
-	<link rel="stylesheet" href="menustyle.css?v=41">
-	<link rel="stylesheet" href="pokemon.css?v=41">
-	<link rel="stylesheet" href="test.css?v=41">
+	<link rel="stylesheet" href="globalstyle.css?v=100">
+	<link rel="stylesheet" href="menustyle.css?v=100">
+	<link rel="stylesheet" href="pokemon.css?v=100">
+	<link rel="stylesheet" href="test.css?v=100">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 </head>
 <body>
@@ -60,12 +60,15 @@
 	</body>
 </div>
 
-<div class="botbar">
-	<a id="update-log" class="align-right" href="about.html#news">Nytt</a>
-</div>
+<div id="botbar" class="botbar"></div>
+	<script>	
+		fetch('botbar.html')
+			.then(response => response.text())
+			.then(data => document.getElementById('botbar').innerHTML = data);
+	</script>
 
-<script src="global.js?v=41"></script>
-<script src="saveandload.js?v=41"></script>
+<script src="global.js?v=100"></script>
+<script src="saveandload.js?v=100"></script>
 </body>
 
 </html>

@@ -1,30 +1,67 @@
-#Set the error document for not found.
-ErrorDocument 404  /notfound.html
+# Enable the Rewrite Engine
+RewriteEngine On
+RewriteBase /
 
-#Remove need for www.
-#RewriteEngine On
-#RewriteBase /
-#RewriteCond %{HTTP_HOST} ^pokemath.online [NC]
-#RewriteRule ^(.*)$ http://pokemath.online/$1 [L,R=301]
+# Force HTTPS for the entire site except bingo.html and header.html
+RewriteCond %{HTTPS} off
+RewriteCond %{REQUEST_URI} !^/bingo\.html$ [NC]
+RewriteCond %{REQUEST_URI} !^/header\.html$ [NC]
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
+# Force HTTP specifically for bingo.html only if accessed over HTTPS
+RewriteCond %{HTTPS} on
+RewriteCond %{REQUEST_URI} ^/bingo\.html$ [NC]
+RewriteRule ^bingo\.html$ http://%{HTTP_HOST}/bingo.html [L,R=301]
+
+# Proxy API requests to Node.js running on port 3002
+RewriteCond %{REQUEST_URI} ^/api/ [NC]
+RewriteRule ^(.*)$ http://localhost:3002/$1 [P,L]
+
+# Proxy requests to specific paths to Node.js app
+RewriteCond %{REQUEST_URI} ^/app/ [NC]
+RewriteRule ^(.*)$ http://localhost:3002/$1 [P,L]
+
+# validate uuid attempt
+RewriteCond %{REQUEST_URI} ^/validate-uuid
+RewriteRule ^(.*)$ http://localhost:8080/$1 [P,L]
 
 # Set time zone
 SetEnv TZ Europe/Oslo
 
-#Sign this stuff
+# Server signature and admin contact information
 ServerSignature EMail
 SetEnv SERVER_ADMIN tirco@tirco.tv
 
-# disable directory browsing
+# Disable directory browsing
 Options All -Indexes
 
-#ikke tillat å se bildemapper
-<Files /images>
-order allow,deny
-deny from all
-</Files>
+ErrorDocument 404 /notfound.html
 
-#Bilder?
-<FilesMatch "\.(ico|pdf|jpg|jpeg|png|webp|gif|html|htm|xml|txt|xsl|css)$">
+# Enable mod_expires
+<IfModule mod_expires.c>
+    ExpiresActive On
+
+    # Set the default expiration time for HTML files
+    <FilesMatch "\.(html|htm)$">
+        ExpiresDefault "access plus 12 hours"
+    </FilesMatch>
+</IfModule>
+
+# Increase security with headers
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "DENY"
+    Header always set X-XSS-Protection "1; mode=block"
+    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+	Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+
+    <FilesMatch "\.(html|htm)$">
+        Header set Cache-Control "max-age=43200, must-revalidate"
+    </FilesMatch>
+</IfModule>
+
+
+# Set Cache-Control headers for static assets
+<FilesMatch "\.(ico|pdf|jpg|jpeg|png|webp|gif|xml|txt|xsl|css)$">
 Header set Cache-Control "max-age=31536050"
 </FilesMatch>

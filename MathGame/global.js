@@ -371,30 +371,53 @@ function checkACookieExists(name) {
 
 async function getOrCreateUUID(retryLimit = 3) {
   let uuid = getCookie("playerUUID");
+  let token = getCookie("playerToken");
 
-  if (!uuid) {
+  // If UUID and token are already present, verify their validity with the server
+  if (uuid && token) {
+      try {
+          const isValid = await validateUser(uuid, token, retryLimit);
+          if (isValid) {
+              // If valid, return the existing UUID and token
+              return { uuid, token };
+          } else {
+              // If the token is invalid, generate a new UUID
+              uuid = generateUUID();
+              token = null;
+          }
+      } catch (error) {
+          console.error("Error validating UUID and token:", error);
+          return null;
+      }
+  } else {
+      // If no UUID is present, generate a new one
       uuid = generateUUID();
   }
 
+  // Validate the new UUID or create a new one if needed
   try {
-      const isUnique = await validateUUID(uuid, retryLimit);
+      const { isUnique, newToken } = await validateUser(uuid, retryLimit);
       if (!isUnique) {
           uuid = generateUUID(); // Generate a new UUID if the existing one isn't unique
           setCookie("playerUUID", uuid, 365);
       }
+      // Store the validated UUID and token in cookies
+      setCookie("playerUUID", uuid, 365);
+      setCookie("playerToken", newToken, 365);
+      return { uuid, token: newToken };
   } catch (error) {
-      log("Error validating UUID:", error);
-      log("Unable to connect to the server. Please check your connection.");
+      console.error("Error validating UUID:", error);
+      console.error("Unable to connect to the server. Please check your connection.");
       return null; // Return null or handle fallback as needed
   }
-
-  // Store the validated UUID in cookies if it's unique
-  setCookie("playerUUID", uuid, 365);
-  return uuid;
 }
 
-async function validateUUID(uuid, retryLimit = 3) {
-  const url = `${window.location.protocol}//${window.location.host}/validate-uuid?uuid=${uuid}&username=${state.username}`;
+async function validateUser(uuid, token, retryLimit = 3) {
+  let url = `${window.location.protocol}//${window.location.host}/validate-user?uuid=${uuid}`;
+  if (token) {
+      url += `&token=${token}`;
+  }
+  
   let attempts = 0;
 
   while (attempts < retryLimit) {
@@ -404,7 +427,44 @@ async function validateUUID(uuid, retryLimit = 3) {
               throw new Error(`Server returned status ${response.status}`);
           }
           const data = await response.json();
-          return data.unique;
+          
+          if (data.unique && data.valid) {
+              // UUID and token are valid
+              return true;
+          } else if (data.unique && data.token) {
+              // UUID is unique and a new token was provided
+              setCookie("playerToken", data.token, 365);
+              return true;
+          } else {
+              // UUID is not valid
+              return false;
+          }
+      } catch (error) {
+          attempts++;
+          console.warn(`Attempt ${attempts} failed:`, error);
+
+          if (attempts >= retryLimit) {
+              throw new Error("Failed to connect to the server after multiple attempts.");
+          }
+
+          // Optional: Wait before retrying (e.g., 1 second)
+          await new Promise(resolve => setTimeout(resolve, 1000));
+      }
+  }
+}
+
+async function validateToken(uuid, token, retryLimit = 3) {
+  const url = `${window.location.protocol}//${window.location.host}/validate-token?uuid=${uuid}&token=${token}`;
+  let attempts = 0;
+
+  while (attempts < retryLimit) {
+      try {
+          const response = await fetch(url);
+          if (!response.ok) {
+              throw new Error(`Server returned status ${response.status}`);
+          }
+          const data = await response.json();
+          return data.valid; // true if token is valid, false otherwise
       } catch (error) {
           attempts++;
           console.warn(`Attempt ${attempts} failed:`, error);
@@ -537,6 +597,69 @@ function loadAll() {
   loadShop();
   cleanupCorruptedData();
   document.dispatchEvent(new Event('loadAllComplete'));
+
+  //Backup popup!
+  const popup = document.getElementById("backup-popup");
+    const doBackupBtn = document.getElementById("do-backup-btn");
+    const snoozeBtn = document.getElementById("snooze-btn");
+    const snoozeSelect = document.getElementById("snooze-select");
+
+    // Function to check the current page's filename
+    function isBackupPage() {
+        log(window.location.pathname.includes("saveandload"));
+        return window.location.pathname.includes("saveandload");
+    }
+
+    // Show the popup
+    function showPopup() {
+        if (!isBackupPage()) { // Only show popup if not on saveandload.html
+            popup.classList.remove("hidden");
+        }
+    }
+
+    // Hide the popup
+    function hidePopup() {
+        popup.classList.add("hidden");
+    }
+
+    // Handle "Do a Backup" action
+    doBackupBtn.addEventListener("click", () => {
+        hidePopup();
+        // Redirect to backup page
+        window.location.href = "./saveandload.html";
+    });
+
+    // Handle "Snooze" action
+    snoozeBtn.addEventListener("click", () => {
+        const snoozeDays = parseInt(snoozeSelect.value, 10);
+        const snoozeUntil = new Date();
+        snoozeUntil.setDate(snoozeUntil.getDate() + snoozeDays);
+        localStorage.setItem("backupReminder", snoozeUntil.toISOString());
+        alert(`Varselett ble utsatt i ${snoozeDays} dag(er).`);
+        hidePopup();
+    });
+
+    // Check if it's time to show the popup
+    function checkReminder() {
+        if (!isBackupPage() && state.pkmnCaught > 25) { // Only check reminder if not on saveandload.html
+            const snoozeUntil = localStorage.getItem("backupReminder");
+            if (!snoozeUntil || new Date() > new Date(snoozeUntil)) {
+                showPopup();
+            }
+        } else {
+          hidePopup();
+        }
+    }
+
+    // Run the check on page load
+    checkReminder();
+}
+
+function snoozeBackupAlertThreeDays() {
+  const snoozeDays = 3;
+  const snoozeUntil = new Date();
+  snoozeUntil.setDate(snoozeUntil.getDate() + snoozeDays);
+  localStorage.setItem("backupReminder", snoozeUntil.toISOString());
 }
 
 function getStorageString(key) {

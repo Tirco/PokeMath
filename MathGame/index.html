@@ -5,8 +5,8 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Pokémath</title>
-	<link rel="stylesheet" href="globalstyle.css?v=42">
-	<link rel="stylesheet" href="menustyle.css?v=42">
+	<link rel="stylesheet" href="globalstyle.css?v=100">
+	<link rel="stylesheet" href="menustyle.css?v=100">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 	<meta name="title" content="Pokemath">
 	<meta name="description" content="En nettside hvor man kan øve på de fire regneartene og få informasjon om ulike pokemon når man løser nok oppgaver.">
@@ -160,13 +160,61 @@
 	    </div>
 	</div>
 </div>
-<div class="botbar">
-	<a id="update-log" class="align-right" href="about.html#news">Nytt</a>
-</div>
+<div id="botbar" class="botbar"></div>
+	<script>	
+		fetch('botbar.html')
+			.then(response => response.text())
+			.then(data => document.getElementById('botbar').innerHTML = data);
+	</script>
 
 <div id="alertbox" class="alert simple-alert is-hidden-"> <!-- is-hidden if hidden-->
+	<h2>Hvor er Pokémonene mine?!?<a class="date"> 05.12.2024</a></h2>
+	<p>
+		Mange har spurt meg hvorfor Pokémon har blitt borte etter at jeg la inn julekalenderen...<br><br>
+		Det er selvfølgelig veldig trist og absolutt ikke meningen!<br><br>
+	</p>
+	
+	<h2>La meg forklare hva som skjedde:</h2>
+	<p>
+		Når du bruker en nettleser, som Chrome eller Safari, lagrer den noe som heter "cache".<br>
+		Cache er som et lite minne som lagrer en kopi av nettsiden, slik at det går raskere neste gang du besøker den.<br><br>
+		Som regel fungerer dette kjempebra! Men...<br><br>
+		Når jeg oppdaterte julekalenderen, endret jeg også hvordan ting blir lagret i spillet.<br><br>
+		Når dere åpnet julekalenderen eller en annen side som nettleseren din ikke husket, oppdaterte spillet dataen deres (inkludert Pokémonene).<br>
+		Men når dere gikk tilbake til forsiden eller en side nettleseren husket (cachet), brukte den den gamle versjonen av siden. Da krasjet det.<br>
+		Nettleseren forstod ikke de nye dataene, og slettet dem for å starte på nytt...<br><br>
+		Derfor har mange mistet Pokémonene sine nå i desember. Huff!<br><br>
+	</p>
+	
+	<h2>Hvordan kan vi unngå at det skjer igjen?</h2>
+	<p>
+		1. **Lukk nettsiden når du er ferdig.** Ikke la den stå oppe hele tiden.<br><br>
+		2. **Jeg har fikset dette med en oppdatering!** Nå vil ikke en cache være eldre enn 12 timer. Dette bør forhindre at det samme skjer igjen.<br><br>
+		3. **Lag backup!**<br>
+		   Nå får du et varsel som minner deg på å laste ned backup.<br>
+		   Har du en backup, kan du få tilbake Pokémonene dine, selv om noe går galt!<br><br>
+		4. Noen foreldre og lærere har sendt meg e-poster. Selv om jeg ikke kan få tilbake akkurat de Pokémonene dere hadde, har jeg prøvd å lage nye lagringsfiler som nesten er like langt i spillet som dere var.<br><br><br>
+
+		Jeg minner om at PokeMath fortsatt er under utvikling, og vi kommer til å ha flere feil fremover. Det tryggeste du kan gjøre er å ha en backup lagret!
+	</p>
+	
+	<h3>Nå er det jul igjen!<a class="date"> 30.11.2024</a></h3>
+	<p>
+		og kalenderen er klar!<br><br>
+		I år er det flere nye jule-varianter av pokemonene, så det er bare å åpne pakker, og lukene i kalenderen!<br><br>
+
+		Jeg har også prøvd å fikse en del feil, men som vanlig er det veldig lurt å lagre en backup!<br><br>
+
+		Det er også en ny brukerundersøkelse som man kan svare på her: <ins><a href=https://forms.gle/VJxeN2SQAHhA9Y838>Google Forms!</a></ins>  <br><br>
+		I denne undersøkelsen er det et felt hvor man kan stille et spørsmål, og mange av de spørsmålene blir besvart i en video eller en artikkel som kommer senere.<br>
+		<br><br>
+		Obs: Noen av dere rapporterer at det står dere har mange pokemon, men bare noen få kan vises...<br>
+		Her er en mulig løsning:<br>
+		1 - VIKTIG: Last ned en lagringsfil, så du har en backup.<br>
+		2 - Gå til pokedexen, og så last inn siden på nytt. Hold gjerne nede last inn på nytt knappen i 5 sekunder.<br>
+		3 - Hvis feilen fortsatt er der - send en e-post til oss, og send med lagringsfilen slik at vi kan se hva som har skjedd!<br>
+	</p>
 	<h3>Oida!<a class="date"> 12.11.2024</a></h3>
-	<img>
 		<img src="./images/under_construction.png" alt="Under Construction" width="240" height="195"><br>
 		Etter de forrige oppdateringene så er det flere av delene på PokeMath som sliter med å lastes inn!<br>
 		PokeDex, Lagre og Last Inn, PokeViewer og andre undersider vil få små eller store endringer i nær fremtid.<br>
@@ -193,8 +241,8 @@
 	- Mvh. PokeMorten
 	<br>
 </div>
-	  <script src="global.js?v=42"></script>
-	  <script src="menu.js?v=42"></script>
+	  <script src="global.js?v=100"></script>
+	  <script src="menu.js?v=100"></script>
 </body>
 
 </html>

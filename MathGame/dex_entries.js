@@ -3027,9 +3027,9 @@ var dexEntries = {
         "dex_entry": "This seems to be the Iron Serpent mentioned in an old book. The Iron Serpent is said to have turned the land to ash with its lightning."
     },
     "1009": {
-        "dex_entry": null
+        "dex_entry": "This ferocious creature is shrouded in mystery. It\u2019s named after an aquatic monster mentioned in an old expedition journal."
     },
     "1010": {
-        "dex_entry": null
+        "dex_entry": "Many of its physical characteristics match those of a Virizion from the future that was covered in a paranormal magazine."
     }
 }

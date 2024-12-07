@@ -6,18 +6,7 @@ const nextButton = document.getElementById('nextButtonBG');
 
 let shiny = false;
 const maxId = 1010; 
-
-function determineMinId() {
-  const prefixes = shiny ? ["S0", "S0-U1", "S0-U2", "S0-U3"] : ["N0", "N0-U1", "N0-U2", "N0-U3"];
-
-  for (const prefix of prefixes) {
-      if (state.pkmnList.includes(prefix)) {
-          return 0;
-      }
-  }
-  return 1;
-}
-const minId = determineMinId();
+const minId = 0;
 
 let currentId = 1;
 let prevId = 0;

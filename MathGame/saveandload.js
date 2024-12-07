@@ -1,3 +1,40 @@
+// Save LocalStorage as an obfuscated file
+function saveLocalStorageToFile() {
+    // Retrieve all LocalStorage fields
+    const localStorageData = {};
+    for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        localStorageData[key] = localStorage.getItem(key);
+    }
+
+    // Convert to JSON and obfuscate with Base64
+    const jsonData = JSON.stringify(localStorageData);
+    const base64Data = btoa(jsonData);
+
+    // Create a file with .pkmth extension
+    const blob = new Blob([base64Data], { type: "application/octet-stream" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+
+    let date = new Date();
+    let dateString = toJSONLocal(date)
+    if (!state.username || state.username.trim() === "" || /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/.test(state.username)) {
+        state.username = "Username_Error";
+        log("Renamed username. Format did not fit.");
+    }
+    let sanitizedUsername = state.username.replace(/[^a-zA-Z0-9_-]/g, "");
+    let sanitizedDateString = dateString.replace(/[^a-zA-Z0-9_-]/g, "");
+    let filename = `${sanitizedUsername}_savefile_${sanitizedDateString}.pkmth`;    
+    log("Filename: " + filename);
+
+    a.download = filename;
+    a.click();
+
+    // Clean up the object URL
+    URL.revokeObjectURL(a.href);
+}
+
+//Old download function
 function download(filename, text) {
     var element = document.createElement('a');
     element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
@@ -12,7 +49,7 @@ function download(filename, text) {
 }
 
 function saveFileDLButton(){
-    try{createSaveFile()} catch(e){
+    try{saveLocalStorageToFile()} catch(e){ //previously: createSaveFile();
         const toast = new Toast({
             text: e,
             position: "top-right",
@@ -24,6 +61,7 @@ function saveFileDLButton(){
     }
 }
 
+//Old & manual version.
 function createSaveFile(){
     let date = new Date();
     let dateString = toJSONLocal(date)
@@ -84,6 +122,7 @@ function createSaveFile(){
     log("Attempting to download file... If nothing happens, please check device permissions!")
     download(filename,content);
     //console.log(atob(content));
+    snoozeBackupAlertThreeDays();
 }
 
 function toJSONLocal (date) {
@@ -96,13 +135,54 @@ function init(){
     document.getElementById('fileInput').addEventListener('change', handleFileSelect, false);
 }
 
+/** Old version
 function handleFileSelect(event){
     const reader = new FileReader()
-    reader.onload = handleFileLoad;
+    reader.onload = loadLocalStorageFromFile;
     reader.readAsText(event.target.files[0])
+} */
+
+function handleFileSelect(event) {
+    const reader = new FileReader();
+
+    reader.onload = function (event) {
+        const base64Data = event.target.result;
+        try {
+            // Attempt to decode Base64 and parse JSON
+            const jsonData = atob(base64Data);
+            const localStorageData = JSON.parse(jsonData);
+
+            // Restore LocalStorage fields
+            for (const [key, value] of Object.entries(localStorageData)) {
+                localStorage.setItem(key, value);
+            }
+
+            loadAll();
+            triggerAchievementOverlay("images/up-arrow.png", 
+                "Dataen har blitt lastet inn! Bruker: " + state.username + " med " + state.pkmnCaught + " Pokémon");
+            //alert("LocalStorage restored successfully!");
+        } catch (jsonError) {
+            console.warn("Prøver å laste inn dataen din med en gammel versjon...", jsonError);
+            try {
+                handleOldFileLoad(event);
+                alert("Dataen din ble lastet inn ved bruk av den gamle versjonen!");
+            } catch (legacyError) {
+                console.error("Error restoring LocalStorage data:", legacyError);
+                alert("Det oppstod en feil når vi prøvde å laste inn dataen din... Kontakt PokeMorten og send inn filen din!");
+            }
+        }
+    };
+
+    reader.onerror = function () {
+        console.error("Error reading the file:", reader.error);
+        alert("Failed to read the file.");
+    };
+
+    // Read the file as a Base64 string
+    reader.readAsText(event.target.files[0]);
 }
   
-function handleFileLoad(event){
+function handleOldFileLoad(event){
     console.log(event);
 
     var uploadedText = atob(event.target.result);
@@ -210,6 +290,9 @@ function handleFileLoad(event){
         canClose: true,
         badToast: false,
     })
+    triggerAchievementOverlay("images/up-arrow.png", 
+        "Dataen har blitt lastet inn! Bruker: " + state.username + " med " + state.pkmnCaught + " Pokémon");
+    snoozeBackupAlertThreeDays();
 
     //document.getElementById('fileContent').textContent = atob(event.target.result);
 }

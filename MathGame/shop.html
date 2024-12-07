@@ -10,9 +10,9 @@
 	<meta name="robots" content="noindex, nofollow">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta name="author" content="Tirco">
-	<link rel="stylesheet" href="globalstyle.css?v=42">
-	<link rel="stylesheet" href="menustyle.css?v=42">
-	<link rel="stylesheet" href="shop.css?v=42">
+	<link rel="stylesheet" href="globalstyle.css?v=100">
+	<link rel="stylesheet" href="menustyle.css?v=100">
+	<link rel="stylesheet" href="shop.css?v=100">
 	<script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
 </head>
 <body>
@@ -899,12 +899,15 @@
 	<div height="100px"><br></div>
 </div>
 
-<div class="botbar">
-	<a id="update-log" class="align-right" href="about.html#news">Nytt</a>
-</div>
+<div id="botbar" class="botbar"></div>
+	<script>	
+		fetch('botbar.html')
+			.then(response => response.text())
+			.then(data => document.getElementById('botbar').innerHTML = data);
+	</script>
 
-	  <script src="global.js?v=42"></script>
-	  <script src="shop.js?v=42"></script>
+	  <script src="global.js?v=100"></script>
+	  <script src="shop.js?v=100"></script>
 </body>
 
 </html>

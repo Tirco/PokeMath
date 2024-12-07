@@ -10,8 +10,8 @@
 	<meta name="robots" content="noindex, nofollow">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta name="author" content="Tirco">
-	<link rel="stylesheet" href="globalstyle.css?v=42">
-	<link rel="stylesheet" href="faq.css?v=42">
+	<link rel="stylesheet" href="globalstyle.css?v=100">
+	<link rel="stylesheet" href="faq.css?v=100">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 	<!-- <link rel="stylesheet" href="https://www.jsdelivr.com/package/npm/bulma> -->
 </head>
@@ -46,8 +46,9 @@
 			- Skolen / Kommunen din har spesielle regler, som gjør at nettsiden ikke kan lagre data.<br>
 			- Du har ikke godtatt cookies.<br>
 			- Du har et program som sletter cookies og/eller nettleserdata <br>
-			- Du spiller på en annen enhet enn du gjorde fra før.</p>
-			<p> En ting du kan gjøre, om du opplever at du hele tiden mister alt du har, er å ta i bruk den nye <ins><a href="./saveandload.html">lagre og last opp</a></ins> funksjonen.</p>
+			- Du spiller på en annen enhet enn du gjorde fra før.<br>
+			- Det har skjedd en feil etter en oppdatering. </p>
+			<p> En ting du kan gjøre, om du opplever at du hele tiden mister alt du har, er å ta i bruk <ins><a href="./saveandload.html">lagre og last opp</a></ins> funksjonen.</p>
 		</div>
 	</div>
 	  
@@ -69,8 +70,32 @@
 		<div class="panel-content">
 			<p>PokeMath tjener ikke penger, med unntak av donasjoner fra lærere og foreldre som setter pris på arbeidet.<br>
 			Faktisk så taper vi penger på å ha siden oppe, men det er heldigvis ikke mye.</p>
-			<p>Vi betaler ca. 200kr i måneden for å holde siden oppe.<br>
+			<p>Vi betaler ca. 350kr i måneden for å holde siden oppe.<br>
 			Ettersom vi ikke vil ha reklame på nettsiden, og nettsiden ikke koster penger å ta i bruk, så tjener vi ingenting på nettsiden.</p>
+			<p class="cost-display">Totalt har pokemath så langt kostet ca. <span id="total-cost">?</span> kr.</p>
+			Dette er ikke medregnet arbeidstimene som er lagt inn, eller betalingen for kunsten på f.eks julekalenderen.<br>
+
+			<script>
+				// Define the monthly cost in kr
+				const monthlyCost = 300;
+		
+				// Get the current date
+				const currentDate = new Date();
+		
+				// Define the start date (January 1, 2021)
+				const startDate = new Date(2021, 0, 1); // Month is 0-indexed (0 = January)
+		
+				// Calculate the total number of months between the start date and the current date
+				const totalMonths = (currentDate.getFullYear() - startDate.getFullYear()) * 12 +
+									(currentDate.getMonth() - startDate.getMonth());
+		
+				// Calculate the total cost
+				const totalCost = totalMonths * monthlyCost;
+		
+				// Display the total cost in the HTML
+				document.getElementById('total-cost').textContent = totalCost;
+			</script><br>
+			Vi tar i mot donasjoner på <a href="about.html#contact">Kontakt oss</a> siden vår!
 		</div>
 	  </div>
 
@@ -136,11 +161,14 @@
 	</div>
 </div>
 
-<div class="botbar">
-	<a id="update-log" class="align-right" href="about.html#news">Nytt</a>
-</div>
+<div id="botbar" class="botbar"></div>
+	<script>	
+		fetch('botbar.html')
+			.then(response => response.text())
+			.then(data => document.getElementById('botbar').innerHTML = data);
+	</script>
 
-<script src="global.js?v=42"></script>
+<script src="global.js?v=100"></script>
 </body>
 
 </html>

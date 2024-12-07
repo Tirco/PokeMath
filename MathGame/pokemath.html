@@ -10,8 +10,8 @@
 	<meta name="robots" content="noindex, nofollow">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta name="author" content="Tirco">
-	<link rel="stylesheet" href="globalstyle.css?v=42">
-	<link rel="stylesheet" href="pokemon.css?v=42">
+	<link rel="stylesheet" href="globalstyle.css?v=100">
+	<link rel="stylesheet" href="pokemon.css?v=100">
 	<!--<link rel="stylesheet" href="cookies.css?v=1">-->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 	<!-- <link rel="stylesheet" href="https://www.jsdelivr.com/package/npm/bulma> -->
@@ -90,13 +90,16 @@
 </body>
 </div>
 
-<div class="botbar">
-	<a id="update-log" class="align-right" href="about.html#news">Nytt</a>
-</div>
-	  <script src="alternateforms.js?v=42"></script>
-	  <script src="pokemondata.js?v=42"></script>
-	  <script src="global.js?v=42"></script>
-	  <script src="math.js?v=42"></script>
-	  <script src="pokestuff.js?v=90"></script>
+<div id="botbar" class="botbar"></div>
+	<script>	
+		fetch('botbar.html')
+			.then(response => response.text())
+			.then(data => document.getElementById('botbar').innerHTML = data);
+	</script>
+	  <script src="alternateforms.js?v=100"></script>
+	  <script src="pokemondata.js?v=100"></script>
+	  <script src="global.js?v=100"></script>
+	  <script src="math.js?v=100"></script>
+	  <script src="pokestuff.js?v=100"></script>
 	  <script>loadAmountFromList(5,true)</script>
 </html>

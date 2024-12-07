@@ -492,6 +492,7 @@ a.tag:hover {
   color: #f2f2f2;
   overflow: hidden;
   position: fixed;
+  height: 48px;
   bottom: 0;
   width: 100%;
   z-index: 9999;
@@ -1430,4 +1431,83 @@ hr {
   padding: 0;
   color: black;
   height: 10px;
+}
+
+#connection-status {
+  display: block;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  margin-right: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.status-green {
+  background-color: rgb(8, 226, 8);
+  box-shadow: 0px 0px 5px 2px rgba(45,255,196,0.9);
+}
+
+.status-yellow {
+  background-color: yellow;
+  box-shadow: 0px 0px 5px 2px rgba(220, 255, 45, 0.9);
+}
+
+.status-red {
+  background-color: red;
+  box-shadow: 0px 0px 5px 2px rgba(255, 59, 45, 0.9);
+}
+
+#version-info {
+  display: none;
+}
+
+#connection-indicator:hover #version-info {
+  display: inline;
+}
+
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.popup-content {
+  background: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  max-width: 500px;
+  width: 90%;
+}
+
+.popup-actions {
+  margin-top: 20px;
+}
+
+.popup-actions button, .popup-actions select {
+  margin: 5px;
+}
+
+
+.hidden {
+  display: none;
+}
+
+input[type="file"] {
+  display: none;
+}
+
+.saveupload {
+  border: 1px solid #ccc;
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
 }

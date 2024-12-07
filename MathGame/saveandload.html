@@ -10,7 +10,7 @@
 		<meta name="robots" content="noindex, nofollow">
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<meta name="author" content="Tirco">
-		<link rel="stylesheet" href="globalstyle.css?v=42">
+		<link rel="stylesheet" href="globalstyle.css?v=100">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 	</head>
 	<body>
@@ -30,29 +30,38 @@
 		<div id="downloadSection" class="center datasection img-downloadSection">
 			<h2>Lagre</h2>
 			<p>Her kan du lagre dataen din som en fil, og laste ned til din enhet.<br>
-			Denne funksjonen er under utvikling, og det kan derfor hende at den ikke alltid fungerer.
-			Det kan hende at filen er korrupt (altså, den kan ikke leses), eller andre feil. Hvis du møter på slike feil, vennligst rapporter de til oss via "Kontakt Oss".</p>
+			Denne funksjonen er under utvikling, og det kan derfor hende at den ikke alltid fungerer.<br>
+			Det kan hende at filen er korrupt (altså, den kan ikke leses), eller andre feil.<br><br>
+			Hvis du møter på slike feil, vennligst rapporter de til oss via "Kontakt Oss".</p>
 			<p>Vennligst ikke del lagringsdataen din med andre spillere.</p>
-			<button onclick="createSaveFile()" class="button-1">Last ned</button>
+			<button onclick="saveFileDLButton()" class="button-1">Last ned</button>
 			<img class="img-responsive img-downloadSection"> 
 		</div>
 		<div id="uploadSection" class="center datasection img-uploadSection">
 			<h2>Last opp</h2>
-			<p>Her kan du laste opp dataen fra en fil du har lastet ned fra før.</p>
+			<p>Her kan du laste opp dataen fra en fil du har lastet ned fra før, for å få tilbake pokemonene dine.</p>
 			<h3>ADVARSEL:</h3>
-			<p>Hvis du laster opp en .pkmth fil her, vil alt du har inne fra før bli overskrevet, og slettet. Det er ingen måte å få det tilbake på, hvis du ikke har lagret en annen fil.</p>
+			<p>Hvis du laster opp en .pkmth fil her, vil alt du har inne fra før bli overskrevet, og slettet. <br>
+				Det er ingen måte å få det tilbake på, hvis du ikke har lagret en annen fil.</p>
 			<body onload="init()">
-				<input id="fileInput" type="file" name="file" class="saveupload" />
-				<pre id="fileContent"></pre>
+				<label for="fileInput" class="button-1">
+					Velg fil...
+					<input id="fileInput" type="file" name="file"/>
+					<pre id="fileContent"></pre>
+				</label>
+
 			</body> 
 		</div>
 	</div>
 	
-	<div class="botbar">
-		<a id="update-log" class="align-right" href="about.html#news">Nytt</a>
-	</div>
+	<div id="botbar" class="botbar"></div>
+	<script>	
+		fetch('botbar.html')
+			.then(response => response.text())
+			.then(data => document.getElementById('botbar').innerHTML = data);
+	</script>
 	
-	<script src="global.js?v=42"></script>
-	<script src="saveandload.js?v=42"></script>
+	<script src="global.js?v=100"></script>
+	<script src="saveandload.js?v=100"></script>
 </body>
 </html>

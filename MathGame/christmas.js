@@ -259,7 +259,7 @@ const createCalendar = async () => {
        now = date.toLocaleDateString('NO', { day: 'numeric', month: 'long', year: 'numeric' });
     } 
 
-    aboveCalendar.textContent = "God Jul! Dagens dato: " + now;
+    aboveCalendar.textContent = "God Jul!        Dagens dato: " + now;
     for(let i = 0; i < 10; i++) {
         aboveCalendar.innerHTML += '<div class="fallingsnowflake">❅</div>';
     }

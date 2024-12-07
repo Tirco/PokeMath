@@ -99,6 +99,26 @@
 			</div>
 		</div>
 	<image src="" alt="" id="background"></image>
+	<div id="backup-popup" class="popup hidden">
+		<div class="popup-content">
+			<h2>Påminnelse</h2>
+			<p>Det er på tide å lagre en backup!<br>
+			   Vil du lagre en nå, eller vil du bli påminnet senere?</p>
+			<div class="popup-actions">
+				<button id="do-backup-btn" class="button-1">Lagre en backup!</button>
+				<select id="snooze-select">
+					<option value="1">Påminn meg om 1 dag</option>
+					<option value="3">Påminn meg om 3 dager</option>
+					<option value="7" selected>Påminn meg om 1 uke</option>
+					<option value="14">Påminn meg om 2 uker</option>
+					<option value="30">Påminn meg om 1 måned</option>
+					<option value="90">Påminn meg om 3 måneder</option>
+					
+				</select>
+				<button id="snooze-btn" class="button-2">Utsett</button>
+			</div>
+		</div>
+	</div>
 	<div id="notification-container"></div>
 	<div id="id01" class="modal">
 		<span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
