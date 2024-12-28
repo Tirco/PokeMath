@@ -1,0 +1,92 @@
+#stats {
+  margin: 0 auto;
+  text-align: center;
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 50%;
+  max-width: 900px;
+  font-family: Arial, sans-serif;
+}
+
+.stat {
+  font-size: 2rem;
+  color: #333;
+  margin: 10px 0;
+}
+
+.error {
+  color: #d9534f;
+  font-size: 1.5rem;
+  margin-top: 10px;
+  text-align: center;
+}
+
+h1 {
+  text-align: center;
+  font-size: 2.5rem;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+/* Styling for the logs container */
+#logs {
+  text-align: left; /* Align text to the left */
+  max-height: 380px; /* Set a max height for the logs */
+  width: 100%;
+  overflow-y: auto; /* Enable vertical scrollbar if content exceeds max height */
+  background-color: #333; /* Darker background color */
+  color: #eee; /* Lighter text color for contrast */
+  font-family: monospace; /* Use monospace font for log text */
+  font-size: 14px; /* Adjust font size for readability */
+  white-space: pre-wrap; /* Preserve line breaks and spacing */
+}
+
+.log-entry {
+  margin-bottom: 5px;
+  padding: 5px;
+  border-radius: 4px;
+}
+
+.log-entry.message {
+  background-color: #4caf50; /* Green for success messages */
+  color: #fff;
+}
+
+.log-entry.warning {
+  background-color: #f57f17; /* Orange for warnings */
+  color: #fff;
+}
+
+.log-entry.error {
+  background-color: #b71c1c; /* Red for errors */
+  color: #fff;
+}
+
+.log-entry.info {
+  background-color: #2196f3; /* Blue for info */
+  color: #fff;
+}
+
+.console-header {
+  background-color: #222; /* Slightly darker than the console background */
+  color: #0f0; /* Bright green text like a CMD panel */
+  font-family: monospace;
+  border-bottom: 1px solid #333; /* Subtle border to separate header */
+  text-align: left;
+  font-size: 14px;
+}
+
+.console {
+  background-color: #333;
+  color: #ddd;
+  font-family: monospace;
+  padding: 10px;
+  white-space: pre-wrap;
+  border: 1px solid #444;
+  width: 50%;
+  max-width: 900px;
+  border-radius: 5px; /* Slightly round the corners for aesthetics */
+  border: 1px solid #444; /* Add a border for definition */
+}

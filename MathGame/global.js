@@ -370,113 +370,169 @@ function checkACookieExists(name) {
 }
 
 async function getOrCreateUUID(retryLimit = 3) {
-  let uuid = getCookie("playerUUID");
-  let token = getCookie("playerToken");
+  let uuid = localStorage.getItem("UUID");
+  let token = localStorage.getItem("token");
 
-  // If UUID and token are already present, verify their validity with the server
-  if (uuid && token) {
-      try {
-          const isValid = await validateUser(uuid, token, retryLimit);
-          if (isValid) {
-              // If valid, return the existing UUID and token
-              return { uuid, token };
-          } else {
-              // If the token is invalid, generate a new UUID
-              uuid = generateUUID();
-              token = null;
-          }
-      } catch (error) {
-          console.error("Error validating UUID and token:", error);
-          return null;
-      }
-  } else {
-      // If no UUID is present, generate a new one
-      uuid = generateUUID();
+
+  if (!uuid) {
+    uuid = generateUUID();
+    log("getOrCreateUUID - No UUID saved - making a new one. " + uuid);
   }
 
-  // Validate the new UUID or create a new one if needed
   try {
-      const { isUnique, newToken } = await validateUser(uuid, retryLimit);
-      if (!isUnique) {
-          uuid = generateUUID(); // Generate a new UUID if the existing one isn't unique
-          setCookie("playerUUID", uuid, 365);
-      }
-      // Store the validated UUID and token in cookies
-      setCookie("playerUUID", uuid, 365);
-      setCookie("playerToken", newToken, 365);
+    const { valid, unique, token: newToken } = await validateUUID(uuid, token, retryLimit);
+    
+    if (unique) { //UUID was unique, so it has not been saved to MySQL before
+      localStorage.setItem("UUID", uuid);
+      localStorage.setItem("token", newToken);
+      updateConnectionIndicator("good");
+      log("getOrCreateUUID - UUID was Unique, got new token" + uuid);
       return { uuid, token: newToken };
+    }
+
+    if (!valid) {
+      throw new Error("Invalid token");
+    }
+
+    //Not unique, but valid - let's return the values.l
+    updateConnectionIndicator("good");
+    log("getOrCreateUUID - UUID and Token was good");
+    return { uuid, token };
   } catch (error) {
-      console.error("Error validating UUID:", error);
-      console.error("Unable to connect to the server. Please check your connection.");
-      return null; // Return null or handle fallback as needed
+    updateConnectionIndicator("disconnected");
+    console.error("Error validating UUID:", error);
+    return null;
   }
 }
 
-async function validateUser(uuid, token, retryLimit = 3) {
-  let url = `${window.location.protocol}//${window.location.host}/validate-user?uuid=${uuid}`;
-  if (token) {
-      url += `&token=${token}`;
-  }
-  
+async function validateUUID(uuid, token, retryLimit = 3) {
+  const url = `${window.location.protocol}//${window.location.host}/validate-user?uuid=${uuid}&token=${token || ''}`;
   let attempts = 0;
 
   while (attempts < retryLimit) {
       try {
           const response = await fetch(url);
           if (!response.ok) {
+              updateConnectionIndicator("disconnected");
               throw new Error(`Server returned status ${response.status}`);
           }
-          const data = await response.json();
-          
-          if (data.unique && data.valid) {
-              // UUID and token are valid
-              return true;
-          } else if (data.unique && data.token) {
-              // UUID is unique and a new token was provided
-              setCookie("playerToken", data.token, 365);
-              return true;
-          } else {
-              // UUID is not valid
-              return false;
-          }
+          return await response.json();
       } catch (error) {
           attempts++;
           console.warn(`Attempt ${attempts} failed:`, error);
 
           if (attempts >= retryLimit) {
-              throw new Error("Failed to connect to the server after multiple attempts.");
+              throw new Error("Failed to validate UUID after multiple attempts.");
           }
 
-          // Optional: Wait before retrying (e.g., 1 second)
           await new Promise(resolve => setTimeout(resolve, 1000));
       }
   }
 }
 
-async function validateToken(uuid, token, retryLimit = 3) {
-  const url = `${window.location.protocol}//${window.location.host}/validate-token?uuid=${uuid}&token=${token}`;
+async function validateUser(uuid, retryLimit = 3) {
+  const MINIMUM_PKMN_CAUGHT = 25;
+  const VALIDATION_LIFETIME = 6 * 60 * 60 * 1000; // 6 hours in milliseconds
+  const VALIDATION_KEY = "validationTimestamp";
+
+  const token = localStorage.getItem("token");
+
+  if (state.pkmnCaught < MINIMUM_PKMN_CAUGHT) {
+    console.log("Did not validate user, as they have too few Pokémon.");
+    updateConnectionIndicator("disconnected");
+    return false;
+  }
+
+  const lastValidation = localStorage.getItem(VALIDATION_KEY);
+  const now = Date.now();
+
+  if (lastValidation && now - parseInt(lastValidation, 10) < VALIDATION_LIFETIME) {
+    if (uuid && token) {
+      console.log("Validation is still fresh. Skipping server validation.");
+      updateConnectionIndicator("okay");
+      return true;
+    }
+  }
+
+  const url = `${window.location.protocol}//${window.location.host}/validate-user?uuid=${uuid}${token ? `&token=${token}` : ""}`;
   let attempts = 0;
 
   while (attempts < retryLimit) {
-      try {
-          const response = await fetch(url);
-          if (!response.ok) {
-              throw new Error(`Server returned status ${response.status}`);
-          }
-          const data = await response.json();
-          return data.valid; // true if token is valid, false otherwise
-      } catch (error) {
-          attempts++;
-          console.warn(`Attempt ${attempts} failed:`, error);
-
-          if (attempts >= retryLimit) {
-              throw new Error("Failed to connect to the server after multiple attempts.");
-          }
-
-          // Optional: Wait before retrying (e.g., 1 second)
-          await new Promise(resolve => setTimeout(resolve, 1000));
+    try {
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error(`Server returned status ${response.status}`);
       }
+
+      const data = await response.json();
+      if (data.unique && data.valid) {
+        localStorage.setItem("token", token);
+        localStorage.setItem(VALIDATION_KEY, now.toString());
+        updateConnectionIndicator("good");
+        log("Connection: Data was Unique and Data was valid.")
+        return true;
+      } else if (data.unique && data.token) {
+        localStorage.setItem("token", data.token);
+        localStorage.setItem(VALIDATION_KEY, now.toString());
+        updateConnectionIndicator("good");
+        log("Connection: Data was Unique and new token was saved. - " + data.token)
+        return true;
+      } else {
+        updateConnectionIndicator("disconnected");
+        return false;
+      }
+    } catch (error) {
+      attempts++;
+      if (attempts >= retryLimit) {
+        updateConnectionIndicator("disconnected");
+        console.error("Failed to connect to the server after multiple attempts:", error);
+        throw error;
+      }
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+    }
   }
+}
+
+function compressPkmnList(pkmnList) {
+  const countMap = {};
+
+  pkmnList.forEach((pkmn) => {
+    if (pkmn && /\d+/.test(pkmn)) {
+      countMap[pkmn] = (countMap[pkmn] || 0) + 1;
+    } else {
+      console.warn(`Skipping malformed ID: ${pkmn}`);
+    }
+  });
+
+  const compressedList = Object.entries(countMap).map(([pkmn, count]) =>
+    count > 1 ? `${pkmn}x${count}` : pkmn
+  );
+
+  compressedList.sort((a, b) => {
+    const getNumericPart = (id) => parseInt(id.match(/\d+/)[0], 10);
+    return getNumericPart(a) - getNumericPart(b) || a.localeCompare(b);
+  });
+
+  return compressedList;
+}
+
+function decompressPkmnList(compressedList) {
+  const decompressedList = [];
+
+  // Expand each entry
+  compressedList.forEach((entry) => {
+      const match = entry.match(/^(.+?)x(\d+)$/); // Match entries with "x<number>"
+      if (match) {
+          const [_, pkmn, count] = match;
+          for (let i = 0; i < parseInt(count, 10); i++) {
+              decompressedList.push(pkmn);
+          }
+      } else {
+          decompressedList.push(entry);
+      }
+  });
+
+  return decompressedList;
 }
 
 // Function to generate a new UUID
@@ -486,6 +542,87 @@ function generateUUID() {
             v = c === 'x' ? r : (r & 0x3) | 0x8;
       return v.toString(16);
   });
+}
+
+async function uploadUserStats() {
+    let uuid = localStorage.getItem("UUID");
+    let token = localStorage.getItem("token");
+  
+    if (!uuid || !token) {
+      console.log("UUID or token missing. Attempting to get or create UUID and token.");
+      const newCredentials = await getOrCreateUUID();
+      if (!newCredentials) return; // Exit if UUID creation fails
+      uuid = newCredentials.uuid;
+      token = newCredentials.token;
+    }
+  
+    if (state.pkmnCaught < 25) {
+      console.log("Cannot upload stats: Less than 25 Pokémon caught.");
+      return;
+    }
+
+    // Check if the username is allowed
+    /**We are still in beta, and do not want userdata to be stored until we have updated our GDPR compliance etc. */
+    if (state.username !== "PokeMorten_UUIDTest") {
+      console.log(`Username "${state.username}" is not allowed for upload yet.`);
+      return;
+    }
+  
+    const payload = {
+      uuid,
+      token,
+      state: {
+        username: state.username,
+        totalScore: state.totalScore,
+        pkmnCaught: state.pkmnCaught,
+        pkmnList: compressPkmnList(state.pkmnList),
+        tier1Solved: state.tier1Solved,
+        tier2Solved: state.tier2Solved,
+        tier3Solved: state.tier3Solved,
+        tier4Solved: state.tier4Solved,
+        tier5Solved: state.tier5Solved,
+        customSolved: state.customSolved,
+      },
+      shopOptions: {
+        background: shopOptions.background,
+        playerIcon: shopOptions.playerIcon,
+        boughtBackgrounds: shopOptions.boughtBackgrounds,
+        boughtPlayerIcons: shopOptions.boughtPlayerIcons,
+        shinyLevel: shopOptions.shinyLevel,
+        mythicLevel: shopOptions.mythicLevel,
+        legendLevel: shopOptions.legendLevel,
+        specialLevel: shopOptions.specialLevel,
+        coinLevel: shopOptions.coinLevel,
+      },
+    };
+  
+    try {
+      const response = await fetch(`${window.location.protocol}//${window.location.host}/update-user-stats`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (response.status === 401) {
+        console.error("Unauthorized: Invalid token. Refreshing token.");
+        const newCredentials = await getOrCreateUUID();
+        if (!newCredentials) return;
+        localStorage.setItem("UUID", newCredentials.uuid);
+        localStorage.setItem("token", newCredentials.token);
+        return uploadUserStats(); // Retry with refreshed token
+      }
+  
+      const result = await response.json();
+      if (response.ok) {
+        console.log("User stats updated successfully:", result);
+      } else {
+        console.error("Error updating user stats:", result.error);
+      }
+    } catch (error) {
+      console.error("Network error:", error);
+    }
 }
 
 // Helper function to set a cookie
@@ -606,7 +743,6 @@ function loadAll() {
 
     // Function to check the current page's filename
     function isBackupPage() {
-        log(window.location.pathname.includes("saveandload"));
         return window.location.pathname.includes("saveandload");
     }
 
@@ -653,6 +789,25 @@ function loadAll() {
 
     // Run the check on page load
     checkReminder();
+
+    // Simulated connection state
+    let connectionState = "okay"; // Options: "good", "okay", "disconnected"
+    updateConnectionIndicator(connectionState);
+}
+
+function updateConnectionIndicator(state) {
+    //Connection Indicator
+  let connectionStatus = document.getElementById("connection-status");
+  if(!connectionStatus) {
+    return;
+  }
+  if (state === "good") {
+      connectionStatus.className = "status-green";
+  } else if (state === "okay") {
+      connectionStatus.className = "status-yellow";
+  } else if (state === "disconnected") {
+      connectionStatus.className = "status-red";
+  }
 }
 
 function snoozeBackupAlertThreeDays() {
@@ -995,7 +1150,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const header = document.getElementById("topbar");
   if (header) {
       // Directly call loadAll() if the topbar element is found
-      log("Top Bar Found - Loading initiated.")
+      //log("Top Bar Found - Loading initiated.")
       loadAll();
       
   } else {

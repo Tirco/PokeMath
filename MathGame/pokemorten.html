@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Pokémath - Admin Statistikk</title>
+	<meta name="title" content="Pokémath - Admin Statistikk">
+	<meta name="description" content="Administrasjonsoversikt for Pokémath.">
+	<meta name="robots" content="noindex, nofollow">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="author" content="Tirco">
+	<link rel="stylesheet" href="globalstyle.css?v=100">
+    <link rel="stylesheet" href="pokemorten.css?v=100">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+</head>
+<body>
+	<div id="header"></div>
+	<script>
+        fetch('header.html')
+            .then(response => response.text())
+            .then(data => document.getElementById('header').innerHTML = data);
+	</script>
+	
+	<div class="main">
+	    <h1>Admin Statistikk</h1>
+	    <div id="stats">
+	        <p>Lasting av statistikk...</p>
+                <!-- Logs will be dynamically inserted here -->
+
+	    </div>
+		<div class="console">
+			<div id="current-time" class="console-header"></div>
+			<div id="logs"></div>
+		</div>
+	    <div class="error" id="error"></div>
+	</div>
+
+	<div id="botbar" class="botbar"></div>
+	<script>	
+		fetch('botbar.html')
+			.then(response => response.text())
+			.then(data => document.getElementById('botbar').innerHTML = data);
+	</script>
+
+	<script>
+	    async function fetchStats() {
+	        const statsDiv = document.getElementById('stats');
+            const logDiv =  document.getElementById('logs');
+	        const errorDiv = document.getElementById('error');
+
+	        let password = sessionStorage.getItem('adminPassword');
+
+	        if (!password) {
+	            password = prompt("Skriv inn admin-passord:");
+	            if (!password) {
+	                errorDiv.textContent = "Ingen tilgang uten passord.";
+	                return;
+	            }
+	            sessionStorage.setItem('adminPassword', password);
+	        }
+
+	        try {
+	            const response = await fetch(`/admin-stats?password=${password}`);
+	            if (!response.ok) {
+	                throw new Error("Kunne ikke hente statistikk. Feil passord eller serverfeil.");
+	            }
+	            const data = await response.json();
+	            statsDiv.innerHTML = `
+	                <div class="stat"><strong>Unike brukere i dag:</strong> ${data.uniqueUsersToday}</div>
+	                <div class="stat"><strong>Unike brukere denne uken:</strong> ${data.uniqueUsersWeek}</div>
+	                <div class="stat"><strong>Unike brukere denne måneden:</strong> ${data.uniqueUsersMonth}</div><br>
+	                <div class="stat"><strong>Nye brukere i dag:</strong> ${data.createdToday}</div>
+	                <div class="stat"><strong>Nye brukere denne uken:</strong> ${data.createdWeek}</div>
+	                <div class="stat"><strong>Nye brukere denne måneden:</strong> ${data.createdMonth}</div><br>
+                    <div class="stat"><strong>Returnerte brukere i dag:</strong> ${data.returnedToday}</div>
+                    <div class="stat"><strong>Returnerte brukere denne uken:</strong> ${data.returnedWeek}</div>
+                    <div class="stat"><strong>Returnerte brukere denne måneden:</strong> ${data.returnedMonth}</div><br>
+	                <div class="stat"><strong>Total antall brukere:</strong> ${data.totalUsers}</div>
+	            `;
+	            errorDiv.textContent = ''; // Clear error message if stats loaded successfully
+
+                
+                if (data.logs) {
+                    data.logs.forEach((log) => {
+                        const logEntry = document.createElement('div');
+                        let type = 'message'; // Default type
+                        let timestamp = '';
+                        let message = log;
+
+                        // Detect and remove ANSI color codes
+                        const ansiRegex = /\x1b\[[0-9;]*m/g;
+                        const cleanedLog = log.replace(ansiRegex, '');
+
+                        // Parse the cleaned log for timestamp and message
+                        const logMatch = cleanedLog.match(/\[(\d{2}\/\d{2}\/\d{4} \d{2}:\d{2}:\d{2})\] (.+)/);
+                        if (logMatch) {
+                            const [_, parsedTimestamp, parsedMessage] = logMatch;
+                            timestamp = parsedTimestamp;
+                            message = parsedMessage;
+
+                            // Determine log type based on original ANSI color codes
+                            if (log.includes('\x1b[31m')) type = 'error';   // Red for errors
+                            if (log.includes('\x1b[33m')) type = 'warning'; // Yellow for warnings
+                            if (log.includes('\x1b[32m')) type = 'success'; // Green for success
+                        }
+
+                        // Create log entry
+                        logEntry.classList.add('log-entry', type);
+                        logEntry.innerHTML = `<strong>${timestamp}:</strong> ${message}`;
+                        logDiv.appendChild(logEntry);
+                    });
+                }
+
+	        } catch (error) {
+	            console.error(error);
+	            errorDiv.textContent = "Kunne ikke laste statistikk. Prøv igjen.";
+	            sessionStorage.removeItem('adminPassword'); // Clear saved password on failure
+	            statsDiv.innerHTML = ''; // Clear any partial data
+	        }
+	    }
+
+	    fetchStats();
+
+		function updateCurrentTime() {
+		const serverTime = new Date();
+
+		const formattedTime = serverTime.toLocaleString('en-US', {
+			timeZone: 'Europe/Oslo', // Ensure consistent formatting
+			hour12: false,   // Use 24-hour time
+			day: '2-digit',
+			month: '2-digit',
+			year: '2-digit',
+			hour: '2-digit',
+			minute: '2-digit',
+			second: '2-digit',
+		});
+
+		document.getElementById('current-time').textContent = formattedTime.replace(',', ''); // Format as dd/MM/yy hh:mm:ss
+}
+
+// Update time every second
+setInterval(updateCurrentTime, 1000);
+updateCurrentTime(); // Initial call to set time immediately
+	</script>
+	
+	<script src="global.js?v=100"></script>
+	<script src="saveandload.js?v=100"></script>
+</body>
+</html>

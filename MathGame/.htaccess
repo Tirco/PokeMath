@@ -22,7 +22,11 @@ RewriteCond %{REQUEST_URI} ^/app/ [NC]
 RewriteRule ^(.*)$ http://localhost:3002/$1 [P,L]
 
 # validate uuid attempt
-RewriteCond %{REQUEST_URI} ^/validate-uuid
+RewriteCond %{REQUEST_URI} ^/validate-user
+RewriteRule ^(.*)$ http://localhost:8080/$1 [P,L]
+
+# update user stats
+RewriteCond %{REQUEST_URI} ^/update-user-stats
 RewriteRule ^(.*)$ http://localhost:8080/$1 [P,L]
 
 # Set time zone

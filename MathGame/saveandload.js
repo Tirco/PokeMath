@@ -32,6 +32,7 @@ function saveLocalStorageToFile() {
 
     // Clean up the object URL
     URL.revokeObjectURL(a.href);
+    snoozeBackupAlertThreeDays();
 }
 
 //Old download function

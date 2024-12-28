@@ -81,11 +81,9 @@ function loadShopLocal(){
 
         if(levelIndicator != null) {
             level = Number(priceTag.getAttribute('data-level'));
-            console.log("level =" + level);
 
             if(priceTag != null) {
                 price = Number((priceTag.getAttribute('data-price')+ " ").replace(" ",""));
-                console.log("price =" + price);
             }
 
             if(levelIndicator.classList.contains("shinyLevel")) {
@@ -141,12 +139,10 @@ function loadShopLocal(){
 function shopButtonBuy(btn){
     parent = btn.parentNode;
     id = parent.id;
-    console.log(parent.id);
     var priceTag = parent.querySelector('.pricetag');
     price = -1;
     if(priceTag != null) {
         price = Number((priceTag.getAttribute('data-price')+ " ").replace(" ",""));
-        console.log("price = " + price);
     }
 
     if(price == -1 ) {
@@ -257,7 +253,6 @@ function shopButtonUse(btn) {
     price = -1;
     if(priceTag != null) {
         price = Number((priceTag.getAttribute('data-price')+ " ").replace(" ",""));
-        console.log("price = " + price);
     }
 
     if(price == -1 ) {
@@ -364,7 +359,6 @@ function shopButtonUpgrade(btn){
     maxLevel = -1;
     if(priceTag != null) {
         price = Number((priceTag.getAttribute('data-price')+ " ").replace(" ",""));
-        console.log("price = " + price);
     }
 
     if(levelIndicator != null) {

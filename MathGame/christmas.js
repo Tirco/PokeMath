@@ -238,6 +238,7 @@ function openHatch(date) {
         addSpecificToPokedex("S789-C1");
         createFireworks();
     }
+    getOrCreateUUID();
 }
 
 function addMoney(value) {
@@ -294,7 +295,6 @@ const createCalendar = async () => {
      }
 
     if(checkACookieExists("cookies")) {
-        getOrCreateUUID();
     } else {
         const toast = new Toast({
             text: "Du har ikke godkjent bruken av Cookies, så vi kan ikke lagre din spillerdate på din enhet.",

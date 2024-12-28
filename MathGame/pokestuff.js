@@ -152,7 +152,7 @@ function createEventPokemon(eventName) {
     let randomVarietyObject = getRandomProperty(eventSubKeys);
     const pkmnId = randomVarietyObject.id;
     let specialId = pkmnId + "-" + randomVarietyObject.specialId;
-    log(specialId);
+    log("Capturing special pokemon - " + specialId);
     addToPokedex(specialId)
 }
 
@@ -206,7 +206,7 @@ function addSpecificToPokedex(entry) {
 
 async function loadAmountFromList(amount, reverse, log) {
   if(pokedex == null) {
-    log("Attempted to load " + amount + "from list, but there was no pokedex")
+    log("Attempted to load " + amount + "from list, but there was no pokedex!")
     return; //cancel, there is no dex
   }
   pokedex.innerHTML = "";
@@ -245,10 +245,45 @@ function removeItemAll(arr, value) {
   return arr;
 }
 
+
+
+const generationRanges = {
+  1: [1, 151],          // Gen I
+  2: [152, 251],        // Gen II
+  3: [252, 386],        // Gen III
+  4: [387, 493],        // Gen IV
+  5: [494, 649],        // Gen V
+  6: [650, 721],        // Gen VI
+  7: [722, 809],        // Gen VII
+  8: [810, 898],        // Gen VIII
+  9: [899, 1025]        // Gen IX
+};
+
+
+// Special handling for forms
+const specialForms = {
+  "Hisuian": 4,
+  "Alolan": 7
+};
+
+// Determine generation based on ID
+function getGenerationForId(id, name) {
+  
+  if (name.includes("Hisuian")) return specialForms.Hisuian;
+  if (name.includes("Alolan")) return specialForms.Alolan;
+
+  for (const [gen, range] of Object.entries(generationRanges)) {
+      if (id >= range[0] && id <= range[1]) {
+          return parseInt(gen);
+      }
+  }
+
+  return 0;
+}
+
 function loadFromList(entry, firstLoad = false, capture = false, returnString) { 
-  log("Parsing entry - " + entry);
   if (entry == null || entry === "") {
-    log("Error - No entry provided during LoadFromList!");
+    log("Error - No entry provided during LoadFromList!" + entry);
     return;
   }
 
@@ -274,6 +309,7 @@ function loadFromList(entry, firstLoad = false, capture = false, returnString) {
   var imageId = 0;
   var imageLink = "";
   var repeatMultiplier = 1;
+  var generationText = "";
 
   if(entry.includes('-')) { //There's something Special!
     try{
@@ -373,7 +409,9 @@ function loadFromList(entry, firstLoad = false, capture = false, returnString) {
     imageLink = `images/pokemon/normal/${imageId}.png`
   }
 
-  let filterText = ("filtered #"+entry+ " " + shinyText+" " + legendaryText+ pkmnName);
+  generationText = "gen-"+ getGenerationForId(id,pkmnName);
+
+  let filterText = ("filtered #"+entry+ " " + shinyText+" " + legendaryText+ pkmnName + " " + generationText);
   let pkmnType = ''
   const types = pkmnTypes.forEach((type) => {
       pkmnType += `<span class="typecard type-${type}">${type}</span>`
