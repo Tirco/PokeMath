@@ -1,6 +1,7 @@
-# ── Admin panel ──────────────────────────────────────────────────────────────
+# ── Admin panel & server ─────────────────────────────────────────────────────
 pokemorten.html
 pokemorten.css
+server.js
 
 # ── Third-party data files ────────────────────────────────────────────────────
 pokemon.csv
@@ -17,6 +18,11 @@ bingo_logs/
 # ── Images (large binary assets) ─────────────────────────────────────────────
 images/
 fonts/
+
+# ── Development tools & local config ─────────────────────────────────────────
+.claude/
+.dh-diag/
+secret/
 
 # ── OS / editor junk ─────────────────────────────────────────────────────────
 .DS_Store
