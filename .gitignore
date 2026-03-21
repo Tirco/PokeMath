@@ -1,0 +1,26 @@
+# ── Admin panel ──────────────────────────────────────────────────────────────
+pokemorten.html
+pokemorten.css
+
+# ── Third-party data files ────────────────────────────────────────────────────
+pokemon.csv
+
+# ── Sensitive / environment ───────────────────────────────────────────────────
+.env
+.env.*
+!.env.example
+
+# ── Server runtime ────────────────────────────────────────────────────────────
+node_modules/
+bingo_logs/
+
+# ── Images (large binary assets) ─────────────────────────────────────────────
+images/
+fonts/
+
+# ── OS / editor junk ─────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+*.log

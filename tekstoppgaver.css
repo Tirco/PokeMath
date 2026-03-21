@@ -1,0 +1,106 @@
+:root { --bg:#0f172a; --card:#111827; --ink:#e5e7eb; --muted:#9ca3af; --accent:#60a5fa; --ok:#22c55e; --bad:#ef4444; }
+    html,body{height:100%}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Inter,Arial,sans-serif;background:linear-gradient(180deg,#0b1023,#0f172a 35%,#0b1023);color:var(--ink);display:grid;place-items:center;padding:24px}
+    .app{width:min(900px,100%);}
+    .card{background:linear-gradient(180deg,#0f172a,#0b1023);border:1px solid #1f2937;box-shadow:0 10px 30px rgba(0,0,0,.25);border-radius:18px;padding:20px}
+    h1{font-size:clamp(20px,2vw,28px);margin:0 0 12px}
+    .meta{font-size:12px;color:var(--muted)}
+    .problem{font-size:clamp(18px,2.2vw,22px);line-height:1.4;margin:14px 0 6px}
+    .input-row{display:flex;gap:10px;align-items:center;margin:12px 0 2px}
+    input[type="text"]{flex:1;min-width:0;background:#0b1222;border:1px solid #243043;color:var(--ink);border-radius:12px;padding:12px 14px;font-size:18px;outline:none}
+    input[type="text"]::placeholder{color:#64748b}
+    .btns{display:flex;gap:10px;flex-wrap:wrap;margin:8px 0}
+    button{background:#0b1222;border:1px solid #243043;color:var(--ink);border-radius:12px;padding:10px 14px;font-size:15px;cursor:pointer}
+    button:hover{border-color:#334155}
+    .primary{background:linear-gradient(180deg,#1d4ed8,#2563eb);border-color:#1e40af}
+    .primary:hover{filter:brightness(1.05)}
+    .ghost{background:transparent}
+    .status{min-height:24px;margin-top:6px;font-weight:600}
+    .ok{color:var(--ok)}
+    .bad{color:var(--bad)}
+    details{margin-top:10px}
+    .pill{display:inline-block;border:1px solid #334155;padding:2px 8px;border-radius:999px;font-size:12px;color:#cbd5e1}
+    .grid{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:start}
+      /* --- Nivå og teller UI --- */
+    .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+    select{background:#0b1222;border:1px solid #243043;color:var(--ink);border-radius:10px;padding:10px 12px;font-size:14px}
+    .levelbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+    .lv-pill{padding:4px 10px;border-radius:999px;border:1px solid #334155;font-size:12px}
+    .lv-0{background:#064e3b}
+    .lv-1{background:#854d0e}
+    .lv-2{background:#7f1d1d}
+    .lv-3{background:#111827}
+    .lv-4{background:#0b1023}
+    .lv-0,.lv-1,.lv-2,.lv-3,.lv-4{color:#e5e7eb}
+    .counters{margin-top:6px;font-size:14px;color:#cbd5e1}
+    .counters b{color:#e5e7eb}
+    /* Disclaimer */
+    /* Disclaimer */
+    #disclaimer {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      background: rgba(17,24,39,0.95);
+      border: 1px solid #374151;
+      padding: 12px 16px;
+      border-radius: 12px;
+      color: var(--muted);
+      font-size: 14px;
+      max-width: 260px;
+      box-shadow: 0 4px 12px rgba(0,0,0,.3);
+      z-index: 1000;
+      transition: opacity .3s ease;
+      }
+      #disclaimer.hide {opacity:0;pointer-events:none;}
+      #disclaimer button {
+      background:none;border:none;color:var(--muted);cursor:pointer;float:right;font-size:16px;line-height:1;margin:-4px -4px 0 8px;
+    }
+    /* Kylling-mascot */
+    #chicken {
+    left: 16px;
+    bottom: 0px;
+    width: 96px; height: 96px;
+    display: grid; place-items: center;
+    background: rgba(17,24,39,0.8);
+    border: 1px solid #374151;
+    border-radius: 14px;
+    box-shadow: 0 6px 14px rgba(0,0,0,.35);
+    user-select: none;
+    z-index: 999;
+    transition: transform .2s ease;
+    position: relative; /* so ::after is positioned relative to it */
+    overflow: visible;  /* let the bubble show outside */
+    }
+    #chicken .emoji { font-size: 36px; line-height: 1; }
+    #chicken::after{
+    content: '';
+    position: absolute; top: -6px; right: -6px;
+    width: 22px; height: 22px; border-radius: 50%;
+    background: transparent; color: white; display: grid; place-items: center;
+    font-size: 14px; box-shadow: 0 2px 6px rgba(0,0,0,.3);
+    opacity: 0; transform: scale(.8);
+    transition: opacity .2s ease, transform .2s ease;}
+    #chicken.happy::after {
+      content: '❤';
+      background: #16a34a;
+      opacity: 1;
+      transform: scale(1);
+      color: white;
+    }
+
+    #chicken.sad::after {
+      content: '💧';
+      background: #ef4444;
+      opacity: 1;
+      transform: scale(1);
+      color: white;
+    }
+
+
+    /* Animasjoner */
+    @keyframes hop { 0%{transform: translateY(0)} 20%{transform: translateY(-10px)} 40%{transform: translateY(0)} 60%{transform: translateY(-6px)} 100%{transform: translateY(0)} }
+    @keyframes shake { 0%,100%{transform: translateX(0) rotate(0)} 20%{transform: translateX(-4px) rotate(-3deg)} 40%{transform: translateX(4px) rotate(3deg)} 60%{transform: translateX(-3px) rotate(-2deg)} 80%{transform: translateX(3px) rotate(2deg)} }
+
+
+    #chicken.hop { animation: hop .9s ease; }
+    #chicken.shake { animation: shake .6s ease; }

@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speedrun</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f7f7;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h1 {
+            margin-top: 20px;
+        }
+        .container {
+            margin: 20px;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .settings {
+            margin-bottom: 20px;
+        }
+        .task-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .task {
+            min-width: 100px;
+            min-height: 100px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            max-width: 100%;
+            word-wrap: break-word;
+            box-sizing: border-box;
+        }
+        .task .question {
+            font-size: 1em;
+            margin-bottom: 10px;
+        }
+
+        .task .number {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .task input {
+            width: 80%;
+            padding: 5px;
+            font-size: 1em;
+            text-align: center;
+        }
+        .task input::-webkit-outer-spin-button,
+        .task input::-webkit-inner-spin-button {
+            -webkit-appearance: none; /* Remove spinners in Chrome, Safari, Edge, and Opera */
+            margin: 0;
+        }
+        .task input.numerator {
+            margin-bottom: 5px;
+        }
+        .task input.denominator {
+            margin-top: 5px;
+        }
+        .task.correct {
+            background-color: #d4edda;
+        }
+        .task.incorrect {
+            background-color: #f8d7da;
+        }
+        .task.besvart {
+            background-color: #fff3cd;
+        }
+        .hidden {
+            display: none;
+        }
+        .fraction {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 1.2em;
+        }
+        .fraction .line {
+            border-top: 2px solid #000;
+            width: 100%;
+            height: 1px;
+        }
+        #resultPopup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(255, 255, 255, 0.75); /* Semi-transparent background */
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            text-align: center;
+            max-width: 300px;
+            word-wrap: break-word;
+        }
+        #resultPopup button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #resultPopup button:hover {
+            background-color: #0056b3;
+        }
+        #timerDisplay {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            font-size: 1.2em;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Speedrun</h1>
+    <div class="container">
+        <div class="settings">
+            Oppdatert: 23.01.2025<br>
+            <label for="topic">Velg tema:</label>
+            <select id="topic">
+                <option value="tiervenner">Tiervenner</option>
+                <option value="hundrervenner">Hundrervenner</option>
+                <option value="lille_gangetabellen">Den lille gangetabellen</option>
+                <option value="store_gangetabellen">Den store gangetabellen</option>
+                <option value="addisjon">Addisjon A</option>
+                <option value="addisjon_b">Addisjon B</option>
+                <option value="addisjon_c">Addisjon C</option>
+                <option value="addisjon_d">Addisjon D</option>
+                <option value="addisjon_e">Addisjon E</option>
+                <option value="subtraksjon">Subtraksjon A</option>
+                <option value="subtraksjon_b">Subtraksjon B</option>
+                <option value="subtraksjon_c">Subtraksjon C</option>
+                <option value="subtraksjon_d">Subtraksjon D</option>
+                <option value="subtraksjon_e">Subtraksjon E</option>
+                <option value="multiplikasjon_a">Multiplikasjon a x bb</option>
+                <option value="multiplikasjon_b">Multiplikasjon a x bbb</option>
+                <option value="multiplikasjon_c">Multiplikasjon aa x bbb</option>
+                <option value="multiplikasjon_d">Multiplikasjon aaa x bbb</option>
+                <option value="multiplikasjon_e">Multiplikasjon a(aaa) x b(bbb)</option>
+                <option value="utvide_brok">Utvide brøk A</option>
+                <option value="utvide_brok_b">Utvide brøk B</option>
+                <option value="utvide_brok_c">Utvide brøk C</option>
+                <option value="forkorte_brok">Forkorte brøk A</option>
+                <option value="forkorte_brok_b">Forkorte brøk B</option>
+                <option value="forkorte_brok_c">Forkorte brøk C</option>
+            </select>
+            <br>
+            <label for="amount">Velg mengde:</label>
+            <select id="amount">
+                <option value="5">5 Oppgaver</option>
+                <option value="10">10 Oppgaver</option>
+                <option value="25">25 Oppgaver</option>
+                <option value="50">50 Oppgaver</option>
+                <option value="100">100 Oppgaver</option>
+                <option value="250">250 Oppgaver</option>
+                <option value="500">500 Oppgaver</option>
+            </select>
+            <br><br>
+            <input type="checkbox" id="timer" />
+            <label for="timer">Ta tiden</label>
+            <input type="checkbox" id="showTimer" />
+            <label for="showTimer">Vis tiden</label>
+            <br>
+            <input type="checkbox" id="immediateFeedback"/>
+            <label for="immediateFeedback">Marker feil umiddelbart</label>
+            <br>
+            <br>
+            <button onclick="startExercise()">Start</button>
+            
+        </div>
+
+        <div id="timerDisplay">0.0 sekunder</div>
+
+        <div id="taskSection" class="task-container hidden"></div>
+
+        <div id="resultPopup" class="hidden">
+            <p id="resultMessage"></p>
+            <button onclick="closePopUp()">OK</button>
+            <button onclick="resetExercise()">Prøv igjen</button>
+        </div>
+    </div>
+
+    <script>
+        let timerInterval;
+        let startTime = 0;
+
+        document.getElementById('timer').addEventListener('change', () => {
+            const showTimerCheckbox = document.getElementById('showTimer');
+            if (!document.getElementById('timer').checked) {
+                showTimerCheckbox.checked = false;
+                document.getElementById('timerDisplay').style.display = 'none';
+            }
+        });
+
+        document.getElementById('showTimer').addEventListener('change', () => {
+            const timerEnabled = document.getElementById('timer').checked;
+            if(!timerEnabled) {
+                document.getElementById('showTimer').checked = false;
+                return;
+            }
+            const showTimer = document.getElementById('showTimer').checked;
+
+            if (timerEnabled && showTimer) {
+                startTimer();
+            } else {
+                stopTimer();
+            }
+        });
+
+        function startTimer() {
+            const timerDisplay = document.getElementById('timerDisplay');
+            timerDisplay.style.display = 'block';
+
+            timerInterval = setInterval(() => {
+                const elapsed = ((Date.now() - startTime) / 1000).toFixed(1);
+                if(startTime != 0)
+                timerDisplay.textContent = `${elapsed} sekunder`;
+            }, 100);
+        }
+
+        function stopTimer() {
+            const timerDisplay = document.getElementById('timerDisplay');
+            timerDisplay.style.display = 'none';
+            clearInterval(timerInterval);
+        }
+
+
+        let correctCount = 0;
+        let tasksCompleted = 0;
+
+        function startExercise() {
+            const taskSection = document.getElementById('taskSection');
+            taskSection.innerHTML = '';
+            taskSection.classList.remove('hidden');
+
+            const timerEnabled = document.getElementById('timer').checked;
+            if (timerEnabled) startTime = Date.now();
+
+            correctCount = 0;
+            tasksCompleted = 0;
+
+            const topic = document.getElementById('topic').value;
+            const amount = document.getElementById('amount').value;
+
+            for (let i = 0; i < amount; i++) {
+                const task = document.createElement('div');
+                task.className = 'task';
+
+                if (topic === 'tiervenner' || topic === 'hundrervenner') {
+                    const isHundrervenner = topic === 'hundrervenner';
+                    const max = isHundrervenner ? 99 : 9;
+                    const goal = isHundrervenner ? 100 : 10;
+
+                    const number = Math.floor(Math.random() * max) + 1;
+
+                    const questionDiv = document.createElement('div');
+                    questionDiv.className = 'question';
+                    questionDiv.textContent = `Hva mangler for å få ${goal}?`;
+                    task.appendChild(questionDiv);
+
+                    const numberDiv = document.createElement('div');
+                    numberDiv.className = 'number';
+                    numberDiv.textContent = number;
+                    task.appendChild(numberDiv);
+
+                    const input = document.createElement('input');
+                    input.type = 'number';
+                    input.placeholder = 'Svar';
+                    input.oninput = () => checkAnswer(task, topic, input, { number, goal });
+                    task.appendChild(input);
+                } else if(topic === 'addisjon' || topic === 'addisjon_b' || topic === 'addisjon_c' || topic === 'addisjon_d' || topic === 'addisjon_e') {
+                    let min, max, minl, maxl;
+
+                    switch (topic) {
+                        case 'addisjon':
+                            min = 5;
+                            max = 10;
+                            minl = 0;
+                            break;
+                        case 'addisjon_b':
+                            min = 10;
+                            max = 20;
+                            minl = 7;
+                            break;
+                        case 'addisjon_c':
+                            min = 50;
+                            max = 100;
+                            minl = 10;
+                            break;
+                        case 'addisjon_d':
+                            min = 100;
+                            max = 1000;
+                            minl = 60;
+                            break;
+                        case 'addisjon_e':
+                            min = 50000;
+                            max = 100000;
+                            minl = 1000;
+                            break;
+                        default:
+                            min = 5;
+                            max = 10;
+                            minl = 0;
+                    }
+
+                    const answer = Math.floor(Math.random() * (max-min) + min); 
+                    const num1 = Math.floor(Math.random() * (min - minl) + minl);
+                    const num2 = answer - num1;
+
+                    const questionDiv = document.createElement('div');
+                    questionDiv.className = 'question';
+                    questionDiv.textContent = `${num1} + ${num2} = ?`;
+                    task.appendChild(questionDiv);
+
+                    const input = document.createElement('input');
+                    input.type = 'number';
+                    input.placeholder = 'Svar';
+                    input.oninput = () => {
+                        checkAnswer(task, topic, input, answer);
+                    }
+                    task.appendChild(input);
+                } else if(topic === 'subtraksjon' || topic === 'subtraksjon_b' || topic === 'subtraksjon_c' || topic === 'subtraksjon_d' || topic === 'subtraksjon_e') {
+                    let min, max, minl, maxl;
+
+                    switch (topic) {
+                        case 'subtraksjon':
+                            min = 5;
+                            max = 10;
+                            minl = 0;
+                            break;
+                        case 'subtraksjon_b':
+                            min = 10;
+                            max = 20;
+                            minl = 7;
+                            break;
+                        case 'subtraksjon_c':
+                            min = 50;
+                            max = 100;
+                            minl = 10;
+                            break;
+                        case 'subtraksjon_d':
+                            min = 100;
+                            max = 1000;
+                            minl = 60;
+                            break;
+                        case 'subtraksjon_e':
+                            min = 50000;
+                            max = 100000;
+                            minl = 1000;
+                            break;
+                        default:
+                            min = 5;
+                            max = 10;
+                            minl = 0;
+                    }
+
+                    const num1 = Math.floor(Math.random() * (max-min) + min); 
+                    const num2 = Math.floor(Math.random() * (min - minl) + minl);
+                    const answer = num1 - num2;
+
+                    const questionDiv = document.createElement('div');
+                    questionDiv.className = 'question';
+                    questionDiv.textContent = `${num1} - ${num2} = ?`;
+                    task.appendChild(questionDiv);
+
+                    const input = document.createElement('input');
+                    input.type = 'number';
+                    input.placeholder = 'Svar';
+                    input.oninput = () => {
+                        checkAnswer(task, topic, input, answer);
+                    }
+                    task.appendChild(input);
+                } else if (topic === 'lille_gangetabellen') {
+                    const factor1 = Math.floor(Math.random() * 10) + 1;
+                    const factor2 = Math.floor(Math.random() * 10) + 1;
+
+                    const questionDiv = document.createElement('div');
+                    questionDiv.className = 'question';
+                    questionDiv.textContent = `${factor1} x ${factor2} = ?`;
+                    task.appendChild(questionDiv);
+
+                    const input = document.createElement('input');
+                    input.type = 'number';
+                    input.placeholder = 'Svar';
+                    input.oninput = () => checkMultiplicationAnswer(task, input, factor1, factor2);
+                    task.appendChild(input);
+                } else if (topic === 'store_gangetabellen') {
+                    const factor1 = Math.floor(Math.random() * 100) + 1;
+                    const factor2 = Math.floor(Math.random() * 100) + 1;
+
+                    const questionDiv = document.createElement('div');
+                    questionDiv.className = 'question';
+                    questionDiv.textContent = `${factor1} x ${factor2} = ?`;
+                    task.appendChild(questionDiv);
+
+                    const input = document.createElement('input');
+                    input.type = 'number';
+                    input.placeholder = 'Svar';
+                    input.oninput = () => checkMultiplicationAnswer(task, input, factor1, factor2);
+                    task.appendChild(input);
+                } else if (topic.startsWith('multiplikasjon')) {
+                    let factora, factorb;
+                    switch(topic) {
+                        case 'multiplikasjon_a':
+                            factora = Math.floor(Math.random() * 10) + 1;
+                            factorb = Math.floor(Math.random() * 90) + 10;
+                            break;
+                        case 'multiplikasjon_b':
+                            factora = Math.floor(Math.random() * 10) + 1;
+                            factorb = Math.floor(Math.random() * 900) + 100;
+                            break;
+                        case 'multiplikasjon_c':
+                            factora = Math.floor(Math.random() * 90) + 10;
+                            factorb = Math.floor(Math.random() * 900) + 100;
+                            break;
+                        case 'multiplikasjon_d':
+                            factora = Math.floor(Math.random() * 900) + 100;
+                            factorb = Math.floor(Math.random() * 900) + 100;
+                            break;
+                        case 'multiplikasjon_e':
+                            factora = Math.floor(Math.random() * 9999) + 1;
+                            factorb = Math.floor(Math.random() * 9999) + 1;
+                            break;
+                    }
+                    const factor1 = factora
+                    const factor2 = factorb
+
+                    const questionDiv = document.createElement('div');
+                    questionDiv.className = 'question';
+                    questionDiv.textContent = `${factor1} x ${factor2} = ?`;
+                    task.appendChild(questionDiv);
+
+                    const input = document.createElement('input');
+                    input.type = 'number';
+                    input.placeholder = 'Svar';
+                    input.oninput = () => checkMultiplicationAnswer(task, input, factor1, factor2);
+                    task.appendChild(input);
+                } else if (topic === 'forkorte_brok' || topic === 'forkorte_brok_b' || topic === 'forkorte_brok_c' || topic === 'utvide_brok' || topic === 'utvide_brok_b' || topic === 'utvide_brok_c') {
+                    let tempQ = null;
+                    if(topic == 'forkorte_brok') {
+                        tempQ = generateReduceFraction();
+                    } else if( topic == 'forkorte_brok_b') {
+                        tempQ = generateReduceFractionB()
+                    } else if( topic == 'forkorte_brok_c') {
+                        tempQ = generateReduceFractionC()
+                    } else if( topic == 'utvide_brok') {
+                        tempQ = generateExpandFraction();
+                    } else if( topic == 'utvide_brok_b') {
+                        tempQ = generateExpandFractionB();
+                    } else if( topic == 'utvide_brok_c') {
+                        tempQ = generateExpandFractionC();
+                    }
+
+                    const question = tempQ;
+
+                    const questionDiv = createFractionElement(question.numerator, question.denominator);
+
+                    const instruction = document.createElement('div');
+                    if (topic === 'forkorte_brok' || topic === 'forkorte_brok_b' || topic === 'forkorte_brok_c') {
+                        instruction.textContent = 'Forkort brøken så mye som mulig';
+                    } else {
+                        instruction.textContent = `Utvid med ${question.multiplier}`;
+                    }
+                    instruction.style.fontSize = '0.9em';
+                    instruction.style.marginBottom = '10px';
+
+                    const numeratorInput = document.createElement('input');
+                    numeratorInput.className = 'numerator';
+                    numeratorInput.type = 'number';
+                    numeratorInput.placeholder = 'Teller';
+
+                    const denominatorInput = document.createElement('input');
+                    denominatorInput.className = 'denominator';
+                    denominatorInput.type = 'number';
+                    denominatorInput.placeholder = 'Nevner';
+
+                    numeratorInput.oninput = () =>
+                        checkAnswer(task, topic, { numeratorInput, denominatorInput }, question);
+                    denominatorInput.oninput = () =>
+                        checkAnswer(task, topic, { numeratorInput, denominatorInput }, question);
+
+                    task.appendChild(questionDiv);
+                    task.appendChild(instruction);
+                    task.appendChild(numeratorInput);
+                    task.appendChild(denominatorInput);
+                }
+
+                taskSection.appendChild(task);
+            }
+        }
+
+        function generateExpandFraction() {
+            const numerator = Math.floor(Math.random() * 10) + 1;
+            const denominator = numerator + Math.floor(Math.random() * 10) + 1;
+            const multiplier = Math.floor(Math.random() * 9) + 2;
+            return {
+                numerator: numerator,
+                denominator: denominator,
+                baseNumerator: numerator,
+                baseDenominator: denominator,
+                multiplier: multiplier
+            };
+        }
+
+        function generateExpandFractionB() {
+            const numerator = Math.floor(Math.random() * 15) + 1;
+            const denominator = numerator + Math.floor(Math.random() * 15);
+            const multiplier = Math.floor(Math.random() * 20) + 6;
+            return {
+                numerator: numerator,
+                denominator: denominator,
+                baseNumerator: numerator,
+                baseDenominator: denominator,
+                multiplier: multiplier
+            };
+        }
+
+        function generateExpandFractionC() {
+            const numerator = Math.floor(Math.random() * 1000) + 1;
+            const denominator = numerator + Math.floor(Math.random() * 1000);
+            const multiplier = Math.floor(Math.random() * 100) + 6;
+            return {
+                numerator: numerator,
+                denominator: denominator,
+                baseNumerator: numerator,
+                baseDenominator: denominator,
+                multiplier: multiplier
+            };
+        }
+
+        function checkMultiplicationAnswer(task, input, factor1, factor2) {
+            const userAnswer = parseInt(input.value, 10);
+            const correctAnswer = factor1 * factor2;
+
+            if (isNaN(userAnswer)) {
+                task.classList.remove('correct', 'incorrect');
+                return;
+            }
+
+            if(!immediateFeedback.checked) {
+                task.classList.add('besvart');
+            }
+            if (userAnswer === correctAnswer) {
+                if (!task.classList.contains('correct')) {
+                        correctCount++;
+                }
+                    task.classList.add('correct');
+                    task.classList.remove('incorrect');
+            } else {
+                if (task.classList.contains('correct')) {
+                    correctCount--;
+                }
+                task.classList.add('incorrect');
+                task.classList.remove('correct');
+            }
+                
+
+
+            tasksCompleted++;
+
+            const tasks = document.querySelectorAll('.task');
+            if (Array.from(tasks).every(t => t.querySelector('input')?.value)) {
+                finishExercise();
+            }
+        }
+
+        function generateReduceFraction() {
+            let baseNumerator, baseDenominator;
+            const multiplier = Math.floor(Math.random() * 5) + 2;
+
+            do {
+                baseNumerator = Math.floor(Math.random() * 10) + 1;
+                baseDenominator = baseNumerator + Math.floor(Math.random() * 5) + 1;
+            } while (gcd(baseNumerator, baseDenominator) === 1);
+
+            const gcdValue = gcd(baseNumerator, baseDenominator);
+            return {
+                numerator: baseNumerator * multiplier,
+                denominator: baseDenominator * multiplier,
+                baseNumerator: baseNumerator / gcdValue,
+                baseDenominator: baseDenominator / gcdValue
+            };
+        }
+
+        function gcd(a, b) {
+            return b === 0 ? a : gcd(b, a % b);
+        }
+
+        function generateReduceFractionB() {
+            let baseNumerator, baseDenominator;
+            const multiplier = Math.floor(Math.random() * 12) + 2;
+
+            do {
+                baseNumerator = Math.floor(Math.random() * 12) + 1;
+                baseDenominator = baseNumerator + Math.floor(Math.random() * 12) + 0;
+            } while (gcd(baseNumerator, baseDenominator) === 1);
+
+            const gcdValue = gcd(baseNumerator, baseDenominator);
+            return {
+                numerator: baseNumerator * multiplier,
+                denominator: baseDenominator * multiplier,
+                baseNumerator: baseNumerator / gcdValue,
+                baseDenominator: baseDenominator / gcdValue
+            };
+        }
+
+        function generateReduceFractionC() {
+            let baseNumerator, baseDenominator;
+            const multiplier = Math.floor(Math.random() * 30) + 2;
+
+            do {
+                baseNumerator = Math.floor(Math.random() * 30) + 1;
+                baseDenominator = Math.floor(Math.random() * 50) + 1;
+            } while (gcd(baseNumerator, baseDenominator) === 1);
+
+            const gcdValue = gcd(baseNumerator, baseDenominator);
+            return {
+                numerator: baseNumerator * multiplier,
+                denominator: baseDenominator * multiplier,
+                baseNumerator: baseNumerator / gcdValue,
+                baseDenominator: baseDenominator / gcdValue
+            };
+        }
+
+        function gcd(a, b) {
+            return b === 0 ? a : gcd(b, a % b);
+        }
+
+        function createFractionElement(numerator, denominator) {
+            const fractionDiv = document.createElement('div');
+            fractionDiv.className = 'fraction';
+
+            const numeratorDiv = document.createElement('div');
+            numeratorDiv.textContent = numerator;
+
+            const lineDiv = document.createElement('div');
+            lineDiv.className = 'line';
+
+            const denominatorDiv = document.createElement('div');
+            denominatorDiv.textContent = denominator;
+
+            fractionDiv.appendChild(numeratorDiv);
+            fractionDiv.appendChild(lineDiv);
+            fractionDiv.appendChild(denominatorDiv);
+
+            return fractionDiv;
+        }
+
+            function checkAnswer(task, topic, input, question) {
+            if (topic === 'tiervenner' || topic === 'hundrervenner') {
+                const goal = topic === 'hundrervenner' ? 100 : 10;
+                const number = parseInt(task.querySelector('.number').textContent, 10);
+                const userAnswer = parseInt(input.value, 10);
+
+                if (isNaN(userAnswer)) {
+                    task.classList.remove('correct', 'incorrect', 'besvart');
+                    return;
+                }
+
+                const correctAnswer = goal - number;
+
+                if (!immediateFeedback.checked) {
+                    task.classList.add('besvart');
+                }
+
+                if (userAnswer === correctAnswer) {
+                    task.classList.add('correct');
+                    task.classList.remove('incorrect');
+                } else {
+                    task.classList.add('incorrect');
+                    task.classList.remove('correct');
+                }
+            } else if (topic === 'addisjon' || topic === 'addisjon_b' || topic === 'addisjon_c' || topic === 'addisjon_d' || topic === 'addisjon_e') {
+                if (!immediateFeedback.checked) {
+                    task.classList.add('besvart');
+                }
+
+                if (parseInt(input.value, 0) === question) {
+                    task.classList.add('correct');
+                    task.classList.remove('incorrect');
+                } else {
+                    task.classList.add('incorrect');
+                    task.classList.remove('correct');
+                }
+            } else if (topic  === 'subtraksjon' || topic === 'subtraksjon_b' || topic === 'subtraksjon_c' || topic === 'subtraksjon_d' || topic === 'subtraksjon_e') {
+                if (!immediateFeedback.checked) {
+                    task.classList.add('besvart');
+                }
+
+                if (parseInt(input.value, 0) === question) {
+                    task.classList.add('correct');
+                    task.classList.remove('incorrect');
+                } else {
+                    task.classList.add('incorrect');
+                    task.classList.remove('correct');
+                }
+            } else if (topic === 'forkorte_brok' || topic === 'forkorte_brok_b' || topic === 'forkorte_brok_c') {
+                const numeratorInput = task.querySelector('.numerator');
+                const denominatorInput = task.querySelector('.denominator');
+                const userNumerator = parseInt(numeratorInput.value, 10);
+                const userDenominator = parseInt(denominatorInput.value, 10);
+
+                if (isNaN(userNumerator) || isNaN(userDenominator)) {
+                    task.classList.remove('correct', 'incorrect', 'besvart');
+                    return;
+                }
+
+                const simplifiedAnswer = getLowestFraction(question.numerator, question.denominator);
+
+                if (!immediateFeedback.checked) {
+                    task.classList.add('besvart');
+                }
+
+                if (
+                    userNumerator === simplifiedAnswer.numerator &&
+                    userDenominator === simplifiedAnswer.denominator
+                ) {
+                    task.classList.add('correct');
+                    task.classList.remove('incorrect');
+                } else {
+                    task.classList.add('incorrect');
+                    task.classList.remove('correct');
+                }
+            } else if (topic === 'utvide_brok' || topic === 'utvide_brok_b' || topic === 'utvide_brok_c') {
+                const numeratorInput = task.querySelector('.numerator');
+                const denominatorInput = task.querySelector('.denominator');
+                const userNumerator = parseInt(numeratorInput.value, 10);
+                const userDenominator = parseInt(denominatorInput.value, 10);
+
+                if (isNaN(userNumerator) || isNaN(userDenominator)) {
+                    task.classList.remove('correct', 'incorrect', 'besvart');
+                    return;
+                }
+
+                if (!immediateFeedback.checked) {
+                    task.classList.add('besvart');
+                }
+
+                if (
+                    userNumerator === question.numerator * question.multiplier &&
+                    userDenominator === question.denominator * question.multiplier
+                ) {
+                    task.classList.add('correct');
+                    task.classList.remove('incorrect');
+                } else {
+                    task.classList.add('incorrect');
+                    task.classList.remove('correct');
+                }
+            }
+
+            tasksCompleted++;
+
+            const tasks = document.querySelectorAll('.task');
+            if (Array.from(tasks).every(t => t.querySelector('input')?.value)) {
+                finishExercise();
+            }
+        }
+
+
+        function getLowestFraction(numerator, denominator) {
+                // Finn GCD og del teller og nevner for å få laveste form
+                const gcdValue = gcd(numerator, denominator);
+                return {
+                    numerator: numerator / gcdValue,
+                    denominator: denominator / gcdValue
+                };
+            }
+
+
+        function handleEnterKey(event, index) {
+            const allowedKeys = ['+', '-', ',', '.', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+            if (!allowedKeys.includes(event.key)) {
+                const inputs = document.querySelectorAll('.task input');
+                if (index + 1 < inputs.length) {
+                    inputs[index + 1].focus(); // Gå til neste inputfelt
+                } else {
+                    inputs[0].focus(); // Hvis siste input, gå tilbake til starten
+                }
+                event.preventDefault(); // Forhindre standard handling
+            }
+        }
+
+        function finishExercise() {
+            const tasks = document.querySelectorAll('.task');
+            correctCount = 0;
+
+            tasks.forEach((task) => {
+                if (task.classList.contains('correct')) {
+                    correctCount++;
+                }
+            });
+
+            const timerEnabled = document.getElementById('timer').checked;
+            const timeTaken = timerEnabled ? ((Date.now() - startTime) / 1000).toFixed(2) : null;
+            const averageTimePerTask = timerEnabled ? (timeTaken / tasks.length).toFixed(2) : null;
+
+            const resultMessage = `Du hadde ${correctCount} av ${tasks.length} rette.<br>` +
+                `(${(correctCount / tasks.length * 100).toFixed(1)}%)<br><br>` +
+                (timerEnabled ? `Du brukte ${timeTaken} sekunder.<br><br>Gjennomsnittlig tid per oppgave: ${averageTimePerTask} sekunder.` : '');
+
+            document.getElementById('resultMessage').innerHTML = resultMessage;
+            document.getElementById('resultPopup').classList.remove('hidden');
+
+            tasks.forEach((task) => {
+                task.classList.remove('besvart');
+            });
+            clearInterval(timerInterval);
+        }
+
+        function resetExercise() {
+            const taskSection = document.getElementById('taskSection');
+            const resultPopup = document.getElementById('resultPopup');
+
+            if (taskSection) {
+                taskSection.classList.add('hidden');
+            }
+            if (resultPopup) {
+                resultPopup.classList.add('hidden');
+            }
+
+            // Clear any existing task inputs or results
+            if (taskSection) {
+                taskSection.innerHTML = '';
+            }
+
+            correctCount = 0;
+            tasksCompleted = 0;
+        }
+
+        function closePopUp() {
+            const resultPopup = document.getElementById('resultPopup');
+            if (resultPopup) {
+                resultPopup.classList.add('hidden');
+            }
+        }
+        </script>
+</body>
+</html>

@@ -1,0 +1,373 @@
+/* ── Easter Event Styles ──────────────────────────────────────────────────── */
+:root {
+  --eg:          #3a9d5c;
+  --eg-light:    #d4f5e2;
+  --eg-dark:     #1e6e3a;
+  --eg-glow:     rgba(58,157,92,0.35);
+  --shadow:      0 4px 20px rgba(0,0,0,.08);
+  --card-border: 1.5px solid rgba(58,157,92,.22);
+  --radius:      14px;
+}
+
+body {
+  background: linear-gradient(150deg, #d0f0db 0%, #edf9f0 35%, #fdf8e1 70%, #fff0f5 100%);
+  min-height: 100vh;
+}
+
+/* ── Page wrapper ──────────────────────────────────────────────────────────── */
+.easter-page {
+  max-width: 980px;
+  margin: 50px auto 60px;
+  padding: 20px 20px 60px;
+}
+
+.easter-page h1 {
+  font-size: 2rem;
+  font-weight: 900;
+  background: linear-gradient(90deg, var(--eg-dark), #2d8f6f, var(--eg));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-align: center;
+  margin: 0 0 6px;
+  letter-spacing: -.02em;
+}
+
+.easter-page > p {
+  text-align: center;
+  color: #666;
+  margin: 0 0 20px;
+  font-size: .95rem;
+}
+
+/* ── Countdown ─────────────────────────────────────────────────────────────── */
+.easter-countdown {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--eg-dark);
+  background: linear-gradient(135deg, var(--eg-light) 0%, #fffce8 100%);
+  border: 1.5px solid rgba(58,157,92,.3);
+  border-radius: var(--radius);
+  padding: 12px 20px;
+  margin-bottom: 22px;
+  box-shadow: var(--shadow);
+}
+
+.cd-label {
+  font-size: .9rem;
+  color: #666;
+  font-weight: 600;
+}
+
+.cd-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  color: var(--eg-dark);
+  border: 2px solid var(--eg);
+  border-radius: 8px;
+  padding: 3px 10px;
+  font-variant-numeric: tabular-nums;
+  min-width: 2.6em;
+  font-weight: 800;
+  font-size: 1rem;
+  box-shadow: 0 2px 6px var(--eg-glow);
+}
+
+/* ── Bar section ───────────────────────────────────────────────────────────── */
+.easter-bar-section {
+  background: rgba(255,255,255,.88);
+  backdrop-filter: blur(8px);
+  border: var(--card-border);
+  border-radius: var(--radius);
+  padding: 20px 20px 24px;
+  margin-bottom: 22px;
+  box-shadow: var(--shadow);
+  overflow-x: auto;
+}
+
+.easter-bar-title {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--eg-dark);
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.easter-bar-count {
+  font-size: .82rem;
+  font-weight: 700;
+  color: var(--eg);
+  background: var(--eg-light);
+  border-radius: 20px;
+  padding: 2px 10px;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Track wrapper (forces single-line layout) ─────────────────────────────── */
+.easter-track-wrap {
+  min-width: 600px;
+}
+
+/* ── Progress bar ──────────────────────────────────────────────────────────── */
+.easter-bar-track {
+  position: relative;
+  height: 20px;
+  background: #d5edd9;
+  border-radius: 10px;
+  border: 2px solid rgba(58,157,92,.2);
+  overflow: visible;
+  margin: 22px 0 0;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,.06);
+}
+
+.easter-bar-fill {
+  position: absolute;
+  top: 0; left: 0; bottom: 0;
+  background: linear-gradient(90deg, #57c876, #3a9d5c, #2d8f6f);
+  border-radius: 10px;
+  transition: width .8s cubic-bezier(.4,0,.2,1);
+  min-width: 0;
+  box-shadow: 0 0 14px var(--eg-glow), inset 0 1px 0 rgba(255,255,255,.28);
+  overflow: hidden;
+}
+
+.easter-bar-fill::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -60%; bottom: 0;
+  width: 60%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.22), transparent);
+  animation: barShimmer 2.5s ease infinite;
+}
+
+@keyframes barShimmer {
+  0%   { left: -60%; }
+  100% { left: 150%; }
+}
+
+/* ── Milestone dots on bar ─────────────────────────────────────────────────── */
+.easter-ms-dot {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 3px solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: .6rem;
+  font-weight: 800;
+  z-index: 2;
+  pointer-events: none;
+  transition: background .3s, border-color .3s, box-shadow .3s;
+}
+
+.easter-ms-dot.locked {
+  border-color: #c5d9c7;
+  color: #b0c8b2;
+  background: #f0f7f0;
+}
+
+.easter-ms-dot.reached {
+  border-color: var(--eg);
+  color: var(--eg-dark);
+  background: var(--eg-light);
+  box-shadow: 0 0 10px var(--eg-glow);
+}
+
+.easter-ms-dot.claimed {
+  border-color: var(--eg-dark);
+  color: #fff;
+  background: linear-gradient(135deg, #57c876, #2d8f6f);
+  box-shadow: 0 0 14px var(--eg-glow);
+}
+
+/* ── Milestone grid ────────────────────────────────────────────────────────── */
+.easter-ms-grid {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 5px;
+  margin-top: 12px;
+}
+
+.easter-ms-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 7px 3px 8px;
+  border-radius: 10px;
+  text-align: center;
+  min-width: 0;
+  background: rgba(255,255,255,.7);
+  border: 1.5px solid rgba(200,225,205,.6);
+  transition: background .2s, border-color .2s, transform .15s, box-shadow .15s;
+}
+
+.easter-ms-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(0,0,0,.09);
+}
+
+.easter-ms-item.locked {
+  opacity: .52;
+}
+
+.easter-ms-item.reached {
+  background: linear-gradient(160deg, var(--eg-light) 0%, #fffce8 100%);
+  border-color: var(--eg);
+}
+
+.easter-ms-item.claimed {
+  background: linear-gradient(160deg, #b8efca 0%, #d4f5e2 100%);
+  border-color: var(--eg-dark);
+  box-shadow: 0 2px 10px var(--eg-glow);
+}
+
+/* ── Pokemon image (claimed) ───────────────────────────────────────────────── */
+.easter-ms-img {
+  width: 44px;
+  height: 44px;
+  image-rendering: pixelated;
+  object-fit: contain;
+}
+
+/* ── Mystery "?" (locked/not yet reachable) ────────────────────────────────── */
+.easter-ms-unknown {
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #ddd, #ccc);
+  border: 2px solid #bbb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  font-weight: 900;
+  color: #aaa;
+  font-family: 'Courier New', monospace;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,.08);
+  user-select: none;
+}
+
+/* ── Egg sprite (reachable — clickable) ────────────────────────────────────── */
+.easter-ms-egg {
+  width: 44px;
+  height: 44px;
+  image-rendering: pixelated;
+  object-fit: contain;
+  display: block;
+  animation: eggBounce 1s ease-in-out infinite;
+}
+
+.easter-egg-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: block;
+}
+
+.easter-egg-btn:hover .easter-ms-egg {
+  animation-duration: .45s;
+}
+
+@keyframes eggBounce {
+  0%,100% { transform: translateY(0) rotate(-2deg); }
+  40%     { transform: translateY(-8px) rotate(2deg); }
+  65%     { transform: translateY(-4px) rotate(-1deg); }
+}
+
+/* ── Text inside items ─────────────────────────────────────────────────────── */
+.easter-ms-threshold {
+  font-size: .58rem;
+  font-weight: 800;
+  color: #4a6b4f;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: .01em;
+}
+
+.easter-ms-coins {
+  font-size: .52rem;
+  color: #a07800;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.easter-ms-ts {
+  font-size: .45rem;
+  color: #999;
+  line-height: 1.3;
+}
+
+/* ── Action indicators ─────────────────────────────────────────────────────── */
+.easter-ms-action {
+  margin-top: 2px;
+  line-height: 1;
+}
+
+/* CSS-only checkmark circle */
+.easter-ms-check {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  background: var(--eg);
+  border-radius: 50%;
+  position: relative;
+  vertical-align: middle;
+}
+
+.easter-ms-check::after {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-48%, -60%) rotate(45deg);
+  width: 5px;
+  height: 9px;
+  border-right: 2.5px solid #fff;
+  border-bottom: 2.5px solid #fff;
+}
+
+/* CSS-only lock */
+.easter-ms-lock {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border: 2px solid #bbb;
+  border-radius: 2px;
+  position: relative;
+  margin-top: 4px;
+  background: #ddd;
+}
+
+.easter-ms-lock::before {
+  content: '';
+  position: absolute;
+  top: -6px; left: 50%;
+  transform: translateX(-50%);
+  width: 8px; height: 6px;
+  border: 2px solid #bbb;
+  border-bottom: none;
+  border-radius: 4px 4px 0 0;
+}
+
+/* ── Info text ─────────────────────────────────────────────────────────────── */
+.easter-info {
+  text-align: center;
+  font-size: .78rem;
+  color: #999;
+  margin-top: 16px;
+  line-height: 1.8;
+}

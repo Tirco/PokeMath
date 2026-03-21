@@ -1,0 +1,300 @@
+/* PokeMath – Pokédex */
+:root {
+  --pm-red:   #cc1a1a;
+  --pm-green: #2cbb63;
+  --card-shadow: 0 4px 16px rgba(0,0,0,0.13);
+  --radius: 10px;
+}
+
+/* ── Filter bar ─────────────────────────────────────────────────────────── */
+#filterButtons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding: 8px 8px 6px;
+  background: #fff;
+  border-bottom: 2px solid rgba(204,26,26,0.10);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  overflow: visible;
+}
+
+/* Search input */
+#searchInput {
+  flex: 1 1 160px;
+  min-width: 120px;
+  box-sizing: border-box;
+  background-image: url('images/compass.png');
+  background-size: 20px 20px;
+  background-position: 10px 50%;
+  background-repeat: no-repeat;
+  font-size: 0.95em;
+  padding: 8px 12px 8px 36px;
+  border: 2px solid #ddd;
+  border-radius: 20px;
+  outline: none;
+  font-family: 'Source Sans Pro', sans-serif;
+  transition: border-color 0.15s;
+}
+#searchInput:focus { border-color: var(--pm-red); }
+
+/* Filter + dropdown buttons */
+.btn, .altbtn {
+  flex: 0 0 auto;
+  border: 2px solid transparent;
+  outline: none;
+  background: #f1f1f1;
+  cursor: pointer;
+  padding: 6px 12px;
+  height: 34px;
+  border-radius: 20px;
+  font-size: 0.85em;
+  font-weight: 600;
+  font-family: 'Source Sans Pro', sans-serif;
+  color: #444;
+  box-sizing: border-box;
+  white-space: nowrap;
+  transition: background 0.15s, color 0.15s;
+  position: relative;
+}
+.btn:hover, .altbtn:hover { background: #e0e0e0; }
+.btn.active, .altbtn.active {
+  background: var(--pm-red);
+  color: #fff;
+}
+.btn:active { background: #aa1414; color: #fff; }
+
+/* Tri-state: inkluder (grønn) / ekskluder (rød) */
+.btn.filter-include {
+  background: var(--pm-green);
+  color: #fff;
+  border-color: transparent;
+}
+.btn.filter-exclude {
+  background: var(--pm-red);
+  color: #fff;
+  border-color: transparent;
+  text-decoration: line-through;
+  opacity: 0.85;
+}
+
+/* ── Shared dropdown panel ──────────────────────────────────────────────── */
+.dex-dropdown-panel {
+  /* display managed entirely by JS — do not set display here */
+  position: fixed;         /* fixed so sticky/overflow parents never clip */
+  z-index: 9999;
+  background: #fff;
+  border: 1.5px solid #ddd;
+  border-radius: var(--radius);
+  box-shadow: var(--card-shadow);
+  padding: 12px;
+  max-height: 80vh;
+  overflow-y: auto;
+  min-width: 160px;
+}
+
+/* ── Type panel ─────────────────────────────────────────────────────────── */
+#typecontent {
+  grid-template-columns: repeat(3, auto);
+  gap: 4px;
+  min-width: 260px;
+}
+.typecard2 {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 1.8em;
+  border-radius: 20px;
+  padding: 0 0.7em;
+  font-size: 0.78em;
+  font-weight: 600;
+  white-space: nowrap;
+  color: #f8f8f8;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: opacity 0.15s, border-color 0.15s;
+}
+.typecard2:hover  { opacity: 0.85; }
+.typecard2.active { border-color: #fff; outline: 2px solid #333; }
+
+/* ── Generation panel ───────────────────────────────────────────────────── */
+#generationContent label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 0;
+  cursor: pointer;
+  font-size: 0.9em;
+  font-weight: 600;
+  color: #333;
+  white-space: nowrap;
+}
+#generationContent input[type="checkbox"] {
+  accent-color: var(--pm-red);
+  transform: scale(1.15);
+  cursor: pointer;
+}
+
+/* ── Sort panel ─────────────────────────────────────────────────────────── */
+#sortContent a {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9em;
+  font-weight: 600;
+  color: #333;
+  white-space: nowrap;
+  transition: background 0.1s;
+}
+#sortContent a:hover  { background: #f3f3f3; }
+#sortContent a.active { background: rgba(204,26,26,0.10); color: var(--pm-red); }
+
+/* ── Card grid ───────────────────────────────────────────────────────────── */
+#pokedex {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 8px 4px;
+}
+.filtered { display: none; }
+.show     { display: block; }
+
+/* ── Bottom stats bar ────────────────────────────────────────────────────── */
+#dex-botbar {
+  height: auto;
+  padding: 5px 12px 7px;
+  box-sizing: border-box;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  overflow: hidden;
+}
+
+.dex-stats-row {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.statisticText {
+  font-size: clamp(0.65rem, 2vw, 0.85rem);
+  background-image: url("pokeball.svg");
+  background-size: 16px;
+  background-repeat: no-repeat;
+  background-position: left center;
+  padding-left: 22px !important;
+  color: white;
+}
+.statisticText:after { content: attr(data-text); }
+
+/* ── Progress bars ───────────────────────────────────────────────────────── */
+.dex-progress-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.dex-pbar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.dex-pbar-label {
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: rgba(255,255,255,0.9);
+  width: 66px;
+  flex-shrink: 0;
+}
+
+.dex-pbar-track {
+  flex: 1;
+  height: 7px;
+  background: rgba(255,255,255,0.15);
+  border-radius: 99px;
+  overflow: hidden;
+  min-width: 40px;
+}
+
+.dex-pbar-fill {
+  height: 100%;
+  border-radius: 99px;
+  transition: width 0.6s cubic-bezier(.4,0,.2,1);
+}
+
+.dex-pbar-text {
+  font-size: 0.6rem;
+  color: rgba(255,255,255,0.65);
+  width: 130px;
+  flex-shrink: 0;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Toggle button */
+.dex-progress-toggle {
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.55);
+  font-size: 0.7rem;
+  cursor: pointer;
+  padding: 0 6px 0 0;
+  line-height: 1;
+  align-self: center;
+  flex-shrink: 0;
+  transition: color 0.15s, transform 0.25s;
+}
+.dex-progress-toggle:hover { color: white; }
+.dex-progress-toggle.collapsed { transform: rotate(180deg); }
+
+/* Collapsible bars */
+.dex-progress-bars {
+  overflow: hidden;
+  transition: max-height 0.3s ease, opacity 0.3s ease;
+  max-height: 200px;
+  opacity: 1;
+}
+.dex-progress-bars.collapsed {
+  max-height: 0;
+  opacity: 0;
+}
+
+/* Extra bottom margin — shrinks when bars are hidden */
+.main {
+  margin-bottom: 170px;
+  transition: margin-bottom 0.3s ease;
+}
+.main.dex-bars-hidden {
+  margin-bottom: 60px;
+}
+
+/* ── Skeleton loader ─────────────────────────────────────────────────────── */
+.skeleton {
+  background: linear-gradient(90deg, #e8e8e8 25%, #f5f5f5 50%, #e8e8e8 75%);
+  background-size: 200% 100%;
+  width: 130px;
+  height: 180px;
+  margin: 6px;
+  border-radius: var(--radius);
+  display: inline-block;
+  animation: shimmer 1.4s infinite;
+}
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
+}
+
+/* ── Load status ─────────────────────────────────────────────────────────── */
+#dexLoadStatus {
+  text-align: center;
+  font-size: 0.85em;
+  color: #888;
+  padding: 6px;
+  transition: opacity 0.4s;
+}

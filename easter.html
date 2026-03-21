@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="no">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pokémath - Påskeevent</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="stylesheet" href="globalstyle.css?v=100">
+  <link rel="stylesheet" href="easter.css?v=1">
+</head>
+<body>
+  <div id="header"></div>
+  <div class="easter-page">
+    <h1>Påskeevent 2026</h1>
+    <p>Fang Pokémon ved å løse matteoppgaver og lås opp påskepremier!</p>
+
+    <div class="easter-countdown" id="easterCountdown">Laster…</div>
+
+    <!-- Local bar -->
+    <div class="easter-bar-section">
+      <div class="easter-bar-title">Din progresjon <span class="easter-bar-count"><span id="localCount">0</span> / 500</span></div>
+      <div class="easter-segments" id="localSegs"></div>
+    </div>
+
+    <!-- Global bar -->
+    <div class="easter-bar-section">
+      <div class="easter-bar-title">Global progresjon <span class="easter-bar-count"><span id="globalCount">–</span> / 2 500 000</span></div>
+      <div class="easter-global-total" id="globalBar"></div>
+      <div class="easter-segments" id="globalSegs"></div>
+    </div>
+
+    <div class="easter-info">Fang Pokémon ved å løse matteoppgaver for å fylle opp baren din!<br>Global fremgang oppdateres automatisk hvert 10. sekund.</div>
+  </div>
+  <script src="global.js?v=100"></script>
+  <script src="pokestuff.js?v=100"></script>
+  <script src="easter.js?v=1"></script>
+</body>
+</html>

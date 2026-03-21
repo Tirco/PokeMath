@@ -1,0 +1,281 @@
+/* ---- Carousel wrapper (prev btn + carousel + next btn) ---- */
+.carousel-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: auto;
+  padding: 8px 0;
+}
+
+.carousel {
+  background: #EEE;
+  width: 65vmin;
+  height: 40vmin;
+  box-shadow: 10px 10px 10px rgba(51, 51, 51, 0.301);
+  overflow: hidden;
+  position: relative;
+}
+
+.carousel-playericons {
+  background: #EEE;
+  width: 240px;
+  height: 240px;
+  box-shadow: 10px 10px 10px rgba(51, 51, 51, 0.301);
+  overflow: hidden;
+  position: relative;
+}
+
+.carousel-track {
+  display: flex;
+  height: 100%;
+  transition: transform 0.3s ease;
+  will-change: transform;
+}
+
+.carousel-cell {
+  flex: 0 0 100%;
+  width: 100%;
+  border-radius: 5px;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  text-align: center;
+}
+
+.carousel-playericons .carousel-cell {
+  background-size: contain;
+  background-position: center top;
+}
+
+.carousel-btn {
+  background: hsla(0, 0%, 100%, 0.85);
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  font-size: 28px;
+  line-height: 40px;
+  text-align: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.15s;
+  padding: 0;
+}
+
+.carousel-btn:hover {
+  background: white;
+}
+
+/* ---- Hover tooltip ---- */
+.hovertext {
+  position: relative;
+  font-weight: bold;
+  content: "?";
+  text-indent: 0;
+  background-color: #d4d4d485;
+  border-radius: 100px;
+  color: rgb(44, 43, 43);
+  cursor: pointer;
+  display: inline-block;
+  font-family: CerebriSans-Regular, -apple-system, system-ui, Roboto, sans-serif;
+  padding: 7px 20px;
+  text-align: center;
+  text-decoration: none;
+  transition: all 250ms;
+  border: 0;
+  font-size: 16px;
+}
+
+.hovertext:before {
+  content: attr(data-hover);
+  visibility: hidden;
+  opacity: 0;
+  width: 200px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 5px;
+  padding: 5px 0;
+  transition: opacity 1s ease-in-out;
+  position: absolute;
+  z-index: 1;
+  top: 110%;
+  margin-left: -200%;
+}
+
+.hovertext:hover:before {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* ---- Shop upgrade objects ---- */
+.shopButtons {
+  display: flex;
+  padding: 40px;
+  text-align: center;
+}
+
+.shopObject {
+  border: 1px solid #333;
+  background-color: white;
+  width: fit-content;
+  line-height: 1.5;
+  padding-bottom: 10px;
+  padding-top: 5px;
+  padding-left: 15px;
+  padding-right: 15px;
+  height: fit-content;
+}
+
+.shopObject div {
+  padding: 0.5em;
+}
+
+.shopButton:hover {
+  box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+}
+
+.pricetag {
+  background-image: url("money.svg");
+  background-repeat: no-repeat;
+  background-size: 25px 25px;
+  background-position: left top 5px;
+  padding-left: 30px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  overflow: hidden;
+  color: black;
+  background-color: hsla(0, 0%, 100%, 0.66);
+  border-radius: 25%;
+}
+
+.pricetag:after {
+  content: attr(data-price);
+}
+
+.levelIndicator:after {
+  content: attr(data-level);
+}
+
+.centerposition {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 200px;
+  min-width: 100px;
+}
+
+.centerposition:hover {
+  transform: translate(-50%, -50%) scale(1.05) rotate(-1deg);
+}
+
+h3 {
+  background: hsla(0, 0%, 100%, 0.75);
+}
+
+/* ── Player icon shop ─────────────────────────────────────────────────────── */
+.icon-shop {
+  padding: 20px 20px 10px;
+  text-align: center;
+}
+
+.icon-shop-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.icon-shop-title {
+  font-size: 1.4rem;
+  margin: 0;
+}
+
+.icon-shop-box {
+  background: rgba(255, 255, 255, 0.55);
+  border-radius: 14px;
+  padding: 16px 20px 20px;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.1);
+}
+
+.icon-section {
+  margin: 20px 0 8px;
+}
+
+.icon-section h3 {
+  font-size: 1.1rem;
+  margin-bottom: 12px;
+  display: inline-block;
+  padding: 4px 16px;
+  border-radius: 999px;
+}
+
+.week-note {
+  font-size: 0.75rem;
+  font-weight: normal;
+  opacity: 0.7;
+  margin-left: 6px;
+}
+
+.icon-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+}
+
+.icon-card {
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 10px 8px 8px;
+  width: 180px;
+  text-align: center;
+  box-shadow: 2px 2px 6px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.icon-card-img {
+  width: 140px;
+  height: 140px;
+  object-fit: contain;
+  object-position: top;
+}
+
+/* Price text is set directly in HTML; suppress CSS-generated content */
+.icon-card .pricetag::after {
+  content: none;
+}
+
+.icon-card-name {
+  font-size: 0.75rem;
+  font-weight: bold;
+  word-break: break-word;
+  line-height: 1.2;
+  min-height: 2em;
+}
+
+.icon-card .pricetag {
+  font-size: 0.72rem;
+  padding: 3px 8px 3px 28px;
+  background-size: 18px 18px;
+  background-position: left top 4px;
+}
+
+.icon-card-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+}
+
+.icon-card-actions .button-1 {
+  font-size: 0.75rem;
+  padding: 4px 0;
+  width: 100%;
+}

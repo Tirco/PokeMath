@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Pokémath - Butikk</title>
+	<meta name="title" content="Pokémath - Butikk">
+	<meta name="description" content="Butikken til Pokemath hvor man kan kjøpe oppgraderinger.">
+	<meta name="robots" content="noindex, nofollow">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="author" content="Tirco">
+	<link rel="stylesheet" href="globalstyle.css?v=100">
+	<link rel="stylesheet" href="menustyle.css?v=100">
+	<link rel="stylesheet" href="shop.css?v=102">
+</head>
+<body>
+	<div id="header"></div>
+	<div class="main">
+
+		<div class="carousel-wrap" id="bgWrap">
+			<button class="carousel-btn" onclick="carouselStep(this,-1)">&#8249;</button>
+			<div class="carousel">
+				<div class="carousel-track" data-idx="0"></div>
+			</div>
+			<button class="carousel-btn" onclick="carouselStep(this,1)">&#8250;</button>
+		</div>
+		<button class="button-1 use centerposition" onClick="shopButtonUse()">Fjern Bakgrunn</button>
+		<br>
+
+		<div class="shopButtons columns is-multiline is-mobile">
+			<br>
+			<div id="shinyShop" class="shopObject card" data-price="0" data-level="0">
+				<img src="images/shinycharm.png" width="75" height="75"><img>
+				<h3>Shiny Charm</h3>
+				<a class="shinyLevel levelIndicator" data-level="0">Nivå: </a>
+				<br>
+				<a class="pricetag" data-price="10000"></a>
+				<br>
+				<br>
+				<button class="button-1 shopButton upgrade disabled" onClick="shopButtonUpgrade(this)">Oppgrader</button>
+				<span class="hovertext" data-hover="Hvert nivå vil øke sjansen din for å fange en Shiny pokèmon, bittelitt!">
+					?
+				</span>
+			</div>
+			<div id="legendShop" class="shopObject card" data-price="0" data-level="0">
+				<img src="images/lure_legend.svg" width="75" height="75"><img>
+				<h3>Legend Lure</h3>
+				<a class="legendLevel levelIndicator" data-level="0">Nivå: </a>
+				<br>
+				<a class="pricetag" data-price="10000"></a>
+				<br>
+				<br>
+				<button class="button-1 shopButton upgrade disabled" onClick="shopButtonUpgrade(this)">Oppgrader</button>
+				<span class="hovertext" data-hover="Hvert nivå vil øke sjansen din for å fange en legendarisk pokèmon! På maks nivå vil de være like vanlige som andre pokèmon">
+					?
+				</span>
+			</div>
+			<div id="mythicShop" class="shopObject card" data-price="0" data-level="0">
+				<img src="images/lure.svg" width="75" height="75"><img>
+				<h3>Mythic Lure</h3>
+				<a class="mythicLevel levelIndicator" data-level="0">Nivå: </a>
+				<br>
+				<a class="pricetag" data-price="10000"></a>
+				<br>
+				<br>
+				<button class="button-1 shopButton upgrade disabled" onClick="shopButtonUpgrade(this)">Oppgrader</button>
+				<span class="hovertext" data-hover="Hvert nivå vil øke sjansen din for å fange en mytisk pokèmon! På maks nivå vil de være like vanlige som andre pokèmon">
+					?
+				</span>
+			</div>
+			<div id="coinShop" class="shopObject card" data-price="0" data-level="0">
+				<img src="images/coinbag.svg" width="75" height="75"><img>
+				<h3>Repeat Coins</h3>
+				<a class="coinLevel levelIndicator" data-level="0">Nivå: </a>
+				<br>
+				<a class="pricetag" data-price="10000"></a>
+				<br>
+				<br>
+				<button class="button-1 shopButton upgrade disabled" onClick="shopButtonUpgrade(this)">Oppgrader</button>
+				<span class="hovertext" data-hover="Øker hvor mye penger du får når du fanger en pokémon du har fra før!">
+					?
+				</span>
+			</div>
+			<div id="shinyBaitShop" class="shopObject card">
+				<img src="images/stardust.png" width="75" height="75">
+				<h3>Stardust</h3>
+				<a class="shinyBaitStock">Du Har: 0</a>
+				<br>
+				<a class="pricetag shinyBaitPrice" data-price="25 000"></a>
+				<br>
+				<br>
+				<button class="button-1 shopButton disabled" onclick="shopButtonBuyBait(this)" style="min-width:88px">Kjøp</button>
+				<span class="hovertext" data-hover="Den neste pokemonen du fanger vil garantert være shiny! Hvert kjøp gjelder bare for 1 fangst. Du kan kjøpe flere av denne.">?</span>
+			</div>
+		</div>
+
+		<!-- Player icon shop -->
+		<div class="icon-shop">
+			<div class="icon-shop-header">
+				<h2 class="icon-shop-title">Figurer</h2>
+				<a href="/player_profile.html" class="button-1" style="text-decoration:none;">Min profil</a>
+			</div>
+
+			<div class="icon-shop-box">
+				<div class="icon-section" id="exclusiveIconSection" style="display:none;">
+					<h3>✨ Eksklusive karakterer <small class="week-note">Kun via koder og premier</small></h3>
+					<div class="icon-grid" id="exclusiveIconGrid"></div>
+				</div>
+
+				<div class="icon-section">
+					<h3>Ukentlig utvalg <small class="week-note">Bytter hver mandag</small></h3>
+					<div class="icon-grid" id="weeklyIconGrid"></div>
+				</div>
+
+				<div class="icon-section">
+					<h3>Alltid tilgjengelig</h3>
+					<div class="icon-grid" id="alwaysIconGrid"></div>
+				</div>
+
+				<div class="icon-section">
+					<h3>Gratis</h3>
+					<div class="icon-grid" id="freeIconGrid"></div>
+				</div>
+			</div>
+		</div>
+
+		<div style="height:60px"></div>
+	</div>
+
+	<div id="botbar" class="botbar"></div>
+
+	<script>
+		const BG_ITEMS = [
+			{ id: "bg-001", name: "Bakgrunn 001",    price: "25 000" },
+			{ id: "bg-002", name: "Bakgrunn 002",    price: "25 000" },
+			{ id: "bg-003", name: "Bakgrunn 003",    price: "25 000" },
+			{ id: "bg-004", name: "Bakgrunn 004",    price: "5 000" },
+			{ id: "bg-005", name: "Bakgrunn 005",    price: "5 000" },
+			{ id: "bg-006", name: "Bakgrunn 006",    price: "5 000" },
+			{ id: "bg-007", name: "Bakgrunn 007",    price: "5 000" },
+			{ id: "bg-008", name: "Bakgrunn 008",    price: "5 000" },
+			{ id: "bg-009", name: "Bakgrunn 009",    price: "5 000" },
+			{ id: "bg-010", name: "Bakgrunn 010",    price: "10 000" },
+			{ id: "bg-011", name: "Bakgrunn 011",    price: "50 000" },
+			{ id: "bg-012", name: "Bakgrunn 012",    price: "50 000" },
+			{ id: "bg-013", name: "Bakgrunn 013",    price: "50 000" },
+			{ id: "bg-014", name: "Bakgrunn 014",    price: "50 000" },
+			{ id: "bg-015", name: "Bakgrunn 015",    price: "50 000" },
+			{ id: "bg-016", name: "Bakgrunn 016",    price: "50 000" },
+			{ id: "bg-017", name: "Bakgrunn 017",    price: "50 000" },
+			{ id: "bg-018", name: "Bakgrunn 018",    price: "50 000" },
+			{ id: "bg-019", name: "Julebakgrunn #1", price: "500 000" },
+			{ id: "bg-020", name: "Julebakgrunn #2", price: "100 000" },
+			{ id: "bg-021", name: "Julebakgrunn #3", price: "50 000" },
+			{ id: "bg-022", name: "Julebakgrunn #4", price: "50 000" },
+			{ id: "bg-023", name: "Lapras",          price: "50 000" },
+			{ id: "bg-024", name: "Chonky Love",     price: "50 000" },
+			{ id: "bg-025", name: "Pokemon Sleep",   price: "50 000" },
+			{ id: "bg-026", name: "Discovery",       price: "50 000" },
+			{ id: "bg-027", name: "Entertainment",   price: "50 000" },
+		];
+
+		// w = webp from unconverted/, p = png from playericons/
+		const W = "images/playericons/unconverted/";
+		const P = "images/playericons/";
+
+		const ICON_ITEMS = [
+			// ── Free ─────────────────────────────────────────────────────────
+			{ id: "player",       name: "Player (M)",  price: 0, img: P+"player.png" },
+			{ id: "player-fem",   name: "Player (F)",  price: 0, img: P+"player-fem.png" },
+			{ id: "roxanne",      name: "Roxanne",     price: 0, img: W+"Roxanne.webp" },
+			{ id: "brawly",       name: "Brawly",      price: 0, img: W+"Brawly.webp" },
+
+			// ── Always available (5 000) ──────────────────────────────────────
+			{ id: "flannery",     name: "Flannery",    price: 5000,  img: W+"Flannery.webp" },
+			{ id: "juan",         name: "Juan",        price: 5000,  img: W+"Juan.webp" },
+			{ id: "tate",         name: "Tate",        price: 5000,  img: W+"Tate.webp" },
+			{ id: "liza",         name: "Liza",        price: 5000,  img: W+"Liza.webp" },
+			{ id: "norman",       name: "Norman",      price: 5000,  img: W+"Norman.webp" },
+			{ id: "wallace",      name: "Wallace",     price: 5000,  img: W+"Wallace.webp" },
+			{ id: "wattson",      name: "Wattson",     price: 5000,  img: W+"Wattson.webp" },
+			{ id: "winona",       name: "Winona",      price: 5000,  img: W+"Winona.webp" },
+
+			// ── Eksklusive (price: -1 = ikke i butikk, kun via kode/premie) ──
+			{ id: "poke_morten",      name: "PokeMorten",     price: -1, img: W+"PokeMorten.webp" },
+
+			// ── Rotation pool ─────────────────────────────────────────────────
+			// Existing (kept prices)
+			{ id: "cynthia",      name: "Cynthia",     price: 25000, img: W+"Cynthia.webp" },
+			{ id: "arceus",       name: "Arceus",      price: 25000, img: W+"Arceus.webp" },
+			{ id: "brendan",       name: "Brendan",                   price: 25000,   img: W+"Brendan.webp" },
+			{ id: "ethan",         name: "Ethan",                     price: 25000,   img: W+"Ethan.webp" },
+			{ id: "hilbert",       name: "Hilbert",                   price: 25000,   img: W+"Hilbert.webp" },
+			{ id: "nate",          name: "Nate",                      price: 25000,   img: W+"Nate.webp" },
+			{ id: "rosa",          name: "Rosa",                      price: 25000,   img: W+"Rosa.webp" },
+			{ id: "calem",         name: "Calem",                     price: 25000,   img: W+"Calem.webp" },
+			{ id: "ilima",         name: "Ilima",                     price: 25000,   img: W+"Ilima.webp" },
+			{ id: "lana",          name: "Lana",                      price: 25000,   img: W+"Lana.webp" },
+			{ id: "kiawe",         name: "Kiawe",                     price: 25000,   img: W+"Kiawe.webp" },
+			{ id: "mallow",        name: "Mallow",                    price: 25000,   img: W+"Mallow.webp" },
+			{ id: "sophocles",     name: "Sophocles",                 price: 25000,   img: W+"Sophocles.webp" },
+			{ id: "acerola",       name: "Acerola",                   price: 25000,   img: W+"Acerola.webp" },
+			{ id: "mina",          name: "Mina",                      price: 25000,   img: W+"Mina.webp" },
+			{ id: "hala",          name: "Hala",                      price: 25000,   img: W+"Hala.webp" },
+			{ id: "olivia",        name: "Olivia",                    price: 25000,   img: W+"Olivia.webp" },
+			{ id: "nanu",          name: "Nanu",                      price: 25000,   img: W+"Nanu.webp" },
+			{ id: "hapu",          name: "Hapu",                      price: 25000,   img: P+"hapu.png" },
+			{ id: "may",           name: "May",                       price: 100000,  img: W+"May.webp" },
+			{ id: "ash",           name: "Ash",                       price: 100000,  img: W+"Ash.webp" },
+			{ id: "brock",         name: "Brock",                     price: 100000,  img: W+"Brock.webp" },
+			{ id: "misty",         name: "Misty",                     price: 100000,  img: W+"Misty.webp" },
+			{ id: "trainer_red_w_pika", name: "Trainer Red (w/ Pikachu)", price: 1000000, img: P+"trainer_red_w_pika.png" },
+
+			// New webp icons (50 000 each)
+			{ id: "aaron",             name: "Aaron",             price: 50000, img: W+"Aaron.webp" },
+			{ id: "aarune",            name: "Aarune",            price: 50000, img: W+"Aarune.webp" },
+			{ id: "adaman",            name: "Adaman",            price: 75000, img: W+"Adaman.webp" },
+			{ id: "agatha",            name: "Agatha",            price: 75000, img: W+"Agatha.webp" },
+			{ id: "akari",             name: "Akari",             price: 50000, img: W+"Akari.webp" },
+			{ id: "alder",             name: "Alder",             price: 50000, img: W+"Alder.webp" },
+			{ id: "allister",          name: "Allister",          price: 100000, img: W+"Allister.webp" },
+			{ id: "amarys",            name: "Amarys",            price: 50000, img: W+"Amarys.webp" },
+			{ id: "amethio",           name: "Amethio",           price: 50000, img: W+"Amethio.webp" },
+			{ id: "anabel",            name: "Anabel",            price: 50000, img: W+"Anabel.webp" },
+			{ id: "ansha",             name: "Ansha",             price: 100000, img: W+"Ansha.webp" },
+			{ id: "arceus",            name: "Arceus",            price: 50000, img: W+"Arceus.webp" },
+			{ id: "archer",            name: "Archer",            price: 75000, img: W+"Archer.webp" },
+			{ id: "archie",            name: "Archie",            price: 50000, img: W+"Archie.webp" },
+			{ id: "argenta",           name: "Argenta",           price: 50000, img: W+"Argenta.webp" },
+			{ id: "ariana",            name: "Ariana",            price: 50000, img: W+"Ariana.webp" },
+			{ id: "arlo",              name: "Arlo",              price: 75000, img: W+"Arlo.webp" },
+			{ id: "arven",             name: "Arven",             price: 50000, img: W+"Arven.webp" },
+			{ id: "atticus",           name: "Atticus",           price: 50000, img: W+"Atticus.webp" },
+			{ id: "avery",             name: "Avery",             price: 100000, img: W+"Avery.webp" },
+			{ id: "az",                name: "Az",                price: 50000, img: W+"Az.webp" },
+			{ id: "bea",               name: "Bea",               price: 50000, img: W+"Bea.webp" },
+			{ id: "becca",             name: "Becca",             price: 50000, img: W+"Becca.webp" },
+			{ id: "bede",              name: "Bede",              price: 50000, img: W+"Bede.webp" },
+			{ id: "benga",             name: "Benga",             price: 50000, img: W+"Benga.webp" },
+			{ id: "bertha",            name: "Bertha",            price: 50000, img: W+"Bertha.webp" },
+			{ id: "bianca",            name: "Bianca",            price: 50000, img: W+"Bianca.webp" },
+			{ id: "blaine",            name: "Blaine",            price: 50000, img: W+"Blaine.webp" },
+			{ id: "blanche",           name: "Blanche",           price: 50000, img: W+"Blanche.webp" },
+			{ id: "bonnie",            name: "Bonnie",            price: 50000, img: W+"Bonnie.webp" },
+			{ id: "brandon",           name: "Brandon",           price: 50000, img: W+"Brandon.webp" },
+			{ id: "brassius",          name: "Brassius",          price: 50000, img: W+"Brassius.webp" },
+			{ id: "bruno",             name: "Bruno",             price: 50000, img: W+"Bruno.webp" },
+			{ id: "brycen",            name: "Brycen",            price: 50000, img: W+"Brycen.webp" },
+			{ id: "buck",              name: "Buck",              price: 50000, img: W+"Buck.webp" },
+			{ id: "bugsy",             name: "Bugsy",             price: 50000, img: W+"Bugsy.webp" },
+			{ id: "burgh",             name: "Burgh",             price: 50000, img: W+"Burgh.webp" },
+			{ id: "caitlin",           name: "Caitlin",           price: 50000, img: W+"Caitlin.webp" },
+			{ id: "calaba",            name: "Calaba",            price: 50000, img: W+"Calaba.webp" },
+			{ id: "canari",            name: "Canari",            price: 50000, img: W+"Canari.webp" },
+			{ id: "candela",           name: "Candela",           price: 50000, img: W+"Candela.webp" },
+			{ id: "carmine",           name: "Carmine",           price: 50000, img: W+"Carmine.webp" },
+			{ id: "chase",             name: "Chase",             price: 150000, img: W+"Chase.webp" },
+			{ id: "cheren",            name: "Cheren",            price: 50000, img: W+"Cheren.webp" },
+			{ id: "chili",             name: "Chili",             price: 50000, img: W+"Chili.webp" },
+			{ id: "chloe",             name: "Chloe",             price: 50000, img: W+"Chloe.webp" },
+			{ id: "chuck",             name: "Chuck",             price: 50000, img: W+"Chuck.webp" },
+			{ id: "cilan",             name: "Cilan",             price: 50000, img: W+"Cilan.webp" },
+			{ id: "clair",             name: "Clair",             price: 50000, img: W+"Clair.webp" },
+			{ id: "clavell",           name: "Clavell",           price: 50000, img: W+"Clavell.webp" },
+			{ id: "clay",              name: "Clay",              price: 50000, img: W+"Clay.webp" },
+			{ id: "clemont",           name: "Clemont",           price: 50000, img: W+"Clemont.webp" },
+			{ id: "cliff",             name: "Cliff",             price: 75000, img: W+"Cliff.webp" },
+			{ id: "colress",           name: "Colress",           price: 50000, img: W+"Colress.webp" },
+			{ id: "corbeau",           name: "Corbeau",           price: 50000, img: W+"Corbeau.webp" },
+			{ id: "cress",             name: "Cress",             price: 50000, img: W+"Cress.webp" },
+			{ id: "crispin",           name: "Crispin",           price: 50000, img: W+"Crispin.webp" },
+			{ id: "cyndy",             name: "Cyndy",             price: 50000, img: W+"Cyndy.webp" },
+			{ id: "cynthia",           name: "Cynthia",           price: 50000, img: W+"Cynthia.webp" },
+			{ id: "cyrano",            name: "Cyrano",            price: 50000, img: W+"Cyrano.webp" },
+			{ id: "cyrus",             name: "Cyrus",             price: 50000, img: W+"Cyrus.webp" },
+			{ id: "dahlia",            name: "Dahlia",            price: 50000, img: W+"Dahlia.webp" },
+			{ id: "dana",              name: "Dana",              price: 50000, img: W+"Dana.webp" },
+			{ id: "darach",            name: "Darach",            price: 50000, img: W+"Darach.webp" },
+			{ id: "dawn",              name: "Dawn",              price: 50000, img: W+"Dawn.webp" },
+			{ id: "dendra",            name: "Dendra",            price: 50000, img: W+"Dendra.webp" },
+			{ id: "dexio",             name: "Dexio",             price: 50000, img: W+"Dexio.webp" },
+			{ id: "diantha",           name: "Diantha",           price: 50000, img: W+"Diantha.webp" },
+			{ id: "dot",               name: "Dot",               price: 150000, img: W+"Dot.webp" },
+			{ id: "drake",             name: "Drake",             price: 250000, img: W+"Drake.webp" },
+			{ id: "drasna",            name: "Drasna",            price: 50000, img: W+"Drasna.webp" },
+			{ id: "drayden",           name: "Drayden",           price: 50000, img: W+"Drayden.webp" },
+			{ id: "drayton",           name: "Drayton",           price: 50000, img: W+"Drayton.webp" },
+			{ id: "elaine",            name: "Elaine",            price: 150000, img: W+"Elaine.webp" },
+			{ id: "elesa",             name: "Elesa",             price: 50000, img: W+"Elesa.webp" },
+			{ id: "elio",              name: "Elio",              price: 50000, img: W+"Elio.webp" },
+			{ id: "emmet",             name: "Emmet",             price: 50000, img: W+"Emmet.webp" },
+			{ id: "erbie",             name: "Erbie",             price: 50000, img: W+"Erbie.webp" },
+			{ id: "eri",               name: "Eri",               price: 50000, img: W+"Eri.webp" },
+			{ id: "erika",             name: "Erika",             price: 100000, img: W+"Erika.webp" },
+			{ id: "eusine",            name: "Eusine",            price: 50000, img: W+"Eusine.webp" },
+			{ id: "eve",               name: "Eve",               price: 250000, img: W+"Eve.webp" },
+			{ id: "evelyn",            name: "Evelyn",            price: 50000, img: W+"Evelyn.webp" },
+			{ id: "faba",              name: "Faba",              price: 50000, img: W+"Faba.webp" },
+			{ id: "falkner",           name: "Falkner",           price: 50000, img: W+"Falkner.webp" },
+			{ id: "fantina",           name: "Fantina",           price: 50000, img: W+"Fantina.webp" },
+			{ id: "flint",             name: "Flint",             price: 50000, img: W+"Flint.webp" },
+			{ id: "florian",           name: "Florian",           price: 50000, img: W+"Florian.webp" },
+			{ id: "friede",            name: "Friede",            price: 50000, img: W+"Friede.webp" },
+			{ id: "gaeric",            name: "Gaeric",            price: 50000, img: W+"Gaeric.webp" },
+			{ id: "gary_oak",          name: "Gary Oak",          price: 100000, img: W+"Gary_Oak.webp" },
+			{ id: "geeta",             name: "Geeta",             price: 50000, img: W+"Geeta.webp" },
+			{ id: "ghetsis",           name: "Ghetsis",           price: 50000, img: W+"Ghetsis.webp" },
+			{ id: "giacomo",           name: "Giacomo",           price: 50000, img: W+"Giacomo.webp" },
+			{ id: "giovanni",          name: "Giovanni",          price: 500000, img: W+"Giovanni.webp" },
+			{ id: "glacia",            name: "Glacia",            price: 50000, img: W+"Glacia.webp" },
+			{ id: "gladion",           name: "Gladion",           price: 50000, img: W+"Gladion.webp" },
+			{ id: "gloria",            name: "Gloria",            price: 50000, img: W+"Gloria.webp" },
+			{ id: "goh",               name: "Goh",               price: 50000, img: W+"Goh.webp" },
+			{ id: "gordie",            name: "Gordie",            price: 50000, img: W+"Gordie.webp" },
+			{ id: "grant",             name: "Grant",             price: 50000, img: W+"Grant.webp" },
+			{ id: "green",             name: "Green",             price: 50000, img: W+"Green.webp" },
+			{ id: "greta",             name: "Greta",             price: 50000, img: W+"Greta.webp" },
+			{ id: "grimsley",          name: "Grimsley",          price: 50000, img: W+"Grimsley.webp" },
+			{ id: "griselle",          name: "Griselle",          price: 50000, img: W+"Griselle.webp" },
+			{ id: "grisham",           name: "Grisham",           price: 50000, img: W+"Grisham.webp" },
+			{ id: "grusha",            name: "Grusha",            price: 50000, img: W+"Grusha.webp" },
+			{ id: "guzma",             name: "Guzma",             price: 50000, img: W+"Guzma.webp" },
+			{ id: "gwynn",             name: "Gwynn",             price: 50000, img: W+"Gwynn.webp" },
+			{ id: "harmony",           name: "Harmony",           price: 50000, img: W+"Harmony.webp" },
+			{ id: "hassel",            name: "Hassel",            price: 50000, img: W+"Hassel.webp" },
+			{ id: "hau",               name: "Hau",               price: 50000, img: W+"Hau.webp" },
+			{ id: "helena",            name: "Helena",            price: 50000, img: W+"Helena.webp" },
+			{ id: "hilda",             name: "Hilda",             price: 50000, img: W+"Hilda.webp" },
+			{ id: "hop",               name: "Hop",               price: 50000, img: W+"Hop.webp" },
+			{ id: "hugh",              name: "Hugh",              price: 50000, img: W+"Hugh.webp" },
+			{ id: "ingo",              name: "Ingo",              price: 50000, img: W+"Ingo.webp" },
+			{ id: "iono",              name: "Iono",              price: 50000, img: W+"Iono.webp" },
+			{ id: "irida",             name: "Irida",             price: 50000, img: W+"Irida.webp" },
+			{ id: "iris",              name: "Iris",              price: 50000, img: W+"Iris.webp" },
+			{ id: "iscan",             name: "Iscan",             price: 50000, img: W+"Iscan.webp" },
+			{ id: "ivor",              name: "Ivor",              price: 50000, img: W+"Ivor.webp" },
+			{ id: "jacinthe",          name: "Jacinthe",          price: 50000, img: W+"Jacinthe.webp" },
+			{ id: "jacq",              name: "Jacq",              price: 50000, img: W+"Jacq.webp" },
+			{ id: "janine",            name: "Janine",            price: 50000, img: W+"Janine.webp" },
+			{ id: "jasmine",           name: "Jasmine",           price: 50000, img: W+"Jasmine.webp" },
+			{ id: "juliana",           name: "Juliana",           price: 50000, img: W+"Juliana.webp" },
+			{ id: "kabu",              name: "Kabu",              price: 50000, img: W+"Kabu.webp" },
+			{ id: "kahili",            name: "Kahili",            price: 50000, img: W+"Kahili.webp" },
+			{ id: "kali",              name: "Kali",              price: 75000, img: W+"Kali.webp" },
+			{ id: "kamado",            name: "Kamado",            price: 50000, img: W+"Kamado.webp" },
+			{ id: "karen",             name: "Karen",             price: 50000, img: W+"Karen.webp" },
+			{ id: "katy",              name: "Katy",              price: 50000, img: W+"Katy.webp" },
+			{ id: "kieran",            name: "Kieran",            price: 50000, img: W+"Kieran.webp" },
+			{ id: "klara",             name: "Klara",             price: 50000, img: W+"Klara.webp" },
+			{ id: "kofu",              name: "Kofu",              price: 50000, img: W+"Kofu.webp" },
+			{ id: "koga",              name: "Koga",              price: 50000, img: W+"Koga.webp" },
+			{ id: "korrina",           name: "Korrina",           price: 50000, img: W+"Korrina.webp" },
+			{ id: "kris",              name: "Kris",              price: 50000, img: W+"Kris.webp" },
+			{ id: "ltsurge",           name: "Lt. Surge",         price: 50000, img: W+"LTSurge.webp" },
+			{ id: "lacey",             name: "Lacey",             price: 50000, img: W+"Lacey.webp" },
+			{ id: "lance",             name: "Lance",             price: 150000, img: W+"Lance.webp" },
+			{ id: "larry",             name: "Larry",             price: 50000, img: W+"Larry.webp" },
+			{ id: "leaf",              name: "Leaf",              price: 50000, img: W+"Leaf.webp" },
+			{ id: "lear",              name: "Lear",              price: 50000, img: W+"Lear.webp" },
+			{ id: "lebanne",           name: "Lebanne",           price: 50000, img: W+"Lebanne.webp" },
+			{ id: "lenora",            name: "Lenora",            price: 50000, img: W+"Lenora.webp" },
+			{ id: "lian",              name: "Lian",              price: 50000, img: W+"Lian.webp" },
+			{ id: "lida",              name: "Lida",              price: 50000, img: W+"Lida.webp" },
+			{ id: "liko",              name: "Liko",              price: 50000, img: W+"Liko.webp" },
+			{ id: "looker",            name: "Looker",            price: 50000, img: W+"Looker.webp" },
+			{ id: "lorelei",           name: "Lorelei",           price: 50000, img: W+"Lorelei.webp" },
+			{ id: "lucas",             name: "Lucas",             price: 50000, img: W+"Lucas.webp" },
+			{ id: "lucian",            name: "Lucian",            price: 50000, img: W+"Lucian.webp" },
+			{ id: "lucy",              name: "Lucy",              price: 50000, img: W+"Lucy.webp" },
+			{ id: "lyra",              name: "Lyra",              price: 50000, img: W+"Lyra.webp" },
+			{ id: "lysandre",          name: "Lysandre",          price: 50000, img: W+"Lysandre.webp" },
+			{ id: "mai",               name: "Mai",               price: 50000, img: W+"Mai.webp" },
+			{ id: "malva",             name: "Malva",             price: 50000, img: W+"Malva.webp" },
+			{ id: "marley",            name: "Marley",            price: 50000, img: W+"Marley.webp" },
+			{ id: "marlon",            name: "Marlon",            price: 50000, img: W+"Marlon.webp" },
+			{ id: "marnie",            name: "Marnie",            price: 250000, img: W+"Marnie.webp" },
+			{ id: "marshal",           name: "Marshal",           price: 50000, img: W+"Marshal.webp" },
+			{ id: "max",               name: "Max",               price: 50000, img: W+"Max.webp" },
+			{ id: "maxie",             name: "Maxie",             price: 50000, img: W+"Maxie.webp" },
+			{ id: "maylene",           name: "Maylene",           price: 50000, img: W+"Maylene.webp" },
+			{ id: "mela",              name: "Mela",              price: 75000, img: W+"Mela.webp" },
+			{ id: "melli",             name: "Melli",             price: 50000, img: W+"Melli.webp" },
+			{ id: "melony",            name: "Melony",            price: 50000, img: W+"Melony.webp" },
+			{ id: "milo",              name: "Milo",              price: 50000, img: W+"Milo.webp" },
+			{ id: "mira",              name: "Mira",              price: 50000, img: W+"Mira.webp" },
+			{ id: "molayne",           name: "Molayne",           price: 50000, img: W+"Molayne.webp" },
+			{ id: "moon",              name: "Moon",              price: 50000, img: W+"Moon.webp" },
+			{ id: "morgan",            name: "Morgan",            price: 75000, img: W+"Morgan.webp" },
+			{ id: "morty",             name: "Morty",             price: 50000, img: W+"Morty.webp" },
+			{ id: "mustard",           name: "Mustard",           price: 50000, img: W+"Mustard.webp" },
+			{ id: "n",                 name: "N",                 price: 50000, img: W+"N.webp" },
+			{ id: "nate_2",            name: "Nate (Alt)",        price: 50000, img: W+"Nate_2.webp" },
+			{ id: "naveen",            name: "Naveen",            price: 50000, img: W+"Naveen.webp" },
+			{ id: "nemona",            name: "Nemona",            price: 50000, img: W+"Nemona.webp" },
+			{ id: "nessa",             name: "Nessa",             price: 50000, img: W+"Nessa.webp" },
+			{ id: "nita",              name: "Nita",              price: 75000, img: W+"Nita.webp" },
+			{ id: "noland",            name: "Noland",            price: 50000, img: W+"Noland.webp" },
+			{ id: "oleana",            name: "Oleana",            price: 50000, img: W+"Oleana.webp" },
+			{ id: "olympia",           name: "Olympia",           price: 50000, img: W+"Olympia.webp" },
+			{ id: "opal",              name: "Opal",              price: 50000, img: W+"Opal.webp" },
+			{ id: "ortega",            name: "Ortega",            price: 50000, img: W+"Ortega.webp" },
+			{ id: "palina",            name: "Palina",            price: 50000, img: W+"Palina.webp" },
+			{ id: "palmer",            name: "Palmer",            price: 50000, img: W+"Palmer.webp" },
+			{ id: "paulo",             name: "Paulo",             price: 50000, img: W+"Paulo.webp" },
+			{ id: "paxton",            name: "Paxton",            price: 50000, img: W+"Paxton.webp" },
+			{ id: "penny",             name: "Penny",             price: 150000, img: W+"Penny.webp" },
+			{ id: "peony",             name: "Peony",             price: 50000, img: W+"Peony.webp" },
+			{ id: "perrin",            name: "Perrin",            price: 50000, img: W+"Perrin.webp" },
+			{ id: "petey",             name: "Petey",             price: 250000, img: W+"Petey.webp" },
+			{ id: "petrel",            name: "Petrel",            price: 75000, img: W+"Petrel.webp" },
+			{ id: "philippe",          name: "Philippe",          price: 50000, img: W+"Philippe.webp" },
+			{ id: "phoebe",            name: "Phoebe",            price: 50000, img: W+"Phoebe.webp" },
+			{ id: "piers",             name: "Piers",             price: 100000, img: W+"Piers.webp" },
+			{ id: "plumeria",          name: "Plumeria",          price: 50000, img: W+"Plumeria.webp" },
+			{ id: "poppy",             name: "Poppy",             price: 100000, img: W+"Poppy.webp" },
+			{ id: "professor_phorus",  name: "Professor Phorus",  price: 50000, img: W+"Professor_Phorus.webp" },
+			{ id: "proton",            name: "Proton",            price: 50000, img: W+"Proton.webp" },
+			{ id: "pryce",             name: "Pryce",             price: 50000, img: W+"Pryce.webp" },
+			{ id: "rachel",            name: "Rachel",            price: 50000, img: W+"Rachel.webp" },
+			{ id: "raifort",           name: "Raifort",           price: 50000, img: W+"Raifort.webp" },
+			{ id: "raihan",            name: "Raihan",            price: 50000, img: W+"Raihan.webp" },
+			{ id: "ramos",             name: "Ramos",             price: 50000, img: W+"Ramos.webp" },
+			{ id: "red",               name: "Red",               price: 500000, img: W+"Red.webp" },
+			{ id: "rei",               name: "Rei",               price: 50000, img: W+"Rei.webp" },
+			{ id: "rika",              name: "Rika",              price: 50000, img: W+"Rika.webp" },
+			{ id: "riley",             name: "Riley",             price: 50000, img: W+"Riley.webp" },
+			{ id: "roark",             name: "Roark",             price: 50000, img: W+"Roark.webp" },
+			{ id: "rose",              name: "Rose",              price: 50000, img: W+"Rose.webp" },
+			{ id: "roxie",             name: "Roxie",             price: 75000, img: W+"Roxie.webp" },
+			{ id: "roy",               name: "Roy",               price: 50000, img: W+"Roy.webp" },
+			{ id: "ryme",              name: "Ryme",              price: 50000, img: W+"Ryme.webp" },
+			{ id: "ryuki",             name: "Ryuki",             price: 75000, img: W+"Ryuki.webp" },
+			{ id: "sabi",              name: "Sabi",              price: 50000, img: W+"Sabi.webp" },
+			{ id: "sabrina",           name: "Sabrina",           price: 100000, img: W+"Sabrina.webp" },
+			{ id: "samson_oak",        name: "Samson Oak",        price: 50000, img: W+"Samson_Oak.webp" },
+			{ id: "scottie",           name: "Scottie",           price: 50000, img: W+"Scottie.webp" },
+			{ id: "serena",            name: "Serena",            price: 50000, img: W+"Serena.webp" },
+			{ id: "shauna",            name: "Shauna",            price: 50000, img: W+"Shauna.webp" },
+			{ id: "shauntal",          name: "Shauntal",          price: 50000, img: W+"Shauntal.webp" },
+			{ id: "sidney",            name: "Sidney",            price: 50000, img: W+"Sidney.webp" },
+			{ id: "siebold",           name: "Siebold",           price: 50000, img: W+"Siebold.webp" },
+			{ id: "sierra",            name: "Sierra",            price: 50000, img: W+"Sierra.webp" },
+			{ id: "silver",            name: "Silver",            price: 50000, img: W+"Silver.webp" },
+			{ id: "sina",              name: "Sina",              price: 50000, img: W+"Sina.webp" },
+			{ id: "skyla",             name: "Skyla",             price: 50000, img: W+"Skyla.webp" },
+			{ id: "spark",             name: "Spark",             price: 1000000, img: W+"Spark.webp" },
+			{ id: "spenser",           name: "Spenser",           price: 50000, img: W+"Spenser.webp" },
+			{ id: "spinel",            name: "Spinel",            price: 50000, img: W+"Spinel.webp" },
+			{ id: "steven",            name: "Steven",            price: 50000, img: W+"Steven.webp" },
+			{ id: "tarragon",          name: "Tarragon",          price: 50000, img: W+"Tarragon.webp" },
+			{ id: "tate_and_liza",     name: "Tate & Liza",       price: 50000, img: W+"Tate_And_Liza.webp" },
+			{ id: "taunie",            name: "Taunie",            price: 50000, img: W+"Taunie.webp" },
+			{ id: "teddy",             name: "Teddy",             price: 50000, img: W+"Teddy.webp" },
+			{ id: "thorton",           name: "Thorton",           price: 50000, img: W+"Thorton.webp" },
+			{ id: "tierno",            name: "Tierno",            price: 50000, img: W+"Tierno.webp" },
+			{ id: "tina",              name: "Tina",              price: 50000, img: W+"Tina.webp" },
+			{ id: "trace",             name: "Trace",             price: 50000, img: W+"Trace.webp" },
+			{ id: "tracey_sketchit",   name: "Tracey Sketchit",   price: 250000, img: W+"Tracey_Sketchit.webp" },
+			{ id: "trevor",            name: "Trevor",            price: 50000, img: W+"Trevor.webp" },
+			{ id: "tucker",            name: "Tucker",            price: 50000, img: W+"Tucker.webp" },
+			{ id: "tulip",             name: "Tulip",             price: 50000, img: W+"Tulip.webp" },
+			{ id: "ult",               name: "Ult",               price: 50000, img: W+"Ult.webp" },
+			{ id: "urbain",            name: "Urbain",            price: 50000, img: W+"Urbain.webp" },
+			{ id: "valerie",           name: "Valerie",           price: 50000, img: W+"Valerie.webp" },
+			{ id: "victor",            name: "Victor",            price: 50000, img: W+"Victor.webp" },
+			{ id: "vinnie",            name: "Vinnie",            price: 50000, img: W+"Vinnie.webp" },
+			{ id: "viola",             name: "Viola",             price: 50000, img: W+"Viola.webp" },
+			{ id: "volkner",           name: "Volkner",           price: 50000, img: W+"Volkner.webp" },
+			{ id: "volo",              name: "Volo",              price: 50000, img: W+"Volo.webp" },
+			{ id: "wally",             name: "Wally",             price: 50000, img: W+"Wally.webp" },
+			{ id: "whitney",           name: "Whitney",           price: 50000, img: W+"Whitney.webp" },
+			{ id: "wikstrom",          name: "Wikstrom",          price: 50000, img: W+"Wikstrom.webp" },
+			{ id: "will",              name: "Will",              price: 50000, img: W+"Will.webp" },
+			{ id: "willem",            name: "Willem",            price: 50000, img: W+"Willem.webp" },
+			{ id: "wulfric",           name: "Wulfric",           price: 50000, img: W+"Wulfric.webp" },
+			{ id: "zinnia",            name: "Zinnia",            price: 50000, img: W+"Zinnia.webp" },
+			{ id: "zinzolin",          name: "Zinzolin",          price: 50000, img: W+"Zinzolin.webp" },
+		];
+
+		// ── Carousel (backgrounds) ────────────────────────────────────────────
+		function carouselStep(btn, dir) {
+			const wrap = btn.closest('.carousel-wrap');
+			const track = wrap.querySelector('.carousel-track');
+			const count = track.children.length;
+			const idx = ((parseInt(track.dataset.idx || 0) + dir) + count) % count;
+			track.dataset.idx = idx;
+			track.style.transform = 'translateX(-' + (idx * 100) + '%)';
+		}
+
+		function buildCarousel(trackEl, items) {
+			trackEl.innerHTML = items.map(function(item) {
+				return '<div class="carousel-cell" style="background-image:url(\'images/backgrounds/' + item.id + '.png\')">'
+					+ '<div class="carousel-caption" id="' + item.id + '">'
+					+ '<h3>' + item.name + '</h3>'
+					+ '<a class="pricetag" data-price="' + item.price + '"></a>'
+					+ '<br><br>'
+					+ '<button class="button-1 buy" onclick="shopButtonBuy(this)">Kjøp</button>'
+					+ '<button class="button-1 disabled use" onclick="shopButtonUse(this)">Bruk</button>'
+					+ '<br>'
+					+ '<span class="hovertext" data-hover="Denne bakgrunnen kan du bruke på hele nettsiden!">?</span>'
+					+ '</div></div>';
+			}).join('');
+		}
+
+		// ── Icon grid ─────────────────────────────────────────────────────────
+		function seededShuffle(arr, seed) {
+			const a = [...arr];
+			let s = seed >>> 0;
+			for (let i = a.length - 1; i > 0; i--) {
+				s = (Math.imul(s, 1664525) + 1013904223) >>> 0;
+				const j = s % (i + 1);
+				[a[i], a[j]] = [a[j], a[i]];
+			}
+			return a;
+		}
+
+		function fmtPrice(n) {
+			return n.toLocaleString('no-NO');
+		}
+
+		function buildIconCard(item) {
+			const isFree = item.price === 0;
+			const priceHtml = isFree
+				? ''
+				: '<a class="pricetag" data-price="' + item.price + '">' + item.price.toLocaleString('no-NO') + '</a>';
+			const buyBtn = isFree
+				? ''
+				: '<button class="button-1 buy" onclick="playerIconButtonBuy(this)">Kjøp</button>';
+			return '<div class="icon-card" id="' + item.id + '">'
+				+ '<img src="' + item.img + '" class="icon-card-img" alt="' + item.name + '" loading="lazy">'
+				+ '<div class="icon-card-name">' + item.name + '</div>'
+				+ priceHtml
+				+ '<div class="icon-card-actions">'
+				+ buyBtn
+				+ '<button class="button-1 use disabled" onclick="playerIconButtonUse(this)">Bruk</button>'
+				+ '</div>'
+				+ '</div>';
+		}
+
+		function buildIconSections() {
+			const free      = ICON_ITEMS.filter(i => i.price === 0);
+			const always    = ICON_ITEMS.filter(i => i.price === 5000);
+			const rotatable = ICON_ITEMS.filter(i => i.price > 5000);
+			const exclusive = ICON_ITEMS.filter(i => i.price === -1);
+
+			// Week seed: floor(unix_ms / ms_per_week), shifted to Monday start
+			const MS_PER_WEEK = 7 * 24 * 60 * 60 * 1000;
+			// JS epoch (Jan 1 1970) was a Thursday; shift by 3 days to align to Monday
+			const weekSeed = Math.floor((Date.now() - 3 * 24 * 60 * 60 * 1000) / MS_PER_WEEK);
+			const weekly = seededShuffle(rotatable, weekSeed).slice(0, 10);
+
+			document.getElementById('freeIconGrid').innerHTML   = free.map(buildIconCard).join('');
+			document.getElementById('alwaysIconGrid').innerHTML = always.map(buildIconCard).join('');
+			document.getElementById('weeklyIconGrid').innerHTML = weekly.map(buildIconCard).join('');
+
+			// Exclusive section is rendered later by loadShopLocal() once shopOptions is available
+		}
+
+		buildCarousel(document.querySelector('#bgWrap .carousel-track'), BG_ITEMS);
+		buildIconSections();
+	</script>
+
+	<script src="global.js?v=100"></script>
+	<script src="shop.js?v=101"></script>
+</body>
+</html>

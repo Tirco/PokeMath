@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="no">
+<head>
+	<meta charset="utf-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>PokéMath – Pokéviewer</title>
+	<meta name="description" content="Se på dine Pokémon.">
+	<meta name="robots" content="noindex, nofollow">
+	<link rel="stylesheet" href="globalstyle.css?v=100">
+	<link rel="stylesheet" href="menustyle.css?v=100">
+	<link rel="stylesheet" href="pokeviewer.css?v=101">
+	<link rel="stylesheet" href="pokemon.css?v=101">
+</head>
+<body>
+	<div id="header"></div>
+<div class="main">
+	<div id="navbar">
+		<button id="prevButton" class="navButton searchButton">
+			<div class="button-bg" id="prevButtonBG">Forrige</div>
+		</button>
+		<div class="toggle-pill-color">
+			<a class="categoryname">Shiny</a>	
+			<input type="checkbox" id="shinycheck" name="shiny">
+			<label for="shinycheck">  </label>
+		</div>
+		<input type="text" id="searchBar" placeholder="Search by Name or ID" />
+		<button id="searchButton" class="searchButton">Search</button>
+		<button id="nextButton" class="navButton searchButton">
+			<div class="button-bg" id="nextButtonBG">Neste</div>
+		</button>
+	</div>
+	<div id="pokemondata">
+		<div id="poke-details">
+			<div id="prev-evolution-wrapper" class="evolution-wrapper poke-container">
+				<div class="evotitle">Utvikles fra:</div>
+			</div>
+			<div id="main-pokemon-wrapper" class="main-pokemon-wrapper poke-container">
+				
+			</div>
+			<div id="next-evolution-wrapper" class="evolution-wrapper poke-container">
+				<div class="evotitle">Utvikles til:</div>
+			</div>
+	</div>
+	<div id="alternate-forms-wrapper" class="alternate-forms-wrapper">
+		<div id="wrapper-header" class="wrapper-header">Alternative Former:</div>
+	</div>
+</div>
+</div>
+	  <script src="global.js?v=100"></script>
+	  <script src="pokeviewer.js?v=103"></script>
+</body>
+
+</html>

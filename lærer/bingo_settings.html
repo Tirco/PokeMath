@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="no">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>PokeMath Bingo – Innstillinger</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="stylesheet" href="/lærer/bingo_settings.css?v=1">
+</head>
+<body>
+  <main class="page">
+    <header class="header">
+      <div class="brand">
+        <div class="logo"><img src="/images/logo.png" alt="PokeMath"></div>
+        <div class="brand-name">
+          <div class="title">PokeMath Bingo</div>
+          <div class="subtitle">Lærer · Innstillinger</div>
+        </div>
+      </div>
+
+      <a class="link" href="/lærer/index.html">← Tilbake</a>
+    </header>
+
+    <section class="panel warn">
+      <h1>Bingo er et eksperiment</h1>
+      <p>
+        Dette er en testfunksjon. Ikke del sensitiv info.
+        Data lagres på DreamHost-servere (utenfor Norge).
+      </p>
+    </section>
+
+    <section class="panel" id="mustLogin" style="display:none;">
+      <h2>Du må være logget inn</h2>
+      <p class="muted">Gå tilbake og logg inn før du kan starte bingo.</p>
+      <div class="actions">
+        <a class="btn primary linkbtn" href="/lærer/index.html">Gå til innlogging</a>
+      </div>
+    </section>
+
+    <section class="panel" id="settingsBox">
+      <h2>Innstillinger</h2>
+      <p class="muted">Velg vanskelighetsgrad. Du kan lage nytt spill senere fra host-siden.</p>
+
+      <div class="grid">
+        <label class="field">
+          <span>Vanskelighetsgrad</span>
+          <select id="difficulty">
+            <option value="easy">Enkel</option>
+            <option value="medium" selected>Middels</option>
+            <option value="hard">Vanskelig</option>
+            <option value="extreme">Ekstrem</option>
+            <option value="unik">Unik - kun unike pokémon-ID-er</option>
+          </select>
+          <small>Bestemmer hvilke typer oppgaver som kan dukke opp på brettet.</small>
+        </label>
+
+        <label class="field">
+          <span>Minimum arbeidsnivå</span>
+          <select id="minLevel">
+            <option value="alle" selected>Alle nivåer godkjent</option>
+            <option value="stage1">Nivå 1 eller høyere</option>
+            <option value="stage2">Nivå 2 eller høyere</option>
+            <option value="stage3">Nivå 3 eller høyere</option>
+            <option value="stage4">Nivå 4 eller høyere</option>
+            <option value="stage5">Kun nivå 5</option>
+          </select>
+          <small>Pokémon fanget på lavere nivå vises i loggen, men teller ikke på brettet.</small>
+        </label>
+
+        <label class="field">
+          <span>Klasse-navn (valgfritt)</span>
+          <input id="className" type="text" maxlength="40" placeholder="F.eks. 7A">
+          <small>Kun for visning (ikke sensitiv info).</small>
+        </label>
+
+        <label class="field">
+          <span>Premie ved fullføring</span>
+          <select id="prizeType">
+            <option value="random" selected>Tilfeldig (standard)</option>
+            <option value="coins">Mynter</option>
+            <option value="legendary">Legendarisk Pokémon</option>
+            <option value="mythic">Mytisk Pokémon</option>
+            <option value="shiny">Shiny Pokémon (×3)</option>
+            <option value="participation_coins">Pott: 2 000 per elev + 50 per fangst (fordeles etter deltakelse)</option>
+            <option value="per_catch_coins">50 mynter per pokemon eleven fanget</option>
+            <option value="stardust">Stardust (×1)</option>
+          </select>
+          <small>Gis til alle deltakere som fanget minst én Pokémon.</small>
+        </label>
+
+        <label class="field" style="flex-direction:row;align-items:center;gap:10px;cursor:pointer;">
+          <input type="checkbox" id="prizeSecret">
+          <span>Hemmelig premie <small style="font-weight:400;">(skjul premieinfo på brett-skjermen)</small></span>
+        </label>
+      </div>
+
+      <div class="actions">
+        <button class="btn primary" id="startBtn">Start Bingo</button>
+        <button class="btn" id="resetBtn">Nullstill</button>
+      </div>
+
+      <div class="status" id="status"></div>
+      <div class="small muted" style="margin-top:8px;">
+        Når du starter, blir du sendt til host-siden og en kode genereres der.
+      </div>
+    </section>
+  </main>
+
+  <script src="/lærer/bingo_settings.js?v=1"></script>
+</body>
+</html>

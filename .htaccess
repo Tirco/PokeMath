@@ -1,0 +1,131 @@
+# ----------------------------
+# Core rewrite/proxy config
+# ----------------------------
+RewriteEngine On
+RewriteBase /
+
+# Always use HTTPS (remove old bingo.html exception – it breaks websockets + mixed content)
+RewriteCond %{HTTPS} off
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# ----------------------------
+# Friendly URL redirects
+# ----------------------------
+RewriteRule ^lærer/?$ /lærer/index.html [R=301,L]
+RewriteRule ^bingo/?$ /bingo_join.html [R=301,L]
+
+# ----------------------------
+# WebSocket proxy for Bingo (/ws)
+RewriteCond %{REQUEST_URI} ^/ws$ [NC]
+RewriteCond %{HTTP:Upgrade} =websocket [NC]
+RewriteCond %{HTTP:Connection} upgrade [NC]
+RewriteRule ^ws$ ws://localhost:8080/ws [P,L]
+
+# ----------------------------
+# Proxy API requests to Node.js running on port 3002
+# (your existing rules kept)
+# ----------------------------
+RewriteCond %{REQUEST_URI} ^/api/ [NC]
+RewriteRule ^(.*)$ http://localhost:3002/$1 [P,L]
+
+RewriteCond %{REQUEST_URI} ^/app/ [NC]
+RewriteRule ^(.*)$ http://localhost:3002/$1 [P,L]
+
+# ----------------------------
+# Proxy ALL Node endpoints on port 8080
+# ----------------------------
+
+# validate uuid attempt
+RewriteCond %{REQUEST_URI} ^/validate-user$ [NC]
+RewriteRule ^(.*)$ http://localhost:8080/$1 [P,L]
+
+# update user stats
+RewriteCond %{REQUEST_URI} ^/update-user-stats$ [NC]
+RewriteRule ^(.*)$ http://localhost:8080/$1 [P,L]
+
+# admin stats
+RewriteCond %{REQUEST_URI} ^/admin-stats$ [NC]
+RewriteRule ^(.*)$ http://localhost:8080/$1 [P,L]
+
+# teacher auth endpoints
+RewriteCond %{REQUEST_URI} ^/teacher/ [NC]
+RewriteRule ^(.*)$ http://localhost:8080/$1 [P,L]
+
+# admin endpoints (catch-all for /admin/*)
+RewriteCond %{REQUEST_URI} ^/admin/ [NC]
+RewriteRule ^(.*)$ http://localhost:8080/$1 [P,L]
+
+# Allow /bingo_join.html/ABC123 to map to bingo_join.html?code=ABC123
+RewriteRule ^bingo_join\.html/([0-9A-Z]{6})$ /bingo_join.html?code=$1 [L,QSA]
+
+
+# analytics / tracking endpoints
+RewriteCond %{REQUEST_URI} ^/track-catch$ [NC,OR]
+RewriteCond %{REQUEST_URI} ^/track-page$ [NC,OR]
+RewriteCond %{REQUEST_URI} ^/track-stage$ [NC]
+RewriteRule ^(.*)$ http://localhost:8080/$1 [P,L]
+
+# math session ping
+RewriteCond %{REQUEST_URI} ^/math-ping$ [NC]
+RewriteRule ^(.*)$ http://localhost:8080/$1 [P,L]
+
+# redeem secret codes
+RewriteCond %{REQUEST_URI} ^/redeem$ [NC]
+RewriteRule ^(.*)$ http://localhost:8080/$1 [P,L]
+
+# bingo prize claim
+RewriteCond %{REQUEST_URI} ^/bingo/claim-prizes$ [NC]
+RewriteRule ^(.*)$ http://localhost:8080/$1 [P,L]
+
+RewriteCond %{REQUEST_URI} ^/__healthz$ [NC,OR]
+RewriteCond %{REQUEST_URI} ^/__routes$ [NC,OR]
+RewriteCond %{REQUEST_URI} ^/__wsinfo$ [NC]
+RewriteRule ^(.*)$ http://localhost:8080/$1 [P,L]
+
+# ----------------------------
+# Environment / security / caching
+# ----------------------------
+
+<FilesMatch "\.js$">
+Header set Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
+Header set Pragma "no-cache"
+</FilesMatch>
+
+# Set time zone
+SetEnv TZ Europe/Oslo
+
+# Server signature and admin contact information
+ServerSignature EMail
+SetEnv SERVER_ADMIN tirco@tirco.tv
+
+# Disable directory browsing
+Options All -Indexes
+
+ErrorDocument 404 /notfound.html
+
+# Enable mod_expires
+<IfModule mod_expires.c>
+    ExpiresActive On
+    <FilesMatch "\.(html|htm)$">
+        ExpiresDefault "access plus 12 hours"
+    </FilesMatch>
+</IfModule>
+
+# Increase security with headers
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "DENY"
+    Header always set X-XSS-Protection "1; mode=block"
+    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+    Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+    Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https://raw.githubusercontent.com https://api.qrserver.com; connect-src 'self' wss:; frame-ancestors 'none';"
+
+    <FilesMatch "\.(html|htm)$">
+        Header set Cache-Control "max-age=43200, must-revalidate"
+    </FilesMatch>
+</IfModule>
+
+# Cache-Control for static assets
+<FilesMatch "\.(ico|pdf|jpg|jpeg|png|webp|gif|xml|txt|xsl|css)$">
+    Header set Cache-Control "max-age=31536050"
+</FilesMatch>

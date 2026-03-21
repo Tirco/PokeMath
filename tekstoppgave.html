@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="no">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tilfeldige tekstoppgaver</title>
+  <link rel="stylesheet" href="tekstoppgaver.css">
+</head>
+<body>
+  <div id="disclaimer">
+    <button title="Lukk" onclick="this.parentElement.classList.add('hide')">×</button>
+    <b>Merk:</b> Disse oppgavene er KI-genererte og kan vise ulogiske tall, spesielt på vanskeligere nivåer.
+  </div>
+  <main class="app">
+    <div class="card">
+      <div class="grid">
+        <div>
+          <h1>Tilfeldige tekstoppgaver</h1>
+          <div class="meta">Addisjon • Subtraksjon • Multiplikasjon • Divisjon</div>
+        </div>
+        <div class="levelbar">
+          <span id="type-pill" class="pill">—</span>
+          <span id="level-pill" class="pill lv-pill">Grønn</span>
+        </div>
+      </div>
+
+      <div class="row" style="margin-top:8px">
+        <label for="levelSelect" class="meta">Vanskelighetsgrad:</label>
+        <select id="levelSelect" title="Velg nivå">
+          <option value="0">Grønn (Til 20)</option>
+          <option value="1">Gul (Til 50)</option>
+          <option value="2">Rød (Til 100)</option>
+          <option value="3">Svart (Til 10 000)</option>
+          <option value="4">Hodeskalle (Til millioner)</option>
+        </select>
+        <button id="easierBtn" title="Gjør det lettere">Gjør det lettere</button>
+        <button id="harderBtn" title="Gjør det vanskeligere">Gjør det vanskeligere</button>
+      </div>
+
+      <p id="problem" class="problem">&nbsp;</p>
+
+      <div class="input-row">
+        <input id="answerInput" type="text" inputmode="decimal" placeholder="Skriv svaret her…" autocomplete="off" />
+        <button id="checkBtn" class="primary">Sjekk svar</button>
+      </div>
+
+      <div class="btns">
+        <button id="newBtn">Ny oppgave</button>
+        <button id="showBtn" class="ghost">Vis fasit</button>
+        <button id="hideMetaBtn" class="ghost">Skjul/vis meta</button>
+      </div>
+
+      <div class="counters" id="counters">Løst – <b>Grønn:</b> 0 • <b>Gul:</b> 0 • <b>Rød:</b> 0 • <b>Svart:</b> 0 • <b>Hodeskalle:</b> 0</div>
+
+      <div id="status" class="status">&nbsp;</div>
+
+      <details id="metaBox" open>
+        <summary>Meta (for lærer / debugging)</summary>
+        <pre id="meta" style="white-space:pre-wrap"></pre>
+      </details>
+    </div>
+    <div id="chicken" aria-live="polite" title="Hei! Jeg heier på deg 🐣">
+      <div class="emoji">🐥</div>
+    </div>
+  </main>
+  <script src="tekstoppgaver.js"></script>
+</body>
+</html>

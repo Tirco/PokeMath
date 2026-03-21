@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="no">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>PokeMath Bingo – Bli med</title>
+  <link rel="stylesheet" href="/bingo_join.css?v=4">
+</head>
+<body>
+  <main class="join-page">
+    <header class="join-header">
+      <div class="brand">
+        <div class="logo"><img src="/images/logo.png" alt="PokeMath"></div>
+        <div class="brand-name">
+          <div class="title">PokeMath Bingo</div>
+          <div class="subtitle">Bli med i lærerens bingo-brett</div>
+        </div>
+      </div>
+
+      <a class="link" href="/index.html">← Tilbake til forsiden</a>
+    </header>
+
+    <section class="panel">
+      <h1>Join bingo</h1>
+      <p class="help">
+        Skriv inn koden du får av læreren. Du kan bytte kode når som helst.
+      </p>
+
+      <div class="meta" style="margin-bottom:12px;">
+        <div><span class="mono">Elev:</span> <b id="studentOut">Ash</b></div>
+        <div class="small" style="margin-top:6px;">
+          (Navnet hentes fra PokeMath. Hvis det står “Ash”, sett brukernavn i spillet.)
+        </div>
+      </div>
+
+      <div class="form-grid" style="grid-template-columns: 1fr;">
+        <label class="field">
+          <span>Kode</span>
+          <input id="code" type="text" maxlength="6" inputmode="latin" autocapitalize="characters" placeholder="ABC123" />
+          <small>6 tegn (bokstaver og tall).</small>
+        </label>
+      </div>
+
+      <div class="actions">
+        <button id="joinBtn" class="btn primary">Koble til</button>
+        <button id="clearBtn" class="btn">Tøm</button>
+      </div>
+
+      <div id="status" class="status"></div>
+      <div class="meta">
+        <div><span class="mono">UUID:</span> <span id="uuidOut" class="mono">—</span></div>
+      </div>
+    </section>
+
+    <section class="panel subtle">
+      <h2>Hva skjer når jeg kobler til?</h2>
+      <ul>
+        <li>Du blir med i lærerens bingo-lobby.</li>
+        <li>Når du fanger Pokémon i PokeMath, sendes fangsten automatisk til bingobrettet.</li>
+        <li>Hvis fangsten passer en rute, krysses den av og ruten teller treff.</li>
+      </ul>
+    </section>
+  </main>
+
+  <script>
+    function safeUpper6(s){
+      return String(s || "").toUpperCase().replace(/[^0-9A-Z]/g, "").slice(0, 6);
+    }
+
+    function isUuidLike(value) {
+      return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(String(value || ""));
+    }
+
+    function extractCodeFromUrl(){
+      const url = new URL(location.href);
+      const qp = safeUpper6(url.searchParams.get("code"));
+      if (qp.length === 6) return qp;
+
+      const parts = location.pathname.split("/").filter(Boolean);
+      const last = safeUpper6(parts[parts.length - 1] || "");
+      if (last.length === 6) return last;
+
+      return "";
+    }
+
+    function getOrCreateUUID(){
+      const candidates = [
+        localStorage.getItem("uuid"),
+        localStorage.getItem("user_uuid"),
+        localStorage.getItem("pokemath_uuid")
+      ];
+
+      for (const existing of candidates) {
+        if (isUuidLike(existing)) {
+          localStorage.setItem("uuid", existing);
+          return existing;
+        }
+      }
+
+      let uuid = "";
+      if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") {
+        uuid = crypto.randomUUID();
+      } else {
+        uuid = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, c => {
+          const r = Math.random() * 16 | 0;
+          const v = c === "x" ? r : (r & 0x3 | 0x8);
+          return v.toString(16);
+        });
+      }
+
+      localStorage.setItem("uuid", uuid);
+      return uuid;
+    }
+
+    function getStudentName(){
+      const n = (
+        localStorage.getItem("username") ||
+        localStorage.getItem("playerName") ||
+        localStorage.getItem("name") ||
+        ""
+      ).trim();
+      return n || "Ash";
+    }
+
+    const codeEl = document.getElementById("code");
+    const joinBtn = document.getElementById("joinBtn");
+    const clearBtn = document.getElementById("clearBtn");
+    const statusEl = document.getElementById("status");
+    const uuidOut = document.getElementById("uuidOut");
+    const studentOut = document.getElementById("studentOut");
+
+    const uuid = getOrCreateUUID();
+    uuidOut.textContent = uuid;
+
+    const studentName = getStudentName();
+    studentOut.textContent = studentName;
+
+    const urlCode = extractCodeFromUrl();
+    const storedCode = safeUpper6(localStorage.getItem("bingoJoinedCode") || localStorage.getItem("bingoCode") || "");
+    codeEl.value = urlCode || storedCode || "";
+
+    function setStatus(msg, kind="info"){
+      statusEl.className = "status " + kind;
+      statusEl.textContent = msg || "";
+    }
+
+    joinBtn.addEventListener("click", () => {
+      const code = safeUpper6(codeEl.value);
+
+      if (code.length !== 6){
+        setStatus("Skriv inn en gyldig kode (6 tegn).", "bad");
+        return;
+      }
+
+      localStorage.setItem("bingoJoinedCode", code);
+      localStorage.setItem("bingoCode", code);
+
+      setStatus("Klar! Velg et trinn for å begynne å fange Pokémon.", "good");
+
+      setTimeout(() => { location.href = "/index.html"; }, 800);
+    });
+
+    clearBtn.addEventListener("click", () => {
+      codeEl.value = "";
+      localStorage.removeItem("bingoJoinedCode");
+      localStorage.removeItem("bingoCode");
+      setStatus("", "info");
+    });
+
+    codeEl.addEventListener("input", () => {
+      codeEl.value = safeUpper6(codeEl.value);
+    });
+  </script>
+</body>
+</html>

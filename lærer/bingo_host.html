@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="no">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Lærer – Bingo (Host)</title>
+  <link rel="stylesheet" href="/globalstyle.css?v=100">
+  <link rel="stylesheet" href="/bingo.css?v=104">
+  <link rel="stylesheet" href="/pokemon.css?v=100">
+</head>
+<body>
+  <div id="header"></div>
+
+  <div id="main" class="main">
+    <div class="host-grid">
+
+      <!-- LEFT: Players -->
+      <div class="host-panel host-left">
+        <div class="panel-header">
+          <span>Tilkoblede elever</span>
+          <span id="playerCount" class="panel-badge">0</span>
+        </div>
+        <div style="display:flex;gap:4px;padding:6px 8px;flex-wrap:wrap;border-bottom:1px solid rgba(0,0,0,0.08);">
+          <button id="sortJoinBtn"    class="host-btn host-btn-secondary host-btn-sm" style="font-size:11px;padding:3px 7px;opacity:1;">⏱</button>
+          <button id="sortAlphaBtn"   class="host-btn host-btn-secondary host-btn-sm" style="font-size:11px;padding:3px 7px;opacity:0.5;">A–Å</button>
+          <button id="sortCatchBtn"   class="host-btn host-btn-secondary host-btn-sm" style="font-size:11px;padding:3px 7px;opacity:0.5;">🎯</button>
+          <button id="toggleCatchesBtn" class="host-btn host-btn-secondary host-btn-sm" style="font-size:11px;padding:3px 7px;margin-left:auto;">👁 Skjul</button>
+        </div>
+        <div id="players"></div>
+      </div>
+
+      <!-- CENTER: Board -->
+      <div class="host-center">
+        <div class="host-top">
+          <div>
+            <h1 class="pokebingo-header">PokeBingo</h1>
+            <div id="difficultyLabel" class="host-difficulty-label"></div>
+            <div id="classNameLabel" class="host-difficulty-label" style="margin-top:2px;color:#888;"></div>
+          </div>
+          <div class="host-code-box">
+            <div class="host-code-label">Klassekode</div>
+            <div id="code" class="host-code-value">------</div>
+            <div class="host-code-actions">
+              <button id="copyLinkBtn" class="host-btn host-btn-secondary host-btn-sm">Kopier lenke</button>
+              <button id="showQrBtn"   class="host-btn host-btn-secondary host-btn-sm">Vis QR</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="host-controls">
+          <div class="host-controls-left">
+            <button id="newGameBtn"      class="host-btn host-btn-primary">Nytt spill</button>
+            <button id="toggleLog"       class="host-btn host-btn-secondary">Skjul logg</button>
+            <button id="endGameBtn"      class="host-btn host-btn-danger">Avslutt Bingo</button>
+            <button id="backToSettings"  class="host-btn host-btn-secondary">← Innstillinger</button>
+          </div>
+          <div class="host-controls-right">
+            <button id="muteBtn" class="host-btn host-btn-secondary" onclick="(function(){var m=localStorage.getItem('bingoMuted')==='1';localStorage.setItem('bingoMuted',m?'0':'1');document.getElementById('muteBtn').textContent=m?'🔊 Lyd på':'🔇 Lyd av';})()">🔊 Lyd på</button>
+            <div id="totalCatches" class="total-catches">Totalt fanget: 0</div>
+            <div class="host-status-hint">(Refresh = samme kode)</div>
+          </div>
+        </div>
+
+        <table id="bingoCard"></table>
+      </div>
+
+      <!-- RIGHT: Log -->
+      <div class="host-panel host-right">
+        <div class="panel-header">
+          <span>Logg</span>
+          <span id="logCount" class="panel-badge">0</span>
+        </div>
+        <div id="events"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div id="botbar" class="botbar"></div>
+
+  <div id="toast" class="bingo-toast"></div>
+
+  <!-- QR modal -->
+  <div id="qrModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:99997;align-items:center;justify-content:center;">
+    <div style="background:#fff;border-radius:16px;padding:28px 32px;text-align:center;box-shadow:0 8px 32px rgba(0,0,0,0.25);max-width:320px;width:90%;position:relative;">
+      <button id="qrClose" style="position:absolute;top:10px;right:14px;background:none;border:none;font-size:1.4em;cursor:pointer;color:#aaa;">×</button>
+      <div style="font-weight:700;font-size:1.1em;margin-bottom:14px;color:#cc1a1a;">Scan for å bli med</div>
+      <img id="qrImage" src="" alt="QR kode" style="width:220px;height:220px;border-radius:8px;">
+      <div id="qrUrl" style="margin-top:10px;font-size:0.78em;color:#888;word-break:break-all;"></div>
+    </div>
+  </div>
+
+  <!-- Confetti canvas -->
+  <canvas id="confetti-canvas" style="position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:99998;"></canvas>
+
+  <script src="/global.js?v=100"></script>
+  <script src="/bingo_host_tasks.js?v=7"></script>
+  <script>
+    (function(){
+      var btn = document.getElementById("muteBtn");
+      if (btn) btn.textContent = localStorage.getItem("bingoMuted") === "1" ? "🔇 Lyd av" : "🔊 Lyd på";
+    })();
+  </script>
+</body>
+</html>

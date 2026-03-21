@@ -1,0 +1,21 @@
+/* PokeMath Bingo – join page */
+@import url('/lærer/teacher.css');
+
+.join-page {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 24px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.join-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding-bottom: 10px;
+  border-bottom: 2px solid rgba(204,26,26,0.12);
+}

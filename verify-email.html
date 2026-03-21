@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="no">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Bekreft e-post – PokeMath Lærer</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="stylesheet" href="/lærer/teacher.css?v=1">
+</head>
+<body>
+  <main class="teacher-page" style="max-width:520px;">
+    <header class="teacher-header">
+      <div class="brand">
+        <div class="logo"><img src="/images/logo.png" alt="PokeMath"></div>
+        <div class="brand-name">
+          <div class="title">PokeMath – Lærer</div>
+          <div class="subtitle">E-postbekreftelse</div>
+        </div>
+      </div>
+    </header>
+
+    <section class="panel" id="loadingBox">
+      <p>Bekrefter e-post…</p>
+    </section>
+
+    <section class="panel" id="successBox" style="display:none;">
+      <h1>✅ E-post bekreftet!</h1>
+      <p>Hei <strong id="teacherName"></strong>,</p>
+      <p style="margin-top:10px;">E-postadressen din er bekreftet. Kontoen din vil nå bli gjennomgått og godkjent av admin – du vil få en e-post når det er klart.</p>
+      <div class="actions">
+        <a class="btn primary linkbtn" href="/lærer/index.html">Gå til innlogging</a>
+      </div>
+    </section>
+
+    <section class="panel" id="errorBox" style="display:none;">
+      <h1>Noe gikk galt</h1>
+      <p id="errorMsg" class="muted"></p>
+      <div class="actions">
+        <a class="btn linkbtn" href="/lærer/index.html">Tilbake til innlogging</a>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    (async function () {
+      const params  = new URLSearchParams(location.search);
+      const token   = (params.get("token") || "").trim();
+      const loading = document.getElementById("loadingBox");
+      const success = document.getElementById("successBox");
+      const error   = document.getElementById("errorBox");
+      const errMsg  = document.getElementById("errorMsg");
+
+      if (!token) {
+        loading.style.display = "none";
+        errMsg.textContent = "Ingen bekreftelsestoken funnet i lenken.";
+        error.style.display = "block";
+        return;
+      }
+
+      try {
+        const r    = await fetch(`/teacher/verify-email?token=${encodeURIComponent(token)}`);
+        const data = await r.json();
+
+        loading.style.display = "none";
+        if (data.ok) {
+          document.getElementById("teacherName").textContent = data.name || "Lærer";
+          success.style.display = "block";
+        } else {
+          errMsg.textContent = data.message || "Ugyldig eller allerede brukt lenke.";
+          error.style.display = "block";
+        }
+      } catch (e) {
+        loading.style.display = "none";
+        errMsg.textContent = "Serverfeil: " + e.message;
+        error.style.display = "block";
+      }
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,515 @@
+#main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding: 20px;
+  margin-top: 65px; /* topbar is 50px but icons visually overflow ~10px */
+  box-sizing: border-box;
+}
+
+/* Center the buttons in the middle of the screen */
+#lobby-selection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+#solo-mode {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* This centers the child elements horizontally */
+}
+
+#lobby-selection button {
+  padding: 15px 30px;
+  margin: 10px 0;
+  font-size: 1.2em;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: #3498db;
+  color: white;
+  transition: background-color 0.3s;
+}
+
+#lobby-selection button:hover {
+  background-color: #2980b9;
+}
+
+#lobby-selection button:active {
+  background-color: #1c639e;
+}
+
+
+/* Fancy header styling */
+.pokebingo-header {
+  text-align: center;
+  margin: 20px 0; /* Add some space above and below the header */
+  font-family: 'Arial', sans-serif; /* A generic font, but consider something more unique if you have preferences */
+  color: #FF6347; /* Initial color as tomato red */
+  background: -webkit-linear-gradient(left, #FF6347, #FF4500); /* A gradient from tomato red to orange-red */
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent; /* Makes the gradient visible */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* A soft shadow for depth */
+  border: 2px solid #FF6347; /* Border around the text */
+  padding: 10px 40px; /* Padding around the text */
+  border-radius: 20px; /* Rounded corners */
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2); /* Shadow for the entire header element */
+  -webkit-user-select: none; /* Safari */        
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+/Edge */
+  user-select: none; /* Standard */
+}
+
+#bingoCard td {
+  border: 2px solid #000; /* Example border, adjust as needed */
+  text-align: center;
+  vertical-align: middle;
+  padding: 10px;
+  width: 15vw;
+  height: 15vh;
+  text-align: center;
+  vertical-align: middle;
+  background-color: white;
+  cursor: pointer; /* Make it obvious the cells are clickable */
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.3); /* Subtle shadow for 3D effect */
+
+  transition: all 0.3s; /* Smooth transitions for hover effects */
+}
+
+#bingoCard td:hover {
+  transform: scale(1.05); /* Slight scaling on hover */
+  box-shadow: 3px 3px 10px rgba(0,0,0,0.5); /* Darker shadow on hover */
+}
+
+/* Bingo Card table styling */
+#bingoCard {
+  border-collapse: collapse; /* Removes spacing between cells */
+  margin-top: 20px; /* Some space at the top */
+}
+
+table {
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+td img {
+  width: 50px; 
+  height: 50px;
+}
+
+#bingoCard td.toggled {
+  background-color: #00C957; /* Bright green */
+  color: #fff; /* White text for toggled cells */
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.5); /* Inset shadow for "pressed" effect */
+}
+
+.task-description {
+  font-size: 0.9em; /* Adjusts the size of the description text */
+}
+
+#bingoCard td.free-space {
+  cursor: default; /* Prevent clicking on the free space */
+  background-color: green;
+}
+.task-description {
+  font-size: 0.9em;
+  color: #555;
+}
+
+/* ── Host layout (bingo_host.html) ────────────────────────────────────────── */
+
+/* 3-column grid: players | board | log */
+.host-grid {
+  display: grid;
+  grid-template-columns: 260px minmax(0, 1fr) 280px;
+  gap: 14px;
+  align-items: start;
+  width: 100%;
+  max-width: 1440px;
+  font-family: 'Source Sans Pro', 'Segoe UI', sans-serif;
+}
+
+/* Shared side panels */
+.host-panel {
+  background: #fff;
+  border: 1.5px solid rgba(204,26,26,0.13);
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  overflow: hidden;
+  max-height: calc(100vh - 200px);
+  display: flex;
+  flex-direction: column;
+}
+
+.panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #cc1a1a;
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.9em;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 10px 14px;
+  flex-shrink: 0;
+}
+
+.panel-badge {
+  background: rgba(255,255,255,0.25);
+  border-radius: 999px;
+  padding: 1px 8px;
+  font-size: 0.85em;
+  font-weight: 700;
+}
+
+#players, #events {
+  overflow-y: auto;
+  flex: 1;
+  padding: 8px;
+}
+
+/* ── Player rows ── */
+.player-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  margin-bottom: 6px;
+  background: #fafafa;
+  border: 1px solid #eee;
+  font-size: 0.88em;
+  transition: background 0.15s;
+}
+.player-row:hover { background: #f3f3f3; }
+
+.player-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.player-dot.connected    { background: #2cbb63; box-shadow: 0 0 0 3px rgba(44,187,99,0.2); }
+.player-dot.disconnected { background: #bbb; }
+
+.player-icon {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  image-rendering: pixelated;
+  flex-shrink: 0;
+}
+
+.player-name { font-weight: 700; flex: 1; color: #222; }
+.player-catches {
+  background: rgba(204,26,26,0.09);
+  color: #cc1a1a;
+  font-weight: 700;
+  font-size: 0.85em;
+  border-radius: 999px;
+  padding: 1px 8px;
+}
+
+/* ── Log entries ── */
+.log-entry {
+  padding: 6px 8px;
+  border-radius: 6px;
+  margin-bottom: 4px;
+  font-size: 0.82em;
+  border-left: 3px solid #eee;
+  background: #fafafa;
+  line-height: 1.4;
+  cursor: help;
+}
+.log-entry.log-match {
+  border-left-color: #2cbb63;
+  background: rgba(44,187,99,0.05);
+}
+.log-entry .log-time { color: #999; font-size: 0.9em; }
+.log-entry .log-match-pill {
+  display: inline-block;
+  background: #2cbb63;
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.78em;
+  border-radius: 999px;
+  padding: 1px 7px;
+  margin-left: 4px;
+}
+
+/* ── Center column ── */
+.host-center {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* ── Header ── */
+.host-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  background: #fff;
+  border: 1.5px solid rgba(204,26,26,0.13);
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  padding: 12px 16px;
+}
+
+.pokebingo-header {
+  margin: 0;
+  font-family: 'Source Sans Pro', sans-serif;
+  font-weight: 700;
+  font-size: 1.5em;
+  background: linear-gradient(135deg, #cc1a1a 0%, #ff6b35 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+  text-shadow: none;
+}
+
+.host-code-box { text-align: right; }
+.host-code-label {
+  font-size: 0.75em;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #999;
+}
+.host-code-value {
+  font-size: 2em;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  color: #cc1a1a;
+  font-family: 'Courier New', monospace;
+  line-height: 1.1;
+}
+.host-code-hint {
+  font-size: 0.75em;
+  color: #aaa;
+  margin-top: 2px;
+}
+
+/* ── Controls bar ── */
+.host-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+  background: #fff;
+  border: 1.5px solid rgba(204,26,26,0.13);
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  padding: 10px 14px;
+}
+
+.host-controls-left { display: flex; gap: 8px; flex-wrap: wrap; }
+
+.host-btn {
+  padding: 7px 16px;
+  border: none;
+  border-radius: 20px;
+  font-family: 'Source Sans Pro', sans-serif;
+  font-weight: 700;
+  font-size: 0.88em;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+}
+.host-btn:active { transform: scale(0.97); }
+.host-btn-primary   { background: #cc1a1a; color: #fff; }
+.host-btn-primary:hover   { background: #aa1414; }
+.host-btn-secondary { background: #f1f1f1; color: #444; }
+.host-btn-secondary:hover { background: #e0e0e0; }
+.host-btn-danger    { background: #fff0f0; color: #cc1a1a; border: 1.5px solid rgba(204,26,26,0.3); }
+.host-btn-danger:hover    { background: #ffe0e0; }
+.host-btn-sm { padding: 4px 10px; font-size: 0.8em; }
+
+.host-difficulty-label {
+  font-size: 0.8em;
+  font-weight: 600;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-top: 2px;
+}
+
+.host-code-actions {
+  display: flex;
+  gap: 6px;
+  margin-top: 6px;
+  justify-content: flex-end;
+}
+
+.total-catches {
+  font-weight: 800;
+  font-size: 1em;
+  color: #cc1a1a;
+}
+.host-status-hint { font-size: 0.8em; color: #aaa; }
+
+/* ── Bingo board ── */
+#bingoCard {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: separate;
+  border-spacing: 6px;
+  margin: 0;
+  background: #fff;
+  border: 1.5px solid rgba(204,26,26,0.13);
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  padding: 8px;
+}
+
+#bingoCard td {
+  position: relative;
+  width: auto;
+  height: 120px;
+  padding: 8px;
+  text-align: center;
+  vertical-align: middle;
+  background: #fafafa;
+  border: 1.5px solid #e8e8e8;
+  border-radius: 10px;
+  cursor: pointer;
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: 0.82em;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+  transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
+}
+
+#bingoCard td:hover {
+  transform: scale(1.03);
+  box-shadow: 0 4px 12px rgba(204,26,26,0.2);
+  border-color: rgba(204,26,26,0.3);
+}
+
+#bingoCard td.toggled {
+  background: linear-gradient(135deg, #2cbb63, #1da850);
+  color: #fff;
+  border-color: #2cbb63;
+  box-shadow: 0 3px 10px rgba(44,187,99,0.35);
+}
+
+#bingoCard td.free-space {
+  cursor: default;
+  background: linear-gradient(135deg, #cc1a1a, #e84d4d);
+  color: #fff;
+  border-color: #cc1a1a;
+}
+
+#bingoCard td img {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto 3px;
+}
+
+.task-description { font-size: 0.85em; opacity: 0.75; }
+
+/* ── Hit badge ── */
+.hit-badge {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 5px;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.12);
+  color: #111;
+}
+#bingoCard td.toggled .hit-badge { background: rgba(255,255,255,0.3); color: #fff; }
+#bingoCard td.free-space .hit-badge { display: none; }
+
+/* ── Host manual mark ── */
+#bingoCard td.host-cell { cursor: pointer; }
+#bingoCard td.host-cell:not(.toggled):hover { outline: 2px dashed #cc1a1a; outline-offset: -3px; }
+
+/* ── Silhouette (pokedexExact tasks) ── */
+#bingoCard td img.silhouette {
+  filter: brightness(0);
+}
+#bingoCard td.toggled img.silhouette {
+  filter: none;
+  transition: filter 0.5s ease;
+}
+
+/* ── Range cycling solved checkmark ── */
+.cell-range-solved {
+  display: block;
+  font-size: 2.2em;
+  line-height: 1;
+  font-weight: 900;
+  color: #fff;
+  text-shadow: 0 2px 6px rgba(0,0,0,0.25);
+  margin: 4px 0;
+}
+
+/* ── Toast ── */
+.bingo-toast {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  display: none;
+  padding: 14px 18px;
+  border-radius: 14px;
+  box-shadow: 0 8px 28px rgba(0,0,0,0.2);
+  max-width: 380px;
+  z-index: 9999;
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: 0.95em;
+  animation: toastIn 0.25s ease;
+}
+@keyframes toastIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Milestone glow/pop animation ── */
+@keyframes bingoFlash {
+  0%   { transform: scale(1);    box-shadow: 0 0 0 0 rgba(255,215,0,0); }
+  30%  { transform: scale(1.16); box-shadow: 0 0 28px 10px rgba(255,215,0,0.95), inset 0 0 16px rgba(255,200,0,0.5); }
+  65%  { transform: scale(1.08); box-shadow: 0 0 16px 5px rgba(255,215,0,0.55); }
+  100% { transform: scale(1);    box-shadow: 0 0 0 0 rgba(255,215,0,0); }
+}
+
+#bingoCard td.bingo-flash {
+  animation: bingoFlash 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  z-index: 3;
+  position: relative;
+}
+
+/* ── Responsive ── */
+@media (max-width: 1100px) {
+  .host-grid {
+    grid-template-columns: 1fr;
+  }
+  .host-panel {
+    max-height: 320px;
+  }
+}
+
+@media (max-width: 900px) {
+  #bingoCard td { height: 90px; }
+}

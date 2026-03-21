@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Icon Preview (Admin)</title>
+	<meta name="robots" content="noindex, nofollow">
+	<style>
+		body { font-family: sans-serif; background: #f0f0f0; margin: 0; padding: 16px; }
+		h1 { margin-bottom: 4px; }
+		.stats { color: #555; margin-bottom: 16px; font-size: 0.9rem; }
+		.filter-bar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; align-items: center; }
+		.filter-bar input { padding: 6px 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 0.9rem; width: 220px; }
+		.filter-bar select { padding: 6px 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 0.9rem; }
+		table { width: 100%; border-collapse: collapse; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.1); }
+		th { background: #444; color: white; padding: 8px 12px; text-align: left; font-size: 0.85rem; }
+		td { padding: 6px 12px; border-bottom: 1px solid #eee; font-size: 0.85rem; vertical-align: middle; }
+		tr:last-child td { border-bottom: none; }
+		tr:hover td { background: #f5f5f5; }
+		td img { width: 96px; height: 96px; object-fit: contain; object-position: top; display: block; }
+		.id-cell { color: #888; font-size: 0.75rem; word-break: break-all; }
+		.badge {
+			display: inline-block; border-radius: 999px; padding: 2px 9px;
+			font-size: 0.72rem; font-weight: bold; color: white;
+		}
+		.badge-free    { background: #2ecc71; }
+		.badge-always  { background: #3498db; }
+		.badge-medium  { background: #9b59b6; }
+		.badge-high    { background: #e67e22; }
+		.badge-special { background: #e74c3c; }
+		.badge-new     { background: #1abc9c; }
+		.no-results { color: #888; padding: 32px; text-align: center; }
+	</style>
+</head>
+<body>
+<h1>Icon Preview</h1>
+<div class="stats" id="stats"></div>
+
+<div class="filter-bar">
+	<input type="text" id="search" placeholder="Søk navn eller id..." oninput="render()">
+	<select id="priceFilter" onchange="render()">
+		<option value="">Alle priser</option>
+		<option value="0">Gratis (0)</option>
+		<option value="5000">Alltid (5 000)</option>
+		<option value="25000">25 000</option>
+		<option value="50000">50 000</option>
+		<option value="100000">100 000</option>
+		<option value="1000000">1 000 000</option>
+	</select>
+</div>
+
+<div id="grid"></div>
+
+<script>
+	// shop.html defines ICON_ITEMS as a global — we load it via a trick:
+	// Actually, let's just duplicate the reference array here.
+	// This file pulls ICON_ITEMS from shop.html's inline script via iframe trick.
+	// Simpler: just read window.ICON_ITEMS if the outer script ran.
+
+	// Since we can't easily import from shop.html, we embed a loader:
+	function loadIconItems(cb) {
+		fetch('shop.html')
+			.then(r => r.text())
+			.then(html => {
+				const wm = html.match(/const W\s*=\s*"([^"]+)"/);
+				const pm = html.match(/const P\s*=\s*"([^"]+)"/);
+				const im = html.match(/const ICON_ITEMS\s*=\s*(\[[\s\S]*?\];)/);
+				if (!im) { alert('Could not parse ICON_ITEMS from shop.html'); return; }
+				const W = wm ? wm[1] : 'images/playericons/unconverted/';
+				const P = pm ? pm[1] : 'images/playericons/';
+				const items = eval('(function(){const W="'+W+'",P="'+P+'";return '+im[1].replace(/;$/,'')+'})()');
+				cb(items);
+			});
+	}
+
+	function badgeClass(price) {
+		if (price === 0)       return 'badge-free';
+		if (price === 5000)    return 'badge-always';
+		if (price === 25000)   return 'badge-medium';
+		if (price === 50000)   return 'badge-new';
+		if (price === 100000)  return 'badge-high';
+		return 'badge-special';
+	}
+	function badgeLabel(price) {
+		if (price === 0)       return 'Gratis';
+		if (price === 5000)    return 'Alltid';
+		return price.toLocaleString('no-NO');
+	}
+
+	let ALL_ITEMS = [];
+
+	function render() {
+		const q     = document.getElementById('search').value.toLowerCase();
+		const pf    = document.getElementById('priceFilter').value;
+		const grid  = document.getElementById('grid');
+
+		let items = ALL_ITEMS;
+		if (q)  items = items.filter(i => i.name.toLowerCase().includes(q) || i.id.toLowerCase().includes(q));
+		if (pf) items = items.filter(i => i.price === Number(pf));
+
+		document.getElementById('stats').textContent =
+			`Viser ${items.length} av ${ALL_ITEMS.length} figurer`;
+
+		if (!items.length) {
+			grid.innerHTML = '<div class="no-results">Ingen treff.</div>';
+			return;
+		}
+
+		grid.innerHTML = '<table>'
+			+ '<thead><tr><th>Bilde</th><th>Navn</th><th>ID</th><th>Pris</th></tr></thead>'
+			+ '<tbody>'
+			+ items.map(item =>
+				'<tr>'
+				+ '<td><img src="' + item.img + '" alt="' + item.name + '" loading="lazy"></td>'
+				+ '<td>' + item.name + '</td>'
+				+ '<td class="id-cell">' + item.id + '</td>'
+				+ '<td><span class="badge ' + badgeClass(item.price) + '">' + badgeLabel(item.price) + '</span></td>'
+				+ '</tr>'
+			).join('')
+			+ '</tbody></table>';
+	}
+
+	loadIconItems(items => {
+		ALL_ITEMS = items.sort((a, b) => a.name.localeCompare(b.name, 'no'));
+		render();
+	});
+</script>
+</body>
+</html>

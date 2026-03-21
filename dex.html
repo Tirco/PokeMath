@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="no">
+<head>
+	<meta charset="utf-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>PokéMath – Pokédex</title>
+	<meta name="description" content="Pokédexen til PokéMath – se alle pokémonene dine.">
+	<meta name="robots" content="noindex, nofollow">
+	<link rel="stylesheet" href="globalstyle.css?v=100">
+	<link rel="stylesheet" href="menustyle.css?v=100">
+	<link rel="stylesheet" href="dex.css?v=103">
+	<link rel="stylesheet" href="pokemon.css?v=101">
+</head>
+<body>
+	<div id="header"></div>
+
+	<div class="main">
+		<div id="filterButtons">
+			<input type="text" placeholder="Søk.." id="searchInput">
+
+			<button class="btn active" data-filter="all"         onclick="filterSelection('all')">Vis alle</button>
+			<button class="btn"        data-filter="Shiny"       onclick="cycleSpecialFilter('Shiny')">Shiny</button>
+			<button class="btn"        data-filter="Legendarisk" onclick="cycleSpecialFilter('Legendarisk')">Legendarisk</button>
+			<button class="btn"        data-filter="Mytisk"      onclick="cycleSpecialFilter('Mytisk')">Mytisk</button>
+			<button class="btn"        data-filter=" mega "      onclick="cycleSpecialFilter(' mega ')">Mega</button>
+			<button class="btn"        data-filter="gigantamax"  onclick="cycleSpecialFilter('gigantamax')">Gigantamax</button>
+			<button class="btn"        data-filter="alolan"      onclick="cycleSpecialFilter('alolan')">Alolan</button>
+			<button class="btn"        data-filter="galarian"    onclick="cycleSpecialFilter('galarian')">Galarian</button>
+			<button class="btn"        data-filter="hisuian"     onclick="cycleSpecialFilter('hisuian')">Hisuian</button>
+			<button class="btn"        data-filter="-H"          onclick="cycleSpecialFilter('-H')">Halloween</button>
+			<button class="btn"        data-filter="-C"          onclick="cycleSpecialFilter('-C')">Jul</button>
+			<button class="btn"        data-filter="-U"          onclick="cycleSpecialFilter('-U')">Unik</button>
+			<button class="btn" id="duplicatesBtn"               onclick="toggleDuplicates()">Dobler</button>
+
+			<button class="altbtn" id="typeDropdownBtn">Typer &#x25BC;</button>
+			<button class="altbtn" id="generationDropdown">Generasjon &#x25BC;</button>
+			<button class="altbtn" id="sortDropdownBtn">Sorter &#x25BC;</button>
+		</div>
+
+		<div class="columns is-multiline is-mobile" id="pokedex">
+			Laster...<br><br>
+		</div>
+		<div class="center" id="dexLoadStatus"></div>
+	</div>
+
+	<div class="botbar" id="dex-botbar">
+		<div class="dex-stats-row">
+			<button class="dex-progress-toggle" id="progressToggleBtn" onclick="toggleProgressBars()" title="Vis/skjul fremdrift">&#x25B2;</button>
+			<a id="amountCaught"  class="statisticText" data-text=" fanget.">?</a>
+			<a id="amountCaught2" class="statisticText" data-text=" unike.">?</a>
+			<a id="amountCaught3" class="statisticText" data-text=" i søk.">?</a>
+		</div>
+		<div class="dex-progress-bars" id="dexProgressBars"></div>
+	</div>
+
+	<!-- Dropdown panels — live on body so they're never clipped by the sticky filter bar -->
+	<div class="dex-dropdown-panel" id="typecontent" style="display:none" data-display="grid">
+		<a class="typecard2 type-bug"      data-filter="bug"      onclick="filterTypeSelection('bug')">Bug</a>
+		<a class="typecard2 type-dark"     data-filter="dark"     onclick="filterTypeSelection('dark')">Dark</a>
+		<a class="typecard2 type-dragon"   data-filter="dragon"   onclick="filterTypeSelection('dragon')">Dragon</a>
+		<a class="typecard2 type-electric" data-filter="electric" onclick="filterTypeSelection('electric')">Electric</a>
+		<a class="typecard2 type-fairy"    data-filter="fairy"    onclick="filterTypeSelection('fairy')">Fairy</a>
+		<a class="typecard2 type-fighting" data-filter="fighting" onclick="filterTypeSelection('fighting')">Fighting</a>
+		<a class="typecard2 type-fire"     data-filter="fire"     onclick="filterTypeSelection('fire')">Fire</a>
+		<a class="typecard2 type-flying"   data-filter="flying"   onclick="filterTypeSelection('flying')">Flying</a>
+		<a class="typecard2 type-ghost"    data-filter="ghost"    onclick="filterTypeSelection('ghost')">Ghost</a>
+		<a class="typecard2 type-grass"    data-filter="grass"    onclick="filterTypeSelection('grass')">Grass</a>
+		<a class="typecard2 type-ground"   data-filter="ground"   onclick="filterTypeSelection('ground')">Ground</a>
+		<a class="typecard2 type-ice"      data-filter="ice"      onclick="filterTypeSelection('ice')">Ice</a>
+		<a class="typecard2 type-normal"   data-filter="normal"   onclick="filterTypeSelection('normal')">Normal</a>
+		<a class="typecard2 type-poison"   data-filter="poison"   onclick="filterTypeSelection('poison')">Poison</a>
+		<a class="typecard2 type-psychic"  data-filter="psychic"  onclick="filterTypeSelection('psychic')">Psychic</a>
+		<a class="typecard2 type-rock"     data-filter="rock"     onclick="filterTypeSelection('rock')">Rock</a>
+		<a class="typecard2 type-steel"    data-filter="steel"    onclick="filterTypeSelection('steel')">Steel</a>
+		<a class="typecard2 type-water"    data-filter="water"    onclick="filterTypeSelection('water')">Water</a>
+	</div>
+
+	<div class="dex-dropdown-panel" id="generationContent" style="display:none">
+		<label><input type="checkbox" class="genCheckbox" value="gen-1" checked> Gen I</label>
+		<label><input type="checkbox" class="genCheckbox" value="gen-2" checked> Gen II</label>
+		<label><input type="checkbox" class="genCheckbox" value="gen-3" checked> Gen III</label>
+		<label><input type="checkbox" class="genCheckbox" value="gen-4" checked> Gen IV</label>
+		<label><input type="checkbox" class="genCheckbox" value="gen-5" checked> Gen V</label>
+		<label><input type="checkbox" class="genCheckbox" value="gen-6" checked> Gen VI</label>
+		<label><input type="checkbox" class="genCheckbox" value="gen-7" checked> Gen VII</label>
+		<label><input type="checkbox" class="genCheckbox" value="gen-8" checked> Gen VIII</label>
+		<label><input type="checkbox" class="genCheckbox" value="gen-9" checked> Gen IX</label>
+	</div>
+
+	<div class="dex-dropdown-panel" id="sortContent" style="display:none">
+		<a data-sort="id-asc"     onclick="setSort('id-asc')"     class="active">ID (lav til høy)</a>
+		<a data-sort="id-desc"    onclick="setSort('id-desc')"            >ID (høy til lav)</a>
+		<a data-sort="name-asc"   onclick="setSort('name-asc')"           >Navn (A til Å)</a>
+		<a data-sort="name-desc"  onclick="setSort('name-desc')"          >Navn (Å til A)</a>
+		<a data-sort="count-desc" onclick="setSort('count-desc')"         >Antall (flest først)</a>
+	</div>
+
+	<script src="global.js?v=100"></script>
+	<script src="pokestuff.js?v=100"></script>
+	<script src="dex.js?v=103"></script>
+</body>
+</html>

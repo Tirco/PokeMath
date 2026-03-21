@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="no">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>PokeMath – Lærer (Bingo)</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="stylesheet" href="/lærer/teacher.css?v=2">
+</head>
+<body>
+  <main class="teacher-page">
+    <header class="teacher-header">
+      <div class="brand">
+        <div class="logo"><img src="/images/logo.png" alt="PokeMath"></div>
+        <div class="brand-name">
+          <div class="title">PokeMath – Lærer</div>
+          <div class="subtitle">Bingo (eksperiment)</div>
+        </div>
+      </div>
+      <a class="link" href="/index.html">← Tilbake til forsiden</a>
+    </header>
+
+    <section class="panel warn">
+      <h1>Bingo er et eksperiment</h1>
+      <p>
+        Denne lærerfunksjonen er kun ment for voksne lærere.
+        Ikke del sensitiv informasjon. Data lagres på DreamHost-servere (utenfor Norge).
+        Tilgang gis ikke automatisk – kontoer må godkjennes manuelt.
+      </p>
+    </section>
+
+    <!-- Logged in box -->
+    <section class="panel" id="sessionBox" style="display:none;">
+      <h2>Du er logget inn</h2>
+      <div class="session-row">
+        <div>
+          <div class="big" id="who">—</div>
+          <div class="muted" id="whoEmail">—</div>
+        </div>
+        <button class="btn danger" id="logoutBtn">Logg ut</button>
+      </div>
+
+      <div class="actions">
+        <a class="btn primary linkbtn" id="startBingoBtn" href="/lærer/bingo_settings.html">Start Bingo</a>
+      </div>
+
+      <div class="muted small" id="sessionHint"></div>
+
+      <hr style="margin:18px 0; border:none; border-top:1px solid rgba(0,0,0,0.08);">
+      <details>
+        <summary style="cursor:pointer; color:var(--muted); font-size:13px; user-select:none;">Kontoinnstillinger</summary>
+        <div style="margin-top:12px;">
+          <p class="muted small">Sletting er permanent. Kontoen og all tilhørende data fjernes fra databasen, og du vil motta en bekreftelse på e-post.</p>
+          <div class="actions" style="margin-top:8px;">
+            <button class="btn danger" id="deleteAccountBtn">Slett kontoen min</button>
+          </div>
+          <div class="status" id="deleteStatus"></div>
+        </div>
+      </details>
+    </section>
+
+    <!-- Teacher tools (shown when logged in) -->
+    <section class="panel subtle" id="teacherToolsSection" style="display:none;">
+      <div class="actions" style="margin-top:0;">
+        <button class="btn" id="showCodesBtn">🔑 Kodeoversikt</button>
+        <button class="btn" id="showCreateCodeBtn">➕ Lag kode</button>
+      </div>
+    </section>
+
+    <!-- Lag kode panel -->
+    <section class="panel" id="createCodePanel" style="display:none;">
+      <h2>➕ Lag en hemmelig kode</h2>
+      <p class="muted">Du kan lage koder som alle elever kan bruke på redeem-siden. Du har <strong id="tokenCount">…</strong> token(s) igjen.</p>
+      <div class="form-grid">
+        <label class="field">
+          <span>Kode (det elevene skriver)</span>
+          <input id="tcCode" type="text" maxlength="100" placeholder="f.eks. Sommerfuglen2025">
+        </label>
+        <label class="field">
+          <span>Tekst som vises (label)</span>
+          <input id="tcLabel" type="text" maxlength="200" placeholder="f.eks. 50 000 Mynter!">
+        </label>
+        <label class="field">
+          <span>Premie-type</span>
+          <select id="tcType">
+            <option value="coins">Mynter (maks 50 000)</option>
+            <option value="pokemon">Spesifikk Pokémon</option>
+            <option value="random_legendary">Tilfeldig legendarisk</option>
+            <option value="random_mythic">Tilfeldig mytisk</option>
+            <option value="random_shiny">Tilfeldig shiny</option>
+            <option value="random_shiny_mythic">Tilfeldig shiny mytisk</option>
+            <option value="message">Kun melding / overlay</option>
+            <option value="fireworks">Fyrverkeri</option>
+          </select>
+        </label>
+        <label class="field" id="tcValueField">
+          <span id="tcValueLabel">Beløp (maks 50 000)</span>
+          <input id="tcValue" type="text" placeholder="f.eks. 10000">
+          <small id="tcValueHint" style="color:var(--muted);font-size:11px;margin-top:3px;display:none;">
+            Pokémon-kode: <strong>N{id}</strong> for normal, <strong>S{id}</strong> for shiny.<br>
+            Eksempel: <code>N25</code> = Pikachu, <code>S150</code> = Shiny Mewtwo, <code>N6-1</code> = Mega Charizard X.<br>
+            Unike Pokémon (U-varianter) er ikke tillatt.
+          </small>
+        </label>
+        <label class="field" style="grid-column:1/-1;">
+          <span>Bilde i overlay</span>
+          <div style="display:flex;gap:10px;align-items:center;margin-top:4px;">
+            <select id="tcImage" style="flex:1;padding:7px 10px;border-radius:8px;border:1px solid rgba(0,0,0,0.14);font-size:13px;">
+              <option value="" id="tcImageNone">Ingen bilde</option>
+              <option value="" id="tcImageAutoPoke" hidden>Bruk pokemonens bilde</option>
+              <optgroup label="Mynter">
+                <option value="images/events/christmas/14.png">Myntpose</option>
+              </optgroup>
+              <optgroup label="Ikoner">
+                <option value="images/under_construction.png">Under konstruksjon</option>
+                <option value="images/hisuian_ball.png">Hisui-ball</option>
+                <option value="images/gigantamax.png">Gigantamax</option>
+                <option value="images/mega.png">Mega</option>
+                <option value="images/up-arrow.png">Pil opp</option>
+                <option value="images/smarthphone.png">Smarttelefon</option>
+                <option value="images/shinycharm.png">Shiny Charm</option>
+                <option value="images/player.png">Spiller (gutt)</option>
+                <option value="images/player-fem.png">Spiller (jente)</option>
+                <option value="images/lure_legend.sng">Agn (legendarie)</option>
+                <option value="images/lure.svg">Agn</option>
+                <option value="images/gear.png">Tannhjul</option>
+                <option value="images/compass.png">Kompass</option>
+                <option value="images/down-arrow.png">Pil ned</option>
+                <option value="images/conbag.svg">Myntpose 2</option>
+                <option value="images/backpack.png">Ryggsekk</option>
+              </optgroup>
+              <optgroup label="Annet">
+                <option value="images/logo.png">PokeMath-logo</option>
+              </optgroup>
+            </select>
+            <img id="tcImagePreview" src="" style="width:44px;height:44px;object-fit:contain;image-rendering:pixelated;border-radius:8px;background:#f4f4f4;border:1px solid rgba(0,0,0,0.08);display:none;">
+          </div>
+        </label>
+        <div id="tcRepeatableRow" style="display:none;">
+          <label style="display:flex;align-items:center;gap:6px;cursor:pointer;">
+            <input type="checkbox" id="tcRepeatable"> Kan brukes flere ganger
+          </label>
+        </div>
+      </div>
+      <div class="actions" style="margin-top:12px;">
+        <button class="btn primary" id="createTeacherCodeBtn">Lagre kode</button>
+      </div>
+      <div class="status" id="createCodeStatus"></div>
+    </section>
+
+    <!-- Kodeoversikt panel (hidden until button clicked) -->
+    <section class="panel" id="codesPanel" style="display:none;">
+      <h2>🔑 Kodeoversikt</h2>
+      <p class="muted">Aktive hemmelige koder som PokeMorten har gjort synlige for lærere.</p>
+      <div id="codesList" style="margin-top:12px;">Laster…</div>
+    </section>
+
+    <!-- Login -->
+    <section class="panel" id="loginBox">
+      <h2>Logg inn</h2>
+      <div class="form-grid">
+        <label class="field">
+          <span>E-post</span>
+          <input id="loginEmail" type="email" autocomplete="email" placeholder="navn@skole.no">
+        </label>
+        <label class="field">
+          <span>Passord</span>
+          <input id="loginPassword" type="password" autocomplete="current-password" placeholder="••••••••">
+        </label>
+      </div>
+      <div class="actions">
+        <button class="btn primary" id="loginBtn">Logg inn</button>
+        <button class="btn" id="forgotBtn">Glemt passord</button>
+      </div>
+      <div class="status" id="loginStatus"></div>
+    </section>
+
+    <!-- Register -->
+    <section class="panel" id="registerBox">
+      <h2>Registrer lærer (må godkjennes)</h2>
+      <p class="muted">
+        Velg et unikt passord du husker. Sikkerheten er enkel (ingen automatisk reset),
+        men passord blir hashet på server.
+      </p>
+
+      <div class="form-grid">
+        <label class="field">
+          <span>Fornavn</span>
+          <input id="regName" type="text" maxlength="40" placeholder="F.eks. Morten">
+        </label>
+        <label class="field">
+          <span>E-post</span>
+          <input id="regEmail" type="email" autocomplete="email" placeholder="navn@skole.no">
+        </label>
+        <label class="field">
+          <span>Passord (min. 8 tegn)</span>
+          <input id="regPassword" type="password" autocomplete="new-password" placeholder="Lag noe unikt">
+          <small>Bruk et passord du ikke bruker andre steder.</small>
+        </label>
+
+        <label class="field">
+          <span>Fylke</span>
+          <input id="regCounty" type="text" maxlength="60" placeholder="F.eks. Kanto">
+        </label>
+        <label class="field">
+          <span>Kommune</span>
+          <input id="regMunicipality" type="text" maxlength="60" placeholder="F.eks. Pallet Town">
+        </label>
+        <label class="field">
+          <span>Skolenavn</span>
+          <input id="regSchool" type="text" maxlength="80" placeholder="F.eks. Pallet Town School of Rock">
+        </label>
+
+        <label class="field" style="grid-column:1/-1;">
+          <span>Hvordan fant du ut om lærerpålogging?</span>
+          <input id="regHow" type="text" maxlength="120" placeholder="F.eks. kollega / facebook / møtte PokeMorten på by'n">
+        </label>
+      </div>
+
+      <div class="actions">
+        <button class="btn primary" id="registerBtn">Send registrering</button>
+      </div>
+      <div class="status" id="registerStatus"></div>
+    </section>
+
+  </main>
+
+  <!-- Forgot password modal -->
+  <div id="forgotBox" class="modal-overlay" style="display:none;">
+    <div class="modal-box">
+      <h2>Glemt passord</h2>
+      <p class="muted">
+        Skriv inn e-posten din, så sender vi en link for å tilbakestille passordet. Linken er gyldig i 1 time.
+      </p>
+      <div class="form-grid" style="grid-template-columns:1fr; margin-top:12px;">
+        <label class="field">
+          <span>E-post</span>
+          <input id="forgotEmail" type="email" autocomplete="email" placeholder="navn@skole.no">
+        </label>
+      </div>
+      <div class="actions">
+        <button class="btn primary" id="forgotSendBtn">Send forespørsel</button>
+        <button class="btn" id="forgotCloseBtn">Lukk</button>
+      </div>
+      <div class="status" id="forgotStatus"></div>
+    </div>
+  </div>
+
+  <script src="/lærer/teacher.js?v=1"></script>
+</body>
+</html>

@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Pokémath - Min profil</title>
+	<meta name="robots" content="noindex, nofollow">
+	<link rel="stylesheet" href="globalstyle.css?v=100">
+	<link rel="stylesheet" href="menustyle.css?v=100">
+	<link rel="stylesheet" href="player_profile.css?v=1">
+</head>
+<body>
+	<div id="header"></div>
+	<div class="main profile-page">
+
+		<h1 class="profile-title">Min profil</h1>
+
+		<!-- Username -->
+		<section class="profile-card">
+			<h2>Brukernavn</h2>
+			<div class="username-row">
+				<input id="usernameInput" class="username-input" type="text" maxlength="22" placeholder="Ditt brukernavn">
+				<button class="button-1" onclick="saveUsername()">Lagre</button>
+			</div>
+			<p class="hint">Brukernavnet vises i butikk, rangliste og toppmeny.</p>
+		</section>
+
+		<!-- Player icon -->
+		<section class="profile-card">
+			<h2>Aktiv figur</h2>
+			<div class="active-preview" id="iconPreview">
+				<img id="activeIconImg" src="images/player.png" alt="Figur" class="active-icon-img">
+				<span id="activeIconName" class="active-name">Ingen valgt</span>
+			</div>
+			<button class="button-1 remove-btn" onclick="removeIcon()">Fjern figur</button>
+			<h3 class="owned-label collapsible-header collapsed" onclick="toggleSection('iconGrid')">Dine figurer (<span id="ownedIconCount">0</span>)</h3>
+			<div class="collapsible-body collapsed" id="iconGrid">
+				<div class="owned-grid" id="ownedIconGrid">
+					<p class="no-owned">Du eier ingen figurer ennå.</p>
+				</div>
+			</div>
+		</section>
+
+		<!-- Background -->
+		<section class="profile-card">
+			<h2>Aktiv bakgrunn</h2>
+			<div class="active-preview" id="bgPreview">
+				<div id="activeBgImg" class="active-bg-thumb"></div>
+				<span id="activeBgName" class="active-name">Ingen valgt</span>
+			</div>
+			<button class="button-1 remove-btn" onclick="removeBg()">Fjern bakgrunn</button>
+			<h3 class="owned-label collapsible-header collapsed" onclick="toggleSection('bgGrid')">Dine bakgrunner (<span id="ownedBgCount">0</span>)</h3>
+			<div class="collapsible-body collapsed" id="bgGrid">
+				<div class="owned-grid" id="ownedBgGrid">
+					<p class="no-owned">Du eier ingen bakgrunner ennå.</p>
+				</div>
+			</div>
+		</section>
+
+		<!-- Stats -->
+		<section class="profile-card">
+			<h2>Statistikk</h2>
+			<div class="stats-grid">
+				<div class="stat-item">
+					<div class="stat-value" id="statCoins">–</div>
+					<div class="stat-label">Mynter</div>
+				</div>
+				<div class="stat-item">
+					<div class="stat-value" id="statCaught">–</div>
+					<div class="stat-label">Pokémon fanget</div>
+				</div>
+				<div class="stat-item">
+					<div class="stat-value" id="statT1">–</div>
+					<div class="stat-label">Oppgaver (Nivå 1)</div>
+				</div>
+				<div class="stat-item">
+					<div class="stat-value" id="statT2">–</div>
+					<div class="stat-label">Oppgaver (Nivå 2)</div>
+				</div>
+				<div class="stat-item">
+					<div class="stat-value" id="statT3">–</div>
+					<div class="stat-label">Oppgaver (Nivå 3)</div>
+				</div>
+				<div class="stat-item">
+					<div class="stat-value" id="statT4">–</div>
+					<div class="stat-label">Oppgaver (Nivå 4)</div>
+				</div>
+				<div class="stat-item">
+					<div class="stat-value" id="statT5">–</div>
+					<div class="stat-label">Oppgaver (Nivå 5)</div>
+				</div>
+				<div class="stat-item">
+					<div class="stat-value" id="statCustom">–</div>
+					<div class="stat-label">Egne oppgaver</div>
+				</div>
+			</div>
+
+			<div class="profile-pbar-section">
+				<div class="profile-pbar-section-title">Pokédex fremdrift</div>
+				<div id="profileProgressBars"></div>
+			</div>
+		</section>
+
+		<!-- Teacher -->
+		<section class="profile-card">
+			<h2>Lærer</h2>
+			<div class="teacher-placeholder">
+				<div class="teacher-status">Ikke tilkoblet</div>
+				<p class="hint">Under arbeid – lærerkobling kommer senere.</p>
+			</div>
+		</section>
+
+		<!-- UUID -->
+		<section class="profile-card uuid-card">
+			<h2>Spiller-ID</h2>
+			<div class="uuid-row">
+				<code id="uuidDisplay" class="uuid-code">Laster…</code>
+				<button class="button-1 copy-btn" onclick="copyUUID()">Kopier</button>
+			</div>
+			<p class="hint">Dette er din unike spiller-ID. Del den aldri med noen du ikke stoler på.</p>
+		</section>
+
+		<div style="height:60px"></div>
+	</div>
+
+	<div id="botbar" class="botbar"></div>
+
+	<script>
+		// ── Icon data (used to look up img paths for owned icons) ────────────
+		const W = "images/playericons/unconverted/";
+		const P = "images/playericons/";
+
+		const ICON_ITEMS = [
+			{ id: "player",            name: "Player (M)",              img: P+"player.png" },
+			{ id: "player-fem",        name: "Player (F)",              img: P+"player-fem.png" },
+			{ id: "roxanne",           name: "Roxanne",                 img: W+"Roxanne.webp" },
+			{ id: "brawly",            name: "Brawly",                  img: W+"Brawly.webp" },
+			{ id: "flannery",          name: "Flannery",                img: W+"Flannery.webp" },
+			{ id: "juan",              name: "Juan",                    img: W+"Juan.webp" },
+			{ id: "tate",              name: "Tate",                    img: W+"Tate.webp" },
+			{ id: "liza",              name: "Liza",                    img: W+"Liza.webp" },
+			{ id: "norman",            name: "Norman",                  img: W+"Norman.webp" },
+			{ id: "wallace",           name: "Wallace",                 img: W+"Wallace.webp" },
+			{ id: "wattson",           name: "Wattson",                 img: W+"Wattson.webp" },
+			{ id: "winona",            name: "Winona",                  img: W+"Winona.webp" },
+			{ id: "brendan",           name: "Brendan",                 img: W+"Brendan.webp" },
+			{ id: "ethan",             name: "Ethan",                   img: W+"Ethan.webp" },
+			{ id: "hilbert",           name: "Hilbert",                 img: W+"Hilbert.webp" },
+			{ id: "nate",              name: "Nate",                    img: W+"Nate.webp" },
+			{ id: "rosa",              name: "Rosa",                    img: W+"Rosa.webp" },
+			{ id: "calem",             name: "Calem",                   img: W+"Calem.webp" },
+			{ id: "ilima",             name: "Ilima",                   img: W+"Ilima.webp" },
+			{ id: "lana",              name: "Lana",                    img: W+"Lana.webp" },
+			{ id: "kiawe",             name: "Kiawe",                   img: W+"Kiawe.webp" },
+			{ id: "mallow",            name: "Mallow",                  img: W+"Mallow.webp" },
+			{ id: "sophocles",         name: "Sophocles",               img: W+"Sophocles.webp" },
+			{ id: "acerola",           name: "Acerola",                 img: W+"Acerola.webp" },
+			{ id: "mina",              name: "Mina",                    img: W+"Mina.webp" },
+			{ id: "hala",              name: "Hala",                    img: W+"Hala.webp" },
+			{ id: "olivia",            name: "Olivia",                  img: W+"Olivia.webp" },
+			{ id: "nanu",              name: "Nanu",                    img: W+"Nanu.webp" },
+			{ id: "hapu",              name: "Hapu",                    img: P+"hapu.png" },
+			{ id: "may",               name: "May",                     img: W+"May.webp" },
+			{ id: "ash",               name: "Ash",                     img: W+"Ash.webp" },
+			{ id: "brock",             name: "Brock",                   img: W+"Brock.webp" },
+			{ id: "misty",             name: "Misty",                   img: W+"Misty.webp" },
+			{ id: "trainer_red_w_pika",name: "Trainer Red (w/ Pikachu)",img: P+"trainer_red_w_pika.png" },
+			{ id: "aaron",             name: "Aaron",                   img: W+"Aaron.webp" },
+			{ id: "aarune",            name: "Aarune",                  img: W+"Aarune.webp" },
+			{ id: "adaman",            name: "Adaman",                  img: W+"Adaman.webp" },
+			{ id: "agatha",            name: "Agatha",                  img: W+"Agatha.webp" },
+			{ id: "akari",             name: "Akari",                   img: W+"Akari.webp" },
+			{ id: "alder",             name: "Alder",                   img: W+"Alder.webp" },
+			{ id: "allister",          name: "Allister",                img: W+"Allister.webp" },
+			{ id: "amarys",            name: "Amarys",                  img: W+"Amarys.webp" },
+			{ id: "amethio",           name: "Amethio",                 img: W+"Amethio.webp" },
+			{ id: "anabel",            name: "Anabel",                  img: W+"Anabel.webp" },
+			{ id: "ansha",             name: "Ansha",                   img: W+"Ansha.webp" },
+			{ id: "arceus",            name: "Arceus",                  img: W+"Arceus.webp" },
+			{ id: "archer",            name: "Archer",                  img: W+"Archer.webp" },
+			{ id: "archie",            name: "Archie",                  img: W+"Archie.webp" },
+			{ id: "argenta",           name: "Argenta",                 img: W+"Argenta.webp" },
+			{ id: "ariana",            name: "Ariana",                  img: W+"Ariana.webp" },
+			{ id: "arlo",              name: "Arlo",                    img: W+"Arlo.webp" },
+			{ id: "arven",             name: "Arven",                   img: W+"Arven.webp" },
+			{ id: "atticus",           name: "Atticus",                 img: W+"Atticus.webp" },
+			{ id: "avery",             name: "Avery",                   img: W+"Avery.webp" },
+			{ id: "az",                name: "Az",                      img: W+"Az.webp" },
+			{ id: "bea",               name: "Bea",                     img: W+"Bea.webp" },
+			{ id: "becca",             name: "Becca",                   img: W+"Becca.webp" },
+			{ id: "bede",              name: "Bede",                    img: W+"Bede.webp" },
+			{ id: "benga",             name: "Benga",                   img: W+"Benga.webp" },
+			{ id: "bertha",            name: "Bertha",                  img: W+"Bertha.webp" },
+			{ id: "bianca",            name: "Bianca",                  img: W+"Bianca.webp" },
+			{ id: "blaine",            name: "Blaine",                  img: W+"Blaine.webp" },
+			{ id: "blanche",           name: "Blanche",                 img: W+"Blanche.webp" },
+			{ id: "bonnie",            name: "Bonnie",                  img: W+"Bonnie.webp" },
+			{ id: "brandon",           name: "Brandon",                 img: W+"Brandon.webp" },
+			{ id: "brassius",          name: "Brassius",                img: W+"Brassius.webp" },
+			{ id: "bruno",             name: "Bruno",                   img: W+"Bruno.webp" },
+			{ id: "brycen",            name: "Brycen",                  img: W+"Brycen.webp" },
+			{ id: "buck",              name: "Buck",                    img: W+"Buck.webp" },
+			{ id: "bugsy",             name: "Bugsy",                   img: W+"Bugsy.webp" },
+			{ id: "burgh",             name: "Burgh",                   img: W+"Burgh.webp" },
+			{ id: "caitlin",           name: "Caitlin",                 img: W+"Caitlin.webp" },
+			{ id: "calaba",            name: "Calaba",                  img: W+"Calaba.webp" },
+			{ id: "canari",            name: "Canari",                  img: W+"Canari.webp" },
+			{ id: "candela",           name: "Candela",                 img: W+"Candela.webp" },
+			{ id: "carmine",           name: "Carmine",                 img: W+"Carmine.webp" },
+			{ id: "chase",             name: "Chase",                   img: W+"Chase.webp" },
+			{ id: "cheren",            name: "Cheren",                  img: W+"Cheren.webp" },
+			{ id: "chili",             name: "Chili",                   img: W+"Chili.webp" },
+			{ id: "chloe",             name: "Chloe",                   img: W+"Chloe.webp" },
+			{ id: "chuck",             name: "Chuck",                   img: W+"Chuck.webp" },
+			{ id: "cilan",             name: "Cilan",                   img: W+"Cilan.webp" },
+			{ id: "clair",             name: "Clair",                   img: W+"Clair.webp" },
+			{ id: "clavell",           name: "Clavell",                 img: W+"Clavell.webp" },
+			{ id: "clay",              name: "Clay",                    img: W+"Clay.webp" },
+			{ id: "clemont",           name: "Clemont",                 img: W+"Clemont.webp" },
+			{ id: "cliff",             name: "Cliff",                   img: W+"Cliff.webp" },
+			{ id: "colress",           name: "Colress",                 img: W+"Colress.webp" },
+			{ id: "corbeau",           name: "Corbeau",                 img: W+"Corbeau.webp" },
+			{ id: "cress",             name: "Cress",                   img: W+"Cress.webp" },
+			{ id: "crispin",           name: "Crispin",                 img: W+"Crispin.webp" },
+			{ id: "cyndy",             name: "Cyndy",                   img: W+"Cyndy.webp" },
+			{ id: "cynthia",           name: "Cynthia",                 img: W+"Cynthia.webp" },
+			{ id: "cyrano",            name: "Cyrano",                  img: W+"Cyrano.webp" },
+			{ id: "cyrus",             name: "Cyrus",                   img: W+"Cyrus.webp" },
+			{ id: "dahlia",            name: "Dahlia",                  img: W+"Dahlia.webp" },
+			{ id: "dana",              name: "Dana",                    img: W+"Dana.webp" },
+			{ id: "darach",            name: "Darach",                  img: W+"Darach.webp" },
+			{ id: "dawn",              name: "Dawn",                    img: W+"Dawn.webp" },
+			{ id: "dendra",            name: "Dendra",                  img: W+"Dendra.webp" },
+			{ id: "dexio",             name: "Dexio",                   img: W+"Dexio.webp" },
+			{ id: "diantha",           name: "Diantha",                 img: W+"Diantha.webp" },
+			{ id: "dot",               name: "Dot",                     img: W+"Dot.webp" },
+			{ id: "drake",             name: "Drake",                   img: W+"Drake.webp" },
+			{ id: "drasna",            name: "Drasna",                  img: W+"Drasna.webp" },
+			{ id: "drayden",           name: "Drayden",                 img: W+"Drayden.webp" },
+			{ id: "drayton",           name: "Drayton",                 img: W+"Drayton.webp" },
+			{ id: "elaine",            name: "Elaine",                  img: W+"Elaine.webp" },
+			{ id: "elesa",             name: "Elesa",                   img: W+"Elesa.webp" },
+			{ id: "elio",              name: "Elio",                    img: W+"Elio.webp" },
+			{ id: "emmet",             name: "Emmet",                   img: W+"Emmet.webp" },
+			{ id: "erbie",             name: "Erbie",                   img: W+"Erbie.webp" },
+			{ id: "eri",               name: "Eri",                     img: W+"Eri.webp" },
+			{ id: "erika",             name: "Erika",                   img: W+"Erika.webp" },
+			{ id: "eusine",            name: "Eusine",                  img: W+"Eusine.webp" },
+			{ id: "eve",               name: "Eve",                     img: W+"Eve.webp" },
+			{ id: "evelyn",            name: "Evelyn",                  img: W+"Evelyn.webp" },
+			{ id: "faba",              name: "Faba",                    img: W+"Faba.webp" },
+			{ id: "falkner",           name: "Falkner",                 img: W+"Falkner.webp" },
+			{ id: "fantina",           name: "Fantina",                 img: W+"Fantina.webp" },
+			{ id: "flint",             name: "Flint",                   img: W+"Flint.webp" },
+			{ id: "florian",           name: "Florian",                 img: W+"Florian.webp" },
+			{ id: "friede",            name: "Friede",                  img: W+"Friede.webp" },
+			{ id: "gaeric",            name: "Gaeric",                  img: W+"Gaeric.webp" },
+			{ id: "gary_oak",          name: "Gary Oak",                img: W+"Gary_Oak.webp" },
+			{ id: "geeta",             name: "Geeta",                   img: W+"Geeta.webp" },
+			{ id: "ghetsis",           name: "Ghetsis",                 img: W+"Ghetsis.webp" },
+			{ id: "giacomo",           name: "Giacomo",                 img: W+"Giacomo.webp" },
+			{ id: "giovanni",          name: "Giovanni",                img: W+"Giovanni.webp" },
+			{ id: "glacia",            name: "Glacia",                  img: W+"Glacia.webp" },
+			{ id: "gladion",           name: "Gladion",                 img: W+"Gladion.webp" },
+			{ id: "gloria",            name: "Gloria",                  img: W+"Gloria.webp" },
+			{ id: "goh",               name: "Goh",                     img: W+"Goh.webp" },
+			{ id: "gordie",            name: "Gordie",                  img: W+"Gordie.webp" },
+			{ id: "grant",             name: "Grant",                   img: W+"Grant.webp" },
+			{ id: "green",             name: "Green",                   img: W+"Green.webp" },
+			{ id: "greta",             name: "Greta",                   img: W+"Greta.webp" },
+			{ id: "grimsley",          name: "Grimsley",                img: W+"Grimsley.webp" },
+			{ id: "griselle",          name: "Griselle",                img: W+"Griselle.webp" },
+			{ id: "grisham",           name: "Grisham",                 img: W+"Grisham.webp" },
+			{ id: "grusha",            name: "Grusha",                  img: W+"Grusha.webp" },
+			{ id: "guzma",             name: "Guzma",                   img: W+"Guzma.webp" },
+			{ id: "gwynn",             name: "Gwynn",                   img: W+"Gwynn.webp" },
+			{ id: "harmony",           name: "Harmony",                 img: W+"Harmony.webp" },
+			{ id: "hassel",            name: "Hassel",                  img: W+"Hassel.webp" },
+			{ id: "hau",               name: "Hau",                     img: W+"Hau.webp" },
+			{ id: "helena",            name: "Helena",                  img: W+"Helena.webp" },
+			{ id: "hilda",             name: "Hilda",                   img: W+"Hilda.webp" },
+			{ id: "hop",               name: "Hop",                     img: W+"Hop.webp" },
+			{ id: "hugh",              name: "Hugh",                    img: W+"Hugh.webp" },
+			{ id: "ingo",              name: "Ingo",                    img: W+"Ingo.webp" },
+			{ id: "iono",              name: "Iono",                    img: W+"Iono.webp" },
+			{ id: "irida",             name: "Irida",                   img: W+"Irida.webp" },
+			{ id: "iris",              name: "Iris",                    img: W+"Iris.webp" },
+			{ id: "iscan",             name: "Iscan",                   img: W+"Iscan.webp" },
+			{ id: "ivor",              name: "Ivor",                    img: W+"Ivor.webp" },
+			{ id: "jacinthe",          name: "Jacinthe",                img: W+"Jacinthe.webp" },
+			{ id: "jacq",              name: "Jacq",                    img: W+"Jacq.webp" },
+			{ id: "janine",            name: "Janine",                  img: W+"Janine.webp" },
+			{ id: "jasmine",           name: "Jasmine",                 img: W+"Jasmine.webp" },
+			{ id: "juliana",           name: "Juliana",                 img: W+"Juliana.webp" },
+			{ id: "kabu",              name: "Kabu",                    img: W+"Kabu.webp" },
+			{ id: "kahili",            name: "Kahili",                  img: W+"Kahili.webp" },
+			{ id: "kali",              name: "Kali",                    img: W+"Kali.webp" },
+			{ id: "kamado",            name: "Kamado",                  img: W+"Kamado.webp" },
+			{ id: "karen",             name: "Karen",                   img: W+"Karen.webp" },
+			{ id: "katy",              name: "Katy",                    img: W+"Katy.webp" },
+			{ id: "kieran",            name: "Kieran",                  img: W+"Kieran.webp" },
+			{ id: "klara",             name: "Klara",                   img: W+"Klara.webp" },
+			{ id: "kofu",              name: "Kofu",                    img: W+"Kofu.webp" },
+			{ id: "koga",              name: "Koga",                    img: W+"Koga.webp" },
+			{ id: "korrina",           name: "Korrina",                 img: W+"Korrina.webp" },
+			{ id: "kris",              name: "Kris",                    img: W+"Kris.webp" },
+			{ id: "ltsurge",           name: "Lt. Surge",               img: W+"LTSurge.webp" },
+			{ id: "lacey",             name: "Lacey",                   img: W+"Lacey.webp" },
+			{ id: "lance",             name: "Lance",                   img: W+"Lance.webp" },
+			{ id: "larry",             name: "Larry",                   img: W+"Larry.webp" },
+			{ id: "leaf",              name: "Leaf",                    img: W+"Leaf.webp" },
+			{ id: "lear",              name: "Lear",                    img: W+"Lear.webp" },
+			{ id: "lebanne",           name: "Lebanne",                 img: W+"Lebanne.webp" },
+			{ id: "lenora",            name: "Lenora",                  img: W+"Lenora.webp" },
+			{ id: "lian",              name: "Lian",                    img: W+"Lian.webp" },
+			{ id: "lida",              name: "Lida",                    img: W+"Lida.webp" },
+			{ id: "liko",              name: "Liko",                    img: W+"Liko.webp" },
+			{ id: "looker",            name: "Looker",                  img: W+"Looker.webp" },
+			{ id: "lorelei",           name: "Lorelei",                 img: W+"Lorelei.webp" },
+			{ id: "lucas",             name: "Lucas",                   img: W+"Lucas.webp" },
+			{ id: "lucian",            name: "Lucian",                  img: W+"Lucian.webp" },
+			{ id: "lucy",              name: "Lucy",                    img: W+"Lucy.webp" },
+			{ id: "lyra",              name: "Lyra",                    img: W+"Lyra.webp" },
+			{ id: "lysandre",          name: "Lysandre",                img: W+"Lysandre.webp" },
+			{ id: "mai",               name: "Mai",                     img: W+"Mai.webp" },
+			{ id: "malva",             name: "Malva",                   img: W+"Malva.webp" },
+			{ id: "marley",            name: "Marley",                  img: W+"Marley.webp" },
+			{ id: "marlon",            name: "Marlon",                  img: W+"Marlon.webp" },
+			{ id: "marnie",            name: "Marnie",                  img: W+"Marnie.webp" },
+			{ id: "marshal",           name: "Marshal",                 img: W+"Marshal.webp" },
+			{ id: "max",               name: "Max",                     img: W+"Max.webp" },
+			{ id: "maxie",             name: "Maxie",                   img: W+"Maxie.webp" },
+			{ id: "maylene",           name: "Maylene",                 img: W+"Maylene.webp" },
+			{ id: "mela",              name: "Mela",                    img: W+"Mela.webp" },
+			{ id: "melli",             name: "Melli",                   img: W+"Melli.webp" },
+			{ id: "melony",            name: "Melony",                  img: W+"Melony.webp" },
+			{ id: "milo",              name: "Milo",                    img: W+"Milo.webp" },
+			{ id: "mira",              name: "Mira",                    img: W+"Mira.webp" },
+			{ id: "molayne",           name: "Molayne",                 img: W+"Molayne.webp" },
+			{ id: "moon",              name: "Moon",                    img: W+"Moon.webp" },
+			{ id: "morgan",            name: "Morgan",                  img: W+"Morgan.webp" },
+			{ id: "morty",             name: "Morty",                   img: W+"Morty.webp" },
+			{ id: "mustard",           name: "Mustard",                 img: W+"Mustard.webp" },
+			{ id: "n",                 name: "N",                       img: W+"N.webp" },
+			{ id: "nate_2",            name: "Nate (Alt)",              img: W+"Nate_2.webp" },
+			{ id: "naveen",            name: "Naveen",                  img: W+"Naveen.webp" },
+			{ id: "nemona",            name: "Nemona",                  img: W+"Nemona.webp" },
+			{ id: "nessa",             name: "Nessa",                   img: W+"Nessa.webp" },
+			{ id: "nita",              name: "Nita",                    img: W+"Nita.webp" },
+			{ id: "noland",            name: "Noland",                  img: W+"Noland.webp" },
+			{ id: "oleana",            name: "Oleana",                  img: W+"Oleana.webp" },
+			{ id: "olympia",           name: "Olympia",                 img: W+"Olympia.webp" },
+			{ id: "opal",              name: "Opal",                    img: W+"Opal.webp" },
+			{ id: "ortega",            name: "Ortega",                  img: W+"Ortega.webp" },
+			{ id: "palina",            name: "Palina",                  img: W+"Palina.webp" },
+			{ id: "palmer",            name: "Palmer",                  img: W+"Palmer.webp" },
+			{ id: "paulo",             name: "Paulo",                   img: W+"Paulo.webp" },
+			{ id: "paxton",            name: "Paxton",                  img: W+"Paxton.webp" },
+			{ id: "penny",             name: "Penny",                   img: W+"Penny.webp" },
+			{ id: "peony",             name: "Peony",                   img: W+"Peony.webp" },
+			{ id: "perrin",            name: "Perrin",                  img: W+"Perrin.webp" },
+			{ id: "petey",             name: "Petey",                   img: W+"Petey.webp" },
+			{ id: "petrel",            name: "Petrel",                  img: W+"Petrel.webp" },
+			{ id: "philippe",          name: "Philippe",                img: W+"Philippe.webp" },
+			{ id: "phoebe",            name: "Phoebe",                  img: W+"Phoebe.webp" },
+			{ id: "piers",             name: "Piers",                   img: W+"Piers.webp" },
+			{ id: "plumeria",          name: "Plumeria",                img: W+"Plumeria.webp" },
+			{ id: "poppy",             name: "Poppy",                   img: W+"Poppy.webp" },
+			{ id: "professor_phorus",  name: "Professor Phorus",        img: W+"Professor_Phorus.webp" },
+			{ id: "proton",            name: "Proton",                  img: W+"Proton.webp" },
+			{ id: "pryce",             name: "Pryce",                   img: W+"Pryce.webp" },
+			{ id: "rachel",            name: "Rachel",                  img: W+"Rachel.webp" },
+			{ id: "raifort",           name: "Raifort",                 img: W+"Raifort.webp" },
+			{ id: "raihan",            name: "Raihan",                  img: W+"Raihan.webp" },
+			{ id: "ramos",             name: "Ramos",                   img: W+"Ramos.webp" },
+			{ id: "red",               name: "Red",                     img: W+"Red.webp" },
+			{ id: "rei",               name: "Rei",                     img: W+"Rei.webp" },
+			{ id: "rika",              name: "Rika",                    img: W+"Rika.webp" },
+			{ id: "riley",             name: "Riley",                   img: W+"Riley.webp" },
+			{ id: "roark",             name: "Roark",                   img: W+"Roark.webp" },
+			{ id: "rose",              name: "Rose",                    img: W+"Rose.webp" },
+			{ id: "roxie",             name: "Roxie",                   img: W+"Roxie.webp" },
+			{ id: "roy",               name: "Roy",                     img: W+"Roy.webp" },
+			{ id: "ryme",              name: "Ryme",                    img: W+"Ryme.webp" },
+			{ id: "ryuki",             name: "Ryuki",                   img: W+"Ryuki.webp" },
+			{ id: "sabi",              name: "Sabi",                    img: W+"Sabi.webp" },
+			{ id: "sabrina",           name: "Sabrina",                 img: W+"Sabrina.webp" },
+			{ id: "samson_oak",        name: "Samson Oak",              img: W+"Samson_Oak.webp" },
+			{ id: "scottie",           name: "Scottie",                 img: W+"Scottie.webp" },
+			{ id: "serena",            name: "Serena",                  img: W+"Serena.webp" },
+			{ id: "shauna",            name: "Shauna",                  img: W+"Shauna.webp" },
+			{ id: "shauntal",          name: "Shauntal",                img: W+"Shauntal.webp" },
+			{ id: "sidney",            name: "Sidney",                  img: W+"Sidney.webp" },
+			{ id: "siebold",           name: "Siebold",                 img: W+"Siebold.webp" },
+			{ id: "sierra",            name: "Sierra",                  img: W+"Sierra.webp" },
+			{ id: "silver",            name: "Silver",                  img: W+"Silver.webp" },
+			{ id: "sina",              name: "Sina",                    img: W+"Sina.webp" },
+			{ id: "skyla",             name: "Skyla",                   img: W+"Skyla.webp" },
+			{ id: "spark",             name: "Spark",                   img: W+"Spark.webp" },
+			{ id: "spenser",           name: "Spenser",                 img: W+"Spenser.webp" },
+			{ id: "spinel",            name: "Spinel",                  img: W+"Spinel.webp" },
+			{ id: "steven",            name: "Steven",                  img: W+"Steven.webp" },
+			{ id: "tarragon",          name: "Tarragon",                img: W+"Tarragon.webp" },
+			{ id: "tate_and_liza",     name: "Tate & Liza",             img: W+"Tate_And_Liza.webp" },
+			{ id: "taunie",            name: "Taunie",                  img: W+"Taunie.webp" },
+			{ id: "teddy",             name: "Teddy",                   img: W+"Teddy.webp" },
+			{ id: "thorton",           name: "Thorton",                 img: W+"Thorton.webp" },
+			{ id: "tierno",            name: "Tierno",                  img: W+"Tierno.webp" },
+			{ id: "tina",              name: "Tina",                    img: W+"Tina.webp" },
+			{ id: "trace",             name: "Trace",                   img: W+"Trace.webp" },
+			{ id: "tracey_sketchit",   name: "Tracey Sketchit",         img: W+"Tracey_Sketchit.webp" },
+			{ id: "trevor",            name: "Trevor",                  img: W+"Trevor.webp" },
+			{ id: "tucker",            name: "Tucker",                  img: W+"Tucker.webp" },
+			{ id: "tulip",             name: "Tulip",                   img: W+"Tulip.webp" },
+			{ id: "ult",               name: "Ult",                     img: W+"Ult.webp" },
+			{ id: "urbain",            name: "Urbain",                  img: W+"Urbain.webp" },
+			{ id: "valerie",           name: "Valerie",                 img: W+"Valerie.webp" },
+			{ id: "victor",            name: "Victor",                  img: W+"Victor.webp" },
+			{ id: "vinnie",            name: "Vinnie",                  img: W+"Vinnie.webp" },
+			{ id: "viola",             name: "Viola",                   img: W+"Viola.webp" },
+			{ id: "volkner",           name: "Volkner",                 img: W+"Volkner.webp" },
+			{ id: "volo",              name: "Volo",                    img: W+"Volo.webp" },
+			{ id: "wally",             name: "Wally",                   img: W+"Wally.webp" },
+			{ id: "whitney",           name: "Whitney",                 img: W+"Whitney.webp" },
+			{ id: "wikstrom",          name: "Wikstrom",                img: W+"Wikstrom.webp" },
+			{ id: "will",              name: "Will",                    img: W+"Will.webp" },
+			{ id: "willem",            name: "Willem",                  img: W+"Willem.webp" },
+			{ id: "wulfric",           name: "Wulfric",                 img: W+"Wulfric.webp" },
+			{ id: "zinnia",            name: "Zinnia",                  img: W+"Zinnia.webp" },
+			{ id: "zinzolin",          name: "Zinzolin",                img: W+"Zinzolin.webp" },
+		];
+
+		const ICON_MAP = Object.fromEntries(ICON_ITEMS.map(i => [i.id, i]));
+
+		// ── BG names (from shop.html BG_ITEMS) ───────────────────────────────
+		const BG_NAMES = {
+			"bg-001": "Bakgrunn 001", "bg-002": "Bakgrunn 002", "bg-003": "Bakgrunn 003",
+			"bg-004": "Bakgrunn 004", "bg-005": "Bakgrunn 005", "bg-006": "Bakgrunn 006",
+			"bg-007": "Bakgrunn 007", "bg-008": "Bakgrunn 008", "bg-009": "Bakgrunn 009",
+			"bg-010": "Bakgrunn 010", "bg-011": "Bakgrunn 011", "bg-012": "Bakgrunn 012",
+			"bg-013": "Bakgrunn 013", "bg-014": "Bakgrunn 014", "bg-015": "Bakgrunn 015",
+			"bg-016": "Bakgrunn 016", "bg-017": "Bakgrunn 017", "bg-018": "Bakgrunn 018",
+			"bg-019": "Julebakgrunn #1", "bg-020": "Julebakgrunn #2", "bg-021": "Julebakgrunn #3",
+			"bg-022": "Julebakgrunn #4", "bg-023": "Lapras", "bg-024": "Chonky Love",
+			"bg-025": "Pokemon Sleep", "bg-026": "Discovery", "bg-027": "Entertainment",
+		};
+
+		// ── Profile UI ────────────────────────────────────────────────────────
+		function initProfile() {
+			// Username
+			document.getElementById('usernameInput').value = state.username || "";
+
+			// Stats
+			document.getElementById('statCoins').textContent   = (state.totalScore || 0).toLocaleString('no-NO');
+			document.getElementById('statCaught').textContent  = (state.pkmnCaught || 0).toLocaleString('no-NO');
+			document.getElementById('statT1').textContent      = (state.tier1Solved || 0).toLocaleString('no-NO');
+			document.getElementById('statT2').textContent      = (state.tier2Solved || 0).toLocaleString('no-NO');
+			document.getElementById('statT3').textContent      = (state.tier3Solved || 0).toLocaleString('no-NO');
+			document.getElementById('statT4').textContent      = (state.tier4Solved || 0).toLocaleString('no-NO');
+			document.getElementById('statT5').textContent      = (state.tier5Solved || 0).toLocaleString('no-NO');
+			document.getElementById('statCustom').textContent  = (state.customSolved || 0).toLocaleString('no-NO');
+
+			// UUID
+			const uuid = localStorage.getItem('UUID') || '–';
+			document.getElementById('uuidDisplay').textContent = uuid;
+
+			// Icons
+			renderOwnedIcons();
+			renderOwnedBgs();
+			renderProgressBars();
+		}
+
+		function renderOwnedIcons() {
+			const owned = shopOptions.boughtPlayerIcons || [];
+			// Also include free icons (always owned)
+			const freeIds = ICON_ITEMS.filter(i => i.price === 0).map(i => i.id);
+			const allOwned = [...new Set([...freeIds, ...owned])];
+
+			document.getElementById('ownedIconCount').textContent = allOwned.length;
+
+			const active = shopOptions.playerIcon;
+			const grid = document.getElementById('ownedIconGrid');
+
+			if (!allOwned.length) {
+				grid.innerHTML = '<p class="no-owned">Du eier ingen figurer ennå.</p>';
+				return;
+			}
+
+			grid.innerHTML = allOwned.map(id => {
+				const item = ICON_MAP[id];
+				const img  = item ? item.img : (P + id + ".png");
+				const name = item ? item.name : id;
+				const isActive = id === active;
+				return '<div class="owned-card' + (isActive ? ' active-card' : '') + '" onclick="equipIcon(\'' + id + '\', \'' + img.replace(/'/g, "\\'") + '\')">'
+					+ '<img src="' + img + '" alt="' + name + '" loading="lazy">'
+					+ '<span>' + name + '</span>'
+					+ (isActive ? '<div class="active-badge">I bruk</div>' : '')
+					+ '</div>';
+			}).join('');
+
+			updateActiveIconPreview();
+		}
+
+		function renderOwnedBgs() {
+			const owned = shopOptions.boughtBackgrounds || [];
+			document.getElementById('ownedBgCount').textContent = owned.length;
+
+			const active = shopOptions.background;
+			const grid = document.getElementById('ownedBgGrid');
+
+			if (!owned.length) {
+				grid.innerHTML = '<p class="no-owned">Du eier ingen bakgrunner ennå.</p>';
+				return;
+			}
+
+			grid.innerHTML = owned.map(id => {
+				const name = BG_NAMES[id] || id;
+				const isActive = id === active;
+				return '<div class="owned-card bg-card' + (isActive ? ' active-card' : '') + '" onclick="equipBg(\'' + id + '\')"'
+					+ ' style="background-image:url(\'images/backgrounds/' + id + '.png\')">'
+					+ '<span class="bg-label">' + name + '</span>'
+					+ (isActive ? '<div class="active-badge">I bruk</div>' : '')
+					+ '</div>';
+			}).join('');
+
+			updateActiveBgPreview();
+		}
+
+		function updateActiveIconPreview() {
+			const id   = shopOptions.playerIcon;
+			const item = id ? ICON_MAP[id] : null;
+			const img  = item ? item.img : (id ? P + id + ".png" : "images/player.png");
+			const name = item ? item.name : (id || "Ingen valgt");
+			document.getElementById('activeIconImg').src = img;
+			document.getElementById('activeIconName').textContent = name;
+		}
+
+		function updateActiveBgPreview() {
+			const id   = shopOptions.background;
+			const name = id ? (BG_NAMES[id] || id) : "Ingen valgt";
+			const thumb = document.getElementById('activeBgImg');
+			if (id) {
+				thumb.style.backgroundImage = "url('images/backgrounds/" + id + ".png')";
+			} else {
+				thumb.style.backgroundImage = "";
+			}
+			document.getElementById('activeBgName').textContent = name;
+		}
+
+		function equipIcon(id, imgPath) {
+			shopOptions.playerIcon = id;
+			localStorage.setItem('playerIcon', JSON.stringify(id));
+			localStorage.setItem('playerIconImg', imgPath);
+			if (typeof loadPlayerIcon === 'function') loadPlayerIcon();
+			if (typeof saveAll === 'function') saveAll();
+			renderOwnedIcons();
+			showToast("Figuren ble endret til " + (ICON_MAP[id]?.name || id) + "!");
+		}
+
+		function removeIcon() {
+			shopOptions.playerIcon = "";
+			localStorage.setItem('playerIcon', JSON.stringify(""));
+			localStorage.removeItem('playerIconImg');
+			if (typeof loadPlayerIcon === 'function') loadPlayerIcon();
+			if (typeof saveAll === 'function') saveAll();
+			renderOwnedIcons();
+			showToast("Figuren ble fjernet.");
+		}
+
+		function equipBg(id) {
+			shopOptions.background = id;
+			localStorage.setItem('shopBackground', JSON.stringify(id));
+			if (typeof loadBackground === 'function') loadBackground();
+			if (typeof saveAll === 'function') saveAll();
+			renderOwnedBgs();
+			showToast("Bakgrunnen ble endret til " + (BG_NAMES[id] || id) + "!");
+		}
+
+		function removeBg() {
+			shopOptions.background = "";
+			localStorage.setItem('shopBackground', JSON.stringify(""));
+			if (typeof loadBackground === 'function') loadBackground();
+			if (typeof saveAll === 'function') saveAll();
+			renderOwnedBgs();
+			showToast("Bakgrunnen ble fjernet.");
+		}
+
+		function saveUsername() {
+			const val = document.getElementById('usernameInput').value.trim();
+			if (!val) return;
+			state.username = val;
+			localStorage.setItem('username', val);
+			const el1 = document.getElementById('playertext');
+			const el2 = document.getElementById('playertextheader');
+			if (el1) el1.textContent = val;
+			if (el2) el2.textContent = val;
+			if (typeof saveAll === 'function') saveAll();
+			showToast("Brukernavn lagret: " + val);
+		}
+
+		function toggleSection(id) {
+			const body = document.getElementById(id);
+			const header = body.previousElementSibling;
+			body.classList.toggle('collapsed');
+			header.classList.toggle('collapsed');
+		}
+
+		function renderProgressBars() {
+			const list = state.pkmnList || [];
+			const baseN = new Set(), baseS = new Set(), altN = new Set(), altS = new Set();
+			for (const entry of list) {
+				const shiny = entry[0] === 'S';
+				const id    = entry.slice(1);
+				const isAlt = id.includes('-');
+				if (shiny) { if (isAlt) altS.add(id); else baseS.add(id); }
+				else        { if (isAlt) altN.add(id); else baseN.add(id); }
+			}
+			const totalBase = 1025;
+			const totalUnique = baseN.size + baseS.size + altN.size + altS.size;
+			const bars = [
+				{ label: 'Normal (base)', count: baseN.size, total: totalBase,  color: '#4a90d9' },
+				{ label: 'Shiny (base)',  count: baseS.size, total: totalBase,  color: '#d4a017' },
+				{ label: 'Alt form',      count: altN.size,  total: null,       color: '#9b59b6' },
+				{ label: 'Alt shiny',     count: altS.size,  total: null,       color: '#e91e96' },
+				{ label: 'Total unike',   count: totalUnique, total: totalBase * 2, color: '#2cbb63' },
+			];
+			const container = document.getElementById('profileProgressBars');
+			if (!container) return;
+			container.innerHTML = bars.map(b => {
+				const pct  = b.total ? Math.min(b.count / b.total * 100, 100) : Math.min(b.count / 400 * 100, 100);
+				const text = b.total
+					? b.count.toLocaleString('no-NO') + ' / ' + b.total.toLocaleString('no-NO')
+					: b.count.toLocaleString('no-NO') + ' fanget';
+				return '<div class="profile-pbar">'
+					+ '<span class="profile-pbar-label">' + b.label + '</span>'
+					+ '<div class="profile-pbar-track"><div class="profile-pbar-fill" style="width:' + pct.toFixed(1) + '%;background:' + b.color + '"></div></div>'
+					+ '<span class="profile-pbar-text">' + text + '</span>'
+					+ '</div>';
+			}).join('');
+		}
+
+		function copyUUID() {
+			const uuid = document.getElementById('uuidDisplay').textContent;
+			navigator.clipboard.writeText(uuid).then(() => showToast("UUID kopiert!"));
+		}
+
+		function showToast(text) {
+			if (typeof Toast !== 'undefined') {
+				new Toast({ text, position: "top-right", pauseOnHover: true, canClose: true, badToast: false });
+			}
+		}
+
+		document.addEventListener('loadAllComplete', initProfile);
+	</script>
+
+	<script src="global.js?v=100"></script>
+</body>
+</html>

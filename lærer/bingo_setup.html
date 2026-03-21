@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="no">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Lærer – Bingo setup</title>
+  <link rel="stylesheet" href="/globalstyle.css?v=100">
+  <link rel="stylesheet" href="/menustyle.css?v=100">
+</head>
+<body>
+  <div id="header"></div>
+  <script>fetch('/header.html').then(r=>r.text()).then(t=>document.getElementById('header').innerHTML=t);</script>
+
+  <div id="main" class="main">
+    <div class="card" style="max-width:520px;">
+      <h2>Bingo – innstillinger</h2>
+      <p>Dette bruker samme oppgaver og miks som din bingo-side.</p>
+
+      <label>Vanskelighetsgrad</label>
+      <select id="difficulty" class="input">
+        <option value="easy">Lett</option>
+        <option value="medium">Middels</option>
+        <option value="hard">Vanskelig</option>
+        <option value="extreme">Ekstrem</option>
+      </select>
+
+      <div style="height:10px"></div>
+      <button id="start" class="button-1">Start</button>
+      <button id="back" class="button-1">Tilbake</button>
+
+      <div id="msg" style="margin-top:10px;"></div>
+    </div>
+  </div>
+
+  <div id="botbar" class="botbar"></div>
+  <script>fetch('/botbar.html').then(r=>r.text()).then(t=>document.getElementById('botbar').innerHTML=t);</script>
+
+  <script>
+    const msg = document.getElementById("msg");
+    const teacherSession = localStorage.getItem("teacherSession");
+    if (!teacherSession) {
+      msg.textContent = "Du må logge inn som lærer først.";
+      document.getElementById("start").disabled = true;
+    }
+
+    document.getElementById("back").addEventListener("click", () => location.href="/lærer/index.html");
+
+    document.getElementById("start").addEventListener("click", () => {
+      const difficulty = document.getElementById("difficulty").value;
+      sessionStorage.setItem("bingoSettings", JSON.stringify({ difficulty }));
+      location.href = "/lærer/bingo_host.html?mode=create";
+    });
+  </script>
+</body>
+</html>
