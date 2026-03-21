@@ -23,6 +23,7 @@ fonts/
 .claude/
 .dh-diag/
 secret/
+.htaccess
 
 # ── OS / editor junk ─────────────────────────────────────────────────────────
 .DS_Store
